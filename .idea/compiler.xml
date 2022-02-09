@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="platform-server" />
+        <module name="source-cmn" />
+        <module name="source-net" />
+        <module name="data-server" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="PLM-WEB" options="-parameters" />
+      <module name="data-server" options="-parameters" />
+      <module name="platform-server" options="-parameters" />
+      <module name="source-cmn" options="-parameters" />
+      <module name="source-net" options="-parameters" />
+    </option>
+  </component>
+</project>

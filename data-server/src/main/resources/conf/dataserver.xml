@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataserver>
+	<!-- 服务发布 -->
+	<service-dispatch>
+		<rmiport>1298</rmiport>
+		<serverport>1297</serverport>
+	</service-dispatch>
+
+	<!-- 服务列表 -->
+	<service-list>
+		<service>
+			<id>SFS</id>
+			<name>syncFileService</name>
+			<interface>dyna.net.syncfile.SyncFileService</interface>
+			<implement>dyna.net.syncfile.SyncFileServiceImpl</implement>
+			<dispatch-port>7018</dispatch-port>
+			<init-param>
+				<name>port</name>
+				<value>5900</value>
+			</init-param>
+		</service>
+	</service-list>
+
+</dataserver>
