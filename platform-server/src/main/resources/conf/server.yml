@@ -1,0 +1,35 @@
+plmserver:
+  id: APP Server
+  description: APP Server
+
+  thread-pool-count: 16
+  thread-pool-delay: 10
+
+  #定时调度任务线程池
+  scheduled-thread-pool-count: 5
+
+  #会话超时（min）
+  session-timeout: 30
+
+  #会话倒计时提醒（s）
+  session-prompt-time: 30
+
+  language: zh_CN
+
+  storage-map:
+    RDS001:
+      id: RDS001
+      name: RDStorage1
+      dsserver: ftps001
+      path: /RDS001
+    RDS002:
+      id: RDS002
+      name: RDStorage2
+      dsserver: ftps001
+      path: /RDS002
+
+  dsserver-map:
+    ftps001:
+      id: ftps001
+      ip: 127.0.0.1
+      port: 2222
