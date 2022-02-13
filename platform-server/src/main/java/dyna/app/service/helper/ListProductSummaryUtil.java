@@ -15,7 +15,6 @@ import dyna.common.exception.ServiceRequestException;
 import dyna.common.util.SetUtils;
 import dyna.common.util.StringUtils;
 import dyna.net.service.brs.Async;
-import dyna.net.service.brs.BOAS;
 import dyna.net.service.brs.BOMS;
 import dyna.net.service.brs.EMM;
 //import org.apache.ftpserver.util.RegularExpr;
@@ -27,8 +26,7 @@ import java.util.concurrent.ExecutionException;
 
 public class ListProductSummaryUtil implements Comparator<FoundationObject>
 {
-	private BOAS                          boas                 = null;
-	private BOMS                          boms                 = null;
+	private Async                         async                 = null;
 	private EMM                           emm                  = null;
 	private String                        assoTemplateName     = null;
 	private SearchCondition               bomEnd2SearchCondition;
@@ -42,10 +40,9 @@ public class ListProductSummaryUtil implements Comparator<FoundationObject>
 	private List<String>                  filterEnd2Class      = new LinkedList<>();
 	private List<String>					filterEnd2Classification	= new LinkedList<>();
 
-	public ListProductSummaryUtil(BOAS boas, BOMS boms, EMM  emm)
+	public ListProductSummaryUtil(Async async, EMM  emm)
 	{
-		this.boas = boas;
-		this.boms = boms;
+		this.async = async;
 		this.emm =emm;
 	}
 
@@ -231,9 +228,9 @@ public class ListProductSummaryUtil implements Comparator<FoundationObject>
 		if (!allInstanceMasterMap.containsKey(og.getGuid()))
 		{
 			allInstanceMasterMap.put(og.getGuid(), og);
-			CompletableFuture<ListBOMTask> listBOMTaskCompletableFuture = this.boms.listBOMForAllTemplate(og, bomEnd2SearchCondition, dataRule);
+			CompletableFuture<ListBOMTask> listBOMTaskCompletableFuture = this.async.listBOMForAllTemplate(og, bomEnd2SearchCondition, dataRule);
 			allRunTaskMap.put(og.getMasterGuid(), listBOMTaskCompletableFuture);
-			CompletableFuture<List<StructureObject>> structureObjectList = this.boas
+			CompletableFuture<List<StructureObject>> structureObjectList = this.async
 					.listObjectOfRelationAsync(og, assoTemplateName, assoSearchCondition, assoEnd2SearchCondition, dataRule);
 			allRunTaskMap.put(og.getGuid(), structureObjectList);
 		}

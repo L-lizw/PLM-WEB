@@ -288,7 +288,7 @@ public class RelationUnlinkStub extends AbstractServiceStub<BOASImpl>
 			this.stubService.getAsync().systemTrack(this.getTrackerBuilder(), this.stubService.getSignature(), null, args, returnObj);
 			if (end1ObjectGuid != null && StringUtils.isGuid(relationTemplateGuid))
 			{
-				this.stubService.updateHasEnd2Flg(end1ObjectGuid, relationTemplateGuid);
+				this.stubService.getAsync().updateHasEnd2Flg(end1ObjectGuid, relationTemplateGuid);
 			}
 		}
 	}

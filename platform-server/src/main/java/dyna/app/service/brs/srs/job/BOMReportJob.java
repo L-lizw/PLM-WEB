@@ -13,7 +13,6 @@ import java.util.Map;
 import dyna.app.service.AbstractServiceStub;
 import dyna.app.service.brs.aas.AASImpl;
 import dyna.app.service.brs.srs.SRSImpl;
-import dyna.app.service.das.jss.JSSImpl;
 import dyna.app.service.das.jss.JobExecutor;
 import dyna.app.service.das.jss.JobResult;
 import dyna.common.SearchCondition;

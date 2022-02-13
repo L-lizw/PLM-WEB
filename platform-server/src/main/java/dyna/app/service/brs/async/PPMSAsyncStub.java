@@ -1,7 +1,8 @@
-package dyna.app.service.brs.ppms;
+package dyna.app.service.brs.async;
 
 import dyna.app.service.AbstractServiceStub;
 import dyna.app.service.brs.async.AsyncImpl;
+import dyna.app.service.brs.ppms.PPMSImpl;
 import dyna.common.bean.data.ObjectGuid;
 import dyna.common.log.DynaLogger;
 import dyna.net.service.brs.PPMS;

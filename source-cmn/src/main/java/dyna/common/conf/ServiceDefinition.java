@@ -22,11 +22,11 @@ import java.util.Map;
 public class ServiceDefinition
 {
 
-	private String		servcieID				;
+	private String		id				;
 
-	private String		servcieName				;
+	private String		name				;
 
-	private String		servcieDescription		;
+	private String		description		;
 
 	private Map<String, String> param;
 
@@ -39,8 +39,8 @@ public class ServiceDefinition
 	public String toString()
 	{
 		StringBuffer sb = new StringBuffer();
-		sb.append(this.servcieName);
-		sb.append("[" + this.servcieID + "]");
+		sb.append(this.name);
+		sb.append("[" + this.id + "]");
 		return sb.toString();
 	}
 

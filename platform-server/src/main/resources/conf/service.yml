@@ -1,145 +1,146 @@
 service:
-  AAS:
-    id: AAS
-    name: AAS
-    description: Authorization and Authentication Service
-    param:
-      t1: aaa
-  ACL:
-    id: ACL
-    name: ACL
-    description: Access Control List Service
-  Async:
-    id: async
-    name: async
-    description: Async Thread Service
-  BOAS:
-    id: BOAS
-    name: BOAS
-    description: Bussiness Object Access Service
-  BOMS:
-    id: BOMS
-    name: BOMS
-    description: Bill Of Material Service
-  BRM:
-    id: BRM
-    name: BRM
-    description: BOM Replace Manager Service
-    param:
-      # 取替代管控
-      ReplaceControl: false
-  CPB:
-    id: CPB
-    name: CPB
-    description: Configuration Parameter BOM
-    param:
-      columns: 10
-      # 材料明细页签的位置  up/down/left/right
-      position: up
-  DCR:
-    id: DCR
-    name: DCR
-    description: Data Check Rule
-  DSS:
-    id: DSS
-    name: DSS
-    description: Distributed Storage Service
-    param:
-      delete-by-logic: true
-  EDAP:
-    id: EDAP
-    name: EDAP
-    description: Enterprise Directory Access Protocol
-  EMM:
-    id: EMM
-    name: EMM
-    description: Enterprise Model Management
-  EOSS:
-    id: EOSS
-    name: EOSS
-    description: Enterprise Object Script Service
-  ERPI:
-    id: ERPI
-    name: ERPI
-    description: Enterprise Resource Planning Integrate
-    param:
-      # 是否是新版t100集成方案
-      t100_is_old: true
-      # 是否有ERP处理中的状态，如果没有ERP处理中的状态，则不会启动JOB检查ERP状态
-      hasERPExceutingStatus: true
-  FBTS:
-    id: FBTS
-    name: FBTS
-    description: File Browser Tools Service
-    param:
-      # AutoVue Web 参数
-      WebServer: john-PC:80
-      WebServerFilePath: D:\dss\Temp
-  FTS:
-    id: FTS
-    name: FTS
-    description: File Transform Service
-  IOP:
-    id: IOP
-    name: IOP
-    description: IOP Parameter
-  LIC:
-    id: LIC
-    name: LIC
-    description: License Control Service
-  MMS:
-    id: MMS
-    name: MMS
-    description: Model Manage Service
-  PMS:
-    id: PMS
-    name: PMS
-    description: Product Manage Service
-  POS:
-    id: POS
-    name: POS
-    description: Personal Object Service
-  PPMS:
-    id: PPMS
-    name: PPMS
-    description: Project Process Manager Service
-  Schedule:
-    id: Schedule
-    name: Schedule
-    description: Schedule Service
-  SLC:
-    id: SLC
-    name: SLC
-    description: System Logical Configuration
-  SMS:
-    id: SMS
-    name: SMS
-    description: System Mail Service
-  SRS:
-    id: SRS
-    namme: SRS
-    description: Simple Report Service
-  UECS:
-    id: UECS
-    name: UECS
-    description: Updated Engineering Change Service
-  WFI:
-    id: WFI
-    name: WFI
-    description: Workflow Instance
-  WFM:
-    id: WFM
-    name: WFM
-    description: Workflow Model
-  JSS:
-    id: JSS
-    name: JSS
-    description: Job Serialized Service
-    param:
-      # 队列调度是否启用
-      enable: true
-  MSRM:
-    id: MSRM
-    name: MSRM
-    description: Multi String Repository Management
+  services:
+    AAS:
+      id: AAS
+      name: AAS
+      description: Authorization and Authentication Service
+      param:
+        t1: aaa
+    ACL:
+      id: ACL
+      name: ACL
+      description: Access Control List Service
+    Async:
+      id: async
+      name: async
+      description: Async Thread Service
+    BOAS:
+      id: BOAS
+      name: BOAS
+      description: Bussiness Object Access Service
+    BOMS:
+      id: BOMS
+      name: BOMS
+      description: Bill Of Material Service
+    BRM:
+      id: BRM
+      name: BRM
+      description: BOM Replace Manager Service
+      param:
+        # 取替代管控
+        ReplaceControl: false
+    CPB:
+      id: CPB
+      name: CPB
+      description: Configuration Parameter BOM
+      param:
+        columns: 10
+        # 材料明细页签的位置  up/down/left/right
+        position: up
+    DCR:
+      id: DCR
+      name: DCR
+      description: Data Check Rule
+    DSS:
+      id: DSS
+      name: DSS
+      description: Distributed Storage Service
+      param:
+        delete-by-logic: true
+    EDAP:
+      id: EDAP
+      name: EDAP
+      description: Enterprise Directory Access Protocol
+    EMM:
+      id: EMM
+      name: EMM
+      description: Enterprise Model Management
+    EOSS:
+      id: EOSS
+      name: EOSS
+      description: Enterprise Object Script Service
+    ERPI:
+      id: ERPI
+      name: ERPI
+      description: Enterprise Resource Planning Integrate
+      param:
+        # 是否是新版t100集成方案
+        t100_is_old: true
+        # 是否有ERP处理中的状态，如果没有ERP处理中的状态，则不会启动JOB检查ERP状态
+        hasERPExceutingStatus: true
+    FBTS:
+      id: FBTS
+      name: FBTS
+      description: File Browser Tools Service
+      param:
+        # AutoVue Web 参数
+        WebServer: john-PC:80
+        WebServerFilePath: D:\dss\Temp
+    FTS:
+      id: FTS
+      name: FTS
+      description: File Transform Service
+    IOP:
+      id: IOP
+      name: IOP
+      description: IOP Parameter
+    LIC:
+      id: LIC
+      name: LIC
+      description: License Control Service
+    MMS:
+      id: MMS
+      name: MMS
+      description: Model Manage Service
+    PMS:
+      id: PMS
+      name: PMS
+      description: Product Manage Service
+    POS:
+      id: POS
+      name: POS
+      description: Personal Object Service
+    PPMS:
+      id: PPMS
+      name: PPMS
+      description: Project Process Manager Service
+    Schedule:
+      id: Schedule
+      name: Schedule
+      description: Schedule Service
+    SLC:
+      id: SLC
+      name: SLC
+      description: System Logical Configuration
+    SMS:
+      id: SMS
+      name: SMS
+      description: System Mail Service
+    SRS:
+      id: SRS
+      namme: SRS
+      description: Simple Report Service
+    UECS:
+      id: UECS
+      name: UECS
+      description: Updated Engineering Change Service
+    WFI:
+      id: WFI
+      name: WFI
+      description: Workflow Instance
+    WFM:
+      id: WFM
+      name: WFM
+      description: Workflow Model
+    JSS:
+      id: JSS
+      name: JSS
+      description: Job Serialized Service
+      param:
+        # 队列调度是否启用
+        enable: true
+    MSRM:
+      id: MSRM
+      name: MSRM
+      description: Multi String Repository Management
 

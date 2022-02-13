@@ -9,11 +9,10 @@ import java.util.concurrent.ExecutionException;
 
 import dyna.common.bean.data.ObjectGuid;
 import dyna.net.service.brs.Async;
-import dyna.net.service.brs.BOMS;
 
 public class CheckConnectUtil
 {
-	private BOMS                                             boms                 = null;
+	private Async                                            async                = null;
 	private String                                           templateName         = null;
 	private boolean                                          isBom                = false;
 	private String                                           checkMasterGuid      = null;
@@ -21,9 +20,9 @@ public class CheckConnectUtil
 	private Map<String, ObjectGuid>                          allInstanceMasterMap = new HashMap<>();
 	private Map<String, CompletableFuture<List<ObjectGuid>>> allRunTaskMap        = new HashMap<>();
 
-	public CheckConnectUtil(BOMS boms, String templateName, boolean isBom)
+	public CheckConnectUtil(Async async, String templateName, boolean isBom)
 	{
-		this.boms = boms;
+		this.async = async;
 		this.templateName = templateName;
 		this.isBom = isBom;
 	}
@@ -95,7 +94,7 @@ public class CheckConnectUtil
 				if (!allInstanceMasterMap.containsKey(og.getMasterGuid()))
 				{
 					allInstanceMasterMap.put(og.getMasterGuid(), og);
-					CompletableFuture<List<ObjectGuid>> future = this.boms.checkConnect(og, templateName, isBom);
+					CompletableFuture<List<ObjectGuid>> future = this.async.checkConnect(og, templateName, isBom);
 					allRunTaskMap.put(og.getMasterGuid(), future);
 				}
 			}

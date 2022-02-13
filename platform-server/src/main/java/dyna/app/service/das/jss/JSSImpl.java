@@ -11,6 +11,7 @@ import dyna.app.conf.yml.ConfigurableServerImpl;
 import dyna.app.conf.yml.ConfigurableServiceImpl;
 import dyna.app.core.sch.AsyncSchedulerImpl;
 import dyna.app.service.DataAccessService;
+import dyna.app.service.brs.async.JSSAsyncStub;
 import dyna.common.conf.*;
 import dyna.common.dto.Queue;
 import dyna.common.exception.ServiceRequestException;
@@ -48,7 +49,6 @@ import java.util.Map;
 	@Autowired private MSRM  msrm;
 	@Autowired private SMS   sms;
 
-	@Autowired private JSSAsyncStub            jssAsyncStub;
 	@Autowired private JobQueryStub            jobQueryStub;
 	@Autowired private JobCreationStub         jobCreationStub;
 	@Autowired private JobUpdaterStub          jobUpdaterStub;
@@ -76,9 +76,9 @@ import java.util.Map;
 
 		if (runJobQuery)
 		{
-			if (configurableJSS.getSchedulermap() != null)
+			if (configurableJSS.getSchedulerMap() != null)
 			{
-				Iterator<SchedulerDefinition> itr = configurableJSS.getSchedulermap().values().iterator();
+				Iterator<SchedulerDefinition> itr = configurableJSS.getSchedulerMap().values().iterator();
 				while (itr.hasNext())
 				{
 					SchedulerDefinition sd = itr.next();
@@ -121,7 +121,6 @@ import java.util.Map;
 		return this.sms;
 	}
 
-	protected JSSAsyncStub getJSSStub(){return this.jssAsyncStub; }
 
 	/**
 	 * @return the jobQueryStub
@@ -378,15 +377,6 @@ import java.util.Map;
 			newQueue.setFieldl(null);
 		}
 		this.createJob(newQueue);
-	}
-
-
-	@org.springframework.scheduling.annotation.Async(AsyncConfig.MULTI_THREAD_QUEUED_TASK)
-	@Override public void deleteJobByType(String jobID)
-	{
-		DynaLogger.info("JSS Scheduled [Class]ScheduledTaskDeleteJobByTypeImpl[" + jobID + "], Scheduled Task Start...");
-		this.getJSSStub().deleteJobByType(jobID);
-		DynaLogger.info("JSS Scheduled [Class]ScheduledTaskDeleteJobByTypeImpl[" + jobID + "], Scheduled Task End...");
 	}
 
 }

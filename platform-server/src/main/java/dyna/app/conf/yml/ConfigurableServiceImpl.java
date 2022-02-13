@@ -6,6 +6,7 @@
 package dyna.app.conf.yml;
 
 import dyna.common.conf.ServiceDefinition;
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +18,7 @@ import java.util.*;
  * @author Wanglei
  * 
  */
+@Data
 @Component
 @ConfigurationProperties(prefix = "service")
 public class ConfigurableServiceImpl

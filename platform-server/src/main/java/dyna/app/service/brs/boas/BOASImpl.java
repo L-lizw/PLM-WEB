@@ -5,7 +5,6 @@
  */
 package dyna.app.service.brs.boas;
 
-import dyna.app.conf.AsyncConfig;
 import dyna.app.core.track.annotation.Tracked;
 import dyna.app.core.track.impl.TRFoundationImpl;
 import dyna.app.core.track.impl.TRSearchConditionImpl;
@@ -23,17 +22,14 @@ import dyna.common.bean.data.ObjectGuid;
 import dyna.common.bean.data.StructureObject;
 import dyna.common.bean.data.foundation.ViewObject;
 import dyna.common.bean.extra.OpenInstanceModel;
-import dyna.common.bean.sync.AnalysisTask;
 import dyna.common.dto.BIViewHis;
 import dyna.common.dto.DSSFileInfo;
 import dyna.common.dto.DataRule;
 import dyna.common.dto.Folder;
 import dyna.common.dto.model.cls.ClassInfo;
 import dyna.common.dto.template.relation.RelationTemplateInfo;
-import dyna.common.dto.template.wft.WorkflowTemplateScopeRTInfo;
 import dyna.common.exception.AuthorizeException;
 import dyna.common.exception.ServiceRequestException;
-import dyna.common.log.DynaLogger;
 import dyna.common.systemenum.LanguageEnum;
 import dyna.common.systemenum.ModelInterfaceEnum;
 import dyna.common.systemenum.RelationTemplateTypeEnum;
@@ -52,7 +48,6 @@ import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * Business Object Access Service implementation
@@ -76,17 +71,16 @@ import java.util.concurrent.CompletableFuture;
 
 	@Autowired private Async async;
 
-	@Autowired private BOASAsyncStub          boasAsyncStub;
 	@Autowired private CheckInStub          checkInStub;
 	@Autowired private CheckOutStub         checkOutStub;
 	@Autowired private CancelCheckOutStub   cancelCheckOutStub;
 	@Autowired private TransferCheckOutStub transferCheckOutStub;
 	@Autowired private FoundationStub       foundationStub;
-	@Autowired private FFolderStub            fFolderStub;
-	@Autowired private FRevisionStub          fRevisionStub;
-	@Autowired private FSaverStub             fSaverStub;
-	@Autowired private FUIStub                fUIStub;
-	@Autowired private FUpdaterStub           fUpdaterStub;
+	@Autowired private FFolderStub          fFolderStub;
+	@Autowired private FRevisionStub        fRevisionStub;
+	@Autowired private FSaverStub           fSaverStub;
+	@Autowired private FUIStub              fUIStub;
+	@Autowired private FUpdaterStub         fUpdaterStub;
 	@Autowired private IterationStub          iterationStub;
 	@Autowired private RelationStub           relationStub;
 	@Autowired private RelationLinkStub       relationLinkStub;
@@ -168,10 +162,6 @@ import java.util.concurrent.CompletableFuture;
 		return this.numberAllocate;
 	}
 
-	protected BOASAsyncStub getBOASAsyncStub()
-	{
-		return this.boasAsyncStub;
-	}
 
 	@Deprecated @Override public String allocateUniqueId(FoundationObject foundationObject) throws ServiceRequestException
 	{
@@ -1279,35 +1269,4 @@ import java.util.concurrent.CompletableFuture;
 		this.getRouteStub().createByTemplate(end1ObjectGuid, templateObjectGuid, templateName);
 	}
 
-
-	@org.springframework.scheduling.annotation.Async(AsyncConfig.MULTI_THREAD_QUEUED_TASK)
-	@Override public void deleteReferenceAsync(ObjectGuid objectGuid, String exceptionParameter)
-	{
-		DynaLogger.debug("QueuedTaskScheduler Scheduled [Class]DeletetScheduledTask , Scheduled Task Start...");
-		this.getBOASAsyncStub().deleteReference(objectGuid, exceptionParameter);
-		DynaLogger.debug("QueuedTaskScheduler Scheduled [Class]DeletetScheduledTask , Scheduled Task End...");
-	}
-
-
-	@org.springframework.scheduling.annotation.Async(AsyncConfig.SELECT_CONNECT)
-	@Override public CompletableFuture<List<StructureObject>> listObjectOfRelationAsync(ObjectGuid end1, String templateName, SearchCondition searchCondition,
-			SearchCondition end2SearchCondition, DataRule dataRule)
-	{
-		return this.getBOASAsyncStub().listObjectOfRelation(end1, templateName, searchCondition, end2SearchCondition, dataRule);
-	}
-
-	@org.springframework.scheduling.annotation.Async(AsyncConfig.MULTI_THREAD_QUEUED_TASK)
-	@Override public void updateHasEnd2Flg(ObjectGuid end1ObjectGuid, String relationTemplateGuid)
-	{
-		DynaLogger.debug("QueuedTaskScheduler Scheduled [Class]UpdateScheduledTask , Scheduled Task Start...");
-		this.getBOASAsyncStub().updateHasEnd2Flg(end1ObjectGuid, relationTemplateGuid);
-		DynaLogger.debug("QueuedTaskScheduler Scheduled [Class]UpdateScheduledTask , Scheduled Task End...");
-	}
-
-	@org.springframework.scheduling.annotation.Async(AsyncConfig.MULTI_THREAD_QUEUED_TASK)
-	@Override public CompletableFuture<AnalysisTask> listBOMAndRelation(ObjectGuid objectGuid, boolean isCheckcl, boolean isbom, boolean isrelation,
-			List<WorkflowTemplateScopeRTInfo> listScopeRT)
-	{
-		return this.getBOASAsyncStub().listBOMAndRelation(objectGuid,isCheckcl, isbom, isrelation, listScopeRT);
-	}
 }

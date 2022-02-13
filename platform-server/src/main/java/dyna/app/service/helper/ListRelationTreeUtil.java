@@ -12,11 +12,11 @@ import dyna.common.bean.data.ObjectGuid;
 import dyna.common.bean.data.structure.BOMStructure;
 import dyna.common.bean.sync.ListBOMTask;
 import dyna.common.dto.DataRule;
-import dyna.net.service.brs.BOMS;
+import dyna.net.service.brs.Async;
 
 public class ListRelationTreeUtil
 {
-	private BOMS   boms         = null;
+	private Async  async        = null;
 	private String templateName = null;
 	SearchCondition							searchCondition;
 	SearchCondition							end2SearchCondition;
@@ -26,9 +26,9 @@ public class ListRelationTreeUtil
 	private Map<String, List<BOMStructure>>             returnMap            = new HashMap<String, List<BOMStructure>>();
 	private int                                         level                = 0;
 
-	public ListRelationTreeUtil(BOMS stubService )
+	public ListRelationTreeUtil(Async async )
 	{
-		this.boms = stubService;
+		this.async = async;
 	}
 
 	public Map<String, List<BOMStructure>> listBOMForTree(ObjectGuid end1, String templateName, SearchCondition searchCondition, SearchCondition end2SearchCondition,
@@ -93,7 +93,7 @@ public class ListRelationTreeUtil
 		if (!allInstanceMasterMap.containsKey(og.getGuid()))
 		{
 			allInstanceMasterMap.put(og.getGuid(), og);
-			CompletableFuture<ListBOMTask> bomList = this.boms.listBOM(og, templateName, searchCondition,  end2SearchCondition, dataRule, level);
+			CompletableFuture<ListBOMTask> bomList = this.async.listBOM(og, templateName, searchCondition,  end2SearchCondition, dataRule, level);
 			allRunTaskMap.put(og.getMasterGuid(), bomList);
 		}
 	}

@@ -50,6 +50,11 @@ public class ERPWFTransferStub extends ERPTransferStub<ERPWFOperationEnum>
 	private final String					companyTableName	= "DSCMB";
 	private Map<String, FoundationObject>	foMap			= new HashMap<String, FoundationObject>();
 
+	protected ERPWFTransferStub() throws Exception
+	{
+
+	}
+
 	/**
 	 * @param context
 	 * @param service

@@ -1,4 +1,4 @@
-package dyna.app.service.brs.boas;
+package dyna.app.service.brs.async;
 
 import dyna.app.service.AbstractServiceStub;
 import dyna.app.service.brs.async.AsyncImpl;
@@ -31,7 +31,7 @@ import java.util.concurrent.CompletableFuture;
  * @date 2022/1/28
  **/
 @Component
-public class BOASAsyncStub extends AbstractServiceStub<BOASImpl>
+public class BOASAsyncStub extends AbstractServiceStub<AsyncImpl>
 {
 	protected void updateHasEnd2Flg(ObjectGuid end1ObjectGuid, String relationTemplateGuid)
 	{
@@ -42,23 +42,23 @@ public class BOASAsyncStub extends AbstractServiceStub<BOASImpl>
 				return;
 			}
 
-			RelationTemplate relationTemplate = this.stubService.getEMM().getRelationTemplate(relationTemplateGuid);
+			RelationTemplate relationTemplate = this.stubService.getEmm().getRelationTemplate(relationTemplateGuid);
 			if (!relationTemplate.isIsRecordHasEnd2Data() || StringUtils.isNullString(relationTemplate.getFieldForRecordHasEnd2Data()))
 			{
 				return;
 			}
 
-			FoundationObject end1 = this.stubService.getObject(end1ObjectGuid);
+			FoundationObject end1 = this.stubService.getBoas().getObject(end1ObjectGuid);
 			if (end1 == null)
 			{
 				throw new ServiceRequestException("ID_DS_NO_DATA", "end1 is not exist.");
 			}
 
 			boolean hasEnd2 = false;
-			ViewObject viewObject = this.stubService.getRelationByEND1(end1ObjectGuid, relationTemplate.getName());
+			ViewObject viewObject = this.stubService.getBoas().getRelationByEND1(end1ObjectGuid, relationTemplate.getName());
 			if (viewObject != null)
 			{
-				List<FoundationObject> end2List = this.stubService.listFoundationObjectOfRelation(viewObject.getObjectGuid(), null, null, null, false);
+				List<FoundationObject> end2List = this.stubService.getBoas().listFoundationObjectOfRelation(viewObject.getObjectGuid(), null, null, null, false);
 				if (!SetUtils.isNullList(end2List))
 				{
 					hasEnd2 = true;
@@ -67,7 +67,7 @@ public class BOASAsyncStub extends AbstractServiceStub<BOASImpl>
 
 			end1.put(relationTemplate.getFieldForRecordHasEnd2Data(), null);
 			end1.put(relationTemplate.getFieldForRecordHasEnd2Data(), BooleanUtils.getBooleanStringYN(hasEnd2));
-			this.stubService.getFSaverStub().saveObject(end1, false, false, false, null, false, false, false);
+			((BOASImpl)this.stubService.getBoas()).getFSaverStub().saveObject(end1, false, false, false, null, false, false, false);
 		}
 		catch (Throwable e)
 		{
@@ -80,7 +80,7 @@ public class BOASAsyncStub extends AbstractServiceStub<BOASImpl>
 	{
 		try
 		{
-			this.stubService.deleteReference(objectGuid, exceptionParameter);
+			this.stubService.getBoas().deleteReference(objectGuid, exceptionParameter);
 		}
 		catch (Throwable e)
 		{
@@ -92,7 +92,7 @@ public class BOASAsyncStub extends AbstractServiceStub<BOASImpl>
 	{
 		try
 		{
-			List<StructureObject> structureObjectList = this.stubService.listObjectOfRelation(end1, templateName, searchCondition, end2SearchCondition, dataRule);
+			List<StructureObject> structureObjectList = this.stubService.getBoas().listObjectOfRelation(end1, templateName, searchCondition, end2SearchCondition, dataRule);
 			return CompletableFuture.completedFuture(structureObjectList);
 		}
 		catch (ServiceRequestException e)
@@ -129,12 +129,12 @@ public class BOASAsyncStub extends AbstractServiceStub<BOASImpl>
 	{
 		try
 		{
-			List<BOMTemplateInfo> bomTempLateList = this.stubService.getEMM().listBOMTemplateByEND1(mainObjectGuid);
+			List<BOMTemplateInfo> bomTempLateList = this.stubService.getEmm().listBOMTemplateByEND1(mainObjectGuid);
 			if (bomTempLateList != null)
 			{
 				for (BOMTemplateInfo bomTemplate : bomTempLateList)
 				{
-					BOMView viewObject = this.stubService.getBOMS().getBOMViewByEND1(mainObjectGuid, bomTemplate.getName());
+					BOMView viewObject = this.stubService.getBoms().getBOMViewByEND1(mainObjectGuid, bomTemplate.getName());
 					if (viewObject != null)
 					{
 						//todo
@@ -170,13 +170,13 @@ public class BOASAsyncStub extends AbstractServiceStub<BOASImpl>
 			{
 				try
 				{
-					RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateById(rt.getTemplateID());
+					RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateById(rt.getTemplateID());
 					if (relationTemplate != null)
 					{
-						relationTemplate = this.stubService.getEMM().getRelationTemplateByName(mainObjectGuid, relationTemplate.getName());
+						relationTemplate = this.stubService.getEmm().getRelationTemplateByName(mainObjectGuid, relationTemplate.getName());
 						if (relationTemplate != null)
 						{
-							ViewObject viewObject = this.stubService.getRelationByEND1(mainObjectGuid, relationTemplate.getName());
+							ViewObject viewObject = this.stubService.getBoas().getRelationByEND1(mainObjectGuid, relationTemplate.getName());
 							if (viewObject != null)
 							{
 								//todo

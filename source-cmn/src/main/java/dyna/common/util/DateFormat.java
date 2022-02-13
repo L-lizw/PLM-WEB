@@ -105,6 +105,13 @@ public class DateFormat
 		return new Date();
 	}
 
+	public static Date getSystemDate()
+	{
+		Calendar c = Calendar.getInstance();
+		c.setTime(new Date());
+		return c.getTime();
+	}
+
 	/**
 	 * 获取当前日期附近的日期
 	 * 

@@ -170,7 +170,7 @@ public class StructureStub extends AbstractServiceStub<BOASImpl>
 			StructureObject saveStructureInner = this.saveStructureInner(viewObject, structureObject, relationTemplate, isCheckAcl);
 			if (isCheckCycle)
 			{
-				CheckConnectUtil util = new CheckConnectUtil(this.stubService.getBOMS(),
+				CheckConnectUtil util = new CheckConnectUtil(this.stubService.getAsync(),
 						ConfigParameterConstants.CONFIG_PARAMETER_RELATION_TEMPLATE_NAME, false);
 				if (util.checkConntc(viewObject.getEnd1ObjectGuid()))
 				{

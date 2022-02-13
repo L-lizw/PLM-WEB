@@ -308,7 +308,7 @@ public class LoginStub extends AbstractServiceStub<AASImpl>
 								ip, appType, lang, group.getBizModelGuid(), group.getBizModelName(), group.getBizModelTitle()));
 			}
 			// update user latest login time.
-			user.setLatestLoginTime(this.stubService.getEMM().getSystemDate());
+			user.setLatestLoginTime(DateFormat.getSystemDate());
 			user.remove("PASSWORD");
 			this.stubService.getSystemDataService().save(user);
 //			DataServer.getTransactionManager().commitTransaction();

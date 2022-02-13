@@ -1,8 +1,9 @@
-package dyna.app.service.das.jss;
+package dyna.app.service.brs.async;
 
 import dyna.app.service.AbstractServiceStub;
 import dyna.app.conf.yml.ConfigurableJSSImpl;
 import dyna.app.service.brs.async.AsyncImpl;
+import dyna.app.service.das.jss.JSSImpl;
 import dyna.common.conf.JobDefinition;
 import dyna.common.log.DynaLogger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Component;
  * @date 2022/2/4
  **/
 @Component
-public class JSSAsyncStub extends AbstractServiceStub<JSSImpl>
+public class JSSAsyncStub extends AbstractServiceStub<AsyncImpl>
 {
 	@Autowired
 	private ConfigurableJSSImpl configurableJSS;
@@ -26,7 +27,7 @@ public class JSSAsyncStub extends AbstractServiceStub<JSSImpl>
 			int timeOut = jobDefinition.getTimeOut();
 			if (timeOut > 0)
 			{
-				this.stubService.deleteTimeoutJobs( jobID, timeOut);
+				this.stubService.getJss().deleteTimeoutJobs( jobID, timeOut);
 			}
 		}
 		catch (Exception e)

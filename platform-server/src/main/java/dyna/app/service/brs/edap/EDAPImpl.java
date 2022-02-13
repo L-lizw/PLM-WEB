@@ -5,13 +5,10 @@
  */
 package dyna.app.service.brs.edap;
 
-import dyna.app.conf.AsyncConfig;
 import dyna.app.service.BusinessRuleService;
 import dyna.common.dto.Folder;
 import dyna.common.dto.acl.SaAclFolderLibConf;
 import dyna.common.exception.ServiceRequestException;
-import dyna.common.log.DynaLogger;
-import dyna.net.security.signature.UserSignature;
 import dyna.net.service.brs.*;
 import dyna.net.service.das.MSRM;
 import dyna.net.service.data.AclService;
@@ -27,7 +24,7 @@ import java.util.List;
 /**
  * 企业目录访问协议
  *
- * @author Wanglei
+ * @author Lizw
  */
 @Service public class EDAPImpl extends BusinessRuleService implements EDAP
 {
@@ -38,7 +35,6 @@ import java.util.List;
 
 	@Autowired private Async async;
 
-	@Autowired private EDAPAsyncStub edapStub;
 	@Autowired private FolderStub    folderStub;
 	@Autowired private LibraryStub   libraryStub;
 
@@ -65,11 +61,6 @@ import java.util.List;
 	protected Async getAsync()
 	{
 		return this.async;
-	}
-
-	protected EDAPAsyncStub getEdapStub()
-	{
-		return this.edapStub;
 	}
 
 	public FolderStub getFolderStub()
@@ -304,11 +295,4 @@ import java.util.List;
 		return this.getFolderStub().listSubFolder(folderGuid, false);
 	}
 
-	@org.springframework.scheduling.annotation.Async(AsyncConfig.MULTI_THREAD_QUEUED_TASK) @Override public void saveFolderTree(Folder folder, boolean isDelete,
-			UserSignature userSignature)
-	{
-		DynaLogger.debug("QueuedTaskScheduler Scheduled [Class]SaveFolderTreeScheduledTask , Scheduled Task Start...");
-		this.edapStub.saveFolderTree(folder, isDelete, userSignature);
-		DynaLogger.debug("QueuedTaskScheduler Scheduled [Class]SaveFolderTreeScheduledTask , Scheduled Task End...");
-	}
 }

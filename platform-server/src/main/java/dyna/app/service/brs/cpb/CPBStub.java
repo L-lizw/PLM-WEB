@@ -1959,7 +1959,7 @@ public class CPBStub extends AbstractServiceStub<CPBImpl>
 								this.stubService.getFixedTransactionId());
 						// 检查结构是否出现循环
 
-						CheckConnectUtil util = new CheckConnectUtil(this.stubService.getBoms(),
+						CheckConnectUtil util = new CheckConnectUtil(this.stubService.getAsync(),
 								ConfigParameterConstants.CONFIG_PARAMETER_RELATION_TEMPLATE_NAME, false);
 						if (util.checkConntc(destObjectGuid))
 						{

@@ -164,7 +164,7 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 				String bmGuid = this.stubService.getEMM().getCurrentBizModel().getGuid();
 				List<FoundationObject> end1List = new ArrayList<>();
 				end1List.add(end1);
-				this.stubService.updateUHasBOM(end1List, bmGuid);
+				this.stubService.getAsync().updateUHasBOM(end1List, bmGuid);
 			}
 		}
 	}
@@ -415,7 +415,7 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 			BOMStructure retBOMStructure = this.linkBOMInner(bomViewObject, end2ObjectGuid, bomStructure, isCheckAcl, isCheckField);
 			if (isCheckConnectBy)
 			{
-				CheckConnectUtil util = new CheckConnectUtil(this.stubService,
+				CheckConnectUtil util = new CheckConnectUtil(this.stubService.getAsync(),
 						ConfigParameterConstants.CONFIG_PARAMETER_RELATION_TEMPLATE_NAME, false);
 				if (util.checkConntc(bomViewObject.getEnd1ObjectGuid()))
 				{
@@ -444,7 +444,7 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 				String bmGuid = this.stubService.getEMM().getCurrentBizModel().getGuid();
 				List<FoundationObject> end1List = new ArrayList<>();
 				end1List.add(end1FoundationObject);
-				this.stubService.updateUHasBOM(end1List, bmGuid);
+				this.stubService.getAsync().updateUHasBOM(end1List, bmGuid);
 			}
 		}
 
@@ -690,7 +690,7 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 			}
 			if (isCheckBomConnect)
 			{
-				CheckConnectUtil util = new CheckConnectUtil(this.stubService,
+				CheckConnectUtil util = new CheckConnectUtil(this.stubService.getAsync(),
 						ConfigParameterConstants.CONFIG_PARAMETER_RELATION_TEMPLATE_NAME, false);
 				if (util.checkConntc(itemView.getEnd1ObjectGuid()))
 				{
@@ -735,7 +735,7 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 				String bmGuid = this.stubService.getEMM().getCurrentBizModel().getGuid();
 				List<FoundationObject> end1List = new ArrayList<>();
 				end1List.add(end1);
-				this.stubService.updateUHasBOM(end1List, bmGuid);
+				this.stubService.getAsync().updateUHasBOM(end1List, bmGuid);
 			}
 		}
 
@@ -1049,7 +1049,7 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 								flag = true;
 							}
 
-							CheckConnectUtil util = new CheckConnectUtil(this.stubService,
+							CheckConnectUtil util = new CheckConnectUtil(this.stubService.getAsync(),
 									ConfigParameterConstants.CONFIG_PARAMETER_RELATION_TEMPLATE_NAME, false);
 							if (util.checkConntc(bomView.getEnd1ObjectGuid()))
 							{

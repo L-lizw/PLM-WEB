@@ -5,7 +5,6 @@
  */
 package dyna.app.service.brs.ppms;
 
-import dyna.app.conf.AsyncConfig;
 import dyna.app.service.BusinessRuleService;
 import dyna.app.service.brs.boas.BOASImpl;
 import dyna.app.service.brs.ppms.app.EventAppFactory;
@@ -22,7 +21,6 @@ import dyna.common.bean.data.ppms.wbs.WBSPrepareContain;
 import dyna.common.dto.model.bmbo.BOInfo;
 import dyna.common.exception.DynaDataException;
 import dyna.common.exception.ServiceRequestException;
-import dyna.common.log.DynaLogger;
 import dyna.common.systemenum.ppms.IndicatorTimeRangeEnum;
 import dyna.common.systemenum.ppms.PMAuthorityEnum;
 import dyna.common.systemenum.ppms.WorkItemAuthEnum;
@@ -68,7 +66,6 @@ import java.util.Map;
 	@Autowired private CalendarStub        calendarStub;
 	@Autowired private PMChangeStub        pmChangeStub;
 	@Autowired private WarningNoticeStub   warningNoticeStub;
-	@Autowired private PPMSAsyncStub          ppmsAsyncStub;
 
 
 	@Autowired private EventAppFactory eventAppFactory;
@@ -99,9 +96,6 @@ import java.util.Map;
 	{
 		return this.async;
 	}
-
-	protected PPMSAsyncStub getPPMSAsyncStub(){return this.ppmsAsyncStub; }
-
 
 	public synchronized MSRM getMSRM() throws ServiceRequestException
 	{
@@ -1313,11 +1307,4 @@ import java.util.Map;
 		return value;
 	}
 
-	@org.springframework.scheduling.annotation.Async(AsyncConfig.MULTI_THREAD_QUEUED_TASK)
-	@Override public void deleteProject(ObjectGuid projectOObjectGuid)
-	{
-		DynaLogger.debug("QueuedTaskScheduler Scheduled [Class]DeletetScheduledTask , Scheduled Task Start...");
-		this.getPPMSAsyncStub().deleteProject(projectOObjectGuid);
-		DynaLogger.debug("QueuedTaskScheduler Scheduled [Class]DeletetScheduledTask , Scheduled Task End...");
-	}
 }

@@ -10,8 +10,8 @@ import dyna.app.core.track.annotation.Tracked;
 import dyna.app.service.BusinessRuleService;
 import dyna.app.service.brs.aas.tracked.TRLoginImpl;
 import dyna.app.service.brs.aas.tracked.TRLogoutImpl;
+import dyna.app.service.brs.async.AASAsyncStub;
 import dyna.app.service.helper.TrackedDesc;
-import dyna.common.Version;
 import dyna.common.dto.aas.*;
 import dyna.common.exception.AuthorizeException;
 import dyna.common.exception.ServiceRequestException;
@@ -26,6 +26,7 @@ import dyna.net.service.brs.*;
 import dyna.net.service.data.SystemDataService;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Method;
@@ -56,8 +57,10 @@ import java.util.List;
 
 	@DubboReference private SystemDataService systemDataService;
 
-	@Autowired private AASAsyncStub     aasStub;
-	@Autowired private GroupStub groupStub;
+	@Autowired
+	private Async  async;
+
+	@Autowired private GroupStub    groupStub;
 	@Autowired private OrgStub   orgStub;
 	@Autowired private RoleStub  roleStub;
 	@Autowired private LoginStub loginStub;
@@ -69,9 +72,9 @@ import java.util.List;
 		return this.systemDataService;
 	}
 
-	protected AASAsyncStub getAasStub()
+	protected Async getAsync()
 	{
-		return this.aasStub;
+		return this.async;
 	}
 
 	public UserStub getUserStub()
@@ -877,11 +880,4 @@ import java.util.List;
 		return getGroupStub().isChildGroup(groupGuid, parentGroupGuid);
 	}
 
-	@org.springframework.scheduling.annotation.Async(AsyncConfig.MULTI_THREAD_QUEUED_TASK)
-	@Override public void saveGroupTree(Group group, UserSignature userSignature)
-	{
-		DynaLogger.debug("QueuedTaskScheduler Scheduled [Class]SaveGroupTreeScheduledTask , Scheduled Task Start...");
-		this.getAasStub().saveGroupTree(group, userSignature);
-		DynaLogger.debug("QueuedTaskScheduler Scheduled [Class]SaveGroupTreeScheduledTask , Scheduled Task End...");
-	}
 }

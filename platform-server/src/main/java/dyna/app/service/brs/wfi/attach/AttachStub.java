@@ -631,7 +631,7 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 				iputlist.add(mainObjectGuid);
 
 				String credential = this.stubService.getUserSignature().getCredential();
-				ProAttachAnalysisUtil util = new ProAttachAnalysisUtil(credential, this.stubService.getBOAS());
+				ProAttachAnalysisUtil util = new ProAttachAnalysisUtil(credential, this.stubService.getAsync());
 				WorkflowTemplate workflowTemplate = this.stubService.getWfTemplateCacheStub().getWorkflowTemplate(processRuntime.getWFTemplateGuid());
 				List<WorkflowTemplateScopeRTInfo> listScopeRT = workflowTemplate.getListScopeRT();
 				List<FoundationObject> list = util.calculateAttach(iputlist, settings, listScopeRT, Constants.isSupervisor(isCheckAcl, this.stubService));

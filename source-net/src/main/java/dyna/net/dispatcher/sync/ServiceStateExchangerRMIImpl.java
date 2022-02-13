@@ -17,7 +17,6 @@ import org.springframework.stereotype.Repository;
  * @author Wanglei
  * 
  */
-@Repository(value = "serviceStateExchangerRMIImpl")
 public class ServiceStateExchangerRMIImpl implements ServiceStateExchanger
 {
 	@Autowired

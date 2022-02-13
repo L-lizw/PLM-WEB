@@ -45,6 +45,11 @@ public class ERPT100TransferStub extends ERPTransferStub<ERPT100OperationEnum>
 	private Map<String, String>		dblinkInfoMap		= null;
 	private DBLinkStub				dbLinkStub			= null;
 
+	protected ERPT100TransferStub() throws Exception
+	{
+
+	}
+
 	protected ERPT100TransferStub(Document document) throws Exception
 	{
 		super();

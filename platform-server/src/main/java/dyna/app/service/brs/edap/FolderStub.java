@@ -144,7 +144,7 @@ public class FolderStub extends AbstractServiceStub<EDAPImpl>
 		{
 			if (needSaveFolderTreeRelation)
 			{
-				this.stubService.saveFolderTree(folder, true, this.stubService.getUserSignature());
+				this.stubService.getAsync().saveFolderTree(folder, true, this.stubService.getUserSignature());
 			}
 		}
 	}
@@ -436,7 +436,7 @@ public class FolderStub extends AbstractServiceStub<EDAPImpl>
 		{
 			if (needSaveFolderTreeRelation)
 			{
-				this.stubService.saveFolderTree(retFolder, false, stubService.getUserSignature());
+				this.stubService.getAsync().saveFolderTree(retFolder, false, stubService.getUserSignature());
 			}
 		}
 	}

@@ -206,7 +206,7 @@ public class ItemProductStub extends AbstractServiceStub<PMSImpl>
 		String sessionId = this.stubService.getSignature().getCredential();
 		try
 		{
-			ListProductSummaryUtil util = new ListProductSummaryUtil(this.stubService.getBOAS(), this.stubService.getBOMS(), this.stubService.getEMM());
+			ListProductSummaryUtil util = new ListProductSummaryUtil(this.stubService.getAsync(), this.stubService.getEMM());
 			results = util.listProductSummaryObject(productObjectGuid, viewname, searchCondition, new DataRule());
 
 			if (SetUtils.isNullList(results))

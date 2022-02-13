@@ -283,7 +283,7 @@ public class PreferenceStub extends AbstractServiceStub<POSImpl>
 			preference.setPreferenceDetailList(Arrays.asList(preferenceDetail));
 		}
 		this.savePreference(preference);
-		this.stubService.deleteHistory(this.stubService.getOperatorGuid());
+		this.stubService.getAsync().deleteHistory(this.stubService.getOperatorGuid());
 	}
 
 	protected void saveCommonBO(List<BOInfo> boInfoList) throws ServiceRequestException
@@ -429,7 +429,7 @@ public class PreferenceStub extends AbstractServiceStub<POSImpl>
 			preference.setPreferenceDetailList(Arrays.asList(preferenceDetail));
 		}
 		this.savePreference(preference);
-		this.stubService.deleteHistory(this.stubService.getOperatorGuid());
+		this.stubService.getAsync().deleteHistory(this.stubService.getOperatorGuid());
 	}
 
 	protected void saveLoginWarning(boolean isShow) throws ServiceRequestException

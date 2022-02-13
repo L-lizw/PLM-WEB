@@ -185,7 +185,7 @@ public class ScheduledTaskRunJobImpl extends AbstractScheduledTask
 			}
 			if (StringUtils.isNullString(title))
 			{
-				title = jobDefinition.getJobName();
+				title = jobDefinition.getName();
 			}
 			if (StringUtils.isNullString(title))
 			{

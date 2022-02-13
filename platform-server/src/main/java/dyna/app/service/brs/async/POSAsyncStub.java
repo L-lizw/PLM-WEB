@@ -1,4 +1,4 @@
-package dyna.app.service.brs.pos;
+package dyna.app.service.brs.async;
 
 import dyna.app.service.AbstractServiceStub;
 import dyna.app.service.brs.async.AsyncImpl;
@@ -30,7 +30,7 @@ import java.util.Map;
  * @date 2022/1/28
  **/
 @Component
-public class POSAsyncStub extends AbstractServiceStub<POSImpl>
+public class POSAsyncStub extends AbstractServiceStub<AsyncImpl>
 {
 	protected void deleteHistory(String userGuid)
 	{
@@ -41,7 +41,7 @@ public class POSAsyncStub extends AbstractServiceStub<POSImpl>
 	private void deleteBIViewHis(String userGuid) {
 		try
 		{
-			Preference preference =  this.stubService.getPreference(PreferenceTypeEnum.BIVIEWHISCOUNT, userGuid);
+			Preference preference =  this.stubService.getPos().getPreference(PreferenceTypeEnum.BIVIEWHISCOUNT, userGuid);
 			int maxRowNum = BIViewHis.MAXROWNUM;
 			if (preference != null)
 			{
@@ -89,7 +89,7 @@ public class POSAsyncStub extends AbstractServiceStub<POSImpl>
 
 		try
 		{
-			Preference preference = this.stubService.getPreference(PreferenceTypeEnum.MAXHISTORY, userGuid);
+			Preference preference = this.stubService.getPos().getPreference(PreferenceTypeEnum.MAXHISTORY, userGuid);
 			maxHistoryNum =Search.MAX_HISTORY_NUM;
 			if (preference != null)
 			{
@@ -121,7 +121,7 @@ public class POSAsyncStub extends AbstractServiceStub<POSImpl>
 	{
 		if (StringUtils.isGuid(searchGuid))
 		{
-			this.stubService.saveSearch(searchGuid, condition);
+			this.stubService.getPos().saveSearch(searchGuid, condition);
 		}
 		else
 		{
@@ -138,7 +138,7 @@ public class POSAsyncStub extends AbstractServiceStub<POSImpl>
 				{
 					ClassStub.decorateObjectGuid(condition.getObjectGuid(), this.stubService);
 
-					boInfo = ((EMMImpl) this.stubService.getEMM()).getBMStub().getCurrentBoInfoByClassName(condition.getObjectGuid().getClassName());
+					boInfo = ((EMMImpl) this.stubService.getEmm()).getBMStub().getCurrentBoInfoByClassName(condition.getObjectGuid().getClassName());
 				}
 
 				if (boInfo != null)
@@ -152,7 +152,7 @@ public class POSAsyncStub extends AbstractServiceStub<POSImpl>
 					folderGuid = condition.getFolder().getGuid();
 				}
 
-				this.stubService.getMySearchStub().saveSearch(search, classGuid, clasfGuid, folderGuid, condition);
+				((POSImpl)this.stubService.getPos()).getMySearchStub().saveSearch(search, classGuid, clasfGuid, folderGuid, condition);
 			}
 		}
 

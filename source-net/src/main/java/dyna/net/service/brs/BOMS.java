@@ -546,45 +546,4 @@ public interface BOMS extends Service
 	 */
 	public void drawTransferToBOM(ObjectGuid end1ObjectGuid, String bomTemplateName, String procRtGuid) throws ServiceRequestException;
 
-	/**
-	 * 检查BOM结构，或者普通关联结构是否循环
-	 * @return
-	 */
-	public CompletableFuture<List<ObjectGuid>> checkConnect(ObjectGuid end1, String templateName, boolean isBom);
-
-
-	/**
-	 * 删除取替代数据
-	 * @param objectGuid
-	 */
-	public void deleteReplaceData(ObjectGuid objectGuid, String exceptionParameter, List<FoundationObject> end1List, String bmGuid, boolean deleteReplace);
-
-
-	/**
-	 * 查询bom单层信息
-	 * @param end1
-	 * @param templateName
-	 * @param searchCondition
-	 * @param end2SearchCondition
-	 * @param dataRule
-	 * @return
-	 */
-	public CompletableFuture<ListBOMTask> listBOM(ObjectGuid end1, String templateName, SearchCondition searchCondition, SearchCondition end2SearchCondition, DataRule dataRule, int level);
-
-	/**
-	 * 根据end1将所有模板下的的结构查询出来
-	 * @param end1
-	 * @param end2SearchCondition
-	 * @param dataRule
-	 * @return
-	 */
-	public CompletableFuture<ListBOMTask> listBOMForAllTemplate(ObjectGuid end1, SearchCondition end2SearchCondition, DataRule dataRule);
-
-	/**
-	 * 在END1上记录是否存在END2数据，一般用在异步任务中
-	 * @param end1List
-	 * @param bmGuid
-	 * @throws ServiceRequestException
-	 */
-	public void updateUHasBOM(List<FoundationObject> end1List, String bmGuid) throws ServiceRequestException;
 }

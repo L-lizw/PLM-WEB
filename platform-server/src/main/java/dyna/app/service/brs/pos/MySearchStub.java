@@ -829,7 +829,7 @@ public class MySearchStub extends AbstractServiceStub<POSImpl>
 //			this.stubService.getTransactionManager().startTransaction(this.stubService.getFixedTransactionId());
 			String ret = sds.save(search);
 //			this.stubService.getTransactionManager().commitTransaction();
-			this.stubService.deleteHistory(this.stubService.getOperatorGuid());
+			this.stubService.getAsync().deleteHistory(this.stubService.getOperatorGuid());
 			if (isCreate)
 			{
 				return this.stubService.getSearch(ret);

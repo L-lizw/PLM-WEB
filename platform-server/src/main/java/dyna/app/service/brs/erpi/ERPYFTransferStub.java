@@ -37,6 +37,11 @@ import java.util.List;
 public class ERPYFTransferStub extends ERPTransferStub<ERPYFOperationEnum>
 {
 	private String	writebackFileName;
+	protected ERPYFTransferStub() throws Exception
+	{
+
+
+	}
 
 	protected ERPYFTransferStub(Document document) throws Exception
 	{

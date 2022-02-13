@@ -7,6 +7,7 @@ package dyna.app.service.brs.sms;
 
 import dyna.app.conf.AsyncConfig;
 import dyna.app.service.BusinessRuleService;
+import dyna.app.service.brs.async.SMSAsyncStub;
 import dyna.common.SearchCondition;
 import dyna.common.bean.data.FoundationObject;
 import dyna.common.bean.data.ObjectGuid;
@@ -47,7 +48,6 @@ import java.util.List;
 	@Autowired private MailTrashStub    mailTrashStub    ;
 	@Autowired private MailUpdaterStub  mailUpdaterStub  ;
 	@Autowired private EmailStub        emailStub        ;
-	@Autowired private SMSAsyncStub           smsStub;
 
 
 	protected DSCommonService getDsCommonService()
@@ -69,9 +69,6 @@ import java.util.List;
 	{
 		return this.async;
 	}
-
-	protected SMSAsyncStub getSmsStub(){return this.smsStub; }
-
 
 	@Override public void clearTrash() throws ServiceRequestException
 	{
@@ -408,11 +405,4 @@ import java.util.List;
 		this.getMailTrashStub().clearMailByConfig();
 	}
 
-	@org.springframework.scheduling.annotation.Async(AsyncConfig.MAIL_SEND)
-	@Override public void sendMail(Mail mail, List<String> toUserGuidList, LanguageEnum languageEnum)
-	{
-		DynaLogger.debug("SMS MultiThreadQueued Scheduled [Class]MailScheduledTask , Scheduled Task Start...");
-		this.getSmsStub().sendMail(mail, toUserGuidList, languageEnum);
-		DynaLogger.debug("SMS MultiThreadQueued Scheduled [Class]MailScheduledTask , Scheduled Task End...");
-	}
 }

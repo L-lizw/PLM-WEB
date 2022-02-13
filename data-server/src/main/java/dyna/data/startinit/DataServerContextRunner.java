@@ -21,6 +21,7 @@ public class DataServerContextRunner implements CommandLineRunner
 
 	@Override public void run(String... args) throws Exception
 	{
+		DynaLogger.setDataLog();
 		DynaLogger.info("***************************************************");
 		DynaLogger.info("************* " + Version.getProductName() + " " + Version.getVersionInfo() + "**********");
 		DynaLogger.info("************* " + Version.getCopyRight() + " ****************");

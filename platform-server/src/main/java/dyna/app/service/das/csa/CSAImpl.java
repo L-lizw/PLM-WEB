@@ -18,6 +18,7 @@ import org.acegisecurity.Authentication;
 import org.acegisecurity.context.SecurityContext;
 import org.acegisecurity.context.SecurityContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -29,6 +30,7 @@ import java.util.UUID;
  * @author Wanglei
  * 
  */
+@Service
 public class CSAImpl extends DataAccessService implements CSA
 {
 

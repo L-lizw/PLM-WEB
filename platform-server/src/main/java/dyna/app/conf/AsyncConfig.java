@@ -17,7 +17,7 @@ import java.util.concurrent.Executor;
  * @author Lizw
  * @date 2022/1/26
  **/
-@EnableAsync
+@EnableAsync(proxyTargetClass = true)
 @Configuration
 public class AsyncConfig
 {

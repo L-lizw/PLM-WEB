@@ -22,12 +22,12 @@ public class QuartzUtil
 			//定时任务类需要是job类的具体实现 QuartzJobBean是job的抽象类。
 			Class<? extends Job> jobClass = (Class<? extends Job>) Class.forName(quartzBean.getExecutorClassName());
 			// 构建定时任务信息
-			JobDetail jobDetail = JobBuilder.newJob(jobClass).withIdentity(quartzBean.getJobName()).build();
+			JobDetail jobDetail = JobBuilder.newJob(jobClass).withIdentity(quartzBean.getName()).build();
 			// 设置定时任务执行方式
 			CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(quartzBean.getCron());
 			// 构建触发器trigger
 			TriggerBuilder triggerBuilder = TriggerBuilder.newTrigger();
-			triggerBuilder =  triggerBuilder.withIdentity(quartzBean.getJobName());
+			triggerBuilder =  triggerBuilder.withIdentity(quartzBean.getName());
 			triggerBuilder = triggerBuilder.withSchedule(scheduleBuilder);
 			CronTrigger trigger = (CronTrigger) triggerBuilder.build();
 			scheduler.scheduleJob(jobDetail, trigger);
@@ -92,7 +92,7 @@ public class QuartzUtil
 	public static void updateScheduleJob(Scheduler scheduler, JobDefinition quartzBean)  {
 		try {
 			//获取到对应任务的触发器
-			TriggerKey triggerKey = TriggerKey.triggerKey(quartzBean.getJobName());
+			TriggerKey triggerKey = TriggerKey.triggerKey(quartzBean.getName());
 			//设置定时任务执行方式
 			CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(quartzBean.getCron());
 			//重新构建任务的触发器trigger

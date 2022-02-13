@@ -208,12 +208,4 @@ public interface EDAP extends Service
 	 */
 	public List<Folder> listAllRootFolderHasAcl() throws ServiceRequestException;
 
-	/**
-	 * 刷新文件目录
-	 * @param folder
-	 * @param isDelete
-	 * @param userSignature
-	 */
-	public void saveFolderTree(Folder folder, boolean isDelete, UserSignature userSignature);
-
 }

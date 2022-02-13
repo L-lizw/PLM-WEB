@@ -452,7 +452,7 @@ public class BOMStub extends AbstractServiceStub<BOMSImpl>
 
 			if (isCheckConnect)
 			{
-				CheckConnectUtil util = new CheckConnectUtil(this.stubService,
+				CheckConnectUtil util = new CheckConnectUtil(this.stubService.getAsync(),
 						ConfigParameterConstants.CONFIG_PARAMETER_RELATION_TEMPLATE_NAME, false);
 				if (util.checkConntc(viewObject.getEnd1ObjectGuid()))
 				{
@@ -569,7 +569,7 @@ public class BOMStub extends AbstractServiceStub<BOMSImpl>
 				setEnd2UIToStructureSearchCondition(end2SearchCondition, searchCondition);
 			}
 
-			ListRelationTreeUtil util = new ListRelationTreeUtil(this.stubService);
+			ListRelationTreeUtil util = new ListRelationTreeUtil(this.stubService.getAsync());
 			Map<String, List<BOMStructure>> bomMap = util.listBOMForTree(bomViewObject.getEnd1ObjectGuid(), bomTemplate.getName(), searchCondition, end2SearchCondition, dataRule,
 					-1);
 
@@ -788,7 +788,7 @@ public class BOMStub extends AbstractServiceStub<BOMSImpl>
 				setEnd2UIToStructureSearchCondition(end2SearchCondition, searchCondition);
 			}
 
-			ListRelationTreeUtil util = new ListRelationTreeUtil(this.stubService);
+			ListRelationTreeUtil util = new ListRelationTreeUtil(this.stubService.getAsync());
 			return util.listBOMForTree(bomViewObject.getEnd1ObjectGuid(), bomTemplate.getName(), searchCondition, end2SearchCondition, dataRule, level);
 		}
 		catch (DynaDataException e)

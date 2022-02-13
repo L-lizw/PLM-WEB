@@ -315,12 +315,4 @@ public interface SMS extends Service
 	 */
 	public void clearMailByConfig() throws ServiceRequestException;
 
-	/**
-	 * 发送邮件
-	 * @param mail
-	 * @param toUserGuidList
-	 * @param languageEnum
-	 */
-	public void sendMail(Mail mail, List<String> toUserGuidList, LanguageEnum languageEnum);
-
 }

@@ -242,7 +242,7 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 
 			String bmGuid = this.stubService.getEMM().getCurrentBizModel().getGuid();
 			ClassStub.decorateObjectGuid(objectGuid, this.stubService);
-			this.stubService.getBOMS().deleteReplaceData(objectGuid, exceptionParameter, end1List, bmGuid, deleteReplace);
+			this.stubService.getAsync().deleteReplaceData(objectGuid, exceptionParameter, end1List, bmGuid, deleteReplace);
 
 			// invoke delete.after event.
 			this.stubService.getEOSS().executeDeleteAfterEvent(foundationObject);
@@ -923,7 +923,7 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 
 				if (todayDate == null)
 				{
-					todayDate = this.stubService.getEMM().getSystemDate();
+					todayDate = DateFormat.getSystemDate();
 				}
 				today.setTime(todayDate);
 				fromDate = null;
@@ -1060,15 +1060,13 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 	{
 		try
 		{
-			this.stubService.getPOS().saveSearchByCondition(condition, searchGuid);
+			this.stubService.getAsync().saveSearchByCondition(condition, searchGuid);
 		}
 		catch (Throwable e)
 		{
 			DynaLogger.error("saveSearchByCondition:", e);
 		}
 	}
-
-
 
 	protected FoundationObject newFoundationObject(String classGuid, String className, ObjectGuid templateObjectGuid) throws ServiceRequestException
 	{

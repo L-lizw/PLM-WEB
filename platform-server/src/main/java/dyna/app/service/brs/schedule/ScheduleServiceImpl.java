@@ -103,12 +103,12 @@ import org.springframework.stereotype.Service;
 		return this.wfiStub;
 	}
 
-	@Scheduled(cron = "* 0/5 * * * *", initialDelay = 1000) @Override public void checkSession()
+	@Scheduled(fixedRate = 5 * 60 * 1000, initialDelay = 1000) @Override public void checkSession()
 	{
 		this.getLICStub().checkSession();
 	}
 
-	@Scheduled(cron = "* 0/5 * * * *", initialDelay = 60 * 1000) @Override public void checkTransformQueue()
+	@Scheduled(fixedRate = 5 * 60 * 1000, initialDelay = 60 * 1000) @Override public void checkTransformQueue()
 	{
 		DynaLogger.info("Transform Queue Scheduled [Class]TransformQueueScheduledTask , Scheduled Task Start...");
 		this.getFTSStub().checkTransformQueue();
@@ -127,7 +127,7 @@ import org.springframework.stereotype.Service;
 		this.getDssStub().deleteFileTrans();
 	}
 
-	@Scheduled(cron = true ? "" : "") @Override public void fileTransDelete()
+	@Override public void fileTransDelete()
 	{
 
 	}

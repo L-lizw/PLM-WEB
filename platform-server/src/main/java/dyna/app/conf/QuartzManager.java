@@ -39,7 +39,7 @@ public class QuartzManager
 
 
 		PropertiesFactoryBean propertiesFactoryBean = new PropertiesFactoryBean();
-		propertiesFactoryBean.setLocation( new ClassPathResource("spring-quarzt.properties"));
+		propertiesFactoryBean.setLocation( new ClassPathResource("quartz-spring.properties"));
 		propertiesFactoryBean.afterPropertiesSet();
 		Properties quartzProperties = propertiesFactoryBean.getObject();
 

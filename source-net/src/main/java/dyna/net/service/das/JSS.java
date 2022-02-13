@@ -188,11 +188,4 @@ public interface JSS extends Service
 	 */
 	public void reStartQueue(Queue queue) throws ServiceRequestException;
 
-	/**
-	 * 按照类型删除超期对列
-	 *
-	 * @param jobID
-	 */
-	public void deleteJobByType(String jobID);
-
 }

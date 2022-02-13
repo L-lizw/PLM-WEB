@@ -14,6 +14,7 @@ import dyna.common.conf.JobDefinition;
 import dyna.common.conf.SchedulerDefinition;
 import dyna.common.util.SetUtils;
 import dyna.common.util.StringUtils;
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Component;
  * @author Lizw
  *
  */
+@Data
 @Component
 @ConfigurationProperties(prefix = "jobqueueconfig")
 public class ConfigurableJSSImpl
@@ -36,7 +38,7 @@ public class ConfigurableJSSImpl
 	 */
 	public void addJobDefinition(JobDefinition sd)
 	{
-		if (!(StringUtils.isNullString(sd.getJobID())||StringUtils.isNullString(sd.getExecutorClassName())))
+		if (!(StringUtils.isNullString(sd.getId())||StringUtils.isNullString(sd.getExecutorClassName())))
 		{
 			this.classmap.put(sd.getExecutorClassName(), sd);
 		}
@@ -62,8 +64,5 @@ public class ConfigurableJSSImpl
 		return this.schedulerMap.get(id);
 	}
 
-	public Map<String, SchedulerDefinition> getSchedulermap() {
-		return schedulerMap;
-	}
 
 }

@@ -765,18 +765,4 @@ public interface POS extends Service
 
 	public Preference getPreference(PreferenceTypeEnum preferenceTypeEnum, String operatorGuid) throws ServiceRequestException;
 
-	/**
-	 *删除历史查询记录
-	 *
-	 * @param userGuid
-	 */
-	public void deleteHistory(String userGuid);
-
-	/**
-	 * 保存自定义查询设置
-	 * @param condition
-	 * @param searchGuid
-	 */
-	public void saveSearchByCondition(SearchCondition condition, String searchGuid) throws ServiceRequestException;
-
 }

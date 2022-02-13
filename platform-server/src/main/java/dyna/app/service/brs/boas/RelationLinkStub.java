@@ -202,7 +202,7 @@ public class RelationLinkStub extends AbstractServiceStub<BOASImpl>
 
 			if (end1ObjectGuid != null && StringUtils.isGuid(relationTemplateGuid))
 			{
-				this.stubService.updateHasEnd2Flg(end1ObjectGuid, relationTemplateGuid);
+				this.stubService.getAsync().updateHasEnd2Flg(end1ObjectGuid, relationTemplateGuid);
 			}
 		}
 	}
@@ -293,7 +293,7 @@ public class RelationLinkStub extends AbstractServiceStub<BOASImpl>
 			StructureObject linkInner = this.linkInner(viewObject, end1FoundationObject, end2FoundationObjectGuid, structureObject, isCheckAcl, procRtGuid);
 			if (isCheckCycle)
 			{
-				CheckConnectUtil util = new CheckConnectUtil(this.stubService.getBOMS(),
+				CheckConnectUtil util = new CheckConnectUtil(this.stubService.getAsync(),
 						ConfigParameterConstants.CONFIG_PARAMETER_RELATION_TEMPLATE_NAME, false);
 				if (util.checkConntc(viewObject.getEnd1ObjectGuid()))
 				{

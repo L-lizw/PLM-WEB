@@ -2,30 +2,30 @@ jobqueueconfig:
 	schedulerMap:
 		ERPTASK:
 			id: ERPTASK
-			thread: 8
+			threadCount: 8
 		REPORT:
 			id: REPORT
-			thread: 2
+			threadCount: 2
 	jobtype:
 		ERP:
 			id: ERP
 			msrID: ERP
 			name: ERP
-			executorclass: dyna.app.service.brs.erpi.ERPIJob.ERPIJob
+			executorclassName: dyna.app.service.brs.erpi.ERPIJob.ERPIJob
 			schedulerID: ERPTASK
 			timeOut: 30
 		CFERP:
 			id: CFERP
 			msrID: CFERP
 			name: CFERP
-			executorclass: dyna.app.service.brs.erpi.ERPIJob.CFERPIJob
+			executorclassName: dyna.app.service.brs.erpi.ERPIJob.CFERPIJob
 			schedulerID: ERPTASK
 			timeOut: 30
 		ERPpriority:
 			id: ERPpriority
 			msrID: ERPpriority
 			name: ERPpriority
-			executorclass: dyna.app.service.brs.erpi.ERPIJob.ERPpriorityJob
+			executorclassName: dyna.app.service.brs.erpi.ERPIJob.ERPpriorityJob
 			schedulerID: ERPTASK
 			priority: 1
 			timeOut: 30
@@ -33,72 +33,72 @@ jobqueueconfig:
 			id: BOM
 			msrID: BOM
 			name: BOM
-			executorclass: dyna.app.service.brs.srs.job.BOMReportJob
+			executorclassName: dyna.app.service.brs.srs.job.BOMReportJob
 			schedulerID: REPORT
 			timeOut: 30
 		PreSearch:
 			id: PreSearch
 			msrID: PreSearch
 			name: PreSearch
-			executorclass: dyna.app.service.brs.srs.job.PreSearchRepeortJob
+			executorclassName: dyna.app.service.brs.srs.job.PreSearchRepeortJob
 			schedulerID: REPORT
 			timeOut: 30
-		Summary: 
+		Summary:
 			id: Summary
 			msrID: Summary
 			name: Summary
-			executorclass: dyna.app.service.brs.srs.job.SummaryReportJob
+			executorclassName: dyna.app.service.brs.srs.job.SummaryReportJob
 			schedulerID: REPORT
 			timeOut: 30
-		FoundationReport: 
+		FoundationReport:
 			id: FoundationReport
 			msrID: FoundationReport
 			name: FoundationReport
-			executorclass: dyna.app.service.brs.srs.job.GenericReportJob
+			executorclassName: dyna.app.service.brs.srs.job.GenericReportJob
 			schedulerID: REPORT
 			timeOut: 30
 		ECReport:
 			id: ECReport
 			msrID: ECReport
 			name: ECReport
-			executorclass: dyna.app.service.brs.srs.job.ECReportJob
+			executorclassName: dyna.app.service.brs.srs.job.ECReportJob
 			schedulerID: REPORT
 			timeOut: 30
 		AdvancedSearch:
 			id: AdvancedSearch
 			msrID: AdvancedSearch
 			name: AdvancedSearch
-			executorclass: dyna.app.service.brs.srs.job.AdvancedSearchJob
+			executorclassName: dyna.app.service.brs.srs.job.AdvancedSearchJob
 			schedulerID: REPORT
 			timeOut: 30
 		ConfigBOMReport:
 			id: ConfigBOMReport
 			msrID: ConfigBOMReport
 			name: ConfigBOMReport
-			executorclass: dyna.app.service.brs.srs.job.ConfigBOMRepeortJob
+			executorclassName: dyna.app.service.brs.srs.job.ConfigBOMRepeortJob
 			schedulerID: REPORT
 			timeOut: 30
 		JobPolling:
 			id: JobPolling
 			msrID: JobPolling
 			name: JobPolling
-			executorclass: dyna.app.service.das.jss.ScheduledTaskJobPollingImpl
+			executorclassName: dyna.app.service.das.jss.ScheduledTaskJobPollingImpl
 			schedulerID: timerScheduler
 			timeOut: 30
-			cron: 0/30 * * * * *
+			cron: "0/30 * * * * *"
 		JobGetERPStaus:
 			id: JobGetERPStaus
 			msrID: JobGetERPStaus
 			name: JobGetERPStaus
-			executorclass: dyna.app.service.das.jss.ScheduledTaskJobGetERPStausImpl
+			executorclassName: dyna.app.service.das.jss.ScheduledTaskJobGetERPStausImpl
 			schedulerID: timerScheduler
 			timeOut: 30
-			cron: * 0/2 * * * *
+			cron: "* 0/2 * * * *"
 		TaskDeleteJob:
 			id: TaskDeleteJob
 			msrID: TaskDeleteJob
 			name: TaskDeleteJob
-			executorclass: dyna.app.service.das.jss.ScheduledTaskDeleteJobImpl
+			executorclassName: dyna.app.service.das.jss.ScheduledTaskDeleteJobImpl
 			schedulerID: timerScheduler
 			timeOut: 30
-			cron: * * 2 * * *
+			cron: "* * 2 * * *"

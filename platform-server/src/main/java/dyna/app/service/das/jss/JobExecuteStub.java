@@ -56,7 +56,7 @@ public class JobExecuteStub  extends AbstractServiceStub<JSSImpl>
 			{
 				for (JobDefinition jobDefinition : jobQueueTypeList)
 				{
-					this.stubService.deleteJobByType(jobDefinition.getJobID());
+					this.stubService.getAsync().deleteJobByType(jobDefinition.getId());
 				}
 			}
 		}

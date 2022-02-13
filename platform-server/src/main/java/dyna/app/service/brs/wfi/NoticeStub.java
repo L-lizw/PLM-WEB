@@ -104,7 +104,7 @@ public class NoticeStub extends AbstractServiceStub<WFIImpl>
 			contents = MessageFormat.format(contents, processRuntime.getWFTemplateTitle(languageEnum),
 					processRuntime.getDescription(), activity.getTitle(languageEnum),
 
-					DateFormat.getDifferenceDay(activity.getDeadline(), this.stubService.getEMM().getSystemDate()));
+					DateFormat.getDifferenceDay(activity.getDeadline(), DateFormat.getSystemDate()));
 
 			String receiverGuid = processRuntime.getCreateUserGuid();
 
@@ -155,7 +155,7 @@ public class NoticeStub extends AbstractServiceStub<WFIImpl>
 					// DateFormat.getDate(ServerFactory.getDataService().getSystemDate())
 					// - DateFormat.getDate(activity.getDeadline()));
 
-					DateFormat.getDifferenceDay(this.stubService.getEMM().getSystemDate(), activity.getDeadline()));
+					DateFormat.getDifferenceDay(DateFormat.getSystemDate(), activity.getDeadline()));
 
 			String receiverGuid = processRuntime.getCreateUserGuid();
 			// 10.17 变更 流程消息的”发送者”改为流程的创建者

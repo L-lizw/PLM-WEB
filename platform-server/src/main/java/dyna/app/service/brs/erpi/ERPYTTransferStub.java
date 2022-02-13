@@ -47,6 +47,11 @@ public class ERPYTTransferStub extends ERPTransferStub<ERPYTOperationEnum>
 	// 易拓wsdl生成的java文件所在包地址
 	private final String	packageName	= "dyna.app.service.brs.erpi.ytIntegrateService";
 
+	protected ERPYTTransferStub() throws Exception
+	{
+
+	}
+
 	protected ERPYTTransferStub(Document document) throws Exception
 	{
 		super();

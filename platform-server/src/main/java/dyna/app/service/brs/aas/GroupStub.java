@@ -485,7 +485,7 @@ public class GroupStub extends AbstractServiceStub<AASImpl>
 		{
 			if (needSaveGroupTreeRelation)
 			{
-				this.stubService.saveGroupTree( retGroup, stubService.getUserSignature());
+				this.stubService.getAsync().saveGroupTree( retGroup, stubService.getUserSignature());
 			}
 		}
 	}

@@ -267,7 +267,7 @@ public class BIViewHisStub extends AbstractServiceStub<POSImpl>
 			{
 				sds.save(biViewHis);
 			}
-			this.stubService.deleteHistory(operatorGuid);
+			this.stubService.getAsync().deleteHistory(operatorGuid);
 		}
 		catch (DynaDataException e)
 		{

@@ -17,6 +17,7 @@ import dyna.common.dto.template.wft.WorkflowTemplateScopeRTInfo;
 import dyna.common.dto.wf.ProcAttachSetting;
 import dyna.common.dto.wf.WFRelationSet;
 import dyna.common.util.SetUtils;
+import dyna.net.service.brs.Async;
 import dyna.net.service.brs.BOAS;
 
 public class ProAttachAnalysisUtil
@@ -25,7 +26,7 @@ public class ProAttachAnalysisUtil
 
 	private boolean								checkAcl		= false;
 
-	private BOAS boas = null;
+	private Async async = null;
 
 	private Map<String, CompletableFuture<AnalysisTask>>			allRunTaskMap	= new HashMap<>();
 
@@ -35,10 +36,10 @@ public class ProAttachAnalysisUtil
 
 	private List<WorkflowTemplateScopeRTInfo>	listScopeRT		= null;
 
-	public ProAttachAnalysisUtil(String credential2, BOAS boas)
+	public ProAttachAnalysisUtil(String credential2, Async async)
 	{
 		this.credential = credential2;
-		this.boas = boas;
+		this.async = async;
 	}
 
 	public List<FoundationObject> calculateAttach(List<ObjectGuid> firstList, ProcAttachSetting settings, List<WorkflowTemplateScopeRTInfo> listScopeRT, boolean isCheckAcl)
@@ -133,7 +134,7 @@ public class ProAttachAnalysisUtil
 
 			if (listBom || (listRealation && !SetUtils.isNullList(listScopeRT)))
 			{
-				CompletableFuture<AnalysisTask> completableFuture = this.boas.listBOMAndRelation(og, checkAcl,listBom, listRealation, listScopeRT);
+				CompletableFuture<AnalysisTask> completableFuture = this.async.listBOMAndRelation(og, checkAcl,listBom, listRealation, listScopeRT);
 				allRunTaskMap.put(og.getGuid(), completableFuture);
 			}
 		}

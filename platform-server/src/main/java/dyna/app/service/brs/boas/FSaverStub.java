@@ -27,7 +27,6 @@ import dyna.common.bean.data.configparamter.ConfigParameterConstants;
 import dyna.common.bean.data.foundation.BOMView;
 import dyna.common.bean.data.foundation.ViewObject;
 import dyna.common.bean.data.structure.BOMStructure;
-import dyna.common.bean.data.template.RelationTemplate;
 import dyna.common.dto.*;
 import dyna.common.dto.cfm.ClassficationFeature;
 import dyna.common.dto.model.bmbo.BOInfo;

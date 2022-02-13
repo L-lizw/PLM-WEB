@@ -33,7 +33,7 @@ public class JobCreationStub extends AbstractServiceStub<JSSImpl>
 	protected Queue createJob(Queue fo) throws ServiceRequestException
 	{
 		JobDefinition jd = this.stubService.getJobDefinition(fo.getExecutorClass());
-		fo.setType(jd.getJobID());
+		fo.setType(jd.getId());
 		if (StringUtils.isNullString(fo.getIsSinglethRead()))
 		{
 			if (jd.isSingleThread())

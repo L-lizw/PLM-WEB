@@ -29,9 +29,9 @@ public class JobDefinition implements Serializable
 	 */
 	private static final long	serialVersionUID	= 5423549735424960218L;
 
-	private String		jobID				;
+	private String		id				;
 
-	private String		jobName				;
+	private String		name				;
 
 	private String		msrId		;
 	

@@ -30,7 +30,7 @@ import java.util.*;
  * @author Wanglei
  *
  */
-public abstract class DataAccessService extends SignableAdapter implements Poolable, Transactional, Service
+public abstract class DataAccessService extends SignableAdapter implements  Transactional, Service
 {
 	protected ServiceDefinition serviceDefinition = null;
 
@@ -56,11 +56,11 @@ public abstract class DataAccessService extends SignableAdapter implements Poola
 	 * 
 	 * @see dyna.app.core.pool.Poolable#activateObject()
 	 */
-	@Override
-	public void activateObject() throws Exception
-	{
-		isActive = true;
-	}
+//	@Override
+//	public void activateObject() throws Exception
+//	{
+//		isActive = true;
+//	}
 
 	/*
 	 * (non-Javadoc)
@@ -80,12 +80,12 @@ public abstract class DataAccessService extends SignableAdapter implements Poola
 	 * 
 	 * @see dyna.app.core.pool.Poolable#destroyObject()
 	 */
-	@Override
-	public void destroyObject() throws Exception
-	{
-		this.isActive = false;
-		this.clearSignature();
-	}
+//	@Override
+//	public void destroyObject() throws Exception
+//	{
+//		this.isActive = false;
+//		this.clearSignature();
+//	}
 
 	public String getOperatorGuid() throws ServiceRequestException
 	{
@@ -243,7 +243,7 @@ public abstract class DataAccessService extends SignableAdapter implements Poola
 	{
 		this.serviceDefinition = serviceDef;
 
-		this.moduleID = serviceDef.getServcieName();
+		this.moduleID = serviceDef.getName();
 
 		CredentialManager cm = null;
 		//todo
@@ -264,23 +264,23 @@ public abstract class DataAccessService extends SignableAdapter implements Poola
 	 * 
 	 * @see dyna.app.core.pool.Poolable#makeObject(java.lang.Object[])
 	 */
-	@Override
-	public void initObject(Object... initArgs) throws Exception
-	{
-		this.init((ServiceDefinition) initArgs[1]);
-	}
+//	@Override
+//	public void initObject(Object... initArgs) throws Exception
+//	{
+//		this.init((ServiceDefinition) initArgs[1]);
+//	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see dyna.app.core.pool.Poolable#passivateObject()
 	 */
-	@Override
-	public void passivateObject() throws Exception
-	{
-		this.isActive = false;
-		this.clearSignature();
-	}
+//	@Override
+//	public void passivateObject() throws Exception
+//	{
+//		this.isActive = false;
+//		this.clearSignature();
+//	}
 
 	private void releaseRefService()
 	{
@@ -318,11 +318,11 @@ public abstract class DataAccessService extends SignableAdapter implements Poola
 	 * 
 	 * @see dyna.app.core.pool.Poolable#validateObject()
 	 */
-	@Override
-	public boolean validateObject()
-	{
-		return true;
-	}
+//	@Override
+//	public boolean validateObject()
+//	{
+//		return true;
+//	}
 
 	@Override
 	public String getFixedTransactionId()
@@ -362,11 +362,11 @@ public abstract class DataAccessService extends SignableAdapter implements Poola
 		}
 	}
 
-	@Override
-	public String getObjectUID()
-	{
-		return this.serviceUID;
-	}
+//	@Override
+//	public String getObjectUID()
+//	{
+//		return this.serviceUID;
+//	}
 
 	@Override public void setServiceDefinition(ServiceDefinition serviceDefinition)
 	{

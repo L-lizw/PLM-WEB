@@ -739,13 +739,6 @@ import java.util.*;
 		return this.getBMStub().listSubBOInfo(boName);
 	}
 
-	@Override public Date getSystemDate()
-	{
-		Calendar c = Calendar.getInstance();
-		c.setTime(new Date());
-		return c.getTime();
-	}
-
 	@Override public List<UIObjectInfo> listUIObjectInBizModel(String bmGuid, String classObjectName, UITypeEnum uiType, boolean isOnlyVisible) throws ServiceRequestException
 	{
 		return this.getUIStub().listUIObjectByBizModel(classObjectName, bmGuid, uiType, isOnlyVisible);

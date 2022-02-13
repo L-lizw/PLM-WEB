@@ -1,10 +1,6 @@
-package dyna.app.service.brs.bom;
+package dyna.app.service.brs.async;
 
 import dyna.app.service.AbstractServiceStub;
-import dyna.app.service.brs.async.AsyncImpl;
-import dyna.app.service.brs.boas.BOASImpl;
-import dyna.app.service.brs.bom.BOMSImpl;
-import dyna.app.service.brs.brm.BRMImpl;
 import dyna.common.SearchCondition;
 import dyna.common.SearchConditionFactory;
 import dyna.common.bean.data.FoundationObject;
@@ -13,19 +9,12 @@ import dyna.common.bean.data.StructureObject;
 import dyna.common.bean.data.structure.BOMStructure;
 import dyna.common.bean.sync.ListBOMTask;
 import dyna.common.dto.DataRule;
-import dyna.common.dto.model.cls.ClassInfo;
 import dyna.common.dto.template.bom.BOMTemplateInfo;
 import dyna.common.dto.template.relation.RelationTemplateInfo;
 import dyna.common.exception.ServiceRequestException;
 import dyna.common.log.DynaLogger;
-import dyna.common.systemenum.ModelInterfaceEnum;
-import dyna.common.systemenum.ReplaceRangeEnum;
 import dyna.common.util.SetUtils;
-import dyna.common.util.StringUtils;
-import dyna.net.service.brs.BOAS;
 import dyna.net.service.brs.BOMS;
-import dyna.net.service.brs.BRM;
-import org.acegisecurity.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -38,7 +27,7 @@ import java.util.concurrent.CompletableFuture;
  * @date 2022/1/27
  **/
 @Component
-public class BOMAsyncStub extends AbstractServiceStub<BOMSImpl>
+public class BOMAsyncStub extends AbstractServiceStub<AsyncImpl>
 {
 
 	protected void updateUHasBOM(List<FoundationObject> end1List, String bmGuid) throws ServiceRequestException
@@ -47,7 +36,7 @@ public class BOMAsyncStub extends AbstractServiceStub<BOMSImpl>
 		{
 			for (FoundationObject foundationObject : end1List)
 			{
-				List<BOMTemplateInfo> bomTemplateList = this.stubService.getEMM().listBOMTemplateByEND1(foundationObject.getObjectGuid(), bmGuid);
+				List<BOMTemplateInfo> bomTemplateList = this.stubService.getEmm().listBOMTemplateByEND1(foundationObject.getObjectGuid(), bmGuid);
 				if (!SetUtils.isNullList(bomTemplateList))
 				{
 					for (BOMTemplateInfo bomTemplate : bomTemplateList)
@@ -70,7 +59,7 @@ public class BOMAsyncStub extends AbstractServiceStub<BOMSImpl>
 			String struClassGuid = null;
 			if (isBom)
 			{
-				BOMTemplateInfo template = this.stubService.getEMM().getBOMTemplateByName(end1, templateName);
+				BOMTemplateInfo template = this.stubService.getEmm().getBOMTemplateByName(end1, templateName);
 				if (template == null)
 				{
 					return CompletableFuture.completedFuture(end2ObjectGuidList);
@@ -81,7 +70,7 @@ public class BOMAsyncStub extends AbstractServiceStub<BOMSImpl>
 			}
 			else
 			{
-				RelationTemplateInfo template = this.stubService.getEMM().getRelationTemplateByName(end1, templateName);
+				RelationTemplateInfo template = this.stubService.getEmm().getRelationTemplateByName(end1, templateName);
 				if (template == null)
 				{
 					return CompletableFuture.completedFuture(end2ObjectGuidList);
@@ -118,14 +107,14 @@ public class BOMAsyncStub extends AbstractServiceStub<BOMSImpl>
 	{
 		try
 		{
-			this.stubService.getBOAS().deleteReference(objectGuid, exceptionParameter);
+			this.stubService.getBoas().deleteReference(objectGuid, exceptionParameter);
 			if (!SetUtils.isNullList(end1List))
 			{
 				this.updateUHasBOM(end1List, bmGuid);
 			}
 			if (deleteReplace)
 			{
-				this.stubService.getBRM().deleteReplaceDataByItem(objectGuid);
+				this.stubService.getBrm().deleteReplaceDataByItem(objectGuid);
 			}
 		}
 		catch (Throwable e)
@@ -141,7 +130,7 @@ public class BOMAsyncStub extends AbstractServiceStub<BOMSImpl>
 		try
 		{
 			listBOMTask.setLevel(level);
-			List<BOMStructure> bomStruList = this.stubService.listBOM(end1, templateName, searchCondition, end2SearchCondition, dataRule);
+			List<BOMStructure> bomStruList = this.stubService.getBoms().listBOM(end1, templateName, searchCondition, end2SearchCondition, dataRule);
 			listBOMTask.setBomList(bomStruList);
 			listBOMTask.setEnd1guid(end1.getGuid());
 		}
@@ -160,13 +149,13 @@ public class BOMAsyncStub extends AbstractServiceStub<BOMSImpl>
 		try
 		{
 			List<BOMStructure> bomStruList = new ArrayList<>();
-			List<BOMTemplateInfo> bomtempList = this.stubService.getEMM().listBOMTemplateByEND1(end1);
+			List<BOMTemplateInfo> bomtempList = this.stubService.getEmm().listBOMTemplateByEND1(end1);
 			if (bomtempList != null)
 			{
 				for (BOMTemplateInfo info : bomtempList)
 				{
 					SearchCondition createSearchCondition4Class = SearchConditionFactory.createSearchCondition4Class(info.getStructureClassName(), null, true);
-					List<BOMStructure> tempbomStruList = this.stubService.listBOM(end1, info.getName(), createSearchCondition4Class, end2SearchCondition, dataRule);
+					List<BOMStructure> tempbomStruList = this.stubService.getBoms().listBOM(end1, info.getName(), createSearchCondition4Class, end2SearchCondition, dataRule);
 					if (tempbomStruList != null)
 					{
 						bomStruList.addAll(tempbomStruList);

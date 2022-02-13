@@ -586,7 +586,7 @@ public class SDSOperateDataStub extends DSAbstractServiceStub<SystemDataServiceI
 
 			Integer rowsPerPage = (Integer) searchConditionMap.get("ROWSPERPAGE");
 			Integer currentPage = (Integer) searchConditionMap.get("CURRENTPAGE");
-			Method method = mapperClass.getMethod(sqlStatementId);
+			Method method = mapperClass.getMethod(sqlStatementId, Map.class);
 
 			List<T> result;
 			if (rowsPerPage != null && currentPage != null)

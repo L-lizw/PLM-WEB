@@ -318,7 +318,7 @@ public class MailSentStub extends AbstractServiceStub<SMSImpl>
 
 		}
 
-		this.stubService.sendMail( mail, toUserGuidList, this.stubService.getUserSignature().getLanguageEnum());
+		this.stubService.getAsync().sendMail( mail, toUserGuidList, this.stubService.getUserSignature().getLanguageEnum());
 
 		return fileTransList;
 	}

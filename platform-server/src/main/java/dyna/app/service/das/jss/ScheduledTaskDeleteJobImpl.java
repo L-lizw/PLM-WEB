@@ -26,7 +26,7 @@ public class ScheduledTaskDeleteJobImpl  extends AbstractQuartzJobStub<JSSImpl> 
 			{
 				for (JobDefinition jobDefinition : jobQueueTypeList)
 				{
-					this.stubService.deleteJobByType(jobDefinition.getJobID());
+					this.stubService.getAsync().deleteJobByType(jobDefinition.getId());
 				}
 			}
 		}

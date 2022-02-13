@@ -34,6 +34,7 @@ import dyna.common.exception.DecorateException;
 import dyna.common.exception.DynaDataException;
 import dyna.common.exception.ServiceRequestException;
 import dyna.common.systemenum.*;
+import dyna.common.util.DateFormat;
 import dyna.common.util.ECConstants;
 import dyna.common.util.SetUtils;
 import dyna.dbcommon.exception.DynaDataExceptionSQL;
@@ -101,7 +102,7 @@ public class BOMViewStub extends AbstractServiceStub<BOMSImpl>
 			this.stubService.getBOAS().deleteReference(bomView.getObjectGuid(), bomView.getName());
 			if(!SetUtils.isNullList(end1List))
 			{
-				this.stubService.updateUHasBOM(end1List, bmGuid);
+				this.stubService.getAsync().updateUHasBOM(end1List, bmGuid);
 			}
 		}
 		catch (DynaDataException e)
@@ -521,7 +522,7 @@ public class BOMViewStub extends AbstractServiceStub<BOMSImpl>
 			SearchCondition searchCondition = SearchConditionFactory.createSearchConditionForBOMStructure(structureClassName, uiObjectList);
 
 			DataRule dataRule = new DataRule();
-			dataRule.setLocateTime(this.stubService.getEMM().getSystemDate());
+			dataRule.setLocateTime(DateFormat.getSystemDate());
 
 			List<BOMStructure> bomStructureList = this.stubService.listBOM(bomView.getObjectGuid(), searchCondition, null, dataRule);
 			bomView.getObjectGuid().setGuid(null);

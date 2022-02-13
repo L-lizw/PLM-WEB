@@ -1,4 +1,4 @@
-package dyna.app.service.brs.aas;
+package dyna.app.service.brs.async;
 
 import dyna.app.service.AbstractServiceStub;
 import dyna.app.service.brs.aas.AASImpl;
@@ -19,7 +19,7 @@ import java.util.List;
  * @date 2022/1/28
  **/
 @Component
-public class AASAsyncStub extends AbstractServiceStub<AASImpl>
+public class AASAsyncStub extends AbstractServiceStub<AsyncImpl>
 {
 
 	protected void saveGroupTree(Group group, UserSignature userSignature)
@@ -36,7 +36,7 @@ public class AASAsyncStub extends AbstractServiceStub<AASImpl>
 			relation.setCreateUserGuid(userSignature.getUserGuid());
 			this.stubService.getSystemDataService().save(relation);
 
-			List<Group> allSubGroupList = this.stubService.listAllSubGroup(group.getGuid(), null, true);
+			List<Group> allSubGroupList = this.stubService.getAas().listAllSubGroup(group.getGuid(), null, true);
 			if (!SetUtils.isNullList(allSubGroupList))
 			{
 				for (Group subGroup : allSubGroupList)
@@ -50,7 +50,7 @@ public class AASAsyncStub extends AbstractServiceStub<AASImpl>
 				}
 			}
 
-			List<Group> allParentGroupList = this.stubService.getGroupStub().listSuperGroup(group.getGuid(), null, null);
+			List<Group> allParentGroupList = this.stubService.getAas().listSuperGroup(group.getGuid(), null);
 			if (!SetUtils.isNullList(allParentGroupList))
 			{
 				for (Group superGroup : allParentGroupList)

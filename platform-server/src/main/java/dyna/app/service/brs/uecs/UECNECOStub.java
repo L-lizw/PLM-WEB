@@ -921,7 +921,7 @@ public class UECNECOStub extends AbstractServiceStub<UECSImpl>
 				if (end1List != null)
 				{
 					String bmGuid = this.stubService.getEMM().getCurrentBizModel().getGuid();
-					this.stubService.getBOMS().updateUHasBOM(end1List, bmGuid);
+					this.stubService.getAsync().updateUHasBOM(end1List, bmGuid);
 				}
 			}
 		}

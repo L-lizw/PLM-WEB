@@ -42,6 +42,11 @@ public class ERPT100OldTransferStub extends ERPTransferStub<ERPT100OperationEnum
 	private boolean					isEmptyData			= true;
 	private MSRM					msrm				= null;
 
+	protected ERPT100OldTransferStub() throws Exception
+	{
+
+	}
+
 	protected ERPT100OldTransferStub(Document document) throws Exception
 	{
 		super();

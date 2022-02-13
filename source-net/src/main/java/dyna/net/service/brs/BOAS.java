@@ -1336,39 +1336,4 @@ public interface BOAS extends Service
 
 	public void createByTemplate(ObjectGuid objectGuid, ObjectGuid objectGuid2, String name) throws ServiceRequestException;
 
-	/**
-	 * 删除关联数据
-	 * 1、删除end2时，删除结构
-	 * 2、删除end1时，删除BOM，View和结构
-	 * 3、删除BOM和View时，删除结构
-	 *
-	 * @param objectGuid
-	 * @param exceptionParameter
-	 * @throws ServiceRequestException
-	 */
-	public void deleteReferenceAsync(ObjectGuid objectGuid, String exceptionParameter);
-
-	/**
-	 * 查询子阶结构
-	 * @param end1
-	 * @param templateName
-	 * @param searchCondition
-	 * @param end2SearchCondition
-	 * @param dataRule
-	 * @return
-	 */
-	public CompletableFuture<List<StructureObject>> listObjectOfRelationAsync(ObjectGuid end1, String templateName, SearchCondition searchCondition, SearchCondition end2SearchCondition, DataRule  dataRule);
-
-	/**
-	 * 更新是否有end2的标记
-	 * @param end1ObjectGuid
-	 * @param relationTemplateGuid
-	 */
-	public void updateHasEnd2Flg(ObjectGuid end1ObjectGuid, String relationTemplateGuid);
-
-	/**
-	 * 根据参数查询bom，关联结构
-	 * @return
-	 */
-	public CompletableFuture<AnalysisTask> listBOMAndRelation(ObjectGuid objectGuid, boolean isCheckcl, boolean isbom, boolean isrelation, List<WorkflowTemplateScopeRTInfo> listScopeRT);
 }

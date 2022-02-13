@@ -992,10 +992,5 @@ public interface PPMS extends Service
 	 * 
 	 */
 	public FoundationObject completeTask(ObjectGuid taskObjectGuid,UpdateTaskStatus approve) throws ServiceRequestException;
-
-	/**
-	 * 删除项目及其任务
-	 */
-	public void deleteProject(ObjectGuid projectOObjectGuid);
 	
 }

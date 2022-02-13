@@ -1,7 +1,8 @@
-package dyna.app.service.brs.sms;
+package dyna.app.service.brs.async;
 
 import dyna.app.service.AbstractServiceStub;
 import dyna.app.service.brs.async.AsyncImpl;
+import dyna.app.service.brs.sms.SMSImpl;
 import dyna.common.dto.EmailServer;
 import dyna.common.dto.Mail;
 import dyna.common.dto.aas.User;
@@ -24,14 +25,14 @@ import java.util.Properties;
  * @date 2022/1/28
  **/
 @Component
-public class SMSAsyncStub extends AbstractServiceStub<SMSImpl>
+public class SMSAsyncStub extends AbstractServiceStub<AsyncImpl>
 {
 	protected  void sendMail(Mail mail, List<String> toUserGuidList, LanguageEnum languageEnum)
 	{
 		try
 		{
 
-			EmailServer currentServer = this.stubService.getEmailServer();
+			EmailServer currentServer = this.stubService.getSms().getEmailServer();
 
 			if (currentServer == null)
 			{
@@ -41,7 +42,7 @@ public class SMSAsyncStub extends AbstractServiceStub<SMSImpl>
 			String warningText = null;
 			if (currentServer.isShowWarn())
 			{
-				warningText = this.stubService.getMSRM().getMSRString("ID_APP_MAIL_WARNING_CONTENT", languageEnum.toString());
+				warningText = this.stubService.getMsrm().getMSRString("ID_APP_MAIL_WARNING_CONTENT", languageEnum.toString());
 			}
 
 			if (!SetUtils.isNullList(toUserGuidList))
@@ -84,8 +85,8 @@ public class SMSAsyncStub extends AbstractServiceStub<SMSImpl>
 		try
 		{
 
-			User user = this.stubService.getAAS().getUser(toUserGuid);
-			if (currentServer == null || !this.stubService.getPOS().isReceiveEmail(user.getGuid()) || StringUtils.isNullString(user.getEmail()))
+			User user = this.stubService.getAas().getUser(toUserGuid);
+			if (currentServer == null || !this.stubService.getPos().isReceiveEmail(user.getGuid()) || StringUtils.isNullString(user.getEmail()))
 			{
 				return;
 			}

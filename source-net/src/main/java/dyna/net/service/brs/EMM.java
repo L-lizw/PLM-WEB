@@ -47,15 +47,6 @@ import java.util.Set;
  */
 public interface EMM extends Service
 {
-
-	/**
-	 * 取得数据库当前时间
-	 * 
-	 * @return
-	 * @throws ServiceRequestException
-	 */
-	public Date getSystemDate();
-
 	/** LifeCycle Manager **/
 
 	/**

@@ -111,10 +111,10 @@ public class RelationStub extends AbstractServiceStub<BOASImpl>
 		{
 			String bmGuid = this.stubService.getEMM().getCurrentBizModel().getGuid();
 			ClassStub.decorateObjectGuid(relation.getObjectGuid(), this.stubService);
-			this.stubService.getBOMS().deleteReplaceData(relation.getObjectGuid(), relation.getName(), null , bmGuid, false);
+			this.stubService.getAsync().deleteReplaceData(relation.getObjectGuid(), relation.getName(), null , bmGuid, false);
 			if(relation.getEnd1ObjectGuid()!= null && relationTemplate != null)
 			{
-				this.stubService.updateHasEnd2Flg(relation.getEnd1ObjectGuid(), relationTemplate.getGuid());
+				this.stubService.getAsync().updateHasEnd2Flg(relation.getEnd1ObjectGuid(), relationTemplate.getGuid());
 			}
 		}
 	}

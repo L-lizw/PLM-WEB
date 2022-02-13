@@ -5,7 +5,6 @@
  */
 package dyna.app.service.brs.bom;
 
-import dyna.app.conf.AsyncConfig;
 import dyna.app.core.track.annotation.Tracked;
 import dyna.app.service.BusinessRuleService;
 import dyna.app.service.brs.bom.tracked.TRSaveStructureImpl;
@@ -15,13 +14,11 @@ import dyna.common.bean.data.FoundationObject;
 import dyna.common.bean.data.ObjectGuid;
 import dyna.common.bean.data.foundation.BOMView;
 import dyna.common.bean.data.structure.BOMStructure;
-import dyna.common.bean.sync.ListBOMTask;
 import dyna.common.dto.DataRule;
 import dyna.common.dto.ECEffectedBOMRelation;
 import dyna.common.dto.template.bom.BOMCompare;
 import dyna.common.exception.AuthorizeException;
 import dyna.common.exception.ServiceRequestException;
-import dyna.common.log.DynaLogger;
 import dyna.net.service.brs.*;
 import dyna.net.service.das.JSS;
 import dyna.net.service.data.AclService;
@@ -33,11 +30,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * Bill of material implementation
@@ -46,15 +41,12 @@ import java.util.concurrent.CompletableFuture;
  */
 @Service public class BOMSImpl extends BusinessRuleService implements BOMS
 {
-	private static boolean initialized = false;
-
 	@DubboReference private AclService        aclService;
 	@DubboReference private InstanceService   instanceService;
 	@DubboReference private RelationService   relationService;
 	@DubboReference private SystemDataService systemDataService;
 
-	@Autowired private BOMAsyncStub                bomAsyncStub;
-	@Autowired private BOMStub                     bomStub;
+	@Autowired private BOMStub      bomStub;
 	@Autowired private BOMViewStub                 bomViewStub;
 	@Autowired private BOMEditStub                 bomEditStub;
 	@Autowired private BOMCompareStub              bomCompareStub;
@@ -67,7 +59,6 @@ import java.util.concurrent.CompletableFuture;
 	@Autowired private ACL                         acl;
 	@Autowired private Async                       async;
 	@Autowired private BOAS                        boas;
-	@Autowired private BOMS                        boms;
 	@Autowired private BRM                         brm;
 	@Autowired private DCR                         dcr;
 	@Autowired private JSS                         jss;
@@ -131,11 +122,6 @@ import java.util.concurrent.CompletableFuture;
 	protected DCR getDCR()
 	{
 		return this.dcr;
-	}
-
-	protected BOMAsyncStub getBomAsyncStub()
-	{
-		return this.bomAsyncStub;
 	}
 
 	public BOMCompareStub getBomCompareStub()
@@ -464,39 +450,4 @@ import java.util.concurrent.CompletableFuture;
 		this.getDrawTransferBOMStub().transferBOM(end1ObjectGuid, bomTemplateName, procRtGuid);
 	}
 
-	@org.springframework.scheduling.annotation.Async(AsyncConfig.SELECT_CONNECT)
-	@Override public CompletableFuture<List<ObjectGuid>> checkConnect(ObjectGuid end1, String templateName, boolean isBom)
-	{
-		return this.getBomAsyncStub().CheckConnect(end1, templateName, isBom);
-	}
-
-	@org.springframework.scheduling.annotation.Async(AsyncConfig.MULTI_THREAD_QUEUED_TASK)
-	@Override public void deleteReplaceData(ObjectGuid objectGuid, String exceptionParameter, List<FoundationObject> end1List, String bmGuid, boolean deleteReplace)
-	{
-		DynaLogger.debug("QueuedTaskScheduler Scheduled [Class]DeletetScheduledTask , Scheduled Task Start...");
-		this.getBomAsyncStub().deleteReplaceData(objectGuid, exceptionParameter, end1List, bmGuid, deleteReplace);
-		DynaLogger.info("QueuedTaskScheduler Scheduled [Class]DeletetScheduledTask , Scheduled Task End...");
-	}
-
-
-	@org.springframework.scheduling.annotation.Async(AsyncConfig.SELECT_CONNECT)
-	@Override public CompletableFuture<ListBOMTask> listBOM(ObjectGuid end1, String templateName, SearchCondition searchCondition, SearchCondition end2SearchCondition,
-			DataRule dataRule, int level)
-	{
-		return this.getBomAsyncStub().listBOM(end1, templateName, searchCondition, end2SearchCondition ,dataRule, level);
-	}
-
-	@org.springframework.scheduling.annotation.Async(AsyncConfig.SELECT_CONNECT)
-	@Override public CompletableFuture<ListBOMTask> listBOMForAllTemplate(ObjectGuid end1, SearchCondition end2SearchCondition, DataRule dataRule)
-	{
-		return this.getBomAsyncStub().listBOMForAllTemplate(end1, end2SearchCondition, dataRule);
-	}
-
-	@org.springframework.scheduling.annotation.Async(AsyncConfig.MULTI_THREAD_QUEUED_TASK)
-	@Override public void updateUHasBOM(List<FoundationObject> end1List, String bmGuid) throws ServiceRequestException
-	{
-		DynaLogger.debug("QueuedTaskScheduler Scheduled [Class]UpdateScheduledTask , Scheduled Task Start...");
-		this.getBomAsyncStub().updateUHasBOM(end1List, bmGuid);
-		DynaLogger.debug("QueuedTaskScheduler Scheduled [Class]UpdateScheduledTask , Scheduled Task End...");
-	}
 }

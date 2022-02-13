@@ -903,9 +903,4 @@ public interface AAS extends Service
 	 */
 	public boolean isChildGroup(String groupGuid, String parentGroupGuid) throws ServiceRequestException;
 
-
-	/**
-	 * 保存组织架构关系
-	 */
-	public void saveGroupTree(Group group, UserSignature userSignature);
 }

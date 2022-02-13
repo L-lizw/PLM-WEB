@@ -518,7 +518,7 @@ public class ProjectStub extends AbstractServiceStub<PPMSImpl>
 		finally
 		{
 			ClassStub.decorateObjectGuid(pmFoundationObject.getObjectGuid(), this.stubService);
-			this.stubService.deleteProject(pmFoundationObject.getObjectGuid());
+			this.stubService.getAsync().deleteProject(pmFoundationObject.getObjectGuid());
 		}
 	}
 

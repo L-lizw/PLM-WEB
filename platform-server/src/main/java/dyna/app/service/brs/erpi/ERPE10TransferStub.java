@@ -35,6 +35,10 @@ import java.util.List;
 @Component
 public class ERPE10TransferStub extends ERPTransferStub<ERPE10OperationEnum>
 {
+	public ERPE10TransferStub() throws Exception
+	{
+
+	}
 	/**
 	 * @param document
 	 * @throws Exception

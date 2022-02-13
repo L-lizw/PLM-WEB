@@ -7,6 +7,7 @@ package dyna.app.service.brs.pos;
 
 import dyna.app.conf.AsyncConfig;
 import dyna.app.service.BusinessRuleService;
+import dyna.app.service.brs.async.POSAsyncStub;
 import dyna.common.SearchCondition;
 import dyna.common.bean.data.FoundationObject;
 import dyna.common.bean.data.SystemObject;
@@ -44,7 +45,6 @@ import java.util.List;
 	@Autowired private BIViewHisStub         biViewHisStub       ;
 	@Autowired private MyScheduleStub        myScheduleStub      ;
 	@Autowired private MySearchStub          mySearchStub        ;
-	@Autowired private POSAsyncStub          posStub;
 	@Autowired private PreferenceStub        preferenceStub      ;
 	@Autowired private WorkingItemStub       workingItemStub     ;
 	@Autowired private MySearchConditionStub searchConditionStub ;
@@ -69,8 +69,6 @@ import java.util.List;
 	{
 		return this.async;
 	}
-
-	protected POSAsyncStub getPosStub(){return this.posStub; }
 
 
 	@Override public void deleteMySchedule(String guid) throws ServiceRequestException
@@ -687,20 +685,6 @@ import java.util.List;
 	@Override public void saveDefaultOpenEditorInput(String editorInputId) throws ServiceRequestException
 	{
 		this.getPreferenceStub().saveDefaultOpenEditorInput(editorInputId);
-	}
-
-	@org.springframework.scheduling.annotation.Async(AsyncConfig.MULTI_THREAD_QUEUED_TASK)
-	@Override public void deleteHistory(String userGuid)
-	{
-		DynaLogger.debug("BIViewHisDeleteScheduledTask Scheduled [Class]DeletetScheduledTask , Scheduled Task Start...");
-		this.getPosStub().deleteHistory(userGuid);
-		DynaLogger.debug("BIViewHisDeleteScheduledTask Scheduled [Class]DeletetScheduledTask , Scheduled Task End...");
-	}
-
-	@org.springframework.scheduling.annotation.Async(AsyncConfig.MULTI_THREAD_QUEUED_TASK)
-	@Override public void saveSearchByCondition(SearchCondition condition, String searchGuid) throws ServiceRequestException
-	{
-		this.getPosStub().saveSearchByCondition(condition,searchGuid);
 	}
 
 }

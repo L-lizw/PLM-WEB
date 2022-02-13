@@ -1,4 +1,4 @@
-package dyna.app.service.brs.edap;
+package dyna.app.service.brs.async;
 
 import dyna.app.service.AbstractServiceStub;
 import dyna.app.service.brs.async.AsyncImpl;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
  * @date 2022/1/28
  **/
 @Component
-public class EDAPAsyncStub extends AbstractServiceStub<EDAPImpl>
+public class EDAPAsyncStub extends AbstractServiceStub<AsyncImpl>
 {
 
 	protected void saveFolderTree(Folder folder, boolean isDelete, UserSignature userSignature)
@@ -43,7 +43,7 @@ public class EDAPAsyncStub extends AbstractServiceStub<EDAPImpl>
 				String parentFolderGuid = folder.getParentGuid();
 				while (StringUtils.isGuid(parentFolderGuid))
 				{
-					Folder parentFolder = this.stubService.getFolderStub().getFolder(parentFolderGuid, userSignature.getUserGuid(),
+					Folder parentFolder = ((EDAPImpl)this.stubService.getEdap()).getFolderStub().getFolder(parentFolderGuid, userSignature.getUserGuid(),
 							userSignature.getLoginGroupGuid(), userSignature.getLoginRoleGuid(), false);
 					if (parentFolder != null)
 					{

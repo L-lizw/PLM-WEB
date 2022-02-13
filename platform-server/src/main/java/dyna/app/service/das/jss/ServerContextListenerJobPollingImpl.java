@@ -167,7 +167,7 @@ public class ServerContextListenerJobPollingImpl extends AbstractServiceStub<JSS
 			}
 			if (StringUtils.isNullString(title))
 			{
-				title = jobDefinition.getJobName();
+				title = jobDefinition.getName();
 			}
 			if (StringUtils.isNullString(title))
 			{
