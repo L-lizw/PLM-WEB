@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: dataserver
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848 #配置中心地址+
+        file-extension: yml
+        namespace: public
+        group: DEFAULT_GROUP
+        extension-configs:
+          - dataId: mybatis.yml
+            group: DEFAULT_GROUP
+            refresh: true
+
+

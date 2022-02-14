@@ -2,10 +2,12 @@ package dyna.data.conf;
 
 import dyna.common.log.DynaLogger;
 import dyna.common.util.SetUtils;
+import lombok.Data;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -26,8 +28,9 @@ import java.util.List;
  * @author Lizw
  * @date 2021/7/30
  **/
+@Data
 @Configuration
-@PropertySource("classpath:dm/mybatis.properties")
+@ConfigurationProperties(prefix = "database")
 @MapperScan("dyna.common.dtomapper")
 public class MybatisConfig
 {
@@ -38,13 +41,13 @@ public class MybatisConfig
 	//其他的
 	public static final String MAPPER_LOCATION_OTHER = "classpath:dm/sql/**/**.xml";
 
-	@Value("${jdbc.driver}") private String driverClass;
+	private String driverClass;
 
-	@Value("${jdbc.url}") private String url;
+	private String url;
 
-	@Value("${jdbc.username}") private String username;
+	private String username;
 
-	@Value("${jdbc.password}") private String password;
+	private String password;
 
 	/**
 	 * 数据源配置

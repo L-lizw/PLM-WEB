@@ -12,7 +12,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     <select id="get" parameterType="java.lang.String" resultType="dyna.common.dto.acl.SaAclFolderLibConf">
         SELECT * 
           FROM SA_ACL_FOLDER_LIB_CONF
-         WHERE GUID = #GUID#
+         WHERE GUID = #{GUID}
     </select>
 
     <insert id="insert" parameterType="dyna.common.dto.acl.SaAclFolderLibConf">
@@ -28,33 +28,33 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			UPDATETIME
         )
         VALUES(
-        #GUID#,
-        #FOLDERGUID#,
+        #{GUID},
+        #{FOLDERGUID},
         <choose>
-            <when test="ISEXTEND!=null">#ISEXTEND#,</when>
+            <when test="ISEXTEND!=null">#{ISEXTEND},</when>
             <otherwise>'Y',</otherwise>
         </choose>
-        #CREATEUSERGUID#,
-        #CURRENTTIME:TIMESTAMP#,
-        #UPDATEUSERGUID#,
-        #CURRENTTIME:TIMESTAMP#
+        #{CREATEUSERGUID},
+        #{CURRENTTIME:TIMESTAMP},
+        #{UPDATEUSERGUID},
+        #{CURRENTTIME:TIMESTAMP}
         )
     </insert>
 
     <update id="update" parameterType="dyna.common.dto.acl.SaAclFolderLibConf">
         UPDATE SA_ACL_FOLDER_LIB_CONF 
         <set>
-            UPDATETIME = #CURRENTTIME:TIMESTAMP#,
-            <if  test="UPDATEUSERGUID!=null">UPDATEUSERGUID=#UPDATEUSERGUID#,</if>
-            <if  test="OPERCREATE!=null">ISONLYRELEASE=#ISONLYRELEASE#,</if>
-            <if  test="ISEXTEND!=null">ISEXTEND=#ISEXTEND#</if>
+            UPDATETIME = #{CURRENTTIME:TIMESTAMP},
+            <if  test="UPDATEUSERGUID!=null">UPDATEUSERGUID=#{UPDATEUSERGUID},</if>
+            <if  test="OPERCREATE!=null">ISONLYRELEASE=#{ISONLYRELEASE},</if>
+            <if  test="ISEXTEND!=null">ISEXTEND=#{ISEXTEND}</if>
         </set>
-         WHERE GUID = #GUID#
+         WHERE GUID = #{GUID}
     </update>
 
     <delete id="delete" parameterType="java.lang.String">
         delete from sa_acl_folder_lib_conf 
-         where guid = #GUID#
+         where guid = #{GUID}
     </delete>
 
 </mapper>

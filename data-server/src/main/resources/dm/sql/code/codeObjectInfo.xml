@@ -34,7 +34,7 @@
 		ISCLASSIFICATION,
 		BASETABLENAME
 		FROM MA_CODE_MASTER
-		WHERE GUID = #GUID#
+		WHERE GUID = #{GUID}
 	</select>
 
 	<select id="select" parameterType="map" resultType="dyna.common.dto.model.code.CodeObjectInfo" statementType="STATEMENT">
@@ -53,10 +53,10 @@
 		FROM MA_CODE_MASTER
 		<where>
 			<if  test="CODENAME!=null">
-				AND CODENAME = #CODENAME#
+				AND CODENAME = #{CODENAME}
 			</if>
 			<if  test="ISCLASSIFICATION!=null">
-				AND ISCLASSIFICATION = #ISCLASSIFICATION#
+				AND ISCLASSIFICATION = #{ISCLASSIFICATION}
 			</if>
 		</where>
 	</select>
@@ -79,39 +79,39 @@
 		)
 		VALUES
 		(
-		#GUID#,
-		#CODENAME:VARCHAR:NULL#,
-		#TITLE:VARCHAR:NULL#,
-		#CURRENTTIME:TIMESTAMP#,
-		#CREATEUSERGUID:VARCHAR:NULL#,
-		#CURRENTTIME:TIMESTAMP#,
-		#UPDATEUSERGUID:VARCHAR:NULL#,
-		#DESCRIPTION:VARCHAR:NULL#,
-		#SHOWTYPE:VARCHAR:NULL#,
-		#CODETYPE:VARCHAR:NULL#,
-		#ISCLASSIFICATION:VARCHAR:NULL#,
-		#BASETABLENAME:VARCHAR:NULL#
+		#{GUID},
+		#{CODENAME:VARCHAR:NULL},
+		#{TITLE:VARCHAR:NULL},
+		#{CURRENTTIME:TIMESTAMP},
+		#{CREATEUSERGUID:VARCHAR:NULL},
+		#{CURRENTTIME:TIMESTAMP},
+		#{UPDATEUSERGUID:VARCHAR:NULL},
+		#{DESCRIPTION:VARCHAR:NULL},
+		#{SHOWTYPE:VARCHAR:NULL},
+		#{CODETYPE:VARCHAR:NULL},
+		#{ISCLASSIFICATION:VARCHAR:NULL},
+		#{BASETABLENAME:VARCHAR:NULL}
 		)
 	</insert>
 
 	<update id="update" parameterType="dyna.common.dto.model.code.CodeObjectInfo">
 		UPDATE MA_CODE_MASTER
 		<set>
-			UPDATETIME = #CURRENTTIME:TIMESTAMP#
-			<if  test="TITLE!=null">title=#TITLE#,</if>
-			<if  test="UPDATEUSERGUID!=null">updateuserguid=#UPDATEUSERGUID#,</if>
-			<if  test="DESCRIPTION!=null">description=#DESCRIPTION#,</if>
-			<if  test="CODETYPE!=null">CODETYPE=#CODETYPE#,</if>
-			<if  test="SHOWTYPE!=null">showtype=#SHOWTYPE#,</if>
-			<if  test="ISCLASSIFICATION!=null">ISCLASSIFICATION=#ISCLASSIFICATION#,</if>
-			<if  test="BASETABLENAME!=null">BASETABLENAME=#BASETABLENAME#,</if>
+			UPDATETIME = #{CURRENTTIME:TIMESTAMP}
+			<if  test="TITLE!=null">title=#{TITLE},</if>
+			<if  test="UPDATEUSERGUID!=null">updateuserguid=#{UPDATEUSERGUID},</if>
+			<if  test="DESCRIPTION!=null">description=#{DESCRIPTION},</if>
+			<if  test="CODETYPE!=null">CODETYPE=#{CODETYPE},</if>
+			<if  test="SHOWTYPE!=null">showtype=#{SHOWTYPE},</if>
+			<if  test="ISCLASSIFICATION!=null">ISCLASSIFICATION=#{ISCLASSIFICATION},</if>
+			<if  test="BASETABLENAME!=null">BASETABLENAME=#{BASETABLENAME},</if>
 		</set>
-		WHERE GUID = #GUID#
+		WHERE GUID = #{GUID}
 	</update>
 
 	<delete id="delete" parameterType="java.lang.String">
 		DELETE FROM MA_CODE_MASTER
-		WHERE GUID = #GUID#
+		WHERE GUID = #{GUID}
 	</delete>
 
 </mapper>

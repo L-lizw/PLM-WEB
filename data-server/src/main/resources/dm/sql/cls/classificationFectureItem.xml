@@ -12,7 +12,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     <select id="get" parameterType="java.lang.String" resultType="dyna.common.dto.cfm.ClassficationFeatureItemInfo">
         SELECT CC.* 
           FROM CLASSIFICATION_NUMBER_REGULAR CC
-        WHERE GUID = #GUID#
+        WHERE GUID = #{GUID}
     </select>
     
     <insert id="insert" parameterType="dyna.common.dto.cfm.ClassficationFeatureItemInfo">
@@ -29,37 +29,37 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			        CREATETIME,
 			        UPDATEUSERGUID,
 			        UPDATETIME)
-	        VALUES (#GUID#,
-			        #CLASSCLASSIFICATIONGUID:VARCHAR:NULL#,
-			        #CLASSIFICATIONITEMGUID:VARCHAR:NULL#,
-			        #FIELDNAME:VARCHAR:NULL#,
-			        #ISNUMBERING:VARCHAR:NULL#,
-			        #FORMAT:VARCHAR:NULL#,
-			        #STYLE:VARCHAR:NULL#,
+	        VALUES (#{GUID},
+			        #{CLASSCLASSIFICATIONGUID:VARCHAR:NULL},
+			        #{CLASSIFICATIONITEMGUID:VARCHAR:NULL},
+			        #{FIELDNAME:VARCHAR:NULL},
+			        #{ISNUMBERING:VARCHAR:NULL},
+			        #{FORMAT:VARCHAR:NULL},
+			        #{STYLE:VARCHAR:NULL},
 					
-					#CREATEUSERGUID:VARCHAR:NULL#,
-					#CURRENTTIME:TIMESTAMP#,
-					#UPDATEUSERGUID:VARCHAR:NULL#,
-					#CURRENTTIME:TIMESTAMP#)
+					#{CREATEUSERGUID:VARCHAR:NULL},
+					#{CURRENTTIME:TIMESTAMP},
+					#{UPDATEUSERGUID:VARCHAR:NULL},
+					#{CURRENTTIME:TIMESTAMP})
     </insert>
     
     <update id="update" parameterType="dyna.common.dto.cfm.ClassficationFeatureItemInfo">
 		UPDATE CLASSIFICATION_NUMBER_REGULAR 
 		<set>
-			UPDATETIME=#CURRENTTIME:TIMESTAMP#,
-			UPDATEUSERGUID=#UPDATEUSERGUID#,
-			<if  test="GUID!=null">GUID=#GUID#,</if>
-			<if  test="CLASSCLASSIFICATIONGUID!=null">CLASSCLASSIFICATIONGUID=#CLASSCLASSIFICATIONGUID#,</if>
-			<if  test="CLASSIFICATIONITEMGUID!=null">CLASSIFICATIONITEMGUID=#CLASSIFICATIONITEMGUID#,</if>
-			<if  test="FIELDNAME!=null">FIELDNAME=#FIELDNAME#,</if>
-			<if  test="ISNUMBERING!=null">ISNUMBERING=#ISNUMBERING#,</if>
-			<if  test="FORMAT!=null">FORMAT=#FORMAT#,</if>
-			<if  test="STYLE!=null">STYLE=#STYLE#,</if>
+			UPDATETIME=#{CURRENTTIME:TIMESTAMP},
+			UPDATEUSERGUID=#{UPDATEUSERGUID},
+			<if  test="GUID!=null">GUID=#{GUID},</if>
+			<if  test="CLASSCLASSIFICATIONGUID!=null">CLASSCLASSIFICATIONGUID=#{CLASSCLASSIFICATIONGUID},</if>
+			<if  test="CLASSIFICATIONITEMGUID!=null">CLASSIFICATIONITEMGUID=#{CLASSIFICATIONITEMGUID},</if>
+			<if  test="FIELDNAME!=null">FIELDNAME=#{FIELDNAME},</if>
+			<if  test="ISNUMBERING!=null">ISNUMBERING=#{ISNUMBERING},</if>
+			<if  test="FORMAT!=null">FORMAT=#{FORMAT},</if>
+			<if  test="STYLE!=null">STYLE=#{STYLE},</if>
 		</set>
-		 WHERE GUID = #GUID#
+		 WHERE GUID = #{GUID}
 	</update>
 	
     <delete id="delete" parameterType="java.lang.String">
-        DELETE FROM CLASSIFICATION_NUMBER_REGULAR  WHERE GUID = #GUID#
+        DELETE FROM CLASSIFICATION_NUMBER_REGULAR  WHERE GUID = #{GUID}
     </delete>
 </mapper>

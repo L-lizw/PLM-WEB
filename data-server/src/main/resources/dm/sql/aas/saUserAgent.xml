@@ -8,13 +8,13 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
         select a.*
           from sa_user_agent a
 			<where>
-				<if  test="PRINCIPALGUID!=null">and a.principalguid=#PRINCIPALGUID#</if>
-				<if  test="AGENTGUID!=null">and a.agentguid=#AGENTGUID#</if>
+				<if  test="PRINCIPALGUID!=null">and a.principalguid=#{PRINCIPALGUID}</if>
+				<if  test="AGENTGUID!=null">and a.agentguid=#{AGENTGUID}</if>
 				<if  test="and VALID!=null">
-					a.valid=#VALID#
+					a.valid=#{VALID}
 				</if>
 				<if  test="ISOVERTIME!= null and ISOVERTIME=='Y'">
-						and a.finishdate<![CDATA[<]]>#CURRENTTIME:DATE#
+						and a.finishdate<![CDATA[<]]>#{CURRENTTIME:DATE}
 						and a.finishdate is not null
 						and a.valid = 'Y'
 				</if>
@@ -36,29 +36,29 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			updateuserguid
 		)
 		select
-			#GUID:VARCHAR#,
-			#PRINCIPALGUID:VARCHAR#,
-			#AGENTGUID:VARCHAR#,
-			#STARTDATE:DATE#,
-			#FINISHDATE:DATE#,
-			#VALID:VARCHAR:NULL#,
+			#{GUID:VARCHAR},
+			#{PRINCIPALGUID:VARCHAR},
+			#{AGENTGUID:VARCHAR},
+			#{STARTDATE:DATE},
+			#{FINISHDATE:DATE},
+			#{VALID:VARCHAR:NULL},
 
-			#CURRENTTIME:TIMESTAMP#,
-			#CREATEUSERGUID:VARCHAR:NULL#,
-			#CURRENTTIME:TIMESTAMP#,
-			#UPDATEUSERGUID:VARCHAR:NULL#
+			#{CURRENTTIME:TIMESTAMP},
+			#{CREATEUSERGUID:VARCHAR:NULL},
+			#{CURRENTTIME:TIMESTAMP},
+			#{UPDATEUSERGUID:VARCHAR:NULL}
 	</insert>
 	
 	<update id="update" parameterType="dyna.common.dto.aas.UserAgent">
 		UPDATE sa_user_agent
 		<set>
-			updatetime=#CURRENTTIME:TIMESTAMP#,
-			updateuserguid=#UPDATEUSERGUID#,
-			<if  test="AGENTGUID!=null">AGENTGUID=#AGENTGUID#,</if>
-			<if  test="STARTDATE!=null">STARTDATE=#STARTDATE:DATE#,</if>
-			<if  test="FINISHDATE!=null">FINISHDATE=#FINISHDATE:DATE#,</if>
-			<if  test="VALID!=null">VALID=#VALID#</if>
+			updatetime=#{CURRENTTIME:TIMESTAMP},
+			updateuserguid=#{UPDATEUSERGUID},
+			<if  test="AGENTGUID!=null">AGENTGUID=#{AGENTGUID},</if>
+			<if  test="STARTDATE!=null">STARTDATE=#{STARTDATE:DATE},</if>
+			<if  test="FINISHDATE!=null">FINISHDATE=#{FINISHDATE:DATE},</if>
+			<if  test="VALID!=null">VALID=#{VALID}</if>
 		</set>
-		WHERE PRINCIPALGUID = #PRINCIPALGUID#
+		WHERE PRINCIPALGUID = #{PRINCIPALGUID}
 	</update>
 </mapper>

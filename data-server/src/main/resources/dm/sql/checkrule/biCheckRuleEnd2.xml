@@ -8,10 +8,10 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
         select a.*
           from BI_RULE_END2 a
         <where>
-			<if  test="MASTERGUID">and a.MASTERGUID=#MASTERGUID#</if>
-			<if  test="DATASEQ">and a.DATASEQ=#DATASEQ#</if>
-			<if  test="END2CONDITION">and a.END2CONDITION=#END2CONDITION#</if>
-			<if  test="GUID">and a.GUID=#GUID#</if>
+			<if  test="MASTERGUID">and a.MASTERGUID=#{MASTERGUID}</if>
+			<if  test="DATASEQ">and a.DATASEQ=#{DATASEQ}</if>
+			<if  test="END2CONDITION">and a.END2CONDITION=#{END2CONDITION}</if>
+			<if  test="GUID">and a.GUID=#{GUID}</if>
 		</where>
 		order by DATASEQ
 	</select>
@@ -30,37 +30,37 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 
 		)
 		select
-			#GUID:VARCHAR:NULL#,
-			#MASTERGUID:VARCHAR:NULL#,
-			#DATASEQ:NUMERIC#,
-			#END2CONDITION:VARCHAR:NULL#,
+			#{GUID:VARCHAR:NULL},
+			#{MASTERGUID:VARCHAR:NULL},
+			#{DATASEQ:NUMERIC},
+			#{END2CONDITION:VARCHAR:NULL},
 
-			#CURRENTTIME:TIMESTAMP#,
-			#CREATEUSERGUID:VARCHAR:NULL#,
-			#CURRENTTIME:TIMESTAMP#,
-			#UPDATEUSERGUID:VARCHAR:NULL#
+			#{CURRENTTIME:TIMESTAMP},
+			#{CREATEUSERGUID:VARCHAR:NULL},
+			#{CURRENTTIME:TIMESTAMP},
+			#{UPDATEUSERGUID:VARCHAR:NULL}
 	</insert>
 	
 	<update id="update" parameterType="dyna.common.bean.data.checkrule.End2CheckRule">
 		UPDATE BI_RULE_END2  SET
 		<set>
-			updatetime=#CURRENTTIME:TIMESTAMP#,
-			updateuserguid=#UPDATEUSERGUID#,
-			<if  test="MASTERGUID!=null">MASTERGUID=#MASTERGUID#,</if>
-			<if  test="DATASEQ!=null">DATASEQ=#DATASEQ#,</if>
-			<if  test="END2CONDITION!=null">END2CONDITION=#END2CONDITION#,</if>
+			updatetime=#{CURRENTTIME:TIMESTAMP},
+			updateuserguid=#{UPDATEUSERGUID},
+			<if  test="MASTERGUID!=null">MASTERGUID=#{MASTERGUID},</if>
+			<if  test="DATASEQ!=null">DATASEQ=#{DATASEQ},</if>
+			<if  test="END2CONDITION!=null">END2CONDITION=#{END2CONDITION},</if>
 		</set>
-		WHERE guid = #GUID#
+		WHERE guid = #{GUID}
 	</update>
 
 	<delete id="delete" parameterType="java.lang.String">
 		DELETE FROM BI_RULE_END2 
-		WHERE guid = #GUID#
+		WHERE guid = #{GUID}
 	</delete>
 	
 	<delete id="deleteByMaster" parameterType="java.lang.String">
 		DELETE FROM BI_RULE_END2 
-		WHERE masterguid = #MASTERGUID#
+		WHERE masterguid = #{MASTERGUID}
 	</delete>
 	
 	<delete id="deleteAll">

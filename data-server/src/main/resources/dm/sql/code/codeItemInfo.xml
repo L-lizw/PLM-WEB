@@ -36,7 +36,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		       CODE,
 		       ISCLASSIFICATION
 		  FROM MA_CODE_DETAIL
-		 WHERE GUID = #GUID#
+		 WHERE GUID = #{GUID}
 	</select>
     
     <select id="select" parameterType="map" resultType="dyna.common.dto.model.code.CodeItemInfo">
@@ -55,27 +55,27 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			   ISCLASSIFICATION
 		  FROM MA_CODE_DETAIL
 		<where>
-			<if  test="GUID!=null">and GUID=#GUID#</if>
-			<if  test="MASTERGUID!=null">and MASTERGUID=#MASTERGUID#</if>
-			<if  test="PARENTGUID!=null">and PARENTGUID=#PARENTGUID#</if>
-			<if  test="ITEMNAME!=null">and ITEMNAME=#ITEMNAME#</if>
-			<if  test="TITLE!=null">and TITLE=#TITLE#</if>
-			<if  test="DESCRIPTION!=null">and DESCRIPTION=#DESCRIPTION#</if>
-			<if  test="CODE!=null">and CODE=#CODE#</if>
+			<if  test="GUID!=null">and GUID=#{GUID}</if>
+			<if  test="MASTERGUID!=null">and MASTERGUID=#{MASTERGUID}</if>
+			<if  test="PARENTGUID!=null">and PARENTGUID=#{PARENTGUID}</if>
+			<if  test="ITEMNAME!=null">and ITEMNAME=#{ITEMNAME}</if>
+			<if  test="TITLE!=null">and TITLE=#{TITLE}</if>
+			<if  test="DESCRIPTION!=null">and DESCRIPTION=#{DESCRIPTION}</if>
+			<if  test="CODE!=null">and CODE=#{CODE#}</if>
 		</where>
     </select>
     
     <update id="update" parameterType="dyna.common.dto.model.code.CodeItemInfo">
         UPDATE MA_CODE_DETAIL 
 		<set>
-			UPDATEUSERGUID = #UPDATEUSERGUID#,
-			UPDATETIME = #CURRENTTIME:TIMESTAMP#,
-			<if  test="DATASEQ!=null">DATASEQ=#DATASEQ#,</if>
-			<if  test="TITLE!=null">TITLE=#TITLE#,</if>
-			<if  test="DESCRIPTION!=null">DESCRIPTION=#DESCRIPTION#,</if>
-			<if  test="CODE!=null">CODE=#CODE#,</if>
+			UPDATEUSERGUID = #{UPDATEUSERGUID},
+			UPDATETIME = #{CURRENTTIME:TIMESTAMP},
+			<if  test="DATASEQ!=null">DATASEQ=#{DATASEQ},</if>
+			<if  test="TITLE!=null">TITLE=#{TITLE},</if>
+			<if  test="DESCRIPTION!=null">DESCRIPTION=#{DESCRIPTION},</if>
+			<if  test="CODE!=null">CODE=#{CODE},</if>
 		</set>
-         WHERE GUID = #GUID#
+         WHERE GUID = #{GUID}
     </update>
     
     <insert id="insert" parameterType="dyna.common.dto.model.code.CodeItemInfo">
@@ -93,27 +93,27 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 							       UPDATETIME,
 							       UPDATEUSERGUID
                                   )
-                            VALUES(#GUID:VARCHAR#,
-							       #MASTERGUID:VARCHAR#,
-							       #PARENTGUID:VARCHAR:NULL#,
-							       #DATASEQ:NUMERIC#,
-							       #ITEMNAME:VARCHAR:NULL#,
-							       #TITLE:VARCHAR:NULL#,
-							       #DESCRIPTION:VARCHAR:NULL#,
-							       #CODE:VARCHAR:NULL#,
-		                           #ISCLASSIFICATION:VARCHAR:NULL#,
-							       #CURRENTTIME:TIMESTAMP#,
-							       #CREATEUSERGUID:VARCHAR:NULL#,
-							       #CURRENTTIME:TIMESTAMP#,
-							       #UPDATEUSERGUID:VARCHAR:NULL#
+                            VALUES(#{GUID:VARCHAR},
+							       #{MASTERGUID:VARCHAR},
+							       #{PARENTGUID:VARCHAR:NULL},
+							       #{DATASEQ:NUMERIC},
+							       #{ITEMNAME:VARCHAR:NULL},
+							       #{TITLE:VARCHAR:NULL},
+							       #{DESCRIPTION:VARCHAR:NULL},
+							       #{CODE:VARCHAR:NULL},
+		                           #{ISCLASSIFICATION:VARCHAR:NULL},
+							       #{CURRENTTIME:TIMESTAMP},
+							       #{CREATEUSERGUID:VARCHAR:NULL},
+							       #{CURRENTTIME:TIMESTAMP},
+							       #{UPDATEUSERGUID:VARCHAR:NULL}
                                   )
     </insert>
     
     <delete id="delete" parameterType="java.lang.String">
-        DELETE FROM MA_CODE_DETAIL WHERE GUID = #GUID#
+        DELETE FROM MA_CODE_DETAIL WHERE GUID = #{GUID}
     </delete>
     
     <delete id="deleteBy" parameterType="java.lang.String">
-        DELETE FROM MA_CODE_DETAIL WHERE MASTERGUID = #GUID#
+        DELETE FROM MA_CODE_DETAIL WHERE MASTERGUID = #{GUID}
     </delete>
 </mapper>

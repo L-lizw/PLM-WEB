@@ -26,7 +26,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			   UPDATETIME,
 			   UPDATEUSERGUID
 		  FROM MA_CLASS_FIELD_CR_DETAIL
-		 WHERE GUID=#GUID#
+		 WHERE GUID=#{GUID}
 	</select>
 
 	<select id="select" parameterType="map" resultType="dyna.common.dto.model.cls.ClassFieldCRDetail">
@@ -40,10 +40,10 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 				UPDATEUSERGUID
 	     FROM MA_CLASS_FIELD_CR_DETAIL
 		<where>
-			<if  test="GUID!=null">and GUID=#GUID#</if>
-			<if  test="FIELDFK!=null">and FIELDFK=#FIELDFK#</if>
-			<if  test="CODE!=null">and CODE=#CODE#</if>
-			<if  test="CRVALUE!=null">and CRVALUE=#CRVALUE#</if>
+			<if  test="GUID!=null">and GUID=#{GUID}</if>
+			<if  test="FIELDFK!=null">and FIELDFK=#{FIELDFK}</if>
+			<if  test="CODE!=null">and CODE=#{CODE}</if>
+			<if  test="CRVALUE!=null">and CRVALUE=#{CRVALUE}</if>
 		</where>
 	</select>
     
@@ -57,18 +57,18 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 										     UPDATETIME,
 										     UPDATEUSERGUID
                                             )
-                                      VALUES(#GUID#,
-									         #FIELDFK:VARCHAR:NULL#,
-									         #CODE:VARCHAR:NULL#,
-									         #CRVALUE:VARCHAR:NULL#,
-									         #CURRENTTIME:TIMESTAMP#,
-										     #CREATEUSERGUID:VARCHAR:NULL#,
-										     #CURRENTTIME:TIMESTAMP#,
-										     #UPDATEUSERGUID:VARCHAR:NULL#
+                                      VALUES(#{GUID},
+									         #{FIELDFK:VARCHAR:NULL},
+									         #{CODE:VARCHAR:NULL},
+									         #{CRVALUE:VARCHAR:NULL},
+									         #{CURRENTTIME:TIMESTAMP},
+										     #{CREATEUSERGUID:VARCHAR:NULL},
+										     #{CURRENTTIME:TIMESTAMP},
+										     #{UPDATEUSERGUID:VARCHAR:NULL}
                                             )
     </insert>
     
     <delete id="delete" parameterType="java.lang.String">
-        DELETE FROM MA_CLASS_FIELD_CR_DETAIL WHERE FIELDFK = #FIELDFK#
+        DELETE FROM MA_CLASS_FIELD_CR_DETAIL WHERE FIELDFK = #{FIELDFK}
     </delete>
 </mapper>

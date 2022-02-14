@@ -31,7 +31,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			   UPDATEUSERGUID,
 			   (SELECT M.CLASSNAME FROM MA_CLASS M WHERE A.CLASSGUID = M.GUID) CLASSNAME,
 			   (SELECT M.CODENAME FROM MA_CODE_MASTER M WHERE A.CLASSIFICATIONFK = M.GUID AND M.ISCLASSIFICATION = 'Y') CLASSIFICATIONNAME
-          FROM MA_CLASS_CLASSIFICATION A WHERE GUID = #GUID#
+          FROM MA_CLASS_CLASSIFICATION A WHERE GUID = #{GUID}
     </select>
     
     <select id="selectMaster" parameterType="java.lang.String" resultType="dyna.common.dto.cfm.ClassficationFeature">
@@ -44,7 +44,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		           AND M.ISCLASSIFICATION = 'Y'
 		       ) CLASSIFICATIONNAME
           FROM MA_CLASS_CLASSIFICATION C 
-         WHERE C.CLASSGUID = #CLASSGUID#
+         WHERE C.CLASSGUID = #{CLASSGUID}
            AND C.ISMASTER = 'Y'
     </select>
     
@@ -60,33 +60,33 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			        CREATETIME,
 			        UPDATEUSERGUID,
 			        UPDATETIME)
-	        VALUES (#GUID#,
-			        #CLASSGUID:VARCHAR:NULL#,
-			        #CLASSIFICATIONFK:VARCHAR:NULL#,
-			        #ISMASTER:VARCHAR:NULL#,
-			        #INHERITED:VARCHAR:NULL#,
+	        VALUES (#{GUID},
+			        #{CLASSGUID:VARCHAR:NULL},
+			        #{CLASSIFICATIONFK:VARCHAR:NULL},
+			        #{ISMASTER:VARCHAR:NULL},
+			        #{INHERITED:VARCHAR:NULL},
 					
-					#CREATEUSERGUID:VARCHAR:NULL#,
-					#CURRENTTIME:TIMESTAMP#,
-					#UPDATEUSERGUID:VARCHAR:NULL#,
-					#CURRENTTIME:TIMESTAMP#)
+					#{CREATEUSERGUID:VARCHAR:NULL},
+					#{CURRENTTIME:TIMESTAMP},
+					#{UPDATEUSERGUID:VARCHAR:NULL},
+					#{CURRENTTIME:TIMESTAMP})
     </insert>
     
     <update id="update" parameterType="dyna.common.dto.cfm.ClassficationFeature">
 		UPDATE MA_CLASS_CLASSIFICATION  
 		<set>
-			UPDATETIME=#CURRENTTIME:TIMESTAMP#,
-			UPDATEUSERGUID=#UPDATEUSERGUID#,
-			<if  test="GUID!=null">GUID=#GUID#,</if>
-			<if  test="CLASSGUID!=null">CLASSGUID=#CLASSGUID#,</if>
-			<if  test="CLASSIFICATIONFK!=null">CLASSIFICATIONFK=#CLASSIFICATIONFK#,</if>
-			<if  test="ISMASTER!=null">ISMASTER=#ISMASTER#,</if>
-			<if  test="INHERITED!=null">INHERITED=#INHERITED#,</if>
+			UPDATETIME=#{CURRENTTIME:TIMESTAMP},
+			UPDATEUSERGUID=#{UPDATEUSERGUID},
+			<if  test="GUID!=null">GUID=#{GUID},</if>
+			<if  test="CLASSGUID!=null">CLASSGUID=#{CLASSGUID},</if>
+			<if  test="CLASSIFICATIONFK!=null">CLASSIFICATIONFK=#{CLASSIFICATIONFK},</if>
+			<if  test="ISMASTER!=null">ISMASTER=#{ISMASTER},</if>
+			<if  test="INHERITED!=null">INHERITED=#{INHERITED},</if>
 		</set>
-		 WHERE GUID = #GUID#
+		 WHERE GUID = #{GUID}
 	</update>
 	
     <delete id="delete" parameterType="java.lang.String">
-        DELETE FROM MA_CLASS_CLASSIFICATION  WHERE GUID = #GUID#
+        DELETE FROM MA_CLASS_CLASSIFICATION  WHERE GUID = #{GUID}
     </delete>
 </mapper>

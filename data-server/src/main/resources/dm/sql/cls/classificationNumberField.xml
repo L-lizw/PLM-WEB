@@ -45,7 +45,7 @@
         UPDATETIME,
         UPDATEUSERGUID
         FROM CLASSIFICATION_NUMBER_FIELD CC
-        WHERE GUID = #GUID#
+        WHERE GUID = #{GUID}
     </select>
 
     <insert id="insert" parameterType="dyna.common.dto.cfm.ClassificationNumberField">
@@ -68,52 +68,52 @@
         CREATETIME,
         UPDATEUSERGUID,
         UPDATETIME)
-        VALUES (#GUID#,
-        #CLFNUMBERREGULARGUID:VARCHAR:NULL#,
-        #FIELDNAME:VARCHAR:NULL#,
-        #ISCLASSFIELD:VARCHAR:NULL#,
-        #DATASEQ#,
-        #FIELDTYPE:VARCHAR:NULL#,
-        #CODERULEVALUE:VARCHAR:NULL#,
-        #FIELDLENGTH:NUMERIC:0#,
-        #PREFIX:VARCHAR:NULL#,
-        #SUFFIX:VARCHAR:NULL#,
-        #CONTROLLEDNUMBERFIELDGUID:VARCHAR:NULL#,
-        #ISDATEBYUSER:VARCHAR:NULL#,
-        #TYPEVALUE:VARCHAR:NULL#,
+        VALUES (#{GUID},
+        #{CLFNUMBERREGULARGUID:VARCHAR:NULL},
+        #{FIELDNAME:VARCHAR:NULL},
+        #{ISCLASSFIELD:VARCHAR:NULL},
+        #{DATASEQ},
+        #{FIELDTYPE:VARCHAR:NULL},
+        #{CODERULEVALUE:VARCHAR:NULL},
+        #{FIELDLENGTH:NUMERIC:0},
+        #{PREFIX:VARCHAR:NULL},
+        #{SUFFIX:VARCHAR:NULL},
+        #{CONTROLLEDNUMBERFIELDGUID:VARCHAR:NULL},
+        #{ISDATEBYUSER:VARCHAR:NULL},
+        #{TYPEVALUE:VARCHAR:NULL},
 
-        #CREATEUSERGUID:VARCHAR:NULL#,
-        #CURRENTTIME:TIMESTAMP#,
-        #UPDATEUSERGUID:VARCHAR:NULL#,
-        #CURRENTTIME:TIMESTAMP#)
+        #{CREATEUSERGUID:VARCHAR:NULL},
+        #{CURRENTTIME:TIMESTAMP},
+        #{UPDATEUSERGUID:VARCHAR:NULL},
+        #{CURRENTTIME:TIMESTAMP})
     </insert>
 
     <update id="update" parameterType="dyna.common.dto.cfm.ClassificationNumberField">
         UPDATE CLASSIFICATION_NUMBER_FIELD
         <set>
-            UPDATETIME=#CURRENTTIME:TIMESTAMP#,
-            UPDATEUSERGUID=#UPDATEUSERGUID#,
-            <if  test="GUID!=null">GUID=#GUID#,</if>
-            <if  test="CLFNUMBERREGULARGUID!=null">CLFNUMBERREGULARGUID=#CLFNUMBERREGULARGUID#,</if>
-            <if  test="FIELDNAME!=null">FIELDNAME=#FIELDNAME#,</if>
-            <if  test="ISCLASSFIELD!=null">ISCLASSFIELD=#ISCLASSFIELD#,</if>
-            <if  test="DATASEQ!=null">DATASEQ=#DATASEQ#,</if>
-            <if  test="FIELDTYPE!=null">FIELDTYPE=#FIELDTYPE#,</if>
-            <if  test="CODERULEVALUE!=null">CODERULEVALUE=#CODERULEVALUE#,</if>
-            <if  test="FIELDLENGTH!=null">FIELDLENGTH=#FIELDLENGTH#,</if>
-            <if  test="PREFIX!=null">PREFIX=#PREFIX#,</if>
-            <if  test="SUFFIX!=null">SUFFIX=#SUFFIX#,</if>
-            <if  test="CONTROLLEDNUMBERFIELDGUID!=null">CONTROLLEDNUMBERFIELDGUID=#CONTROLLEDNUMBERFIELDGUID#,</if>
-            <if  test="ISDATEBYUSER!=null">ISDATEBYUSER=#ISDATEBYUSER#,</if>
-            <if  test="TYPEVALUE!=null">TYPEVALUE=#TYPEVALUE#,</if>
+            UPDATETIME=#{CURRENTTIME:TIMESTAMP},
+            UPDATEUSERGUID=#{UPDATEUSERGUID},
+            <if  test="GUID!=null">GUID=#{GUID},</if>
+            <if  test="CLFNUMBERREGULARGUID!=null">CLFNUMBERREGULARGUID=#{CLFNUMBERREGULARGUID},</if>
+            <if  test="FIELDNAME!=null">FIELDNAME=#{FIELDNAME},</if>
+            <if  test="ISCLASSFIELD!=null">ISCLASSFIELD=#{ISCLASSFIELD},</if>
+            <if  test="DATASEQ!=null">DATASEQ=#{DATASEQ},</if>
+            <if  test="FIELDTYPE!=null">FIELDTYPE=#{FIELDTYPE},</if>
+            <if  test="CODERULEVALUE!=null">CODERULEVALUE=#{CODERULEVALUE},</if>
+            <if  test="FIELDLENGTH!=null">FIELDLENGTH=#{FIELDLENGTH},</if>
+            <if  test="PREFIX!=null">PREFIX=#{PREFIX},</if>
+            <if  test="SUFFIX!=null">SUFFIX=#{SUFFIX},</if>
+            <if  test="CONTROLLEDNUMBERFIELDGUID!=null">CONTROLLEDNUMBERFIELDGUID=#{CONTROLLEDNUMBERFIELDGUID},</if>
+            <if  test="ISDATEBYUSER!=null">ISDATEBYUSER=#{ISDATEBYUSER},</if>
+            <if  test="TYPEVALUE!=null">TYPEVALUE=#{TYPEVALUE},</if>
         </set>
-        WHERE GUID = #GUID#
+        WHERE GUID = #{GUID}
     </update>
 
     <delete id="delete" parameterType="java.lang.String">
-        DELETE FROM CLASSIFICATION_NUMBER_FIELD  WHERE GUID = #GUID#
+        DELETE FROM CLASSIFICATION_NUMBER_FIELD  WHERE GUID = #{GUID}
     </delete>
     <delete id="deleteFields" parameterType="java.lang.String">
-        DELETE FROM CLASSIFICATION_NUMBER_FIELD  WHERE CLFNUMBERREGULARGUID = #CLFNUMBERREGULARGUID#
+        DELETE FROM CLASSIFICATION_NUMBER_FIELD  WHERE CLFNUMBERREGULARGUID = #{CLFNUMBERREGULARGUID}
     </delete>
 </mapper>

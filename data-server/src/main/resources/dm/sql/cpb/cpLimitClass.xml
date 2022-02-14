@@ -8,10 +8,10 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
         select * from ma_config_limit_class a
         <where>
 	       <if  test="BMGUID!=null">
-	       and a.bmguid = #BMGUID#
+	       and a.bmguid = #{BMGUID}
 	       </if>
 	       <if  test="BOINFONAME!=null">
-	       and a.BOINFONAME = #BOINFONAME#
+	       and a.BOINFONAME = #{BOINFONAME}
 	       </if>
        </where>
     </select>
@@ -23,14 +23,14 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			        BOINFONAME,			        			         
 			        createuserguid,
 			        createtime)
-	        values (#GUID#,
-			        #BMGUID#,
-			        #BOINFONAME#,
-					#CREATEUSERGUID:VARCHAR:NULL#,
-					#CURRENTTIME:TIMESTAMP#)
+	        values (#{GUID},
+			        #{BMGUID},
+			        #{BOINFONAME},
+					#{CREATEUSERGUID:VARCHAR:NULL},
+					#{CURRENTTIME:TIMESTAMP})
     </insert>
     
     <delete id="delete" parameterType="java.lang.String">
-        delete from ma_config_limit_class  where BMGUID = #BMGUID# 
+        delete from ma_config_limit_class  where BMGUID = #{BMGUID}
     </delete>
 </mapper>
