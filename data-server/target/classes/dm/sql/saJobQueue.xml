@@ -238,16 +238,16 @@
 			and jobtype = #JOBTYPE#
 		</if>
 		<if  test="CREATEUSERGUID!=null">
-			and createuserguid = #CREATEUSERGUID#
+			and createuserguid = #{CREATEUSERGUID}
 		</if>
 		<if  test="LISTJOBSTATUS==null">
 			and 1 = 2
 		</if>
 		<if  test="LISTJOBSTATUS!=null">
-			and $LISTJOBSTATUS$
+			and ${LISTJOBSTATUS}
 		</if>
 		<if test="ORDERBY!=null">
-			order by $ORDERBY$
+			order by ${ORDERBY}
 		</if>
 		<if test="ORDERBY==null">
 			ORDER BY q.UPDATETIME DESC
