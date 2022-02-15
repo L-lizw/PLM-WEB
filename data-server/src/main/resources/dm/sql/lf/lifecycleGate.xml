@@ -13,7 +13,7 @@
 	<select id="get" parameterType="java.lang.String" resultType="dyna.common.dto.model.lf.LifecycleGate" statementType="STATEMENT">
 		select *
 		from ma_lifecycle_gate a
-		WHERE GUID=#GUID#
+		WHERE GUID=#{GUID}
 	</select>
 
 	<insert id="insert" parameterType="dyna.common.dto.model.lf.LifecycleGate">
@@ -30,36 +30,36 @@
 		createtime,
 		updateuserguid,
 		updatetime)
-		values (#GUID:VARCHAR#,
-		#DETAILFK:VARCHAR#,
-		#GATETYPE:VARCHAR:NULL#,
-		#FROMPHASE:VARCHAR:NULL#,
-		#CLASSNAME:VARCHAR:NULL#,
+		values (#{GUID:VARCHAR},
+		#{DETAILFK:VARCHAR},
+		#{GATETYPE:VARCHAR:NULL},
+		#{FROMPHASE:VARCHAR:NULL},
+		#{CLASSNAME:VARCHAR:NULL},
 
-		#ACTIONNAME:VARCHAR:NULL#,
+		#{ACTIONNAME:VARCHAR:NULL},
 
-		#CREATEUSERGUID:VARCHAR:NULL#,
-		#CURRENTTIME:TIMESTAMP#,
-		#UPDATEUSERGUID:VARCHAR:NULL#,
-		#CURRENTTIME:TIMESTAMP#)
+		#{CREATEUSERGUID:VARCHAR:NULL},
+		#{CURRENTTIME:TIMESTAMP},
+		#{UPDATEUSERGUID:VARCHAR:NULL},
+		#{CURRENTTIME:TIMESTAMP})
 	</insert>
 
 	<update id="update" parameterType="dyna.common.dto.model.lf.LifecycleGate">
 		update ma_lifecycle_gate
 		<set>
-			<if test="DETAILFK!=null">detailfk = #DETAILFK#,</if>
-			<if test="GATETYPE!=null">GATETYPE = #GATETYPE#,</if>
-			<if test="FROMPHASE!=null">fromphase = #FROMPHASE#,</if>
-			<if test="CLASSNAME!=null">classname = #CLASSNAME#,</if>
-			<if test="ACTIONNAME!=null">actionname = #ACTIONNAME#,</if>
+			<if test="DETAILFK!=null">detailfk = #{DETAILFK},</if>
+			<if test="GATETYPE!=null">GATETYPE = #{GATETYPE},</if>
+			<if test="FROMPHASE!=null">fromphase = #{FROMPHASE},</if>
+			<if test="CLASSNAME!=null">classname = #{CLASSNAME},</if>
+			<if test="ACTIONNAME!=null">actionname = #{ACTIONNAME},</if>
 		</set>
-		updatetime = #CURRENTTIME:TIMESTAMP#,
-		updateuserguid = #UPDATEUSERGUID#
-		where guid = #GUID#
+		updatetime = #{CURRENTTIME:TIMESTAMP},
+		updateuserguid = #{UPDATEUSERGUID}
+		where guid = #{GUID}
 	</update>
 
 	<delete id="delete" parameterType="java.lang.String">
-		delete from ma_lifecycle_gate where guid = #GUID#
+		delete from ma_lifecycle_gate where guid = #{GUID}
 	</delete>
 
 </mapper>

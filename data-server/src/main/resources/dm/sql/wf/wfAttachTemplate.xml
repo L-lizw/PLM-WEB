@@ -13,25 +13,25 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 					 leveltype,
 					 bomtype
                     )
-        values(#GUID:VARCHAR:NULL#, 
-               #PROCRTGUID:VARCHAR:NULL#, 
-               #INSTANCEGUID:VARCHAR:NULL#,
-               #VIEWNAME:VARCHAR:NULL#,
-               #LEVELTYPE:VARCHAR:NULL#,
-               #BOMTYPE:VARCHAR:NULL#
+        values(#{GUID:VARCHAR:NULL}, 
+               #{PROCRTGUID:VARCHAR:NULL}, 
+               #{INSTANCEGUID:VARCHAR:NULL},
+               #{VIEWNAME:VARCHAR:NULL},
+               #{LEVELTYPE:VARCHAR:NULL},
+               #{BOMTYPE:VARCHAR:NULL}
               )
     </insert>
 
  	<update id="updatebom" parameterType="dyna.common.dto.wf.ProcAttachSetting">
         update wf_attachbomsetting
         <set>
-            <if test="PROCRTGUID!=null">procrtguid = #PROCRTGUID#,</if>
-	        <if test="instanceguid!=null">instanceguid = #instanceguid#,</if>
-	        <if test="VIEWNAM!=nullE">viewname = #VIEWNAME#,</if>
-	        <if test="LEVELTYPE!=null">leveltype = #LEVELTYPE#,</if>
-	        <if test="BOMTYPE!=null">bomtype = #BOMTYPE#</if>
+            <if test="PROCRTGUID!=null">procrtguid = #{PROCRTGUID},</if>
+	        <if test="instanceguid!=null">instanceguid = #{instanceguid},</if>
+	        <if test="VIEWNAM!=nullE">viewname = #{VIEWNAME},</if>
+	        <if test="LEVELTYPE!=null">leveltype = #{LEVELTYPE},</if>
+	        <if test="BOMTYPE!=null">bomtype = #{BOMTYPE}</if>
         </set>
-         where guid = #GUID#
+         where guid = #{GUID}
     </update>
     
     <insert id="insertrelation" parameterType="dyna.common.dto.wf.ProcAttachSetting">
@@ -42,38 +42,38 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                      viewname, 
                      leveltype
                     )
-        values(#GUID:VARCHAR:NULL#, 
-               #PROCRTGUID:VARCHAR:NULL#, 
-               #INSTANCEGUID:VARCHAR:NULL#,
-               #VIEWNAME:VARCHAR:NULL#,
-               #LEVELTYPE:VARCHAR:NULL#
+        values(#{GUID:VARCHAR:NULL}, 
+               #{PROCRTGUID:VARCHAR:NULL}, 
+               #{INSTANCEGUID:VARCHAR:NULL},
+               #{VIEWNAME:VARCHAR:NULL},
+               #{LEVELTYPE:VARCHAR:NULL}
               )
     </insert>
 
     <update id="updaterelation" parameterType="dyna.common.dto.wf.ProcAttachSetting">
         update wf_attachrelationsetting
         <set>
-            <if test="PROCRTGUID!=null">procrtguid = #PROCRTGUID#,</if>
-	        <if test="instanceguid!=null">instanceguid = #instanceguid#,</if>
-	        <if test="VIEWNAME!=null">viewname = #VIEWNAME#,</if>
-	        <if test="LEVELTYPE!=null">leveltype = #LEVELTYPE#</if>
+            <if test="PROCRTGUID!=null">procrtguid = #{PROCRTGUID},</if>
+	        <if test="instanceguid!=null">instanceguid = #{instanceguid},</if>
+	        <if test="VIEWNAME!=null">viewname = #{VIEWNAME},</if>
+	        <if test="LEVELTYPE!=null">leveltype = #{LEVELTYPE}</if>
         </set>
-         where guid = #GUID#
+         where guid = #{GUID}
     </update>
     
     <sql id="where">
         <where>
             <if  test="GUID!=null">
-                and b.guid = #GUID#
+                and b.guid = #{GUID}
             </if>
             <if  test="PROCRTGUID!=null">
-                and b.procrtguid = #PROCRTGUID#
+                and b.procrtguid = #{PROCRTGUID}
             </if>
             <if  test="INSTANCEGUID!=null">
-                and  b.instanceguid = #INSTANCEGUID#
+                and  b.instanceguid = #{INSTANCEGUID}
             </if>
             <if  test="VIEWNAME!=null">
-                and b.viewname = #VIEWNAME#
+                and b.viewname = #{VIEWNAME}
             </if>
         </where>
     </sql>
@@ -91,9 +91,9 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     </select>
     
     <delete id="deletebom" parameterType="java.lang.String">
-        delete from wf_attachbomsetting  where guid = #GUID#
+        delete from wf_attachbomsetting  where guid = #{GUID}
     </delete>
     <delete id="deleterelation" parameterType="java.lang.String">
-        delete from wf_attachrelationsetting  where guid = #GUID#
+        delete from wf_attachrelationsetting  where guid = #{GUID}
     </delete>
 </mapper>

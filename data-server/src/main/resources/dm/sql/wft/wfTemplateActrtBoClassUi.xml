@@ -12,7 +12,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     <select id="get" parameterType="java.lang.String" resultType="dyna.common.dto.template.wft.WorkflowTemplateActClassUIInfo" statementType="STATEMENT">
 		SELECT *
 		  FROM WF_TEMPLATE_ACTRT_BOCLASSUI
-		 WHERE GUID = #GUID#
+		 WHERE GUID = #{GUID}
 	</select>
 
     <insert id="insert" parameterType="dyna.common.dto.template.wft.WorkflowTemplateActClassUIInfo">
@@ -27,41 +27,41 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                      UPDATEUSERGUID, 
                      UPDATETIME
                     )
-        VALUES(#GUID:VARCHAR:NULL#,
-               #TEMACTBOGUID:VARCHAR:NULL#,
-               #BOUINAME:VARCHAR:NULL#,
-               #SELECTUINAME:VARCHAR:NULL#,
-               #EDITUINAME:VARCHAR:NULL#,
-               #CREATEUSERGUID:VARCHAR:NULL#,
-               #CURRENTTIME:TIMESTAMP#,
-               #UPDATEUSERGUID:VARCHAR:NULL#,
-               #CURRENTTIME:TIMESTAMP#
+        VALUES(#{GUID:VARCHAR:NULL},
+               #{TEMACTBOGUID:VARCHAR:NULL},
+               #{BOUINAME:VARCHAR:NULL},
+               #{SELECTUINAME:VARCHAR:NULL},
+               #{EDITUINAME:VARCHAR:NULL},
+               #{CREATEUSERGUID:VARCHAR:NULL},
+               #{CURRENTTIME:TIMESTAMP},
+               #{UPDATEUSERGUID:VARCHAR:NULL},
+               #{CURRENTTIME:TIMESTAMP}
               )
     </insert>
     
     <update id="update" parameterType="java.util.HashMap">
         UPDATE WF_TEMPLATE_ACTRT_BOCLASSUI 
                <set>
-                   UPDATEUSERGUID = #UPDATEUSERGUID#,
-                   UPDATETIME = #CURRENTTIME:TIMESTAMP#,
+                   UPDATEUSERGUID = #{UPDATEUSERGUID},
+                   UPDATETIME = #{CURRENTTIME:TIMESTAMP},
                    <if test="TEMACTBOGUID!=null" >
-                       TEMACTBOGUID = #TEMACTBOGUID#,
+                       TEMACTBOGUID = #{TEMACTBOGUID},
                    </if>
                    <if test="BOUINAME!=null" >
-                       BOUINAME = #BOUINAME#,
+                       BOUINAME = #{BOUINAME},
                    </if>
                    <if test="SELECTUINAME!=null" >
-                       SELECTUINAME = #SELECTUINAME#,
+                       SELECTUINAME = #{SELECTUINAME},
                    </if>
                    <if test="EDITUINAME!=null" >
-                       EDITUINAME = #EDITUINAME#,
+                       EDITUINAME = #{EDITUINAME},
                    </if>
                </set>
-         WHERE GUID = #GUID#
+         WHERE GUID = #{GUID}
     </update>
 
     <delete id="delete" parameterType="java.lang.String">
-        DELETE FROM WF_TEMPLATE_ACTRT_BOCLASSUI WHERE GUID = #GUID#
+        DELETE FROM WF_TEMPLATE_ACTRT_BOCLASSUI WHERE GUID = #{GUID}
     </delete>
 
 </mapper>

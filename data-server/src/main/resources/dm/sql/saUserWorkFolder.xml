@@ -8,8 +8,8 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
         select a.*,
                (select b.username from sa_user b where b.guid = a.userguid) username
           from sa_user_work_folder a
-         where a.userguid = #USERGUID#
-           and a.foldertype = #FOLDERTYPE#
+         where a.userguid = #{USERGUID}
+           and a.foldertype = #{FOLDERTYPE}
 	</select>
 	
 	<insert id="insert" parameterType="dyna.common.dto.aas.UserWorkFolder">
@@ -20,16 +20,16 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			folderpath
 		)
 		select
-			#GUID:VARCHAR#,
-			#USERGUID:VARCHAR#,
-			#FOLDERTYPE:VARCHAR#,
-			#FOLDERPATH:VARCHAR#
+			#{GUID:VARCHAR},
+			#{USERGUID:VARCHAR},
+			#{FOLDERTYPE:VARCHAR},
+			#{FOLDERPATH:VARCHAR}
 	</insert>
 	
 	<update id="update" parameterType="dyna.common.dto.aas.UserWorkFolder">
 		update sa_user_work_folder 
-		   set folderpath = #FOLDERPATH#
-		 where userguid = #USERGUID#
-		   and foldertype = #FOLDERTYPE#
+		   set folderpath = #{FOLDERPATH}
+		 where userguid = #{USERGUID}
+		   and foldertype = #{FOLDERTYPE}
 	</update>
 </mapper>

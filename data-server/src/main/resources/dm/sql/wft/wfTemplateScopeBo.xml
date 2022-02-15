@@ -12,7 +12,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     <select id="get" parameterType="java.lang.String" resultType="dyna.common.dto.template.wft.WorkflowTemplateScopeBoInfo" statementType="STATEMENT">
 		SELECT A.* 
 		  FROM WF_TEMPLATE_SCOPEBO A
-		 WHERE GUID=#GUID#
+		 WHERE GUID=#{GUID}
 	</select>
 
     <insert id="insert" parameterType="dyna.common.dto.template.wft.WorkflowTemplateScopeBoInfo">
@@ -26,25 +26,25 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                      UPDATETIME,
                      CANLAUNCH
                     )
-        VALUES(#GUID:VARCHAR:NULL#,
-               #WFTEMPLATEFK:VARCHAR:NULL#,
-               #BOGUID:VARCHAR:NULL#,
-               #CREATEUSERGUID:VARCHAR:NULL#,
-               #CURRENTTIME:TIMESTAMP#,
-               #UPDATEUSERGUID:VARCHAR:NULL#,
-               #CURRENTTIME:TIMESTAMP#,
-               #CANLAUNCH:VARCHAR:NULL#
+        VALUES(#{GUID:VARCHAR:NULL},
+               #{WFTEMPLATEFK:VARCHAR:NULL},
+               #{BOGUID:VARCHAR:NULL},
+               #{CREATEUSERGUID:VARCHAR:NULL},
+               #{CURRENTTIME:TIMESTAMP},
+               #{UPDATEUSERGUID:VARCHAR:NULL},
+               #{CURRENTTIME:TIMESTAMP},
+               #{CANLAUNCH:VARCHAR:NULL}
               )
     </insert>
 
     <update id="update" parameterType="dyna.common.dto.template.wft.WorkflowTemplateScopeBoInfo">
         UPDATE WF_TEMPLATE_SCOPEBO 
-           SET CANLAUNCH = #CANLAUNCH#
-	     WHERE GUID = #GUID#
+           SET CANLAUNCH = #{CANLAUNCH}
+	     WHERE GUID = #{GUID}
     </update>
 
     <delete id="delete" parameterType="java.lang.String">
-        DELETE FROM WF_TEMPLATE_SCOPEBO WHERE GUID = #GUID#
+        DELETE FROM WF_TEMPLATE_SCOPEBO WHERE GUID = #{GUID}
     </delete>
 
 </mapper>

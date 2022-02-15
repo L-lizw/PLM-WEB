@@ -7,34 +7,34 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     <sql id="where">
         <where>
             <if  test="GUID!=null">
-                and  d.guid = #GUID#
+                and  d.guid = #{GUID}
             </if>
             <if  test="MASTERFK!=null">
-                and d.masterfk = #MASTERFK#
+                and d.masterfk = #{MASTERFK}
             </if>
             <if  test="CLASSIFICATIONFK!=null">
-                and d.classificationfk = #CLASSIFICATIONFK#
+                and d.classificationfk = #{CLASSIFICATIONFK}
             </if>
             <if  test="FIELDORIGN!=null">
-                and d.FIELDORIGN = #FIELDORIGN#
+                and d.FIELDORIGN = #{FIELDORIGN}
             </if>
             <if  test="CUSTOMFIELD!=null">
-                and d.customfield = #CUSTOMFIELD#
+                and d.customfield = #{CUSTOMFIELD}
             </if>
              <if  test="COLUMNLENGTH!=null">
-                 and  d.columnlength = #COLUMNLENGTH#
+                 and  d.columnlength = #{COLUMNLENGTH}
             </if>
             <if  test="VALUETYPE!=null">
-                and d.valuetype = #VALUETYPE#
+                and d.valuetype = #{VALUETYPE}
             </if>
             <if  test="DATASEQ!=null">
-                and d.DATASEQ = #DATASEQ#
+                and d.DATASEQ = #{DATASEQ}
             </if>
             <if  test="CREATEUSERGUID!=null">
-                and d.createuserguid = #CREATEUSERGUID#
+                and d.createuserguid = #{CREATEUSERGUID}
             </if>
             <if  test="UPDATEUSERGUID!=null">
-                and d.updateuserguid = #UPDATEUSERGUID#
+                and d.updateuserguid = #{UPDATEUSERGUID}
             </if>
         </where>
     </sql>
@@ -67,44 +67,44 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			        updateuserguid,
 			        updatetime)
         values
-			       (#GUID#,
-			        #MASTERFK#,
-			        #CLASSIFICATIONFK:VARCHAR:NULL#,
-			        #CLASSFK:VARCHAR:NULL#,
-			        #FIELDORIGN:VARCHAR:NULL#,
-					#CUSTOMFIELD:VARCHAR:NULL#,
-					#COLUMNLENGTH:VARCHAR:NULL#,
-					#VALUETYPE:VARCHAR:NULL#,
-					#DATASEQ:NUMERIC#,
+			       (#{GUID},
+			        #{MASTERFK},
+			        #{CLASSIFICATIONFK:VARCHAR:NULL},
+			        #{CLASSFK:VARCHAR:NULL},
+			        #{FIELDORIGN:VARCHAR:NULL},
+					#{CUSTOMFIELD:VARCHAR:NULL},
+					#{COLUMNLENGTH:VARCHAR:NULL},
+					#{VALUETYPE:VARCHAR:NULL},
+					#{DATASEQ:NUMERIC},
 					 
-					#CREATEUSERGUID:VARCHAR:NULL#,
-					#CURRENTTIME:TIMESTAMP#,
-					#UPDATEUSERGUID:VARCHAR:NULL#,
-					#CURRENTTIME:TIMESTAMP#)
+					#{CREATEUSERGUID:VARCHAR:NULL},
+					#{CURRENTTIME:TIMESTAMP},
+					#{UPDATEUSERGUID:VARCHAR:NULL},
+					#{CURRENTTIME:TIMESTAMP})
     </insert>
     
     <update id="update" parameterType="dyna.common.dto.SaCustomColumnsPreferenceDetail">
         update sa_custom_columns_detail
         <set>
-	        <if test="MASTERFK!=null">masterfk = #MASTERFK#,</if>
-	        <if test="CLASSIFICATIONFK!=null">classificationfk = #CLASSIFICATIONFK#,</if>
-	        <if test="CLASSFK!=null">classfk = #CLASSFK#,</if>
-	        <if test="FIELDORIGN!=null">fieldorign = #FIELDORIGN#,</if>
-	        <if test="CUSTOMFIELD!=null">customfield = #CUSTOMFIELD#,</if>
-	        <if test="COLUMNLENGTH!=null">columnlength = #COLUMNLENGTH#,</if>
-	        <if test="VALUETYPE!=null">valuetype = #VALUETYPE#,</if>
-	        <if test="DATASEQ!=null">DATASEQ = #DATASEQ#,</if>
+	        <if test="MASTERFK!=null">masterfk = #{MASTERFK},</if>
+	        <if test="CLASSIFICATIONFK!=null">classificationfk = #{CLASSIFICATIONFK},</if>
+	        <if test="CLASSFK!=null">classfk = #{CLASSFK},</if>
+	        <if test="FIELDORIGN!=null">fieldorign = #{FIELDORIGN},</if>
+	        <if test="CUSTOMFIELD!=null">customfield = #{CUSTOMFIELD},</if>
+	        <if test="COLUMNLENGTH!=null">columnlength = #{COLUMNLENGTH},</if>
+	        <if test="VALUETYPE!=null">valuetype = #{VALUETYPE},</if>
+	        <if test="DATASEQ!=null">DATASEQ = #{DATASEQ},</if>
         </set>
-               updatetime = #CURRENTTIME:TIMESTAMP#,
-               updateuserguid = #UPDATEUSERGUID#
-         where guid = #GUID#
+               updatetime = #{CURRENTTIME:TIMESTAMP},
+               updateuserguid = #{UPDATEUSERGUID}
+         where guid = #{GUID}
     </update>
     
     <delete id="delete" parameterType="map">
-        delete from sa_custom_columns_detail where guid = #GUID#
+        delete from sa_custom_columns_detail where guid = #{GUID}
     </delete>
     
     <delete id="deleteDetailByMaster" parameterType="java.lang.String">
-        delete from sa_custom_columns_detail where masterfk = #MASTERFK#
+        delete from sa_custom_columns_detail where masterfk = #{MASTERFK}
     </delete>
 </mapper>

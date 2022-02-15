@@ -41,84 +41,84 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                      isvalid,
                      title
                     )
-        values (#GUID:VARCHAR#, 
-                #TEMPLATEID:VARCHAR#, 
-                #TEMPLATENAME:VARCHAR#, 
-                #TEMPLATETYPE:VARCHAR#, 
-                #STRUCTUREMODEL:VARCHAR#, 
-                #BMGUID:VARCHAR#, 
-                #VIEWCLASSGUID:VARCHAR#, 
-                #STRUCTURECLASSGUID:VARCHAR#, 
-                #END1BONAME:VARCHAR#, 
-                #ISRECORDHASEND2:VARCHAR#, 
-                #FIELDFORRECORDHASEND2:VARCHAR#, 
-                #END2INTERFACE:VARCHAR#, 
+        values (#{GUID:VARCHAR}, 
+                #{TEMPLATEID:VARCHAR}, 
+                #{TEMPLATENAME:VARCHAR}, 
+                #{TEMPLATETYPE:VARCHAR}, 
+                #{STRUCTUREMODEL:VARCHAR}, 
+                #{BMGUID:VARCHAR}, 
+                #{VIEWCLASSGUID:VARCHAR}, 
+                #{STRUCTURECLASSGUID:VARCHAR}, 
+                #{END1BONAME:VARCHAR}, 
+                #{ISRECORDHASEND2:VARCHAR}, 
+                #{FIELDFORRECORDHASEND2:VARCHAR}, 
+                #{END2INTERFACE:VARCHAR}, 
                 
-                #END2TYPE:VARCHAR#, 
-                #MAXQUANTITY:NUMERIC#, 
-                #ISINCORPORATEDMASTER:VARCHAR#, 
-                #REVISETRIGGER:VARCHAR#, 
-                #SAVEASTRIGGER:VARCHAR#, 
-                #REVISECOPYRELATION:VARCHAR#, 
-                #SAVEASCOPYRELATION:VARCHAR#, 
+                #{END2TYPE:VARCHAR}, 
+                #{MAXQUANTITY:NUMERIC}, 
+                #{ISINCORPORATEDMASTER:VARCHAR}, 
+                #{REVISETRIGGER:VARCHAR}, 
+                #{SAVEASTRIGGER:VARCHAR}, 
+                #{REVISECOPYRELATION:VARCHAR}, 
+                #{SAVEASCOPYRELATION:VARCHAR}, 
                 
-                #CHECKINTRIGGER:VARCHAR#, 
-                #CHECKOUTTRIGGER:VARCHAR#, 
-                #TRASCHKOUTTRIGGER:VARCHAR#, 
-                #CANCELCHKOUTTRIGGER:VARCHAR#, 
-                #CHANGELOCATIONTRIGGER:VARCHAR#, 
-                #DELETETRIGGER:VARCHAR#, 
+                #{CHECKINTRIGGER:VARCHAR}, 
+                #{CHECKOUTTRIGGER:VARCHAR}, 
+                #{TRASCHKOUTTRIGGER:VARCHAR}, 
+                #{CANCELCHKOUTTRIGGER:VARCHAR}, 
+                #{CHANGELOCATIONTRIGGER:VARCHAR}, 
+                #{DELETETRIGGER:VARCHAR}, 
                 
-                #CREATEUSERGUID:VARCHAR#, 
-                #CURRENTTIME:TIMESTAMP#, 
-                #UPDATEUSERGUID:VARCHAR#, 
-                #CURRENTTIME:TIMESTAMP#,
+                #{CREATEUSERGUID:VARCHAR}, 
+                #{CURRENTTIME:TIMESTAMP}, 
+                #{UPDATEUSERGUID:VARCHAR}, 
+                #{CURRENTTIME:TIMESTAMP},
                 '1',
-                #TITLE:VARCHAR#
+                #{TITLE:VARCHAR}
                )
     </insert>
 
     <sql id="where">
         <where>
             <if  test="GUID!=null">
-                and b.guid = #GUID#
+                and b.guid = #{GUID}
             </if>
             <if  test="TEMPLATEID!=null">
-                and b.templateid = #TEMPLATEID#
+                and b.templateid = #{TEMPLATEID#}
             </if>
             <if  test="TEMPLATENAME!=null">
-                and b.templatename = #TEMPLATENAME#
+                and b.templatename = #{TEMPLATENAME}
             </if>
             
             <if  test="TEMPLATETYPE!=null">
-                and b.templatetype = #TEMPLATETYPE#
+                and b.templatetype = #{TEMPLATETYPE}
             </if>
             <if  test="STRUCTUREMODEL!=null">
-                and  b.structuremodel = #STRUCTUREMODEL#
+                and  b.structuremodel = #{STRUCTUREMODEL}
             </if>
             <if  test="BMGUID!=null">
-                and b.bmguid = #BMGUID#
+                and b.bmguid = #{BMGUID}
             </if>
             
             <if  test="VIEWCLASSGUID!=null">
-                and b.viewclassguid = #VIEWCLASSGUID#
+                and b.viewclassguid = #{VIEWCLASSGUID}
             </if>
             <if  test="STRUCTURECLASSGUID!=null">
-                and b.structureclassguid = #STRUCTURECLASSGUID#
+                and b.structureclassguid = #{STRUCTURECLASSGUID}
             </if>
             <if  test="END1BONAME!=null">
-                and b.end1boname = #END1BONAME#
+                and b.end1boname = #{END1BONAME}
             </if>
             
             <if  test="END2INTERFACE!=null">
-                and b.end2interface = #END2INTERFACE#
+                and b.end2interface = #{END2INTERFACE}
             </if>
             <if  test="END2TYPE!=null">
-                and b.end2type = #END2TYPE#
+                and b.end2type = #{END2TYPE}
             </if>
             
             <if  test="ISVALID!=null">
-                and b.isvalid = #ISVALID#
+                and b.isvalid = #{ISVALID}
             </if>
         </where>
     </sql>
@@ -140,14 +140,14 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
           from bi_relation_template b
           <where>
             <if  test="ISVALID!=null">
-                and b.isvalid = #ISVALID#
+                and b.isvalid = #{ISVALID}
             </if>
             <if  test="END1BONAME!=null">
                 and b.end1boname in 
-                <foreach collection="END1BONAME" open="(" close=")" separator="," >#TEMP#</foreach>
+                <foreach collection="END1BONAME" open="(" close=")" separator="," >#{TEMP}</foreach>
             </if>
             <if  test="END2INTERFACE!=null">
-                and  b.end2interface = #END2INTERFACE#
+                and  b.end2interface = #{END2INTERFACE}
             </if>
           </where>
          order by b.templatename,
@@ -159,12 +159,12 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
           from bi_relation_template a
             <where>
                 <if  test="ISVALID!=null">
-                    and a.isvalid = #ISVALID#
+                    and a.isvalid = #{ISVALID}
                 </if>
 
                 <if  test="STRUCTUREMODEL!=null">
                     and a.structuremodel in
-                    <foreach collection= "STRUCTUREMODEL" open="(" close=")" separator="," >#TEMP#</foreach>
+                    <foreach collection= "STRUCTUREMODEL" open="(" close=")" separator="," >#{TEMP}</foreach>
                 </if>
                 <if  test="STRUCTUREMODEL==null">
                     and 1 = 2
@@ -172,16 +172,16 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 
                 <if  test="END1BONAME!=null">
                     and a.end1boname in
-                    <foreach collection="END1BONAME" open="(" close=")" separator="," item="TEMP">#TEMP#</foreach>
+                    <foreach collection="END1BONAME" open="(" close=")" separator="," item="TEMP">#{TEMP}</foreach>
                 </if>
 
                 <if  test="TEMPLATETYPE!=null">
-                    and a.templatetype = #TEMPLATETYPE#
+                    and a.templatetype = #{TEMPLATETYPE}
                 </if>
 
                 <if  test="BMGUID!=null">
                     and a.bmguid in
-                    <foreach collection="BMGUID" open="(" close=")" separator="," item="TEMP">#TEMP#</foreach>
+                    <foreach collection="BMGUID" open="(" close=")" separator="," item="TEMP">#{TEMP}</foreach>
                 </if>
             </where>
 
@@ -193,21 +193,21 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
           from bi_relation_template a
         <where>
             <if  test="ISVALID!=null">
-                and a.isvalid = #ISVALID#
+                and a.isvalid = #{ISVALID}
             </if>
             
             <if  test="END1BONAME!=null">
                 and a.end1boname in 
-                <foreach collection= "END1BONAME" open="(" close=")" separator="," >#TEMP#</foreach>
+                <foreach collection= "END1BONAME" open="(" close=")" separator="," >#{TEMP}</foreach>
             </if>
             
             <if  test="TEMPLATETYPE!=null">
-                and a.templatetype = #TEMPLATETYPE#
+                and a.templatetype = #{TEMPLATETYPE}
             </if>
             
              <if  test="BMGUID!=null">
                  and a.bmguid in 
-                <foreach collection="BMGUID" open="(" close=")" separator="," item="TEMP">#TEMP#</foreach>
+                <foreach collection="BMGUID" open="(" close=")" separator="," item="TEMP">#{TEMP}</foreach>
             </if>
         </where>
         order by a.templatename
@@ -215,65 +215,65 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     
     <select id="end2Count" parameterType="map" resultType="dyna.common.dto.template.relation.RelationTemplateInfo">
         select count(1) end2count 
-          from $STRUCTABLE$ a 
-         where a.viewfk = #VIEWGUID#
+          from ${STRUCTABLE} a
+         where a.viewfk = #{VIEWGUID}
     </select>
 
 
     <update id="update" parameterType="dyna.common.dto.template.relation.RelationTemplateInfo">
         update bi_relation_template 
         <set>
-            updateuserguid = #UPDATEUSERGUID#,
-            updatetime = #CURRENTTIME:TIMESTAMP#,
-            <if  test="TEMPLATEID!=null">TEMPLATEid=#TEMPLATEID#,</if>
-            <if  test="TEMPLATENAME!=null">TEMPLATEname=#TEMPLATENAME#,</if>
-            <if  test="TEMPLATETYPE!=null">templatetype=#TEMPLATETYPE#,</if>
-            <if  test="STRUCTUREMODEL!=null">structuremodel=#STRUCTUREMODEL#,</if>
-            <if  test="BMGUID!=null">bmguid=#BMGUID#,</if>
-            <if  test="VIEWCLASSGUID!=null">viewclassguid=#VIEWCLASSGUID#,</if>
-            <if  test="STRUCTURECLASSGUID!=null">structureclassguid=#STRUCTURECLASSGUID#,</if>
-            <if  test="END1BONAME!=null">end1boname=#END1BONAME#,</if>
-            <if  test="ISRECORDHASEND2!=null">a.ISRECORDHASEND2=#ISRECORDHASEND2#,</if>
-            <if  test="FIELDFORRECORDHASEND2!=null">a.FIELDFORRECORDHASEND2=#FIELDFORRECORDHASEND2#,</if>
-            <if  test="END2INTERFACE!=null">end2interface=#END2INTERFACE#,</if>
+            updateuserguid = #{UPDATEUSERGUID},
+            updatetime = #{CURRENTTIME:TIMESTAMP},
+            <if  test="TEMPLATEID!=null">TEMPLATEid=#{TEMPLATEID},</if>
+            <if  test="TEMPLATENAME!=null">TEMPLATEname=#{TEMPLATENAME},</if>
+            <if  test="TEMPLATETYPE!=null">templatetype=#{TEMPLATETYPE},</if>
+            <if  test="STRUCTUREMODEL!=null">structuremodel=#{STRUCTUREMODEL},</if>
+            <if  test="BMGUID!=null">bmguid=#{BMGUID},</if>
+            <if  test="VIEWCLASSGUID!=null">viewclassguid=#{VIEWCLASSGUID},</if>
+            <if  test="STRUCTURECLASSGUID!=null">structureclassguid=#{STRUCTURECLASSGUID},</if>
+            <if  test="END1BONAME!=null">end1boname=#{END1BONAME},</if>
+            <if  test="ISRECORDHASEND2!=null">a.ISRECORDHASEND2=#{ISRECORDHASEND2},</if>
+            <if  test="FIELDFORRECORDHASEND2!=null">a.FIELDFORRECORDHASEND2=#{FIELDFORRECORDHASEND2},</if>
+            <if  test="END2INTERFACE!=null">end2interface=#{END2INTERFACE},</if>
             
             
-            <if  test="END2TYPE!=null">end2type=#END2TYPE#,</if>
-            <if  test="MAXQUANTITY!=null">maxquantity=#MAXQUANTITY#,</if>
-            <if  test="ISINCORPORATEDMASTER!=null">isincorporatedmaster=#ISINCORPORATEDMASTER#,</if>
-            <if  test="REVISETRIGGER!=null">revisetrigger=#REVISETRIGGER#,</if>
-            <if  test="SAVEASTRIGGER!=null">saveastrigger=#SAVEASTRIGGER#,</if>
-            <if  test="REVISECOPYRELATION!=null">revisecopyrelation=#REVISECOPYRELATION#,</if>
-            <if  test="SAVEASCOPYRELATION!=null">saveascopyrelation=#SAVEASCOPYRELATION#,</if>
+            <if  test="END2TYPE!=null">end2type=#{END2TYPE},</if>
+            <if  test="MAXQUANTITY!=null">maxquantity=#{MAXQUANTITY},</if>
+            <if  test="ISINCORPORATEDMASTER!=null">isincorporatedmaster=#{ISINCORPORATEDMASTER},</if>
+            <if  test="REVISETRIGGER!=null">revisetrigger=#{REVISETRIGGER},</if>
+            <if  test="SAVEASTRIGGER!=null">saveastrigger=#{SAVEASTRIGGER},</if>
+            <if  test="REVISECOPYRELATION!=null">revisecopyrelation=#{REVISECOPYRELATION},</if>
+            <if  test="SAVEASCOPYRELATION!=null">saveascopyrelation=#{SAVEASCOPYRELATION},</if>
             
             
-            <if  test="CHECKINTRIGGER!=null">checkintrigger=#CHECKINTRIGGER#,</if>
-            <if  test="CHECKOUTTRIGGER!=null">checkouttrigger=#CHECKOUTTRIGGER#,</if>
-            <if  test="TRASCHKOUTTRIGGER!=null">traschkouttrigger=#TRASCHKOUTTRIGGER#,</if>
-            <if  test="CANCELCHKOUTTRIGGER!=null">cancelchkouttrigger=#CANCELCHKOUTTRIGGER#,</if>
-            <if  test="CHANGELOCATIONTRIGGER!=null">changelocationtrigger=#CHANGELOCATIONTRIGGER#,</if>
-            <if  test="DELETETRIGGER!=null">deletetrigger=#DELETETRIGGER#,</if>
+            <if  test="CHECKINTRIGGER!=null">checkintrigger=#{CHECKINTRIGGER},</if>
+            <if  test="CHECKOUTTRIGGER!=null">checkouttrigger=#{CHECKOUTTRIGGER},</if>
+            <if  test="TRASCHKOUTTRIGGER!=null">traschkouttrigger=#{TRASCHKOUTTRIGGER},</if>
+            <if  test="CANCELCHKOUTTRIGGER!=null">cancelchkouttrigger=#{CANCELCHKOUTTRIGGER},</if>
+            <if  test="CHANGELOCATIONTRIGGER!=null">changelocationtrigger=#{CHANGELOCATIONTRIGGER},</if>
+            <if  test="DELETETRIGGER!=null">deletetrigger=#{DELETETRIGGER},</if>
             
-            <if  test="ISVALID!=null">isvalid=#ISVALID#,</if>
-            <if  test="TITLE!=null">title=#TITLE#,</if>
+            <if  test="ISVALID!=null">isvalid=#{ISVALID},</if>
+            <if  test="TITLE!=null">title=#{TITLE},</if>
         </set>
-        where guid = #GUID#
+        where guid = #{GUID}
     </update>
     
     <update id="obsleteByName" parameterType="map">
         update bi_relation_template 
-           set updateuserguid = #UPDATEUSERGUID#,
-               updatetime = #CURRENTTIME:TIMESTAMP#,
+           set updateuserguid = #{UPDATEUSERGUID},
+               updatetime = #{CURRENTTIME:TIMESTAMP},
                isvalid = '0'
-         where TEMPLATEname = #TEMPLATENAME#
+         where TEMPLATEname = #{TEMPLATENAME#{
     </update>
 
     <delete id="delete" parameterType="java.lang.String">
-        delete from bi_relation_template where guid = #GUID# and templatetype = '1'
+        delete from bi_relation_template where guid = #{GUID} and templatetype = '1'
     </delete>
 
     <delete id="deleteRelationTemplateByName" parameterType="java.lang.String">
-        delete from bi_relation_template where templatename = #NAME# and templatetype = '1'
+        delete from bi_relation_template where templatename = #{NAME} and templatetype = '1'
     </delete>
        
     <select id="getRelationTemplateByEND2" parameterType="map" resultType="dyna.common.dto.template.relation.RelationTemplateInfo">
@@ -283,11 +283,11 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
           from bi_relation_template x, 
                bi_relation_template_end2 y
          where x.guid = y.masterfk
-           and y.bmguid =#BMGUID#
-           and x.ISVALID = #ISVALID#
+           and y.bmguid =#{BMGUID}
+           and x.ISVALID = #{ISVALID}
             <if test="END2BONAME">
 		    and   y.end2boname in
-		    <foreach collection= "END2BONAME" open="(" close=")" separator="," item="TEMP">#TEMP#</foreach>
+		    <foreach collection= "END2BONAME" open="(" close=")" separator="," item="TEMP">#{TEMP}</foreach>
 		    </if>
 
          order by x.templatename,
@@ -297,6 +297,6 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     <select id="get" parameterType="java.lang.String" resultType="dyna.common.dto.template.relation.RelationTemplateInfo" statementType="STATEMENT">
 		SELECT a.* 
 		  FROM bi_relation_template a
-		 WHERE guid=#guid#
+		 WHERE guid=#{guid}
 	</select>
 </mapper>

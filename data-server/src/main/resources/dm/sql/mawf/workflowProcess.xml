@@ -9,7 +9,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 	</select>
 	
 	<select id="get" resultType="dyna.common.dto.model.wf.WorkflowProcessInfo" statementType="STATEMENT">
-		select a.* from ma_wf a where guid = #GUID#
+		select a.* from ma_wf a where guid = #{GUID}
 	</select>
 	
 	<insert id="insert" parameterType="dyna.common.dto.model.wf.WorkflowProcessInfo">
@@ -26,31 +26,31 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 
 		)
 		values (
-		#GUID:VARCHAR:NULL#,
-		#WFNAME:VARCHAR:NULL#,
-		#DESCRIPTION:VARCHAR:NULL#,
-		#TITLE:VARCHAR:NULL#,
-		#CURRENTTIME:TIMESTAMP#,
-		#CREATEUSERGUID:VARCHAR:NULL#,
-		#CURRENTTIME:TIMESTAMP#,
-		#UPDATEUSERGUID:VARCHAR:NULL#
+		#{GUID:VARCHAR:NULL},
+		#{WFNAME:VARCHAR:NULL},
+		#{DESCRIPTION:VARCHAR:NULL},
+		#{TITLE:VARCHAR:NULL},
+		#{CURRENTTIME:TIMESTAMP},
+		#{CREATEUSERGUID:VARCHAR:NULL},
+		#{CURRENTTIME:TIMESTAMP},
+		#{UPDATEUSERGUID:VARCHAR:NULL}
 		)
 	</insert>
 	
 	<update id="update" parameterType="dyna.common.dto.model.wf.WorkflowProcessInfo">
 		update ma_wf 
 		<set>
-			updatetime=#CURRENTTIME:TIMESTAMP#,
-			updateuserguid=#UPDATEUSERGUID#
-			<if  test="WFNAME!=null">wfname=#WFNAME#,</if>
-			<if  test="DESCRIPTION!=null">description=#DESCRIPTION#,</if>
-			<if  test="TITLE!=null">title=#TITLE#,</if>
+			updatetime=#{CURRENTTIME:TIMESTAMP},
+			updateuserguid=#{UPDATEUSERGUID}
+			<if  test="WFNAME!=null">wfname=#{WFNAME},</if>
+			<if  test="DESCRIPTION!=null">description=#{DESCRIPTION},</if>
+			<if  test="TITLE!=null">title=#{TITLE},</if>
 		</set>
-		WHERE guid = #GUID#
+		WHERE guid = #{GUID}
 	</update>
 	
 	<delete id="delete" parameterType="java.lang.String">
 		delete from ma_wf 
-		where guid = #GUID#
+		where guid = #{GUID}
 	</delete>
 </mapper>

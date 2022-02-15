@@ -8,10 +8,10 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
         select a.*
           from BI_TRANSFORM_SIGN_WF_MAP a
         <where>
-			<if  test="SIGNPARAMGUID!=null">and a.SIGNPARAMGUID=#SIGNPARAMGUID#</if>
-			<if  test="WORKFLOWNAME!=null">and a.WORKFLOWNAME=#WORKFLOWNAME#</if>
-			<if  test="ACTIVITYNAME!=null">and a.ACTIVITYNAME=#ACTIVITYNAME#</if>
-			<if  test="GUID!=null">and a.GUID=#GUID#</if>
+			<if  test="SIGNPARAMGUID!=null">and a.SIGNPARAMGUID=#{SIGNPARAMGUID}</if>
+			<if  test="WORKFLOWNAME!=null">and a.WORKFLOWNAME=#{WORKFLOWNAME}</if>
+			<if  test="ACTIVITYNAME!=null">and a.ACTIVITYNAME=#{ACTIVITYNAME}</if>
+			<if  test="GUID!=null">and a.GUID=#{GUID}</if>
 		</where>
 		order by a.createtime
 	</select>
@@ -29,34 +29,34 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 
 		)
 		select
-			#GUID:VARCHAR:NULL#,
-			#SIGNPARAMGUID:VARCHAR:NULL#,
-			#WORKFLOWNAME:VARCHAR:NULL#,
-			#ACTIVITYNAME:VARCHAR:NULL#,
-			#CURRENTTIME:TIMESTAMP#,
-			#CREATEUSERGUID:VARCHAR:NULL#,
-			#CURRENTTIME:TIMESTAMP#,
-			#UPDATEUSERGUID:VARCHAR:NULL#
+			#{GUID:VARCHAR:NULL},
+			#{SIGNPARAMGUID:VARCHAR:NULL},
+			#{WORKFLOWNAME:VARCHAR:NULL},
+			#{ACTIVITYNAME:VARCHAR:NULL},
+			#{CURRENTTIME:TIMESTAMP},
+			#{CREATEUSERGUID:VARCHAR:NULL},
+			#{CURRENTTIME:TIMESTAMP},
+			#{UPDATEUSERGUID:VARCHAR:NULL}
 	</insert>
 
 	<update id="update" parameterType="dyna.common.bean.data.trans.TransformSignWFMap">
 		UPDATE BI_TRANSFORM_SIGN_WF_MAP
 		<set>
-			updatetime=#CURRENTTIME:TIMESTAMP#,
-			updateuserguid=#UPDATEUSERGUID#,
-			<if  test="SIGNPARAMGUID!=null">SIGNPARAMGUID=#SIGNPARAMGUID#,</if>
-			<if  test="ACTIVITYNAME!=null">ACTIVITYNAME=#ACTIVITYNAME#,</if>
-			<if  test="WORKFLOWNAME!=null">WORKFLOWNAME=#WORKFLOWNAME#,</if>
+			updatetime=#{CURRENTTIME:TIMESTAMP},
+			updateuserguid=#{UPDATEUSERGUID},
+			<if  test="SIGNPARAMGUID!=null">SIGNPARAMGUID=#{SIGNPARAMGUID},</if>
+			<if  test="ACTIVITYNAME!=null">ACTIVITYNAME=#{ACTIVITYNAME},</if>
+			<if  test="WORKFLOWNAME!=null">WORKFLOWNAME=#{WORKFLOWNAME},</if>
 		</set>
-		WHERE guid = #GUID#
+		WHERE guid = #{GUID}
 	</update>
 
 	<delete id="delete" parameterType="java.lang.String">
 		DELETE FROM BI_TRANSFORM_SIGN_WF_MAP 
-		WHERE guid = #GUID#
+		WHERE guid = #{GUID}
 	</delete>
 	<delete id="deleteAll" parameterType="java.lang.String">
 		DELETE FROM BI_TRANSFORM_SIGN_WF_MAP 
-		WHERE SIGNPARAMGUID = #SIGNPARAMGUID#
+		WHERE SIGNPARAMGUID = #{SIGNPARAMGUID}
 	</delete>
 </mapper>

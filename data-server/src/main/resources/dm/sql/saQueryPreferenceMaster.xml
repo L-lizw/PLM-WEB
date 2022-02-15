@@ -7,16 +7,16 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     <sql id="where">
         <where>
             <if  test="USERGUID!=null">
-                and m.userguid = #USERGUID#
+                and m.userguid = #{USERGUID}
             </if>
             <if  test="CLASSFK!=null">
-                and m.classfk = #CLASSFK#
+                and m.classfk = #{CLASSFK}
             </if>
             <if  test="CREATEUSERGUID!=null">
-                and m.createuserguid = #CREATEUSERGUID#
+                and m.createuserguid = #{CREATEUSERGUID}
             </if>
             <if  test="UPDATEUSERGUID!=null">
-                and m.updateuserguid = #UPDATEUSERGUID#
+                and m.updateuserguid = #{UPDATEUSERGUID}
             </if>
         </where>
     </sql>
@@ -38,28 +38,28 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			        createtime,
 			        updateuserguid,
 			        updatetime)
-	        values (#GUID#,
-			        #USERGUID#,
-					#CLASSFK#,
+	        values (#{GUID},
+			        #{USERGUID},
+					#{CLASSFK},
 					
-					#CREATEUSERGUID:VARCHAR:NULL#,
-					#CURRENTTIME:TIMESTAMP#,
-					#UPDATEUSERGUID:VARCHAR:NULL#,
-					#CURRENTTIME:TIMESTAMP#)
+					#{CREATEUSERGUID:VARCHAR:NULL},
+					#{CURRENTTIME:TIMESTAMP},
+					#{UPDATEUSERGUID:VARCHAR:NULL},
+					#{CURRENTTIME:TIMESTAMP})
     </insert>
     
     <update id="update" parameterType="dyna.common.dto.SaQueryPreference">
         update sa_query_preference_master
         <set>
-	        <if test="USERGUID!=null">userguid = #USERGUID#,</if>
-	        <if test="CLASSFK!=null">classfk = #CLASSFK#,</if>
+	        <if test="USERGUID!=null">userguid = #{USERGUID},</if>
+	        <if test="CLASSFK!=null">classfk = #{CLASSFK},</if>
         </set>
-               updatetime = #CURRENTTIME:TIMESTAMP#,
-               updateuserguid = #UPDATEUSERGUID#
-         where guid = #GUID#
+               updatetime = #{CURRENTTIME:TIMESTAMP},
+               updateuserguid = #{UPDATEUSERGUID}
+         where guid = #{GUID}
     </update>
     
     <delete id="delete" parameterType="java.lang.String">
-        delete from sa_query_preference_master where guid = #GUID#
+        delete from sa_query_preference_master where guid = #{GUID}
     </delete>
 </mapper>

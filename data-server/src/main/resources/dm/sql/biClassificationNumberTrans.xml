@@ -9,13 +9,13 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
           from BI_CLASSIFICATION_NUMBER_TRANS b
         <where>
             <if  test="CLASSIFICATIONFEATUREITEM!=null">
-                and b.classificationfeatureitem = #CLASSIFICATIONFEATUREITEM#
+                and b.classificationfeatureitem = #{CLASSIFICATIONFEATUREITEM}
             </if>
             <if  test="FIELDNAME!=null">
-                and b.fieldname = #FIELDNAME#
+                and b.fieldname = #{FIELDNAME}
             </if>
             <if  test="CONSENGVALUES!=null">
-                and b.consengvalues=#CONSENGVALUES#
+                and b.consengvalues=#{CONSENGVALUES}
             </if>
             <if  test="CONSENGVALUES==null">
                 and b.consengvalues is null
@@ -27,17 +27,17 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
         update BI_CLASSIFICATION_NUMBER_TRANS
            set 
                transnumber = transnumber+1,
-               updatetime=#CURRENTTIME:TIMESTAMP#,
-               updateuserguid=#UPDATEUSERGUID#
+               updatetime=#{CURRENTTIME:TIMESTAMP},
+               updateuserguid=#{UPDATEUSERGUID}
           where 
                 <if  test="CLASSIFICATIONFEATUREITEM!=null">
-                    and classificationfeatureitem = #CLASSIFICATIONFEATUREITEM#
+                    and classificationfeatureitem = #{CLASSIFICATIONFEATUREITEM}
                 </if>
                 <if  test="FIELDNAME!=null">
-                    and fieldname = #FIELDNAME#
+                    and fieldname = #{FIELDNAME}
                 </if>
                 <if  test="CONSENGVALUES!=null">
-                    and consengvalues=#CONSENGVALUES#
+                    and consengvalues=#{CONSENGVALUES}
                 </if>
                 <if test="CONSENGVALUES==null">
                     and consengvalues is null
@@ -46,18 +46,18 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     
     <update id="update" parameterType="map">
         update BI_CLASSIFICATION_NUMBER_TRANS
-           set transnumber = #TRANSNUMBER#,
-               updatetime=#CURRENTTIME:TIMESTAMP#,
-               updateuserguid=#UPDATEUSERGUID#
+           set transnumber = #{TRANSNUMBER},
+               updatetime=#{CURRENTTIME:TIMESTAMP},
+               updateuserguid=#{UPDATEUSERGUID}
           where 
                 <if  test="CLASSIFICATIONFEATUREITEM">
-                    classificationfeatureitem = #CLASSIFICATIONFEATUREITEM#
+                    classificationfeatureitem = #{CLASSIFICATIONFEATUREITEM}
                 </if>
                 <if  test="FIELDNAME!=null">
-                    and fieldname = #FIELDNAME#
+                    and fieldname = #{FIELDNAME}
                 </if>
                 <if  test="CONSENGVALUES!=null">
-                    and consengvalues=#CONSENGVALUES#
+                    and consengvalues=#{CONSENGVALUES}
                 </if>
                 <if  test="CONSENGVALUES==null">
                     and consengvalues is null
@@ -76,19 +76,19 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			        createtime,
 			        updateuserguid,
 			        updatetime)
-	        values (#GUID#,
-			        #CLASSIFICATIONFEATUREITEM:VARCHAR:NULL#,
-			        #CONSENGVALUES:VARCHAR:NULL#,
-			        #TRANSNUMBER#,
-			        #FIELDNAME:VARCHAR:NULL#,
+	        values (#{GUID},
+			        #{CLASSIFICATIONFEATUREITEM:VARCHAR:NULL},
+			        #{CONSENGVALUES:VARCHAR:NULL},
+			        #{TRANSNUMBER},
+			        #{FIELDNAME:VARCHAR:NULL},
 
-					#CREATEUSERGUID:VARCHAR:NULL#,
-					#CURRENTTIME:TIMESTAMP#,
-					#UPDATEUSERGUID:VARCHAR:NULL#,
-					#CURRENTTIME:TIMESTAMP#)
+					#{CREATEUSERGUID:VARCHAR:NULL},
+					#{CURRENTTIME:TIMESTAMP},
+					#{UPDATEUSERGUID:VARCHAR:NULL},
+					#{CURRENTTIME:TIMESTAMP})
     </insert>
     
     <delete id="delete" parameterType="String">
-        delete from BI_CLASSIFICATION_NUMBER_TRANS where guid = #GUID#
+        delete from BI_CLASSIFICATION_NUMBER_TRANS where guid = #{GUID}
     </delete>
 </mapper>

@@ -69,22 +69,22 @@
 			updatetime updatetime$$,
 			updateuser updateuser$$,
 			classguid classguid$$
-		FROM $TABLENAME$ a
+		FROM ${TABLENAME} a
 		<where>
 			<if  test="VIEWFK!=null">
-				and a.viewfk = #VIEWFK#
+				and a.viewfk = #{VIEWFK}
 			</if>
 			<if  test="END2!=null">
-                and a.end2 = #END2#
+                and a.end2 = #{END2}
 			</if>
 			<if  test="END2MASTERFK!=null">
-                and a.end2$$master = #END2MASTERFK#
+                and a.end2$$master = #{END2MASTERFK}
 			</if>
 			<if  test="GUID!=null">
-                and a.guid = #GUID#
+                and a.guid = #{GUID}
 			</if>
 			<if  test="DATASEQ!=null">
-                and a.DATASEQ = #DATASEQ#
+                and a.DATASEQ = #{DATASEQ}
 			</if>
 		</where>
 	</select>
@@ -97,12 +97,12 @@
 		                              else 'N'
 		                          end
 		                    from $TABLENAME$ b
-		                   where b.viewfk = #VIEWGUID#
-		                     and b.end2$$master = #END2MASTERGUID#)
+		                   where b.viewfk = #{VIEWGUID}
+		                     and b.end2$$master = #{END2MASTERGUID})
 		            else 'N'
 		        end isRepeat
 		  from bi_bom_template t
-		 where t.templateid = #BOMTEMPLATEID#
+		 where t.templateid = #{BOMTEMPLATEID}
 		   and rownum = 1
 	</select>
 
@@ -113,48 +113,48 @@
 		         else
 		          'Y'
 		       end flg
-		  from $VIEWTABLENAME$ r,
-		       $STRUCTURETABLENAME$ s
+		  from ${VIEWTABLENAME} r,
+		       ${STRUCTURETABLENAME} s
 		 where r.guid = s.viewfk
-		   and r.end1 = #END1GUID#
+		   and r.end1 = #{END1GUID}
 	</select>
 	
 	<update id="setFixedRevisionEnd2" parameterType="java.util.HashMap">
-	    update $STRUCTABLE$ 
+	    update ${STRUCTABLE}
 	       set end2 = (select guid
-                           from $END2TABLE$ 
+                           from ${END2TABLE}
                           where masterfk = end2$$master
                             and revisionidsequence = (select max(revisionidsequence)
-                                                           from $END2TABLE$ 
+                                                           from ${END2TABLE}
                                                           where masterfk = end2$$master
                                                         )
                         )
-	     where viewfk = #VIEWGUID#
+	     where viewfk = #{VIEWGUID}
 	</update>
 	
 	<update id="setLatestEnd2" parameterType="java.util.HashMap">
-	    update $STRUCTABLE$ 
+	    update ${STRUCTABLE}
 	       set end2 = ''
-	     where viewfk = #VIEWGUID#
+	     where viewfk = #{VIEWGUID#{
 	</update>
 		
 	<select id="checkBOMViewMaster" parameterType="java.util.HashMap" resultType="dyna.common.bean.xml.UpperKeyMap" statementType="STATEMENT">
-		select t.precise ISPRECISE from $VIEWTABLENAME$ a ,bi_bom_template t where a.guid = #VIEWGUID#
+		select t.precise ISPRECISE from ${VIEWTABLENAME} a ,bi_bom_template t where a.guid = #{VIEWGUID}
 		and a.templateid=t.templateid
 	</select>
 	
 	<update id="updateUHasBOM" parameterType="java.util.HashMap">
 	    update $END1TABLENAME$ 
-	       set UHASBOM = #UHASBOM#
+	       set UHASBOM = #{UHASBOM}
         <where>
             <if  test="GUID!=null">
-                and guid = #GUID#
+                and guid = #{GUID}
             </if>
             <if  test="FOUNDATIONFK!=null">
-                and foundationfk = #FOUNDATIONFK#
+                and foundationfk = #{FOUNDATIONFK}
             </if>
             <if  test="ORIGUHASBOM!=null">
-                and  UHASBOM = #ORIGUHASBOM#
+                and  UHASBOM = #{ORIGUHASBOM}
             </if>
         </where>
 	</update>
@@ -177,7 +177,7 @@
              where m.guid = a.end1$$class
            )                               end1$$classname,
            a.end1$$master
-      from $VIEWTABLE$ a where a.guid = #BOMVIEWGUID#
+      from ${VIEWTABLE} a where a.guid = #{BOMVIEWGUID}
   </select>
       
     <select id="isPreciseByStruc" parameterType="map" resultType="java.lang.String">
@@ -185,27 +185,27 @@
                  when '1' then 'Y'
                  else 'N'
                end isprecise
-          from $VIEWTABLE$ b,
+          from ${VIEWTABLE} b,
                bi_bom_template t
          where b.templateid = t.templateid
            and b.guid = (select a.viewfk
-                        from $STRUCTABLE$ a
-                       where a.guid = #GUID#
+                        from ${STRUCTABLE} a
+                       where a.guid = #{GUID}
                       )
     </select>
     
     <select id="getFoundationGuidByMaster" parameterType="map" resultType="java.lang.String">
         select a.guid
-          from $TABLENAME$ a
+          from ${TABLENAME} a
          where a.latestrevision like '%m%'
-           and a.masterfk = #MASTER#
+           and a.masterfk = #{MASTER}
     </select>
     
    <select id="getStrucClassGuidByViewName" parameterType="java.util.HashMap" resultType="java.lang.String">
       select t.structureclassguid
         from bi_bom_template t
-       where t.templatename = #VIEWNAME#
-         and t.viewclassguid = #VIEWCLASS#
+       where t.templatename = #{VIEWNAME}
+         and t.viewclassguid = #{VIEWCLASS}
          and rownum = 1
   </select>
 </mapper>

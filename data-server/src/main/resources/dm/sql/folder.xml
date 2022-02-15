@@ -14,7 +14,7 @@
 		select a.*,
 		a.path hierarchy
 		from ma_folder a
-		WHERE a.guid = #GUID#
+		WHERE a.guid = #{GUID}
 	</select>
 
 	<insert id="insert" parameterType="dyna.common.dto.Folder">
@@ -39,53 +39,53 @@
 		path
 		)
 
-		values(#GUID#,
-		#FOLDERID:VARCHAR:NULL#,
-		#FOLDERNAME:VARCHAR:NULL#,
-		#PARENTGUID:VARCHAR:NULL#,
-		#CLASSIFICATION#,
-		#OWNERUSERGUID:VARCHAR:NULL#,
-		#CREATEUSERGUID#,
-		#CURRENTTIME:TIMESTAMP#,
-		#CREATEUSERGUID#,
-		#CURRENTTIME:TIMESTAMP#,
-		#STORAGEGUID:VARCHAR:NULL#,
+		values(#{GUID},
+		#{FOLDERID:VARCHAR:NULL},
+		#{FOLDERNAME:VARCHAR:NULL},
+		#{PARENTGUID:VARCHAR:NULL},
+		#{CLASSIFICATION},
+		#{OWNERUSERGUID:VARCHAR:NULL},
+		#{CREATEUSERGUID},
+		#{CURRENTTIME:TIMESTAMP},
+		#{CREATEUSERGUID},
+		#{CURRENTTIME:TIMESTAMP},
+		#{STORAGEGUID:VARCHAR:NULL},
 		<if test="ISSHARED==null">'N'</if>
-		<if test="ISSHARED!=null">#ISSHARED#</if>,
-		#SHAREDNAME:VARCHAR:NULL#,
-		#DESCRIPTION:VARCHAR:NULL#,
+		<if test="ISSHARED!=null">#{ISSHARED}</if>,
+		#{SHAREDNAME:VARCHAR:NULL},
+		#{DESCRIPTION:VARCHAR:NULL},
 		<if test="SEARCHLIMIT==null">0</if>
 		<if test="SEARCHLIMIT!=null">$ISVALID$</if>,
-		#ISVALID:VARCHAR:NULL#,
-		<if test="LIBRARYUSER==null">#GUID#</if>
-		<if test="LIBRARYUSER!=null">#LIBRARYUSER#</if>,
-		#HIERARCHY:VARCHAR:NULL#)
+		#{ISVALID:VARCHAR:NULL},
+		<if test="LIBRARYUSER==null">#{GUID}</if>
+		<if test="LIBRARYUSER!=null">#{LIBRARYUSER}</if>,
+		#{HIERARCHY:VARCHAR:NULL})
 	</insert>
 
 	<update id="update" parameterType="dyna.common.dto.Folder">
 		update ma_folder
 		 <set>
-			<if test="PARENTGUID!=null">parentguid=#PARENTGUID#,</if>
-			<if test="CLASSIFICATION!=null">classification=#CLASSIFICATION#,</if>
-			<if test="FOLDERID!=null">folderid=#FOLDERID#,</if>
-			<if test="FOLDERNAME!=null">foldername=#FOLDERNAME#,</if>
-			<if test="DESCRIPTION!=null">description=#DESCRIPTION#,</if>
-			<if test="OWNERUSERGUID!=null">owneruserguid=#OWNERUSERGUID#,</if>
-			<if test="ISSHARED!=null">isshared=#ISSHARED#,</if>
-			<if test="SHAREDNAME!=null">sharedname=#SHAREDNAME#,</if>
-			<if test="STORAGEGUID!=null">storageguid=#STORAGEGUID#,</if>
-			<if test="LIBRARYUSER!=null">libraryuser=#LIBRARYUSER#,</if>
-			<if test="SEARCHLIMIT!=null">searchlimit=#SEARCHLIMIT#,</if>
-			<if test="ISVALID!=null">isvalid=#ISVALID#,</if>
-			<if test="HIERARCHY!=null">hierarchy=#HIERARCHY#,</if>
+			<if test="PARENTGUID!=null">parentguid=#{PARENTGUID},</if>
+			<if test="CLASSIFICATION!=null">classification=#{CLASSIFICATION},</if>
+			<if test="FOLDERID!=null">folderid=#{FOLDERID},</if>
+			<if test="FOLDERNAME!=null">foldername=#{FOLDERNAME},</if>
+			<if test="DESCRIPTION!=null">description=#{DESCRIPTION},</if>
+			<if test="OWNERUSERGUID!=null">owneruserguid=#{OWNERUSERGUID},</if>
+			<if test="ISSHARED!=null">isshared=#{ISSHARED},</if>
+			<if test="SHAREDNAME!=null">sharedname=#{SHAREDNAME},</if>
+			<if test="STORAGEGUID!=null">storageguid=#{STORAGEGUID},</if>
+			<if test="LIBRARYUSER!=null">libraryuser=#{LIBRARYUSER},</if>
+			<if test="SEARCHLIMIT!=null">searchlimit=#{SEARCHLIMIT},</if>
+			<if test="ISVALID!=null">isvalid=#{ISVALID},</if>
+			<if test="HIERARCHY!=null">hierarchy=#{HIERARCHY},</if>
 		</set>
-		updatetime=#CURRENTTIME:TIMESTAMP#,
-		updateuserguid=#UPDATEUSERGUID#
-		WHERE guid = #GUID#
+		updatetime=#{CURRENTTIME:TIMESTAMP},
+		updateuserguid=#{UPDATEUSERGUID}
+		WHERE guid = #{GUID}
 	</update>
 
 	<delete id="delete" parameterType="java.lang.String">
 		delete from ma_folder 
-		where guid = #GUID#
+		where guid = #{GUID}
 	</delete>
 </mapper>

@@ -12,12 +12,12 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			   (select b.SOLUTIONNAME from bi_transform_sign b where b.guid = a.RLSSOLUTION) RLSSOLUTIONNAME
           from BI_TRANSFORM_MANUAL a
         <where>
-			<if  test="TRANSFORMCONFIGGUID!=null">and a.TRANSFORMCONFIGGUID=#TRANSFORMCONFIGGUID#</if>
-			<if  test="ISECP!=null">and a.isecp=#ISECP#</if>
-			<if  test="ISRLS!=null">and a.ISRLS=#ISRLS#</if>
-			<if  test="ISWIP!=null">and a.ISWIP=#ISWIP#</if>
-			<if  test="ISPRE!=null">and a.ISPRE=#ISPRE#</if>
-			<if  test="GUID!=null">and a.GUID=#GUID#</if>
+			<if  test="TRANSFORMCONFIGGUID!=null">and a.TRANSFORMCONFIGGUID=#{TRANSFORMCONFIGGUID}</if>
+			<if  test="ISECP!=null">and a.isecp=#{ISECP}</if>
+			<if  test="ISRLS!=null">and a.ISRLS=#{ISRLS}</if>
+			<if  test="ISWIP!=null">and a.ISWIP=#{ISWIP}</if>
+			<if  test="ISPRE!=null">and a.ISPRE=#{ISPRE}</if>
+			<if  test="GUID!=null">and a.GUID=#{GUID}</if>
 		</where>
 		order by a.createtime
 	</select>
@@ -41,47 +41,47 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 
 		)
 		select
-			#GUID:VARCHAR:NULL#,
-			#TRANSFORMCONFIGGUID:VARCHAR:NULL#,
-			#ISWIP:VARCHAR:NULL#,
-			#WIPSOLUTION:VARCHAR:NULL#,
-			#ISPRE:VARCHAR:NULL#,
-			#PRESOLUTION:VARCHAR:NULL#,
-			#ISECP:VARCHAR:NULL#,
-			#ECPSOLUTION:VARCHAR:NULL#,
-			#ISRLS:VARCHAR:NULL#,
-			#RLSSOLUTION:VARCHAR:NULL#,
-			#CURRENTTIME:TIMESTAMP#,
-			#CREATEUSERGUID:VARCHAR:NULL#,
-			#CURRENTTIME:TIMESTAMP#,
-			#UPDATEUSERGUID:VARCHAR:NULL#
+			#{GUID:VARCHAR:NULL},
+			#{TRANSFORMCONFIGGUID:VARCHAR:NULL},
+			#{ISWIP:VARCHAR:NULL},
+			#{WIPSOLUTION:VARCHAR:NULL},
+			#{ISPRE:VARCHAR:NULL},
+			#{PRESOLUTION:VARCHAR:NULL},
+			#{ISECP:VARCHAR:NULL},
+			#{ECPSOLUTION:VARCHAR:NULL},
+			#{ISRLS:VARCHAR:NULL},
+			#{RLSSOLUTION:VARCHAR:NULL},
+			#{CURRENTTIME:TIMESTAMP},
+			#{CREATEUSERGUID:VARCHAR:NULL},
+			#{CURRENTTIME:TIMESTAMP},
+			#{UPDATEUSERGUID:VARCHAR:NULL}
 	</insert>
 
 	<update id="update" parameterType="dyna.common.bean.data.trans.TransformManualConfig">
 		UPDATE BI_TRANSFORM_MANUAL
 		<set>
-			updatetime=#CURRENTTIME:TIMESTAMP#,
-			updateuserguid=#UPDATEUSERGUID#,
-			<if  test="TRANSFORMCONFIGGUID!=null">TRANSFORMCONFIGGUID=#TRANSFORMCONFIGGUID#,</if>
-			<if  test="ISECP!=null">ISECP=#ISECP#,</if>
-			<if  test="ISRLS!=null">ISRLS=#ISRLS#,</if>
-			<if  test="ISWIP!=null">ISWIP=#ISWIP#,</if>
-			<if  test="ISPRE!=null">ISPRE=#ISPRE#,</if>
-			<if  test="WIPSOLUTION!=null">WIPSOLUTION=#WIPSOLUTION#,</if>
-			<if  test="PRESOLUTION!=null">PRESOLUTION=#PRESOLUTION#,</if>
-			<if  test="ECPSOLUTION!=null">ECPSOLUTION=#ECPSOLUTION#,</if>
-			<if  test="RLSSOLUTION!=null">RLSSOLUTION=#RLSSOLUTION#,</if>
+			updatetime=#{CURRENTTIME:TIMESTAMP},
+			updateuserguid=#{UPDATEUSERGUID},
+			<if  test="TRANSFORMCONFIGGUID!=null">TRANSFORMCONFIGGUID=#{TRANSFORMCONFIGGUID},</if>
+			<if  test="ISECP!=null">ISECP=#{ISECP},</if>
+			<if  test="ISRLS!=null">ISRLS=#{ISRLS},</if>
+			<if  test="ISWIP!=null">ISWIP=#{ISWIP},</if>
+			<if  test="ISPRE!=null">ISPRE=#{ISPRE},</if>
+			<if  test="WIPSOLUTION!=null">WIPSOLUTION=#{WIPSOLUTION},</if>
+			<if  test="PRESOLUTION!=null">PRESOLUTION=#{PRESOLUTION},</if>
+			<if  test="ECPSOLUTION!=null">ECPSOLUTION=#{ECPSOLUTION},</if>
+			<if  test="RLSSOLUTION!=null">RLSSOLUTION=#{RLSSOLUTION},</if>
 		</set>
-		WHERE guid = #GUID#
+		WHERE guid = #{GUID}
 	</update>
 
 	<delete id="delete" parameterType="java.lang.String">
 		DELETE FROM BI_TRANSFORM_MANUAL 
-		WHERE guid = #GUID#
+		WHERE guid = #{GUID}
 	</delete>
 	
 	<delete id="deleteConfig" parameterType="java.lang.String">
 		DELETE FROM BI_TRANSFORM_MANUAL 
-		WHERE TRANSFORMCONFIGGUID = #TRANSFORMCONFIGGUID#
+		WHERE TRANSFORMCONFIGGUID = #{TRANSFORMCONFIGGUID}
 	</delete>
 </mapper>

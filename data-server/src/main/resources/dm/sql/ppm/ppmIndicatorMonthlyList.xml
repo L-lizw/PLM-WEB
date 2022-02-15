@@ -8,32 +8,32 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
       select * from ppm_indicator_monthly_list m
       <where>
           <if  test="GUID!=null">
-              and  m.guid = #GUID#
+              and  m.guid = #{GUID}
           </if>
           <if  test="INDICATORYEARYEAR!=null">
-              and  m.indicatoryear = #INDICATORYEAR#
+              and  m.indicatoryear = #{INDICATORYEAR}
           </if>
           <if  test="INDICATORYEARMONTH!=null">
-              and  m.indicatormonth = #INDICATORMONTH#
+              and  m.indicatormonth = #{INDICATORMONTH}
           </if>
           <if  test="DATASOURCENAME!=null">
-              and  m.datasourcename = #DATASOURCENAME#
+              and  m.datasourcename = #{DATASOURCENAME}
           </if>
           <if  test="INSTANCECLASSGUID!=null">
-              and m.instanceclassguid = #INSTANCECLASSGUID#
+              and m.instanceclassguid = #{INSTANCECLASSGUID}
           </if>
           <if  test="INSTANCEGUID!=null">
-              and m.instanceguid = #INSTANCEGUID#
+              and m.instanceguid = #{INSTANCEGUID}
           </if>
           <if  test="OVERYEAR!=null">
-              and m.indicatoryear  <![CDATA[ <= ]]> #OVERTIMEYEAR#
+              and m.indicatoryear  <![CDATA[ <= ]]> #{OVERTIMEYEAR}
           </if>
           <if  test="OVERTIME!=null">
-              and  m.indicatormonth <![CDATA[ < ]]> #OVERTIMEMONTH#
+              and  m.indicatormonth <![CDATA[ < ]]> #{OVERTIMEMONTH}
           </if>
       </where>
     </select>
-    
+
     <insert id="insert" parameterType="dyna.common.bean.data.ppms.indicator.IndicatorDataMonthlyList">
         insert into ppm_indicator_monthly_list
 			       (guid,
@@ -47,40 +47,40 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			        parentguid,
 			        createtime,
 			        updatetime)
-	        values (#GUID#,
-			        #INDICATORYEAR#,
-					#INDICATORYEAR#,
-					#DATASOURCENAME#,
-					#INSTANCECLASSGUID#,
-					#INSTANCEGUID#,
-					#INSTANCETYPE#,
-					#PARENTDATASOURCE#,
-					#PARENTGUID#,
-					#CURRENTTIME:TIMESTAMP#,
-					#CURRENTTIME:TIMESTAMP#)
+	        values (#{GUID},
+			        #{INDICATORYEAR},
+					#{INDICATORYEAR},
+					#{DATASOURCENAME},
+					#{INSTANCECLASSGUID},
+					#{INSTANCEGUID},
+					#{INSTANCETYPE},
+					#{PARENTDATASOURCE},
+					#{PARENTGUID},
+					#{CURRENTTIME:TIMESTAMP},
+					#{CURRENTTIME:TIMESTAMP})
     </insert>
-    
+
     <update id="update" parameterType="dyna.common.bean.data.ppms.indicator.IndicatorDataMonthlyList">
-        update ppm_indicator_monthly_list 
+        update ppm_indicator_monthly_list
                  <set>
-	               <if test="INDICATORYEAR!=null">indicatoryear = #INDICATORYEAR#,</if>
-	               <if test="INDICATORYEAR!=null">indicatoryear = #INDICATORYEAR#,</if>
-	               <if test="DATASOURCENAME!=null">datasourcename = #DATASOURCENAME#,</if>
-	               <if test="INSTANCECLASSGUID!=null">instanceclassguid = #INSTANCECLASSGUID#,</if>
-	               <if test="INSTANCEGUID!=null">instanceguid = #INSTANCEGUID#,</if>
-	               <if test="INSTANCETYPE!=null">instancetype = #INSTANCETYPE#,</if>
-	               <if test="PARENTDATASOURCE!=null">parentdatasource = #PARENTDATASOURCE#,</if>
-	               <if test="PARENTGUID!=null">parentguid = #PARENTGUID#,</if>
+	               <if test="INDICATORYEAR!=null">indicatoryear = #{INDICATORYEAR},</if>
+	               <if test="INDICATORYEAR!=null">indicatoryear = #{INDICATORYEAR},</if>
+	               <if test="DATASOURCENAME!=null">datasourcename = #{DATASOURCENAME},</if>
+	               <if test="INSTANCECLASSGUID!=null">instanceclassguid = #{INSTANCECLASSGUID},</if>
+	               <if test="INSTANCEGUID!=null">instanceguid = #{INSTANCEGUID},</if>
+	               <if test="INSTANCETYPE!=null">instancetype = #{INSTANCETYPE},</if>
+	               <if test="PARENTDATASOURCE!=null">parentdatasource = #{PARENTDATASOURCE},</if>
+	               <if test="PARENTGUID!=null">parentguid = #{PARENTGUID},</if>
                </set>
-               updatetime = #CURRENTTIME:TIMESTAMP#
-         where guid=#GUID#
+               updatetime = #{CURRENTTIME:TIMESTAMP}
+         where guid=#{GUID}
     </update>
-    
+
     <delete id="delete" parameterType="java.lang.String">
-        delete from ppm_indicator_monthly_list where guid =#GUID#
+        delete from ppm_indicator_monthly_list where guid =#{GUID}
     </delete>
-    
+
     <delete id="deleteBy" parameterType="map">
-        delete from ppm_indicator_monthly_list where indicatoryear = #INDICATORYEAR# and indicatoryear = #INDICATORYEAR#
+        delete from ppm_indicator_monthly_list where indicatoryear = #{INDICATORYEAR} and indicatoryear = #{INDICATORYEAR}
     </delete>
 </mapper>
