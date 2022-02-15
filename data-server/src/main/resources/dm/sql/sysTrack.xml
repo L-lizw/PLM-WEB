@@ -11,12 +11,12 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
       		               a.*
 			          from sa_systrack a
 			          <where>
-						<if  test="CREATETIMESTART!=null">and a.createtime >=#CREATETIMESTART:DATE#</if>
-						<if  test="CREATETIMEEND!=null">and #CREATETIMEEND:DATE#>=a.createtime</if>
-						<if  test="CREATEUSERGUID!=null">and a.createuserguid=#CREATEUSERGUID#</if>
-						<if  test="SID!=null">and a.sid=#SID#</if>
+						<if  test="CREATETIMESTART!=null">and a.createtime >=#{CREATETIMESTART:DATE}</if>
+						<if  test="CREATETIMEEND!=null">and #{CREATETIMEEND:DATE}>=a.createtime</if>
+						<if  test="CREATEUSERGUID!=null">and a.createuserguid=#{CREATEUSERGUID}</if>
+						<if  test="SID!=null">and a.sid=#{SID}</if>
 			          </where>
-					  <if test="ORDERBY">$ORDERBY$</if>
+					  <if test="ORDERBY">${ORDERBY}</if>
 					) b ) c
     </select>
         
@@ -34,16 +34,16 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			createuserguid
         )
         values(
-			#GUID:VARCHAR:NULL#,
-			#SID:VARCHAR:NULL#,
-			#BYWHOM:VARCHAR:NULL#,
-			#ATWHERE:VARCHAR:NULL#,
-			#DOWHAT:VARCHAR:NULL#,
-			#TGOBJECT:VARCHAR:NULL#,
-			#EXECUTRESULT:VARCHAR:NULL#,
-			<if test="CREATETIME!=null">#CREATETIME:TIMESTAMP#,</if>
-			<if test="CREATETIME==null">#CURRENTTIME:TIMESTAMP#,</if>
-			#CREATEUSERGUID#
+			#{GUID:VARCHAR:NULL},
+			#{SID:VARCHAR:NULL},
+			#{BYWHOM:VARCHAR:NULL},
+			#{ATWHERE:VARCHAR:NULL},
+			#{DOWHAT:VARCHAR:NULL},
+			#{TGOBJECT:VARCHAR:NULL},
+			#{EXECUTRESULT:VARCHAR:NULL},
+			<if test="CREATETIME!=null">#{CREATETIME:TIMESTAMP},</if>
+			<if test="CREATETIME==null">#{CURRENTTIME:TIMESTAMP},</if>
+			#{CREATEUSERGUID}
         )
     </insert> 
     
@@ -53,13 +53,13 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			<if  test="GUID!=null">
 			    and guid in 
 		       	<foreach collection="GUID" open="(" close=")" separator="," item="TEMP">
-				#TEMP#
+				#{TEMP}
 				</foreach>
 			</if>
-			<if  test="CREATETIMESTART!=null">and a.createtime >=#CREATETIMESTART:DATE#</if>
-			<if  test="CREATETIMEEND!=null">and #CREATETIMEEND:DATE#>=a.createtime</if>
-			<if  test="CREATEUSERGUID!=null">and a.createuserguid=#CREATEUSERGUID#</if>
-			<if  test="SID!=null">and sid=#SID#</if>
+			<if  test="CREATETIMESTART!=null">and a.createtime >=#{CREATETIMESTART:DATE}</if>
+			<if  test="CREATETIMEEND!=null">and #{CREATETIMEEND:DATE}>=a.createtime</if>
+			<if  test="CREATEUSERGUID!=null">and a.createuserguid=#{CREATEUSERGUID}</if>
+			<if  test="SID!=null">and sid=#{SID}</if>
         </where>
 	</delete>
 	
@@ -71,29 +71,29 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		delete from sa_systrack 
 		 where guid in 
 		       <foreach collection= "GUID!=null" open="(" close=")" separator="," item="TEMP">
-			   #TEMP#
+			   #{TEMP}
 			   </foreach>
 	</delete>
 	
 	<delete id="deleteBySID" parameterType="map">
 		delete from sa_systrack 
-		 where sid=#SID#
-		<if  test="CREATETIMESTART!=null">and a.createtime >=#CREATETIMESTART:DATE#</if>
-		<if  test="CREATETIMEEND!=null">and #CREATETIMEEND:DATE#>=a.createtime</if>
+		 where sid=#{SID}
+		<if  test="CREATETIMESTART!=null">and a.createtime >=#{CREATETIMESTART:DATE}</if>
+		<if  test="CREATETIMEEND!=null">and #{CREATETIMEEND:DATE}>=a.createtime</if>
 	</delete>
 	
 	<delete id="deleteByUserGuid" parameterType="map">
 		delete from sa_systrack 
-		 where createuserguid=#CREATEUSERGUID#
-		<if  test="CREATETIMESTART!=null">and a.createtime >=#CREATETIMESTART:DATE#</if>
-		<if  test="CREATETIMEEND!=null">and #CREATETIMEEND:DATE#>=a.createtime</if>
+		 where createuserguid=#{CREATEUSERGUID}
+		<if  test="CREATETIMESTART!=null">and a.createtime >=#{CREATETIMESTART:DATE}</if>
+		<if  test="CREATETIMEEND!=null">and #{CREATETIMEEND:DATE}>=a.createtime</if>
 	</delete>
 	
 	<delete id="deleteByAll" parameterType="map">
 		delete from sa_systrack 
-		 where sid=#SID#
-		   and createuserguid=#CREATEUSERGUID#
-		<if  test="CREATETIMESTART!=null">and a.createtime >=#CREATETIMESTART:DATE#</if>
-		<if  test="CREATETIMEEND!=null">and #CREATETIMEEND:DATE#>=a.createtime</if>
+		 where sid=#{SID}
+		   and createuserguid=#{CREATEUSERGUID}
+		<if  test="CREATETIMESTART!=null">and a.createtime >=#{CREATETIMESTART:DATE}</if>
+		<if  test="CREATETIMEEND!=null">and #{CREATETIMEEND:DATE}>=a.createtime</if>
 	</delete>
 </mapper>

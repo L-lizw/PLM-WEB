@@ -7,63 +7,63 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     <sql id="where">
         <where>
             <if  test="GUID!=null">
-				and pc.guid = #GUID#
+				and pc.guid = #{GUID}
             </if>
             <if  test="CALENDARID!=null">
-				and pc.calendarid = #CALENDARID#
+				and pc.calendarid = #{CALENDARID}
             </if>
             <if  test="CALENDARNAME!=null">
-				and  pc.calendarname = #CALENDARNAME#
+				and  pc.calendarname = #{CALENDARNAME}
             </if>
             <if  test="BOFWEEK!=null">
-				and pc.bofweek = #BOFWEEK#
+				and pc.bofweek = #{BOFWEEK}
             </if>
             <if  test="BEGINTIME!=null">
-				and pc.begintime = #BEGINTIME#
+				and pc.begintime = #{BEGINTIME}
             </if>
             <if  test="ENDTIME!=null">
-				and  pc.endtime = #ENDTIME#
+				and  pc.endtime = #{ENDTIME}
             </if>
             <if  test="DAILYWORKHOURS!=null">
-				and pc.dailyworkhours = #DAILYWORKHOURS#
+				and pc.dailyworkhours = #{DAILYWORKHOURS}
             </if>
             <if  test="FISCALYEAR!=null">
-				and pc.fiscalyear = #FISCALYEAR#
+				and pc.fiscalyear = #{FISCALYEAR}
             </if>
             <if  test="CODEBYSTARTYEAR!=null">
-				and pc.codebystartyear = #CODEBYSTARTYEAR#
+				and pc.codebystartyear = #{CODEBYSTARTYEAR}
             </if>
             <if  test="NONWORKDAYS!=null">
-				and pc.nonworkdays = #NONWORKDAYS#
+				and pc.nonworkdays = #{NONWORKDAYS}
             </if>
             <if  test="WEEKLYWORKHOURS!=null">
-				and  pc.weeklyworkhours = #WEEKLYWORKHOURS#
+				and  pc.weeklyworkhours = #{WEEKLYWORKHOURS}
             </if>
             <if  test="MONTHLYWORKDAYS!=null">
-				and  pc.monthlyworkdays = #MONTHLYWORKDAYS#
+				and  pc.monthlyworkdays = #{MONTHLYWORKDAYS}
             </if>
             <if  test="CREATEUSERGUID!=null">
-				and pc.createuserguid = #CREATEUSERGUID#
+				and pc.createuserguid = #{CREATEUSERGUID}
             </if>
             <if  test="UPDATEUSERGUID!=null">
-				and pc.updateuserguid = #UPDATEUSERGUID#
+				and pc.updateuserguid = #{UPDATEUSERGUID}
             </if>
             <if  test="ISVALID!=null">
-				and  pc.isvalid = #ISVALID#
+				and  pc.isvalid = #{ISVALID}
             </if>
             <if test="PROJECT!=null">
 	            <if  test="PROJECT!=null">
-					and pc.project = #PROJECT#
+					and pc.project = #{PROJECT}
 	            </if>
 	            <if  test="PROJECT==null">
 					and pc.project is null
 		        </if>
 			</if>
             <if  test="PROJECT$CLASS!=null">
-				and  pc.project$$class = #PROJECT$CLASS#
+				and  pc.project$$class = #{PROJECT$CLASS}
             </if>
             <if  test="PROJECT$MASTER!=null">
-				and pc.project$$master = #PROJECT$MASTER#
+				and pc.project$$master = #{PROJECT$MASTER}
             </if>
         </where>
     </sql>
@@ -90,9 +90,9 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		         inner join sa_user u
 		            on u.guid = f$$.executor
 		         where f$$.latestrevision like '%m%'
-		           and f$$.boguid = #BOGUID#
-		           and (f$$.obsoletetime is null or f$$.obsoletetime > #CURRENTDATE:TIMESTAMP#)
-		           and u.userid in ($USERID$)
+		           and f$$.boguid = #{BOGUID}
+		           and (f$$.obsoletetime is null or f$$.obsoletetime > #{CURRENTDATE:TIMESTAMP})
+		           and u.userid in (${USERID})
 		        union
 		        <!--我参与的任务-->
 		        select f$$.guid taskguid, 
@@ -105,11 +105,11 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		         inner join sa_user u
 		            on u.guid = b.userguid
 		         where f$$.latestrevision like '%m%'
-		           and f$$.boguid = #BOGUID#
-		           and (f$$.obsoletetime is null or f$$.obsoletetime > #CURRENTDATE:TIMESTAMP#)
-		           and u.userid in ($USERID$)
+		           and f$$.boguid = #{BOGUID}
+		           and (f$$.obsoletetime is null or f$$.obsoletetime > #{CURRENTDATE:TIMESTAMP})
+		           and u.userid in (${USERID})
 		       ) x
-		 where planstarttime between #STARTTIME:TIMESTAMP#  and #ENDTIME:TIMESTAMP#
+		 where planstarttime between #{STARTTIME:TIMESTAMP}  and #{ENDTIME:TIMESTAMP}
 		                                            
       order by planstarttime,
                userid
@@ -131,9 +131,9 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		         inner join sa_user u
 		            on u.guid = f$$.executor
 		         where f$$.latestrevision like '%m%'
-		           and f$$.boguid = #BOGUID#
-		           and (f$$.obsoletetime is null or f$$.obsoletetime > #CURRENTDATE:TIMESTAMP#)
-		           and u.userid in ($USERID$)
+		           and f$$.boguid = #{BOGUID#{
+		           and (f$$.obsoletetime is null or f$$.obsoletetime > #{CURRENTDATE:TIMESTAMP})
+		           and u.userid in (${USERID})
 		        union
 		        <!--我参与的任务-->
 		        select f$$.guid taskguid, 
@@ -146,11 +146,11 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		         inner join sa_user u
 		            on u.guid = b.userguid
 		         where f$$.latestrevision like '%m%'
-		           and f$$.boguid = #BOGUID#
-		           and (f$$.obsoletetime is null or f$$.obsoletetime > #CURRENTDATE:TIMESTAMP#)
-		           and u.userid in ($USERID$)
+		           and f$$.boguid = #{BOGUID}
+		           and (f$$.obsoletetime is null or f$$.obsoletetime > #{CURRENTDATE:TIMESTAMP})
+		           and u.userid in (${USERID})
 		       ) x
-		 where planstarttime between #STARTTIME:TIMESTAMP# and #ENDTIME:TIMESTAMP#
+		 where planstarttime between #{STARTTIME:TIMESTAMP} and #{ENDTIME:TIMESTAMP}
 		                                             
       order by planstarttime,
                userid
@@ -183,56 +183,56 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			        createtime,
 			        updateuserguid,
 			        updatetime)
-	        values (#GUID#,
-			        #CALENDARID#,
-					#CALENDARNAME:VARCHAR:NULL#,
+	        values (#{GUID},
+			        #{CALENDARID},
+					#{CALENDARNAME:VARCHAR:NULL},
 					
-					#BOFWEEK:NUMERIC#,
-					#BEGINTIME:VARCHAR:NULL#,
-					#ENDTIME:VARCHAR:NULL#,
+					#{BOFWEEK:NUMERIC},
+					#{BEGINTIME:VARCHAR:NULL},
+					#{ENDTIME:VARCHAR:NULL},
 					
-					#DAILYWORKHOURS:NUMERIC#,
-					#WEEKLYWORKHOURS:NUMERIC#,
-					#MONTHLYWORKDAYS:NUMERIC#,
+					#{DAILYWORKHOURS:NUMERIC},
+					#{WEEKLYWORKHOURS:NUMERIC},
+					#{MONTHLYWORKDAYS:NUMERIC},
 					
-					#FISCALYEAR:NUMERIC#,
-					#CODEBYSTARTYEAR:VARCHAR:NULL#,
-					#NONWORKDAYS:VARCHAR:NULL#,
+					#{FISCALYEAR:NUMERIC},
+					#{CODEBYSTARTYEAR:VARCHAR:NULL},
+					#{NONWORKDAYS:VARCHAR:NULL},
 					'1',
 					
-					#PROJECT:VARCHAR:NULL#,
-					#PROJECT$CLASS:VARCHAR:NULL#,
-					#PROJECT$MASTER:VARCHAR:NULL#,
+					#{PROJECT:VARCHAR:NULL},
+					#{PROJECT$CLASS:VARCHAR:NULL},
+					#{PROJECT$MASTER:VARCHAR:NULL},
 					
-					#CREATEUSERGUID:VARCHAR:NULL#,
-					#CURRENTTIME:TIMESTAMP#,
-					#UPDATEUSERGUID:VARCHAR:NULL#,
-					#CURRENTTIME:TIMESTAMP#)
+					#{CREATEUSERGUID:VARCHAR:NULL},
+					#{CURRENTTIME:TIMESTAMP},
+					#{UPDATEUSERGUID:VARCHAR:NULL},
+					#{CURRENTTIME:TIMESTAMP})
     </insert>
     
     <update id="update" parameterType="dyna.common.bean.data.ppms.PMCalendar">
         update ppm_calendar
         <set>
-	        <if test="CALENDARID!=null">calendarid = #CALENDARID#,</if>
-	        <if test="CALENDARNAME!=null">calendarname = #CALENDARNAME#,</if>
-	        <if test="BOFWEEK!=null">bofweek = #BOFWEEK#,</if>
-	        <if test="BEGINTIME!=null">begintime = #BEGINTIME#,</if>
-	        <if test="ENDTIME!=null">endtime = #ENDTIME#,</if>
-	        <if test="DAILYWORKHOURS!=null">dailyworkhours = #DAILYWORKHOURS#,</if>
-	        <if test="FISCALYEAR!=null">fiscalyear = #FISCALYEAR#,</if>
-	        <if test="CODEBYSTARTYEAR!=null">codebystartyear = #CODEBYSTARTYEAR#,</if>
-	        <if test="NONWORKDAYS!=null">nonworkdays = #NONWORKDAYS#,</if>
-	        <if test="ISVALID!=null">isvalid = #ISVALID#,</if>
-	        <if test="PROJECT!=null">project = #PROJECT#,</if>
-	        <if test="PROJECT$CLASS!=null">project$$class = #PROJECT$CLASS#,</if>
-	        <if test="PROJECT$MASTER!=null">project$$master = #PROJECT$MASTER#,</if>
+	        <if test="CALENDARID!=null">calendarid = #{CALENDARID},</if>
+	        <if test="CALENDARNAME!=null">calendarname = #{CALENDARNAME},</if>
+	        <if test="BOFWEEK!=null">bofweek = #{BOFWEEK},</if>
+	        <if test="BEGINTIME!=null">begintime = #{BEGINTIME},</if>
+	        <if test="ENDTIME!=null">endtime = #{ENDTIME},</if>
+	        <if test="DAILYWORKHOURS!=null">dailyworkhours = #{DAILYWORKHOURS},</if>
+	        <if test="FISCALYEAR!=null">fiscalyear = #{FISCALYEAR},</if>
+	        <if test="CODEBYSTARTYEAR!=null">codebystartyear = #{CODEBYSTARTYEAR},</if>
+	        <if test="NONWORKDAYS!=null">nonworkdays = #{NONWORKDAYS},</if>
+	        <if test="ISVALID!=null">isvalid = #{ISVALID},</if>
+	        <if test="PROJECT!=null">project = #{PROJECT},</if>
+	        <if test="PROJECT$CLASS!=null">project$$class = #{PROJECT$CLASS},</if>
+	        <if test="PROJECT$MASTER!=null">project$$master = #{PROJECT$MASTER},</if>
         </set>
-               updatetime = #CURRENTTIME:TIMESTAMP#,
-               updateuserguid = #UPDATEUSERGUID#
-         where guid = #GUID#
+               updatetime = #{CURRENTTIME:TIMESTAMP},
+               updateuserguid = #{UPDATEUSERGUID}
+         where guid = #{GUID}
     </update>
     
     <delete id="delete" parameterType="map">
-        delete from ppm_calendar where guid = #GUID#
+        delete from ppm_calendar where guid = #{GUID}
     </delete>
 </mapper>

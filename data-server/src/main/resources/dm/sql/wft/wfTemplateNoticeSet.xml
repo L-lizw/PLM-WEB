@@ -12,7 +12,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     <select id="get" parameterType="java.lang.String" resultType="dyna.common.dto.template.wft.WorkflowTemplateActAdvnoticeInfo" statementType="STATEMENT">
 		SELECT A.* 
 		  FROM WF_TEMPLATE_NOTICE A
-		 WHERE GUID=#GUID#
+		 WHERE GUID=#{GUID}
 	</select>
 
     <insert id="insert" parameterType="dyna.common.dto.template.wft.WorkflowTemplateActAdvnoticeInfo">
@@ -31,56 +31,56 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                      UPDATEUSERGUID, 
                      UPDATETIME
                     )
-        values(#GUID:VARCHAR:NULL#,
-               #TEMPLATEGUID:VARCHAR:NULL#,
-               #TEMPLATEACTRTGUID:VARCHAR:NULL#,
-               #HASORGANIGER:VARCHAR:NULL#,
-               #HASLASTEXECUTOR:VARCHAR:NULL#,
-               #HASNEXTEXECUTOR:VARCHAR:NULL#,
-               #HASALLEXECUTOR:VARCHAR:NULL#,
-               #HASLEADER:VARCHAR:NULL#,
-               #NOTICETYPE:VARCHAR:NULL#,
-               #CREATEUSERGUID:VARCHAR:NULL#,
-               #CURRENTTIME:TIMESTAMP#,
-               #UPDATEUSERGUID:VARCHAR:NULL#,
-               #CURRENTTIME:TIMESTAMP#
+        values(#{GUID:VARCHAR:NULL},
+               #{TEMPLATEGUID:VARCHAR:NULL},
+               #{TEMPLATEACTRTGUID:VARCHAR:NULL},
+               #{HASORGANIGER:VARCHAR:NULL},
+               #{HASLASTEXECUTOR:VARCHAR:NULL},
+               #{HASNEXTEXECUTOR:VARCHAR:NULL},
+               #{HASALLEXECUTOR:VARCHAR:NULL},
+               #{HASLEADER:VARCHAR:NULL},
+               #{NOTICETYPE:VARCHAR:NULL},
+               #{CREATEUSERGUID:VARCHAR:NULL},
+               #{CURRENTTIME:TIMESTAMP},
+               #{UPDATEUSERGUID:VARCHAR:NULL},
+               #{CURRENTTIME:TIMESTAMP}
               )
     </insert>
     
     <update id="update" parameterType="java.util.HashMap">
         update wf_template_notice 
                <set>
-                   UPDATEUSERGUID = #UPDATEUSERGUID#,
-                   UPDATETIME = #CURRENTTIME:TIMESTAMP#,
+                   UPDATEUSERGUID = #{UPDATEUSERGUID},
+                   UPDATETIME = #{CURRENTTIME:TIMESTAMP},
                    <if test="TEMPLATEACTRTGUID!=null" >
-                      TEMPLATEACTRTGUID = #TEMPLATEACTRTGUID#,
+                      TEMPLATEACTRTGUID = #{TEMPLATEACTRTGUID},
                    </if>
                    <if test="TEMPLATEGUID!=null" >
-                      TEMPLATEGUID = #TEMPLATEGUID#,
+                      TEMPLATEGUID = #{TEMPLATEGUID},
                    </if>
                    <if test="HASORGANIGER!=null" >
-                      HASORGANIGER = #HASORGANIGER#,
+                      HASORGANIGER = #{HASORGANIGER},
                    </if>
                    <if test="HASLASTEXECUTOR!=null" >
-                      HASLASTEXECUTOR = #HASLASTEXECUTOR#,
+                      HASLASTEXECUTOR = #{HASLASTEXECUTOR},
                    </if>
                    <if test="HASNEXTEXECUTOR!=null" >
-                      HASNEXTEXECUTOR = #HASNEXTEXECUTOR#,
+                      HASNEXTEXECUTOR = #{HASNEXTEXECUTOR},
                    </if>
                    <if test="HASALLEXECUTOR!=null" >
-                      HASALLEXECUTOR = #HASALLEXECUTOR#,
+                      HASALLEXECUTOR = #{HASALLEXECUTOR},
                    </if>
                    <if test="HASLEADER!=null" >
-                      HASLEADER = #HASLEADER#,
+                      HASLEADER = #{HASLEADER},
                    </if>
                    <if test="NOTICETYPE!=null" >
-                      NOTICETYPE = #NOTICETYPE#,
+                      NOTICETYPE = #{NOTICETYPE},
                    </if>
                </set>
-         where GUID = #GUID#
+         where GUID = #{GUID}
     </update>
     
     <delete id="delete" parameterType="java.lang.String">
-        DELETE FROM WF_TEMPLATE_NOTICE WHERE GUID = #GUID#
+        DELETE FROM WF_TEMPLATE_NOTICE WHERE GUID = #{GUID}
     </delete>
 </mapper>

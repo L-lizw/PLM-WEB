@@ -7,13 +7,13 @@
     <sql id="where">
         <where>
             <if  test="GUID!=null">
-                and guid = #GUID#
+                and guid = #{GUID}
             </if>
             <if  test="TYPEGUID!=null">
-                and  typeguid = #TYPEGUID#
+                and  typeguid = #{TYPEGUID}
             </if>
             <if  test="OWNERTYPE!=null">
-                and  OWNERTYPE = #OWNERTYPE#
+                and  OWNERTYPE = #{OWNERTYPE}
             </if>
         </where>
     </sql>
@@ -28,10 +28,10 @@
         from ppm_projectrole m ,
         ppm_rolemembers mem
         where mem.projectroleguid = m.guid
-        and mem.userguid = #USERGUID#
-        and m.typeguid = #TYPEGUID#
+        and mem.userguid = #{USERGUID}
+        and m.typeguid = #{TYPEGUID}
         <if  test="OWNERTYPE!=null">
-            and  m.OWNERTYPE = #OWNERTYPE#
+            and  m.OWNERTYPE = #{OWNERTYPE}
         </if>
     </select>
     <insert id="insert" parameterType="dyna.common.bean.data.ppms.ProjectRole">
@@ -48,32 +48,32 @@
         createtime,
         updateuserguid,
         updatetime)
-        values (#GUID#,
-        #TYPEGUID#,
-        #CLASSGUID#,
-        #OWNERTYPE#,
-        #ROLEID#,
-        #ROLENAME#,
-        #DESCRIPTION#,
+        values (#{GUID},
+        #{TYPEGUID},
+        #{CLASSGUID},
+        #{OWNERTYPE},
+        #{ROLEID},
+        #{ROLENAME},
+        #{DESCRIPTION},
 
-        #CREATEUSERGUID#,
-        #CURRENTTIME:TIMESTAMP#,
-        #UPDATEUSERGUID#,
-        #CURRENTTIME:TIMESTAMP#)
+        #{CREATEUSERGUID},
+        #{CURRENTTIME:TIMESTAMP},
+        #{UPDATEUSERGUID},
+        #{CURRENTTIME:TIMESTAMP})
     </insert>
 
     <update id="update" parameterType="dyna.common.bean.data.ppms.ProjectRole">
         update ppm_projectrole
          <set>
-            <if test="TYPEGUID!=null">TYPEGUID = #TYPEGUID#,</if>
-            <if test="CLASSGUID!=null">CLASSGUID = #CLASSGUID#,</if>
-            <if test="OWNERTYPE!=null">OWNERTYPE = #OWNERTYPE#,</if>
-            <if test="ROLEID!=null">ROLEID = #ROLEID#,</if>
-            <if test="ROLENAME!=null">ROLENAME = #ROLENAME#,</if>
-            <if test="DESCRIPTION!=null">DESCRIPTION = #DESCRIPTION#,</if>
+            <if test="TYPEGUID!=null">TYPEGUID = #{TYPEGUID},</if>
+            <if test="CLASSGUID!=null">CLASSGUID = #{CLASSGUID},</if>
+            <if test="OWNERTYPE!=null">OWNERTYPE = #{OWNERTYPE},</if>
+            <if test="ROLEID!=null">ROLEID = #{ROLEID},</if>
+            <if test="ROLENAME!=null">ROLENAME = #{ROLENAME},</if>
+            <if test="DESCRIPTION!=null">DESCRIPTION = #{DESCRIPTION},</if>
         </set>
-        updatetime = #CURRENTTIME:TIMESTAMP#,
-        updateuserguid = #UPDATEUSERGUID#
+        updatetime = #{CURRENTTIME:TIMESTAMP},
+        updateuserguid = #{UPDATEUSERGUID}
         <include refid="where"/>
     </update>
 

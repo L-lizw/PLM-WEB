@@ -20,9 +20,9 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		         inner join sa_user u
 		            on u.guid = r$$.executor
 		         where f$$.latestrevision like '%m%'
-		           and f$$.boguid = #BOGUID#
-		           and (f$$.obsoletetime is null or f$$.obsoletetime > #CURRENTTIME:TIMESTAMP#)
-		           and u.userid in ($USERID$)
+		           and f$$.boguid = #{BOGUID}
+		           and (f$$.obsoletetime is null or f$$.obsoletetime > #{CURRENTTIME:TIMESTAMP})
+		           and u.userid in (${USERID})
 		        union
 		        <!--我参与的任务-->
 		        select f$$.guid taskguid, 
@@ -35,11 +35,11 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		         inner join sa_user u
 		            on u.guid = b.userguid
 		         where f$$.latestrevision like '%m%'
-		           and f$$.boguid = #BOGUID#
-		           and (f$$.obsoletetime is null or f$$.obsoletetime > #CURRENTTIME:TIMESTAMP#)
-		           and u.userid in ($USERID$)
+		           and f$$.boguid = #{BOGUID}
+		           and (f$$.obsoletetime is null or f$$.obsoletetime > #{CURRENTTIME:TIMESTAMP})
+		           and u.userid in (${USERID})
 		       )
-		 where planstarttime between #STARTTIME:TIMESTAMP#  and #ENDTIME:TIMESTAMP#
+		 where planstarttime between #{STARTTIME:TIMESTAMP}  and #{ENDTIME:TIMESTAMP}
 		                                             
       order by planstarttime,
                userid
@@ -61,9 +61,9 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		         inner join sa_user u
 		            on u.guid = r$$.executor
 		         where f$$.latestrevision like '%m%'
-		           and f$$.boguid = #BOGUID#
-		           and (f$$.obsoletetime is null or f$$.obsoletetime > #CURRENTTIME:TIMESTAMP#)
-		           and u.userid in ($USERID$)
+		           and f$$.boguid = #{BOGUID#{
+		           and (f$$.obsoletetime is null or f$$.obsoletetime > #{CURRENTTIME:TIMESTAMP})
+		           and u.userid in (${USERID})
 		        union
 		        <!--我参与的任务-->
 		        select f$$.guid taskguid, 
@@ -76,11 +76,11 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		         inner join sa_user u
 		            on u.guid = b.userguid
 		         where f$$.latestrevision like '%m%'
-		           and f$$.boguid = #BOGUID#
-		           and (f$$.obsoletetime is null or f$$.obsoletetime > #CURRENTTIME:TIMESTAMP#)
-		           and u.userid in ($USERID$)
+		           and f$$.boguid = #{BOGUID}
+		           and (f$$.obsoletetime is null or f$$.obsoletetime > #{CURRENTTIME:TIMESTAMP})
+		           and u.userid in (${USERID$})
 		       )
-		 where planstarttime between #STARTTIME:TIMESTAMP#  and #ENDTIME:TIMESTAMP#
+		 where planstarttime between #{STARTTIME:TIMESTAMP}  and #{ENDTIME:TIMESTAMP}
 		                                             
       order by planstarttime,
                userid

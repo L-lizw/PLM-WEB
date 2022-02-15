@@ -7,13 +7,13 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     <sql id="where">
         <where>
             <if  test="GUID!=null">
-                and guid = #GUID#
+                and guid = #{GUID}
             </if>
             <if  test="PROJECTROLEGUID!=null">
-                and PROJECTROLEGUID = #PROJECTROLEGUID#
+                and PROJECTROLEGUID = #{PROJECTROLEGUID}
             </if>
             <if  test="USERGUID!=null">
-                and USERGUID = #USERGUID#
+                and USERGUID = #{USERGUID}
             </if>
         </where>
     </sql>
@@ -37,26 +37,26 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			        createtime,
 			        updateuserguid,
 			        updatetime)
-	        values (#GUID:VARCHAR:NULL#,
-			        #PROJECTROLEGUID:VARCHAR:NULL#,
-					#USERGUID:VARCHAR:NULL#,
-					#DATASEQ#,
+	        values (#{GUID:VARCHAR:NULL},
+			        #{PROJECTROLEGUID:VARCHAR:NULL},
+					#{USERGUID:VARCHAR:NULL},
+					#{DATASEQ},
 					
-					#CREATEUSERGUID:VARCHAR:NULL#,
-					#CURRENTTIME:TIMESTAMP#,
-					#UPDATEUSERGUID:VARCHAR:NULL#,
-					#CURRENTTIME:TIMESTAMP#)
+					#{CREATEUSERGUID:VARCHAR:NULL},
+					#{CURRENTTIME:TIMESTAMP},
+					#{UPDATEUSERGUID:VARCHAR:NULL},
+					#{CURRENTTIME:TIMESTAMP})
     </insert>
     
     <update id="update" parameterType="dyna.common.bean.data.ppms.RoleMembers">
         update ppm_RoleMembers 
                  <set>
-	               <if test="PROJECTROLEGUID!=null">PROJECTROLEGUID = #PROJECTROLEGUID#,</if>
-	               <if test="USERGUID!=null">USERGUID = #USERGUID#,</if>
-	               <if test="DATASEQ!=null">DATASEQ = #DATASEQ#,</if>
+	               <if test="PROJECTROLEGUID!=null">PROJECTROLEGUID = #{PROJECTROLEGUID},</if>
+	               <if test="USERGUID!=null">USERGUID = #{USERGUID},</if>
+	               <if test="DATASEQ!=null">DATASEQ = #{DATASEQ},</if>
                </set>
-               updatetime = #CURRENTTIME:TIMESTAMP#,
-               updateuserguid = #UPDATEUSERGUID#
+               updatetime = #{CURRENTTIME:TIMESTAMP},
+               updateuserguid = #{UPDATEUSERGUID}
          	   <include refid="where"/>
     </update>
     

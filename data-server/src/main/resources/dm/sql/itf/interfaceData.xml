@@ -14,16 +14,16 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		SELECT GUID,
 		       INTERFACENAME
 		  FROM MA_INTERFACE
-		 WHERE INTERFACENAME=#INTERFACENAME#
+		 WHERE INTERFACENAME=#{INTERFACENAME}
 	</select>
 	
 	<insert id="insert" parameterType="map">
 	    INSERT INTO MA_INTERFACE(GUID, INTERFACENAME)
-	    VALUES(#GUID#, #INTERFACENAME#)
+	    VALUES(#{GUID}, #{INTERFACENAME})
 	</insert>
     
     <delete id="delete" parameterType="java.lang.String">
-        DELETE FROM MA_INTERFACE WHERE GUID=#GUID#
+        DELETE FROM MA_INTERFACE WHERE GUID=#{GUID}
     </delete>
 
 	<delete id="deleteAll">

@@ -13,7 +13,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 	<select id="get" resultType="dyna.common.dto.model.wf.WorkflowTransitionInfo" statementType="STATEMENT">
 		select a.*
 		from ma_wf_trans a
-		where guid=#GUID#
+		where guid=#{GUID}
 	</select>
 	
 	<insert id="insert" parameterType="dyna.common.dto.model.wf.WorkflowTransitionInfo">
@@ -34,40 +34,40 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 
 		)
 		values (
-		#GUID:VARCHAR:NULL#,
-		#WFFK:VARCHAR:NULL#,
-		#TRANSNAME:VARCHAR:NULL#,
-		#DESCRIPTION:VARCHAR:NULL#,
-		#ACTFROMGUID:VARCHAR:NULL#,
-		#ACTTOGUID:VARCHAR:NULL#,
-		#TRANSTYPE:VARCHAR:NULL#,
-		#DATASEQ#,
+		#{GUID:VARCHAR:NULL},
+		#{WFFK:VARCHAR:NULL},
+		#{TRANSNAME:VARCHAR:NULL},
+		#{DESCRIPTION:VARCHAR:NULL},
+		#{ACTFROMGUID:VARCHAR:NULL},
+		#{ACTTOGUID:VARCHAR:NULL},
+		#{TRANSTYPE:VARCHAR:NULL},
+		#{DATASEQ},
 
-		#CURRENTTIME:TIMESTAMP#,
-		#CREATEUSERGUID:VARCHAR:NULL#,
-		#CURRENTTIME:TIMESTAMP#,
-		#UPDATEUSERGUID:VARCHAR:NULL#
+		#{CURRENTTIME:TIMESTAMP},
+		#{CREATEUSERGUID:VARCHAR:NULL},
+		#{CURRENTTIME:TIMESTAMP},
+		#{UPDATEUSERGUID:VARCHAR:NULL}
 		)
 	</insert>
 	
 	<update id="update" parameterType="dyna.common.dto.model.wf.WorkflowTransitionInfo">
 		update ma_wf_trans 
 		<set>
-			updatetime=#CURRENTTIME:TIMESTAMP#,
-			updateuserguid=#UPDATEUSERGUID#,
-			<if  test="WFFK!=null">WFFK=#WFFK#,</if>
-			<if  test="TRANSNAME!=null">transname=#TRANSNAME#,</if>
-			<if  test="DESCRIPTION!=null">description=#DESCRIPTION#,</if>
-			<if  test="ACTFROMGUID!=null">actfromguid=#ACTFROMGUID#,</if>
-			<if  test="ACTTOGUID!=null">acttoguid=#ACTTOGUID#,</if>
-			<if  test="TRANSTYPE!=null">transtype=#TRANSTYPE#,</if>
-			<if  test="DATASEQ!=null">DATASEQ=#DATASEQ#,</if>
+			updatetime=#{CURRENTTIME:TIMESTAMP},
+			updateuserguid=#{UPDATEUSERGUID},
+			<if  test="WFFK!=null">WFFK=#{WFFK},</if>
+			<if  test="TRANSNAME!=null">transname=#{TRANSNAME},</if>
+			<if  test="DESCRIPTION!=null">description=#{DESCRIPTION},</if>
+			<if  test="ACTFROMGUID!=null">actfromguid=#{ACTFROMGUID},</if>
+			<if  test="ACTTOGUID!=null">acttoguid=#{ACTTOGUID},</if>
+			<if  test="TRANSTYPE!=null">transtype=#{TRANSTYPE},</if>
+			<if  test="DATASEQ!=null">DATASEQ=#{DATASEQ},</if>
 		</set>
-		WHERE guid = #GUID#
+		WHERE guid = #{GUID}
 	</update>
 	
 	<delete id="delete" parameterType="java.lang.String">
 		delete from ma_wf_trans 
-		where guid = #GUID#
+		where guid = #{GUID}
 	</delete>
 </mapper>

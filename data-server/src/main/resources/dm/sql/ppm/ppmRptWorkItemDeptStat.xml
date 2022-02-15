@@ -6,40 +6,40 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 
 	<sql id="where">
 			<if  test="ID!=null">
-				and A.MD_ID LIKE '%$ID$%'
+				and A.MD_ID LIKE '%${ID}%'
 			</if>
 			<if  test="NAME!=null">
-				and A.MD_NAME LIKE '%$NAME$%'
+				and A.MD_NAME LIKE '%${NAME}%'
 			</if>
 			<if  test="PRJNAME!=null">
-				and A.RELATIONPROJECT = #PRJNAME#
+				and A.RELATIONPROJECT = #{PRJNAME}
 			</if>
 			<if  test="EXECUTOR!=null">
-				and A.EXECUTOR = #EXECUTOR#
+				and A.EXECUTOR = #{EXECUTOR}
 			</if>
 			<if  test="OPERATIONSTATE!=null">
-				and A.EXECUTESTATUS = #OPERATIONSTATE#
+				and A.EXECUTESTATUS = #{OPERATIONSTATE}
 			</if>
 			<if  test="ONTIMESTATE!=null">
-				and A.ONTIMESTATE = #ONTIMESTATE#
+				and A.ONTIMESTATE = #{ONTIMESTATE}
 			</if>
 			<if  test="DEPT!=null">
-				and A.OWNERGROUP = #DEPT#
+				and A.OWNERGROUP = #{DEPT}
 			</if>
 			<if  test="PLANSTARTTIMEFROM!=null">
-				and A.PLANSTARTTIME BETWEEN #PLANSTARTTIMEFROM:TIMESTAMP# AND #PLANSTARTTIMETO:TIMESTAMP#
+				and A.PLANSTARTTIME BETWEEN #{PLANSTARTTIMEFROM:TIMESTAMP} AND #{PLANSTARTTIMETO:TIMESTAMP}
 			</if>
 			<if  test="PLANFINISHTIMEFROM!=null">
-				and A.PLANFINISHTIME BETWEEN #PLANFINISHTIMEFROM:TIMESTAMP# AND #PLANSTARTTIMETO:TIMESTAMP#
+				and A.PLANFINISHTIME BETWEEN #{PLANFINISHTIMEFROM:TIMESTAMP} AND #{PLANSTARTTIMETO:TIMESTAMP}
 			</if>
 			<if  test="ACTUALSTARTTIMEFROM!=null">
-				and A.ACTUALSTARTTIME BETWEEN #ACTUALSTARTTIMEFROM:TIMESTAMP# AND #ACTUALSTARTTIMETO:TIMESTAMP#
+				and A.ACTUALSTARTTIME BETWEEN #{ACTUALSTARTTIMEFROM:TIMESTAMP} AND #{ACTUALSTARTTIMETO:TIMESTAMP}
 			</if>
 			<if  test="ACTUALFINISHTIMEFROM!=null">
-				and A.ACTUALFINISHTIME BETWEEN #ACTUALFINISHTIMEFROM:TIMESTAMP# AND #ACTUALFINISHTIMETO:TIMESTAMP#
+				and A.ACTUALFINISHTIME BETWEEN #{ACTUALFINISHTIMEFROM:TIMESTAMP} AND #{ACTUALFINISHTIMETO:TIMESTAMP}
 			</if>
 			<if  test="CREATEUSER!=null">
-				and A.CREATEUSER = #CREATEUSERGUID#
+				and A.CREATEUSER = #{CREATEUSERGUID}
 			</if>
 	</sql>
 
@@ -76,29 +76,29 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 					      A.MD_ID,
 					      A.MD_NAME
 				     FROM (SELECT P.*
-				             FROM $WORKITEMTABLENAME$ P
-				            WHERE P.CREATEUSER = #USERGUID#
+				             FROM ${WORKITEMTABLENAME} P
+				            WHERE P.CREATEUSER = #{USERGUID}
 				            UNION
 				           SELECT P.*
-				             FROM $WORKITEMTABLENAME$ P
+				             FROM ${WORKITEMTABLENAME} P
 				            WHERE EXISTS(SELECT 1
 					                       FROM SA_USER A_
 					                 INNER JOIN PPM_TASKRESOURCE B_
 					                         ON A_.GUID = B_.USERGUID
 					                      WHERE B_.TASKGUID = P.GUID
-					                        AND A_.GUID = #USERGUID#
+					                        AND A_.GUID = #{USERGUID}
 			                            )
 			                UNION
 			               SELECT P.*
-			                 FROM $WORKITEMTABLENAME$ P
+			                 FROM ${WORKITEMTABLENAME} P
 			                WHERE EXISTS(SELECT 1
 				                           FROM PPM_PROJECTROLE Y
 				                     INNER JOIN PPM_ROLEMEMBERS Z
 				                             ON Y.GUID = Z.PROJECTROLEGUID
 				                          WHERE P.RELATIONPROJECT = Y.TYPEGUID
-				                            AND Y.CLASSGUID = #CLASSGUID#
+				                            AND Y.CLASSGUID = #{CLASSGUID}
 				                            AND (UPPER(Y.ROLEID) = 'MANAGERROLE' OR UPPER(Y.ROLEID) = 'RECEIVER')
-				                            AND Z.USERGUID = #USERGUID#
+				                            AND Z.USERGUID = #{USERGUID}
 				                        )
 				          ) A
 			    LEFT JOIN MA_CODE_DETAIL D
@@ -140,7 +140,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			           A.COMPLETIONRATE,
 			           A.MD_ID,
 			           A.MD_NAME
-			      FROM $WORKITEMTABLENAME$ A
+			      FROM ${WORKITEMTABLENAME} A
 			 LEFT JOIN MA_CODE_DETAIL D
 			        ON A.EXECUTESTATUS = D.GUID
 			       WHERE 1=1

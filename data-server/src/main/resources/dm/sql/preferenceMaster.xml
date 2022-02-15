@@ -19,9 +19,9 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		<include refid="selectFeilds" />
 		<include refid="from" />
 		<where>
-			<if  test="GUID!=null">and a.guid=#GUID#</if>
-			<if  test="USERGUID!=null">and a.userguid=#USERGUID#</if>
-			<if  test="CONFIGTYPE!=null">and a.configtype=#CONFIGTYPE#</if>
+			<if  test="GUID!=null">and a.guid=#{GUID}</if>
+			<if  test="USERGUID!=null">and a.userguid=#{USERGUID}</if>
+			<if  test="CONFIGTYPE!=null">and a.configtype=#{CONFIGTYPE}</if>
 		</where>
 		<include refid="orderby" />
 	</select>
@@ -38,36 +38,36 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		updatetime
 		)
 		VALUES(
-		#GUID#,
-		#USERGUID:VARCHAR:NULL#,
-		#CONFIGTYPE:VARCHAR:NULL#,
-		#CREATEUSERGUID:VARCHAR:NULL#,
-		#CURRENTTIME:TIMESTAMP#,
-		#CREATEUSERGUID:VARCHAR:NULL#,
-		#CURRENTTIME:TIMESTAMP#
+		#{GUID},
+		#{USERGUID:VARCHAR:NULL},
+		#{CONFIGTYPE:VARCHAR:NULL},
+		#{CREATEUSERGUID:VARCHAR:NULL},
+		#{CURRENTTIME:TIMESTAMP},
+		#{CREATEUSERGUID:VARCHAR:NULL},
+		#{CURRENTTIME:TIMESTAMP}
 		)
 	</insert>
 
 	<update id="update" parameterType="dyna.common.dto.Preference">
 		UPDATE sa_preference_master 
 		<set>
-			updateuserguid = #UPDATEUSERGUID#,
-			updatetime = #CURRENTTIME:TIMESTAMP#,
-			<if  test="GUID!=null">guid=#GUID#,</if>
-			<if  test="USERGUID!=null">userguid=#USERGUID#,</if>
-			<if  test="CONFIGTYPE!=null">configtype=#CONFIGTYPE#,</if>
+			updateuserguid = #{UPDATEUSERGUID},
+			updatetime = #{CURRENTTIME:TIMESTAMP},
+			<if  test="GUID!=null">guid=#{GUID},</if>
+			<if  test="USERGUID!=null">userguid=#{USERGUID},</if>
+			<if  test="CONFIGTYPE!=null">configtype=#{CONFIGTYPE},</if>
 		</set>
-		WHERE guid = #GUID#
+		WHERE guid = #{GUID}
 	</update>
 
 	<delete id="delete" parameterType="java.lang.String">
 		DELETE FROM sa_preference_master 
-		WHERE guid = #GUID#
+		WHERE guid = #{GUID}
 	</delete>
 
 	<delete id="deleteByType"  parameterType="map">
 		DELETE FROM sa_preference_master 
-		WHERE userguid = #USERGUID# AND configtype=#CONFIGTYPE#
+		WHERE userguid = #{USERGUID} AND configtype=#{CONFIGTYPE}
 	</delete>
 
 </mapper>

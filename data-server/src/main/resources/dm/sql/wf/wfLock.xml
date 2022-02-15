@@ -10,18 +10,18 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                              instanceguid
                             )
         values (
-                #PROCRTGUID:VARCHAR:NULL#, 
-                #INSTANCEGUID:VARCHAR:NULL#
+                #{PROCRTGUID:VARCHAR:NULL}, 
+                #{INSTANCEGUID:VARCHAR:NULL}
                )
     </insert>
 
     <sql id="where">
         <where>
             <if  test="PROCRTGUID!=null">
-                and b.procrtguid = #PROCRTGUID#
+                and b.procrtguid = #{PROCRTGUID}
             </if>
             <if  test="INSTANCEGUID!=null">
-                and b.instanceguid = #INSTANCEGUID#
+                and b.instanceguid = #{INSTANCEGUI}
             </if>
         </where>
     </sql>
@@ -34,7 +34,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     </select>
 
     <delete id="delete" parameterType="map">
-        delete from wf_lock where procrtguid = #PROCRTGUID# 
+        delete from wf_lock where procrtguid = #{PROCRTGUID}
     </delete>
     
     <insert id="lock" parameterType="map">
@@ -48,11 +48,11 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
          where b.isinvalid = 'N'
            and not exists (select 1
                              from wf_freshattach a
-                            where a.procrtguid in ($SUBPROCGUIDLIST$)
+                            where a.procrtguid in (${SUBPROCGUIDLIST})
                               and a.isinvalid = 'N'
                               and a.instanceguid = b.instanceguid
                           )
-           and b.procrtguid = #PROCRTGUID#
+           and b.procrtguid = #{PROCRTGUID}
     </insert>
     
 </mapper>

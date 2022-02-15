@@ -18,18 +18,18 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                                    perfguid,
                                    quotecomments
                                   )
-        values(#GUID:VARCHAR:NULL#, 
-               #PROCRTGUID:VARCHAR:NULL#, 
-               #ACTRTGUID:VARCHAR:NULL#, 
-               #COMMENTS:VARCHAR:NULL#, 
-               #ATTACHGUID:VARCHAR:NULL#,
-               #CREATEUSERGUID:VARCHAR:NULL#, 
-               #CURRENTTIME:TIMESTAMP#, 
-               #UPDATEUSERGUID:VARCHAR:NULL#, 
-               #CURRENTTIME:TIMESTAMP#, 
-               #CURRENTTIME:TIMESTAMP#, 
-               #PERFGUID:VARCHAR:NULL#,
-               #QUOTECOMMENTS:VARCHAR:NULL#
+        values(#{GUID:VARCHAR:NULL}, 
+               #{PROCRTGUID:VARCHAR:NULL}, 
+               #{ACTRTGUID:VARCHAR:NULL}, 
+               #{COMMENTS:VARCHAR:NULL}, 
+               #{ATTACHGUID:VARCHAR:NULL},
+               #{CREATEUSERGUID:VARCHAR:NULL}, 
+               #{CURRENTTIME:TIMESTAMP}, 
+               #{UPDATEUSERGUID:VARCHAR:NULL}, 
+               #{CURRENTTIME:TIMESTAMP}, 
+               #{CURRENTTIME:TIMESTAMP}, 
+               #{PERFGUID:VARCHAR:NULL},
+               #{QUOTECOMMENTS:VARCHAR:NULL}
               )
     </insert>
 
@@ -37,22 +37,22 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     <sql id="where">
         <where>
             <if  test="GUID!=null">
-                and b.guid = #GUID#
+                and b.guid = #{GUID}
             </if>
             <if  test="PROCRTGUID!=null">
-                and b.procrtguid = #PROCRTGUID#
+                and b.procrtguid = #{PROCRTGUID}
             </if>
             <if  test="ACTRTGUID!=null">
-                and b.actrtguid = #ACTRTGUID#
+                and b.actrtguid = #{ACTRTGUID}
             </if>
             <if  test="DECIDE!=null">
-                and b.decide = #DECIDE#
+                and b.decide = #{DECIDE}
             </if>
             <if  test="ATTACHGUID!=null">
-                and b.attachguid = #ATTACHGUID#
+                and b.attachguid = #{ATTACHGUID}
             </if>
             <if  test="PERFGUID!=null">
-                and b.perfguid = #PERFGUID#
+                and b.perfguid = #{PERFGUID}
             </if>
         </where>
     </sql>
@@ -78,31 +78,31 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     <update id="update" parameterType="java.util.HashMap">
         update wf_trackattach
                <set>
-                   updatetime = #CURRENTTIME:TIMESTAMP#,
+                   updatetime = #{CURRENTTIME:TIMESTAMP},
                    <if test="COMMENTS!=null" >
-                       comments = #COMMENTS#,
+                       comments = #{COMMENTS},
                    </if>
                    <if test="UPDATEUSERGUID!=null" >
-                       updateuserguid = #UPDATEUSERGUID#,
+                       updateuserguid = #{UPDATEUSERGUID},
                    </if>
                    <if test="PERFGUID!=null" >
-                       perfguid = #PERFGUID#,
+                       perfguid = #{PERFGUID},
                    </if>
                    <if test="QUOTECOMMENTS!=null" >
-                       quotecomments = #QUOTECOMMENTS#,
+                       quotecomments = #{QUOTECOMMENTS},
                    </if>
                </set>
-          where guid = #GUID#
+          where guid = #{GUID}
     </update>
     
     
     <delete id="delete" parameterType="map">
-        delete from wf_trackattach where procrtguid = #PROCRTGUID# and attachguid = #ATTACHGUID#
+        delete from wf_trackattach where procrtguid = #{PROCRTGUID} and attachguid = #{ATTACHGUID}
     </delete>
     
     
     <delete id="deleteGuid" parameterType="java.lang.String">
-        delete from wf_trackattach where guid = #GUID#
+        delete from wf_trackattach where guid = #{GUID}
     </delete>
     
 </mapper>

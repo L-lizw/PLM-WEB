@@ -12,7 +12,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     <select id="get" parameterType="java.lang.String" resultType="dyna.common.dto.template.wft.WorkflowTemplateActClassInfo" statementType="STATEMENT">
 		SELECT *
 		  FROM WF_TEMPLATE_ACTRT_BO
-		 WHERE GUID = #GUID#
+		 WHERE GUID = #{GUID}
 	</select>
 
     <insert id="insert" parameterType="dyna.common.dto.template.wft.WorkflowTemplateActClassInfo">
@@ -32,59 +32,59 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                      UPDATEUSERGUID, 
                      UPDATETIME
                     )
-        VALUES(#GUID:VARCHAR:NULL#,
-               #TEMPLATEACTRTGUID:VARCHAR:NULL#,
-               #BOGUID:VARCHAR:NULL#,
-               #HASFILE:VARCHAR:NULL#,
-               #SELECTFILE:VARCHAR:NULL#,
-               #EDITFILE:VARCHAR:NULL#,
+        VALUES(#{GUID:VARCHAR:NULL},
+               #{TEMPLATEACTRTGUID:VARCHAR:NULL},
+               #{BOGUID:VARCHAR:NULL},
+               #{HASFILE:VARCHAR:NULL},
+               #{SELECTFILE:VARCHAR:NULL},
+               #{EDITFILE:VARCHAR:NULL},
                
-               #HASEFFECTIVETIME:VARCHAR:NULL#,
-               #HASOBSOLETETIME:VARCHAR:NULL#,
-               #HASSCRIPT:VARCHAR:NULL#,
-               #CREATEUSERGUID:VARCHAR:NULL#,
-               #CURRENTTIME:TIMESTAMP#,
-               #UPDATEUSERGUID:VARCHAR:NULL#,
-               #CURRENTTIME:TIMESTAMP#
+               #{HASEFFECTIVETIME:VARCHAR:NULL},
+               #{HASOBSOLETETIME:VARCHAR:NULL},
+               #{HASSCRIPT:VARCHAR:NULL},
+               #{CREATEUSERGUID:VARCHAR:NULL},
+               #{CURRENTTIME:TIMESTAMP},
+               #{UPDATEUSERGUID:VARCHAR:NULL},
+               #{CURRENTTIME:TIMESTAMP}
               )
     </insert>
 
     <update id="update" parameterType="java.util.HashMap">
         UPDATE WF_TEMPLATE_ACTRT_BO 
                <set>
-                   UPDATEUSERGUID = #UPDATEUSERGUID#,
-                   UPDATETIME = #CURRENTTIME:TIMESTAMP#,
+                   UPDATEUSERGUID = #{UPDATEUSERGUID},
+                   UPDATETIME = #{CURRENTTIME:TIMESTAMP},
                    <if test="TEMPLATEACTRTGUID!=null" >
-                       TEMPLATEACTRTGUID = #TEMPLATEACTRTGUID#,
+                       TEMPLATEACTRTGUID = #{TEMPLATEACTRTGUID},
                    </if>
                    <if test="BOGUID!=null" >
-                       BOGUID = #BOGUID#,
+                       BOGUID = #{BOGUID},
                    </if>
                    
                    <if test="HASFILE!=null" >
-                       HASFILE = #HASFILE#,
+                       HASFILE = #{HASFILE},
                    </if>
                    <if test="SELECTFILE!=null" >
-                       SELECTFILE = #SELECTFILE#,
+                       SELECTFILE = #{SELECTFILE},
                    </if>
                    <if test="EDITFILE!=null" >
-                       EDITFILE = #EDITFILE#,
+                       EDITFILE = #{EDITFILE},
                    </if>
                    
                    <if test="HASEFFECTIVETIME!=null" >
-                       HASEFFECTIVETIME = #HASEFFECTIVETIME#,
+                       HASEFFECTIVETIME = #{HASEFFECTIVETIME},
                    </if>
                    <if test="HASOBSOLETETIME!=null" >
-                       HASOBSOLETETIME = #HASOBSOLETETIME#,
+                       HASOBSOLETETIME = #{HASOBSOLETETIME},
                    </if>
                    <if test="HASSCRIPT!=null" >
-                       HASSCRIPT = #HASSCRIPT#,
+                       HASSCRIPT = #{HASSCRIPT},
                    </if>
                </set>
-         where GUID = #GUID#
+         where GUID = #{GUID}
     </update>
 
     <delete id="delete" parameterType="java.lang.String">
-        DELETE FROM WF_TEMPLATE_ACTRT_BO  WHERE GUID = #GUID#
+        DELETE FROM WF_TEMPLATE_ACTRT_BO  WHERE GUID = #{GUID}
     </delete>
 </mapper>

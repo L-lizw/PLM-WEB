@@ -6,22 +6,22 @@
 
     <sql id="where">
             <if  test="GUID!=null">
-                and  guid = #GUID#
+                and  guid = #{GUID}
             </if>
             <if  test="TYPEGUID!=null">
-                and  typeguid = #TYPEGUID#
+                and  typeguid = #{TYPEGUID}
             </if>
             <if  test="OWNERTYPE!=null">
-                and  OWNERTYPE = #OWNERTYPE#
+                and  OWNERTYPE = #{OWNERTYPE}
             </if>
             <if  test="RELATEDTASKOBJECT!=null">
-                and relatedtaskobject = #RELATEDTASKOBJECT#
+                and relatedtaskobject = #{RELATEDTASKOBJECT}
             </if>
             <if  test="CHECKPOINTNAME!=null">
-                and  CHECKPOINTNAME = #CHECKPOINTNAME#
+                and  CHECKPOINTNAME = #{CHECKPOINTNAME}
             </if>
             <if  test="DATASEQ!=null">
-                and dataseq = #DATASEQ#
+                and dataseq = #{DATASEQ}
             </if>
     </sql>
 
@@ -38,9 +38,9 @@
         task.classguid relatedtaskobject$$class,
         task.masterfk relatedtaskobject$$master
         from ppm_milestone_checkpoint m
-        left join $tablename$ task
+        left join ${tablename} task
         on m.relatedtaskobject = task.guid
-        where m.relatedtaskobjectclass = #RELATEDTASKOBJECT$CLASS#
+        where m.relatedtaskobjectclass = #{RELATEDTASKOBJECT$CLASS}
         <include refid="where"/>
     </select>
 
@@ -71,49 +71,49 @@
         createtime,
         updateuserguid,
         updatetime)
-        values (#GUID#,
-        #TYPEGUID#,
-        #OWNERTYPE#,
-        #RELATEDTASKOBJECT#,
-        #RELATEDTASKOBJECT$CLASS#,
-        #CHECKPOINTNAME:VARCHAR:NULL#,
-        #DESCRIPTION:VARCHAR:NULL#,
-        #COLOR:VARCHAR:NULL#,
-        #DATASEQ#,
-        #ACTUALFINISHTIME:DATE#,
-        #PLANFINISHTIME:DATE#,
-        #COMPLETIONRATE:NUMERIC#,
+        values (#{GUID},
+        #{TYPEGUID},
+        #{OWNERTYPE},
+        #{RELATEDTASKOBJECT},
+        #{RELATEDTASKOBJECT$CLASS},
+        #{CHECKPOINTNAME:VARCHAR:NULL},
+        #{DESCRIPTION:VARCHAR:NULL},
+        #{COLOR:VARCHAR:NULL},
+        #{DATASEQ},
+        #{ACTUALFINISHTIME:DATE},
+        #{PLANFINISHTIME:DATE},
+        #{COMPLETIONRATE:NUMERIC},
 
-        #CREATEUSERGUID#,
-        #CURRENTTIME:TIMESTAMP#,
-        #UPDATEUSERGUID#,
-        #CURRENTTIME:TIMESTAMP#)
+        #{CREATEUSERGUID},
+        #{CURRENTTIME:TIMESTAMP},
+        #{UPDATEUSERGUID},
+        #{CURRENTTIME:TIMESTAMP})
     </insert>
 
     <update id="update" parameterType="dyna.common.bean.data.ppms.CheckpointConfig">
         update ppm_milestone_checkpoint
              <set>
-                <if test="TYPEGUID!=null">TYPEGUID = #TYPEGUID#,</if>
-                <if test="OWNERTYPE!=null">OWNERTYPE = #OWNERTYPE#,</if>
-                <if test="CHECKPOINTNAME!=null">CHECKPOINTNAME = #CHECKPOINTNAME#,</if>
-                <if test="DESCRIPTION!=null">DESCRIPTION = #DESCRIPTION#,</if>
-                <if test="COLOR!=null">COLOR = #COLOR#,</if>
-                <if test="DATASEQ!=null">DATASEQ = #DATASEQ#,</if>
-                <if test="RELATEDTASKOBJECT!=null">RELATEDTASKOBJECT = #RELATEDTASKOBJECT#,</if>
-                <if test="RELATEDTASKOBJECTCLASS!=null">RELATEDTASKOBJECTCLASS = #RELATEDTASKOBJECT$CLASS#,</if>
-                <if test="ACTUALFINISHTIME!=null">ACTUALFINISHTIME = #ACTUALFINISHTIME#,</if>
-                <if test="PLANFINISHTIME!=null">PLANFINISHTIME = #PLANFINISHTIME#,</if>
-                <if test="COMPLETIONRATE!=null">COMPLETIONRATE = #COMPLETIONRATE#,</if>
+                <if test="TYPEGUID!=null">TYPEGUID = #{TYPEGUID},</if>
+                <if test="OWNERTYPE!=null">OWNERTYPE = #{OWNERTYPE},</if>
+                <if test="CHECKPOINTNAME!=null">CHECKPOINTNAME = #{CHECKPOINTNAME},</if>
+                <if test="DESCRIPTION!=null">DESCRIPTION = #{DESCRIPTION},</if>
+                <if test="COLOR!=null">COLOR = #{COLOR},</if>
+                <if test="DATASEQ!=null">DATASEQ = #{DATASEQ},</if>
+                <if test="RELATEDTASKOBJECT!=null">RELATEDTASKOBJECT = #{RELATEDTASKOBJECT},</if>
+                <if test="RELATEDTASKOBJECTCLASS!=null">RELATEDTASKOBJECTCLASS = #{RELATEDTASKOBJECT$CLASS},</if>
+                <if test="ACTUALFINISHTIME!=null">ACTUALFINISHTIME = #{ACTUALFINISHTIME},</if>
+                <if test="PLANFINISHTIME!=null">PLANFINISHTIME = #{PLANFINISHTIME},</if>
+                <if test="COMPLETIONRATE!=null">COMPLETIONRATE = #{COMPLETIONRATE},</if>
             </set>
-        updatetime = #CURRENTTIME:TIMESTAMP#,
-        updateuserguid = #UPDATEUSERGUID#
-        where guid = #GUID#
+        updatetime = #{CURRENTTIME:TIMESTAMP},
+        updateuserguid = #{UPDATEUSERGUID}
+        where guid = #{GUID}
     </update>
 
     <delete id="delete" parameterType="java.lang.String">
-        delete from ppm_milestone_checkpoint where guid = #GUID#
+        delete from ppm_milestone_checkpoint where guid = #{GUID}
     </delete>
     <delete id="deleteByTypeGuid" parameterType="java.lang.String">
-        delete from ppm_milestone_checkpoint where TYPEGUID = #TYPEGUID#
+        delete from ppm_milestone_checkpoint where TYPEGUID = #{TYPEGUID}
     </delete>
 </mapper>

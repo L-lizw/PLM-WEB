@@ -9,12 +9,12 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     <!-- 根据条件取得流水号 -->
     <select id="select" resultType="dyna.common.bean.data.coding.SerialNumber" parameterType="map" statementType="STATEMENT">
       select * from bi_number_trans t
-          where t.classguid = #CLASSGUID#
-                and t.fieldname = #FIELDNAME#
-                and t.prestr = #PRESTR#
-                and t.sufstr = #SUFSTR#
-                and t.instanceguid= #INSTANCEGUID#
-                and t.serialnolocation = #SERIALNOLOCATION#
+          where t.classguid = #{CLASSGUID}
+                and t.fieldname = #{FIELDNAME}
+                and t.prestr = #{PRESTR}
+                and t.sufstr = #{SUFSTR}
+                and t.instanceguid= #{INSTANCEGUID}
+                and t.serialnolocation = #{SERIALNOLOCATION}
     </select>
     
      <insert id="insert" parameterType="dyna.common.bean.data.coding.SerialNumber">
@@ -33,35 +33,35 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
         updateuserguid,
         updatetime)
         
-        values (#CLASSGUID:VARCHAR#, 
-                #FIELDNAME:VARCHAR#, 
-                #PRESTR:VARCHAR#, 
-                #SUFSTR:VARCHAR#,
+        values (#{CLASSGUID:VARCHAR}, 
+                #{FIELDNAME:VARCHAR}, 
+                #{PRESTR:VARCHAR}, 
+                #{SUFSTR:VARCHAR},
                  
-                #SERIALNOLOCATION:VARCHAR#, 
-                #SERIALNO:VARCHAR#, 
-                #INSTANCEGUID:VARCHAR#, 
-                #FULLNUMBER:VARCHAR#, 
-                #ISVALID:VARCHAR#,
+                #{SERIALNOLOCATION:VARCHAR}, 
+                #{SERIALNO:VARCHAR}, 
+                #{INSTANCEGUID:VARCHAR}, 
+                #{FULLNUMBER:VARCHAR}, 
+                #{ISVALID:VARCHAR},
                 
-                #CREATEUSERGUID:VARCHAR#, 
-                #CURRENTTIME:TIMESTAMP#, 
-                #UPDATEUSERGUID:VARCHAR#, 
-                #CURRENTTIME:TIMESTAMP#
+                #{CREATEUSERGUID:VARCHAR}, 
+                #{CURRENTTIME:TIMESTAMP}, 
+                #{UPDATEUSERGUID:VARCHAR}, 
+                #{CURRENTTIME:TIMESTAMP}
                )
     </insert>
     
     <update id="update" parameterType="map">
 		update bi_number_trans 
-		   set serialno = #SERIALNO#,
-		  	   fullnumber=#FULLNUMBER#,
-			   updateuserguid=#UPDATEUSERGUID#,
-			   updatetime = #CURRENTTIME:TIMESTAMP#
-		 where classguid = #CLASSGUID#
-                and fieldname = #FIELDNAME#
-                and prestr = #PRESTR#
-                and sufstr = #SUFSTR#
-                and instanceguid= #INSTANCEGUID#
-                and serialnolocation = #SERIALNOLOCATION#
+		   set serialno = #{SERIALNO},
+		  	   fullnumber=#{FULLNUMBER},
+			   updateuserguid=#{UPDATEUSERGUID},
+			   updatetime = #{CURRENTTIME:TIMESTAMP}
+		 where classguid = #{CLASSGUID}
+                and fieldname = #{FIELDNAME}
+                and prestr = #{PRESTR}
+                and sufstr = #{SUFSTR}
+                and instanceguid= #{INSTANCEGUID}
+                and serialnolocation = #{SERIALNOLOCATION}
   	</update>
 </mapper>

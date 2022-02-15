@@ -33,39 +33,39 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                              subprocname,
                              startnumber
                             )
-        values(#GUID:VARCHAR:NULL#, 
-               #ACTRTNAME:VARCHAR:NULL#, 
-               #TITLE:VARCHAR:NULL#, 
-               #DESCRIPTION:VARCHAR:NULL#, 
-               #GATE#, 
-               #PROCRTGUID:VARCHAR:NULL#, 
+        values(#{GUID:VARCHAR:NULL}, 
+               #{ACTRTNAME:VARCHAR:NULL}, 
+               #{TITLE:VARCHAR:NULL}, 
+               #{DESCRIPTION:VARCHAR:NULL}, 
+               #{GATE}, 
+               #{PROCRTGUID:VARCHAR:NULL}, 
                
-               #ACTMODE:VARCHAR:NULL#, 
-               #ACTTYPE:VARCHAR:NULL#, 
-               #CHANGEPHASESTATUS:VARCHAR:NULL#,
-               #APPNAME:VARCHAR:NULL#,
+               #{ACTMODE:VARCHAR:NULL}, 
+               #{ACTTYPE:VARCHAR:NULL}, 
+               #{CHANGEPHASESTATUS:VARCHAR:NULL},
+               #{APPNAME:VARCHAR:NULL},
                
-               #CREATEUSERGUID:VARCHAR:NULL#, 
-               #CURRENTTIME:TIMESTAMP#, 
-               #UPDATEUSERGUID:VARCHAR:NULL#, 
-               #CURRENTTIME:TIMESTAMP#,
+               #{CREATEUSERGUID:VARCHAR:NULL}, 
+               #{CURRENTTIME:TIMESTAMP}, 
+               #{UPDATEUSERGUID:VARCHAR:NULL}, 
+               #{CURRENTTIME:TIMESTAMP},
                
                
-               #DEADLINE:DATE#, 
+               #{DEADLINE:DATE}, 
                'N', 
                null, 
                null, 
                
                <if  test="ISBLOCK!=null">
-               #ISBLOCK#, 
+               #{ISBLOCK}, 
                </if>
                <if test="ISBLOCK==null">
                '0', 
                </if>
                <if test="MINSUBPRO!=null">
-               case when $MINSUBPRO$ <![CDATA[ <  ]]> 0 
+               case when ${MINSUBPRO} <![CDATA[ <  ]]> 0
                     then 1 
-                    else $MINSUBPRO$
+                    else ${MINSUBPRO}
                 end,  
                </if>
                <if  test="MINSUBPRO==null">
@@ -74,74 +74,74 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                
                
                <if  test="MAXSUBPRO==null">
-               case when $MAXSUBPRO$ <![CDATA[ <  ]]> 0 
+               case when ${MAXSUBPRO} <![CDATA[ <  ]]> 0
                     then 1 
-                    else $MAXSUBPRO$
+                    else ${MAXSUBPRO}
                 end,
                </if>
                <if test="MAXSUBPRO==null">
                1,
                </if>
                
-               #SUBPROCNAME#,
-               #STARTNUMBER#
+               #{SUBPROCNAME},
+               #{STARTNUMBER}
               )
     </insert>
 
     <sql id="where">
         <where>
             <if  test="GUID!=null">
-                and b.guid = #GUID#
+                and b.guid = #{GUID}
             </if>
             <if  test="ACTRTNAME!=null">
-                and b.actrtname = #ACTRTNAME#
+                and b.actrtname = #{ACTRTNAME}
             </if>
             <if  test="TITLE!=null">
-                and b.title = #TITLE#
+                and b.title = #{TITLE}
             </if>
             <if  test="GATE!=null">
-                and b.gate = #GATE#
+                and b.gate = #{GATE}
             </if>
             <if  test="PROCRTGUID!=null">
-                and b.procrtguid = #PROCRTGUID#
+                and b.procrtguid = #{PROCRTGUID}
             </if>
             <if  test="ACTMODE!=null">
-                and b.actmode = #ACTMODE#
+                and b.actmode = #{ACTMODE}
             </if>
             <if  test="ACTTYPE!=null">
-                and b.acttype = #ACTTYPE#
+                and b.acttype = #{ACTTYPE}
             </if>
             <if  test="CHANGEPHASESTATUS!=null">
-                and b.changephasestatus = #CHANGEPHASESTATUS#
+                and b.changephasestatus = #{CHANGEPHASESTATUS}
             </if>
             <if  test="APPNAME!=null">
-                and b.appname = #APPNAME#
+                and b.appname = #{APPNAME}
             </if>
             <if  test="CREATEUSERGUID!=null">
-                and b.createuserguid = #CREATEUSERGUID#
+                and b.createuserguid = #{CREATEUSERGUID}
             </if>
             <if  test="UPDATEUSERGUID!=null">
-                and b.updateuserguid = #UPDATEUSERGUID#
+                and b.updateuserguid = #{UPDATEUSERGUID}
             </if>
             <if  test="ISFINISH!=null">
-                and b.isfinish = #ISFINISH#
+                and b.isfinish = #{ISFINISH}
             </if>
             <if  test="FINISHTIME!=null">
-                and b.finishtime = #FINISHTIME#
+                and b.finishtime = #{FINISHTIME}
             </if>
             
             <if  test="ISBLOCK!=null">
-                and b.isblock = #ISBLOCK#
+                and b.isblock = #{ISBLOCK}
             </if>
             <if  test="MINSUBPRO!=null">
-                and b.minsubpro = #MINSUBPRO#
+                and b.minsubpro = #{MINSUBPRO}
             </if>
             <if  test="MAXSUBPRO!=null">
-                and b.maxsubpro = #MAXSUBPRO#
+                and b.maxsubpro = #{MAXSUBPRO}
             </if>
             
             <if  test="SUBPROCNAME!=null">
-                and b.subprocname = #SUBPROCNAME#
+                and b.subprocname = #{SUBPROCNAME}
             </if>
         </where>
     </sql>
@@ -159,7 +159,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                wf_transcdt c 
          where a.guid = b.toactguid 
            and b.guid = c.transguid
-           and b.fromactguid = #GUID#
+           and b.fromactguid = #{GUID}
                <choose>
                    <when test="CDTTYPE== 'REJECT'" >
                        and c.cdttype = 'REJECT'
@@ -177,7 +177,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                wf_transcdt c 
          where a.guid = b.fromactguid 
            and b.guid = c.transguid
-           and b.toactguid = #GUID#
+           and b.toactguid = #{GUID}
                <choose>
                    <when test="CDTTYPE == 'REJECT'" >
                       and  c.cdttype = 'REJECT'
@@ -190,35 +190,35 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     
     <update id="updateNextActrtStartTime" parameterType="map">
         update wf_actrt 
-           set starttime = #CURRENTTIME:TIMESTAMP#
-         where guid = #GUID#
+           set starttime = #{CURRENTTIME:TIMESTAMP}
+         where guid = #{GUID}
     </update>
     <update id="updateActrtDeadline" parameterType="map">
         update wf_actrt 
-           set deadline = #DEADLINE#
-         where guid = #GUID#
+           set deadline = #{DEADLINE}
+         where guid = #{GUID}
     </update>
     
     <update id="update" parameterType="map">
         update wf_actrt 
                <set>
                    <if test="STARTNUMBER!=null" >
-                       startnumber = #STARTNUMBER#,
+                       startnumber = #{STARTNUMBER},
                    </if>
                    <if test="DEADLINE!=null" >
-                       deadline = #DEADLINE#,
+                       deadline = #{DEADLINE},
                    </if>
                    <if test="ACTMODE!=null" >
-                       actmode = #ACTMODE#,
+                       actmode = #{ACTMODE},
                    </if>
                    <if test="STARTTIME!=null" >
-                       starttime = #CURRENTTIME:TIMESTAMP#,
+                       starttime = #{CURRENTTIME:TIMESTAMP},
                    </if>
                    <if test="ISFINISH!=null" >
-                       isfinish = #ISFINISH#,
+                       isfinish = #{ISFINISH},
                        <if test="ISFINISH!=null">
                            <if test="ISFINISH== 'Y'">
-                               finishtime = #CURRENTTIME:TIMESTAMP#,
+                               finishtime = #{CURRENTTIME:TIMESTAMP},
                            </if>
                            <if test="ISFINISH != 'Y'">
                                finishtime = null,
@@ -226,20 +226,20 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                        </if>
                    </if>
                </set>
-         where guid = #GUID#
+         where guid = #{GUID}
     </update>
 
     <update id="updateActivity" parameterType="map">
         update wf_actrt 
                <set>
                    <if test="ACTMODE!=null">
-                       actmode = #ACTMODE#,
+                       actmode = #{ACTMODE},
                    </if>
                    <if test="ISFINISH!=null">
-                       isfinish = #ISFINISH#,
+                       isfinish = #{ISFINISH},
                        <if test="ISFINISH!=null">
                            <if test="ISFINISH == 'Y'" >
-                               finishtime = #CURRENTTIME:TIMESTAMP#,
+                               finishtime = #{CURRENTTIME:TIMESTAMP},
                            </if>
                            <if test="ISFINISH!= 'Y'" >
                                finishtime = null,
@@ -249,13 +249,13 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                </set>
          where isfinish != 'Y'
                    <if test="GUID!=null" >
-                       and guid = #GUID#
+                       and guid = #{GUID}
                    </if>
                    <if test="ACTRTNAME!=null" >
-                       and actrtname = #ACTRTNAME#
+                       and actrtname = #{ACTRTNAME}
                    </if>
                    <if test="PROCRTGUI!=null" >
-                       and procrtguid = #PROCRTGUID#
+                       and procrtguid = #{PROCRTGUID}
                    </if>
     </update>
     
@@ -267,11 +267,11 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                           end
                          ), 
                isfinish = 'Y', 
-               finishtime = (case when actmode != 'BYPASS' then #CURRENTTIME:TIMESTAMP#
+               finishtime = (case when actmode != 'BYPASS' then #{CURRENTTIME:TIMESTAMP}
                                   else finishtime
                              end 
                             )
-         where guid = #GUID# 
+         where guid = #{GUID}
     </update>
 
     <!-- finish all activities -->
@@ -283,25 +283,25 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                           end
                          ), 
                isfinish = 'Y',  
-               finishtime = (case when actmode != 'BYPASS' then #CURRENTTIME:TIMESTAMP#
+               finishtime = (case when actmode != 'BYPASS' then #{CURRENTTIME:TIMESTAMP}
                                   else finishtime
                                end 
                              )
-         where procrtguid = #PROCRTGUID# 
+         where procrtguid = #{PROCRTGUID}
     </update>
     
     <select id="selectPerformalActivityRuntime" parameterType="java.util.HashMap" resultType="dyna.common.dto.wf.ActivityRuntime">
         select * 
           from wf_actrt b
          where (b.acttype = 'MANUAL' or b.acttype = 'NOTIFY' or b.acttype = 'SUB_PROCESS' or b.acttype = 'BEGIN') 
-           and b.procrtguid = #PROCRTGUID#
+           and b.procrtguid = #{PROCRTGUID}
          order by b.gate, b.actrtname
     </select>
 
     <select id="changephasestatus" parameterType="java.util.HashMap" resultType="dyna.common.dto.wf.ActivityRuntime">
         SELECT GUID
           FROM WF_ACTRT
-         WHERE PROCRTGUID = #PROCRTGUID#
+         WHERE PROCRTGUID = #{PROCRTGUID}
            AND (CHANGEPHASESTATUS = 'RELEASE' OR CHANGEPHASESTATUS = 'OBSOLETE')
            AND ISFINISH = 'Y'
     </select>    
@@ -360,8 +360,8 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     
     <update id="updateActrtStartNumber" parameterType="map">
         update wf_actrt 
-           set startnumber = #STARTNUMBER#
-         where guid = #GUID#
+           set startnumber = #{STARTNUMBER}
+         where guid = #{GUID}
     </update> 
    
     <!-- 			根据用户的GUID查询关联的组用户是否在流程中 -->

@@ -13,25 +13,25 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                                  updateuserguid, 
                                  updatetime
                                 )
-        values(#GUID:VARCHAR:NULL#, 
-               #COMMENTS:VARCHAR:NULL#,
-               #CREATEUSERGUID:VARCHAR:NULL#, 
-               #CURRENTTIME:TIMESTAMP#, 
-               #UPDATEUSERGUID:VARCHAR:NULL#, 
-               #CURRENTTIME:TIMESTAMP#
+        values(#{GUID:VARCHAR:NULL}, 
+               #{COMMENTS:VARCHAR:NULL},
+               #{CREATEUSERGUID:VARCHAR:NULL}, 
+               #{CURRENTTIME:TIMESTAMP}, 
+               #{UPDATEUSERGUID:VARCHAR:NULL}, 
+               #{CURRENTTIME:TIMESTAMP}
               )
     </insert>
 	
     <sql id="where">
         <where>
             <if  test="GUID!=null">
-                and b.guid = #GUID#
+                and b.guid = #{GUID}
             </if>
             <if  test="CREATEUSERGUID!=null">
-                and b.createuserguid = #CREATEUSERGUID#
+                and b.createuserguid = #{CREATEUSERGUID}
             </if>
             <if  test="UPDATEUSERGUID!=null">
-                and  b.updateuserguid = #UPDATEUSERGUID#
+                and  b.updateuserguid = #{UPDATEUSERGUID}
             </if>
         </where>
     </sql>
@@ -54,23 +54,23 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     <update id="update" parameterType="java.util.HashMap">
         update wf_trackcomm 
                <set>
-                   updatetime = #CURRENTTIME:TIMESTAMP#,
+                   updatetime = #{CURRENTTIME:TIMESTAMP},
                    <if test="COMMENTS!=null" >
-                       comments = #COMMENTS#,
+                       comments = #{COMMENTS},
                    </if>
                    <if test="CREATEUSERGUID!=null" >
-                       createuserguid = #CREATEUSERGUID#,
+                       createuserguid = #{CREATEUSERGUID},
                    </if>
                    <if test="UPDATEUSERGUID!=null" >
-                       updateuserguid = #UPDATEUSERGUID#,
+                       updateuserguid = #{UPDATEUSERGUID},
                    </if>
                </set>
-          where guid = #GUID#
+          where guid = #{GUID}
     </update>
 	
 	
     <delete id="delete" parameterType="map">
-        delete from wf_trackcomm where guid = #GUID# 
+        delete from wf_trackcomm where guid = #{GUID}
     </delete>
 	
 </mapper>

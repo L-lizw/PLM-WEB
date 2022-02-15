@@ -9,16 +9,16 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                     (masterguid,
                      receiveuser
                     )
-        values (#MASTERGUID:VARCHAR:NULL#,
-                #RECEIVEUSER:VARCHAR:NULL#
+        values (#{MASTERGUID:VARCHAR:NULL},
+                #{RECEIVEUSER:VARCHAR:NULL}
                )
     </insert>
     
     <delete id="deleteIsintrash" parameterType="map">
         delete from bi_mail_receiveruser 
-        where masterguid = #MASTERGUID#
+        where masterguid = #{MASTERGUID}
           <if  test="RECEIVEUSER!=null">
-              and receiveuser = #RECEIVEUSER#
+              and receiveuser = #{RECEIVEUSER}
           </if>
     </delete>
     

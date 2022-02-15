@@ -8,11 +8,11 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
         select a.*
           from BI_TRANSFORM_SIGN_PARAM a
         <where>
-			<if  test="SIGNGUID!=null">and a.SIGNGUID=#SIGNGUID#</if>
-			<if  test="PARAMNAME!=null">and a.PARAMNAME=#PARAMNAME#</if>
-			<if  test="DATENAME!=null">and a.DATENAME=#DATENAME#</if>
-			<if  test="GUID!=null">and a.GUID=#GUID#</if>
-			<if  test="SOURCE!=null">and a.SOURCE=#SOURCE#</if>
+			<if  test="SIGNGUID!=null">and a.SIGNGUID=#{SIGNGUID}</if>
+			<if  test="PARAMNAME!=null">and a.PARAMNAME=#{PARAMNAME}</if>
+			<if  test="DATENAME!=null">and a.DATENAME=#{DATENAME}</if>
+			<if  test="GUID!=null">and a.GUID=#{GUID}</if>
+			<if  test="SOURCE!=null">and a.SOURCE=#{SOURCE}</if>
 			
 		</where>
 		order by a.createtime
@@ -33,38 +33,38 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 
 		)
 		select
-			#GUID:VARCHAR:NULL#,
-			#SIGNGUID:VARCHAR:NULL#,
-			#PARAMNAME:VARCHAR:NULL#,
-			#DATENAME:VARCHAR:NULL#,
-			#SOURCE:VARCHAR:NULL#,		
-			#SEALNAME:VARCHAR:NULL#,	
-			#CURRENTTIME:TIMESTAMP#,
-			#CREATEUSERGUID:VARCHAR:NULL#,
-			#CURRENTTIME:TIMESTAMP#,
-			#UPDATEUSERGUID:VARCHAR:NULL#
+			#{GUID:VARCHAR:NULL},
+			#{SIGNGUID:VARCHAR:NULL},
+			#{PARAMNAME:VARCHAR:NULL},
+			#{DATENAME:VARCHAR:NULL},
+			#{SOURCE:VARCHAR:NULL},		
+			#{SEALNAME:VARCHAR:NULL},	
+			#{CURRENTTIME:TIMESTAMP},
+			#{CREATEUSERGUID:VARCHAR:NULL},
+			#{CURRENTTIME:TIMESTAMP},
+			#{UPDATEUSERGUID:VARCHAR:NULL}
 	</insert>
 
 	<update id="update" parameterType="dyna.common.bean.data.trans.TransformSignParam">
 		UPDATE BI_TRANSFORM_SIGN_PARAM
 		<set>
-			updatetime=#CURRENTTIME:TIMESTAMP#,
-			updateuserguid=#UPDATEUSERGUID#,
-			<if  test="SIGNGUID!=null">SIGNGUID=#SIGNGUID#,</if>
-			<if  test="DATENAME!=null">DATENAME=#DATENAME#,</if>
-			<if  test="PARAMNAME!=null">PARAMNAME=#PARAMNAME#,</if>
-			<if  test="SOURCE!=null">SOURCE=#SOURCE#,</if>
-			<if  test="SEALNAME!=null">SEALNAME=#SEALNAME#,</if>
+			updatetime=#{CURRENTTIME:TIMESTAMP},
+			updateuserguid=#{UPDATEUSERGUID},
+			<if  test="SIGNGUID!=null">SIGNGUID=#{SIGNGUID},</if>
+			<if  test="DATENAME!=null">DATENAME=#{DATENAME},</if>
+			<if  test="PARAMNAME!=null">PARAMNAME=#{PARAMNAME},</if>
+			<if  test="SOURCE!=null">SOURCE=#{SOURCE},</if>
+			<if  test="SEALNAME!=null">SEALNAME=#{SEALNAME},</if>
 		</set>
-		WHERE guid = #GUID#
+		WHERE guid = #{GUID}
 	</update>
 
 	<delete id="delete" parameterType="java.lang.String">
 		DELETE FROM BI_TRANSFORM_SIGN_PARAM 
-		WHERE guid = #GUID#
+		WHERE guid = #{GUID}
 	</delete>
 	<delete id="deleteAll" parameterType="java.lang.String">
 		DELETE FROM BI_TRANSFORM_SIGN_PARAM 
-		WHERE SIGNGUID = #SIGNPARAMGUID#
+		WHERE SIGNGUID = #{SIGNPARAMGUID}
 	</delete>
 </mapper>

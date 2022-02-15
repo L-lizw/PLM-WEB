@@ -9,10 +9,10 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		       ( select f.description from ma_class b ,ma_field f where b.guid=f.classguid and b.guid = a.classguid and f.fieldname = a.fieldname) fielddescription     			           	   
           from BI_TRANSFORM_SIGN_OBJECT_MAP a
         <where>
-			<if  test="SIGNPARAMGUID!=null">and a.SIGNPARAMGUID=#SIGNPARAMGUID#</if>
-			<if  test="CLASSGUID!=null">and a.CLASSGUID=#CLASSGUID#</if>
-			<if  test="FIELDNAME!=null">and a.FIELDNAME=#FIELDNAME#</if>
-			<if  test="GUID!=null">and a.GUID=#GUID#</if>
+			<if  test="SIGNPARAMGUID!=null">and a.SIGNPARAMGUID=#{SIGNPARAMGUID#{</if>
+			<if  test="CLASSGUID!=null">and a.CLASSGUID=#{CLASSGUID#{</if>
+			<if  test="FIELDNAME!=null">and a.FIELDNAME=#{FIELDNAME#{</if>
+			<if  test="GUID!=null">and a.GUID=#{GUID#{</if>
 		</where>
 		order by a.createtime
 	</select>
@@ -30,34 +30,34 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 
 		)
 		select
-			#GUID:VARCHAR:NULL#,
-			#SIGNPARAMGUID:VARCHAR:NULL#,
-			#CLASSGUID:VARCHAR:NULL#,
-			#FIELDNAME:VARCHAR:NULL#,
-			#CURRENTTIME:TIMESTAMP#,
-			#CREATEUSERGUID:VARCHAR:NULL#,
-			#CURRENTTIME:TIMESTAMP#,
-			#UPDATEUSERGUID:VARCHAR:NULL#
+			#{GUID:VARCHAR:NULL},
+			#{SIGNPARAMGUID:VARCHAR:NULL},
+			#{CLASSGUID:VARCHAR:NULL},
+			#{FIELDNAME:VARCHAR:NULL},
+			#{CURRENTTIME:TIMESTAMP},
+			#{CREATEUSERGUID:VARCHAR:NULL},
+			#{CURRENTTIME:TIMESTAMP},
+			#{UPDATEUSERGUID:VARCHAR:NULL#{
 	</insert>
 
 	<update id="update" parameterType="dyna.common.bean.data.trans.TransformSignObjectMap">
 		UPDATE BI_TRANSFORM_SIGN_OBJECT_MAP
 		<set>
-			updatetime=#CURRENTTIME:TIMESTAMP#,
-			updateuserguid=#UPDATEUSERGUID#,
-			<if  test="SIGNPARAMGUID!=null">SIGNPARAMGUID=#SIGNPARAMGUID#,</if>
-			<if  test="FIELDNAME!=null">FIELDNAME=#FIELDNAME#,</if>
-			<if  test="CLASSGUID!=null">CLASSGUID=#CLASSGUID#,</if>
+			updatetime=#{CURRENTTIME:TIMESTAMP},
+			updateuserguid=#{UPDATEUSERGUID},
+			<if  test="SIGNPARAMGUID!=null">SIGNPARAMGUID=#{SIGNPARAMGUID},</if>
+			<if  test="FIELDNAME!=null">FIELDNAME=#{FIELDNAME},</if>
+			<if  test="CLASSGUID!=null">CLASSGUID=#{CLASSGUID},</if>
 		</set>
-		WHERE a.guid = #GUID#
+		WHERE a.guid = #{GUID}
 	</update>
 
 	<delete id="delete" parameterType="java.lang.String">
 		DELETE FROM BI_TRANSFORM_SIGN_OBJECT_MAP 
-		WHERE guid = #GUID#
+		WHERE guid = #{GUID}
 	</delete>
 	<delete id="deleteAll" parameterType="java.lang.String">
 		DELETE FROM BI_TRANSFORM_SIGN_OBJECT_MAP 
-		WHERE SIGNPARAMGUID = #SIGNPARAMGUID#
+		WHERE SIGNPARAMGUID = #{SIGNPARAMGUID}
 	</delete>
 </mapper>

@@ -19,41 +19,41 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                              startnumber,
                              agentguid
                             )
-        values(#GUID:VARCHAR:NULL#, 
-               #PROCRTGUID:VARCHAR:NULL#, 
-               #ACTRTGUID:VARCHAR:NULL#, 
-               #DECIDE:VARCHAR:NULL#, 
-               #COMMENTS:VARCHAR:NULL#, 
-               #CREATEUSERGUID:VARCHAR:NULL#, 
-               #CURRENTTIME:TIMESTAMP#,
-               #UPDATEUSERGUID:VARCHAR:NULL#, 
-               #CURRENTTIME:TIMESTAMP#,
-               #CURRENTTIME:TIMESTAMP#,
-               #PERFGUID:VARCHAR:NULL#,
-               #STARTNUMBER#,
-               #AGENTGUID:VARCHAR:NULL#
+        values(#{GUID:VARCHAR:NULL}, 
+               #{PROCRTGUID:VARCHAR:NULL}, 
+               #{ACTRTGUID:VARCHAR:NULL}, 
+               #{DECIDE:VARCHAR:NULL}, 
+               #{COMMENTS:VARCHAR:NULL}, 
+               #{CREATEUSERGUID:VARCHAR:NULL}, 
+               #{CURRENTTIME:TIMESTAMP},
+               #{UPDATEUSERGUID:VARCHAR:NULL}, 
+               #{CURRENTTIME:TIMESTAMP},
+               #{CURRENTTIME:TIMESTAMP},
+               #{PERFGUID:VARCHAR:NULL},
+               #{STARTNUMBER},
+               #{AGENTGUID:VARCHAR:NULL}
               )
     </insert>
 
     <sql id="where">
         <where>
             <if  test="GUID!=null">
-                and b.guid = #GUID#
+                and b.guid = #{GUID}
             </if>
             <if  test="PROCRTGUID!=null">
-                and b.procrtguid = #PROCRTGUID#
+                and b.procrtguid = #{PROCRTGUID}
             </if>
             <if  test="ACTRTGUID!=null">
-                and b.actrtguid = #ACTRTGUID#
+                and b.actrtguid = #{ACTRTGUID}
             </if>
             <if  test="DECIDE!=null">
-                and b.decide = #DECIDE#
+                and b.decide = #{DECIDE}
             </if>
             <if  test="PERFGUID!=null">
-                and  b.perfguid = #PERFGUID#
+                and  b.perfguid = #{PERFGUID}
             </if>
             <if  test="STARTNUMBER!=null">
-                and b.startnumber = #STARTNUMBER#
+                and b.startnumber = #{STARTNUMBER}
             </if>
         </where>
     </sql>

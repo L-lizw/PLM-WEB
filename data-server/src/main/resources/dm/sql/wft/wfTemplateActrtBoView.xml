@@ -12,7 +12,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     <select id="get" parameterType="java.lang.String" resultType="dyna.common.dto.template.wft.WorkflowTemplateActClassRelationInfo" statementType="STATEMENT">
 		SELECT A.* 
 		  FROM WF_TEMPLATE_ACTRT_BOVIEW A
-		 WHERE GUID=#GUID#
+		 WHERE GUID=#{GUID}
 	</select>
 
     <insert id="insert" parameterType="dyna.common.dto.template.wft.WorkflowTemplateActClassRelationInfo">
@@ -29,43 +29,43 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                      UPDATEUSERGUID, 
                      UPDATETIME
                     )
-        VALUES(#GUID:VARCHAR:NULL#,
-               #TEMACTBOGUID:VARCHAR:NULL#,
-               #RELATIONTYPE:VARCHAR:NULL#,
-               #RELATIONNAME:VARCHAR:NULL#,
-               #SELECTRELATION:VARCHAR:NULL#,
-               #EDITRELATION:VARCHAR:NULL#,
-               #CREATEUSERGUID:VARCHAR:NULL#,
-               #CURRENTTIME:TIMESTAMP#,
-               #UPDATEUSERGUID:VARCHAR:NULL#,
-               #CURRENTTIME:TIMESTAMP#
+        VALUES(#{GUID:VARCHAR:NULL},
+               #{TEMACTBOGUID:VARCHAR:NULL},
+               #{RELATIONTYPE:VARCHAR:NULL},
+               #{RELATIONNAME:VARCHAR:NULL},
+               #{SELECTRELATION:VARCHAR:NULL},
+               #{EDITRELATION:VARCHAR:NULL},
+               #{CREATEUSERGUID:VARCHAR:NULL},
+               #{CURRENTTIME:TIMESTAMP},
+               #{UPDATEUSERGUID:VARCHAR:NULL},
+               #{CURRENTTIME:TIMESTAMP}
               )
     </insert>
 
     <update id="update" parameterType="java.util.HashMap">
         UPDATE WF_TEMPLATE_ACTRT_BOVIEW 
                <set>
-                   UPDATEUSERGUID = #UPDATEUSERGUID#,
-                   UPDATETIME = #CURRENTTIME:TIMESTAMP#,
+                   UPDATEUSERGUID = #{UPDATEUSERGUID},
+                   UPDATETIME = #{CURRENTTIME:TIMESTAMP},
                    <if test="TEMACTBOGUID!=null" >
-                       TEMACTBOGUID = #TEMACTBOGUID#,
+                       TEMACTBOGUID = #{TEMACTBOGUID},
                    </if>
                    <if test="RELATIONNAME!=null" >
-                       RELATIONNAME = #RELATIONNAME#,
+                       RELATIONNAME = #{RELATIONNAME},
                    </if>
                    <if test="SELECTRELATION!=null" >
-                       SELECTRELATION = #SELECTRELATION#,
+                       SELECTRELATION = #{SELECTRELATION},
                    </if>
                    <if test="EDITRELATION!=null" >
-                       EDITRELATION = #EDITRELATION#,
+                       EDITRELATION = #{EDITRELATION},
                    </if>
                </set>
-         WHERE GUID = #GUID#
+         WHERE GUID = #{GUID}
     </update>
 
     <delete id="delete" parameterType="java.lang.String">
         DELETE FROM WF_TEMPLATE_ACTRT_BOVIEW
-         WHERE GUID = #GUID#
+         WHERE GUID = #{GUID}
     </delete>
     
 </mapper>
