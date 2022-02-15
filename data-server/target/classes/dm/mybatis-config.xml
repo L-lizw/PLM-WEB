@@ -27,12 +27,17 @@
 		<setting name="logImpl" value="LOG4J"/>
 	</settings>
 
+	<typeHandlers>
+		<typeHandler handler="dyna.data.common.typehandler.NumberTypeHandler"/>
+		<typeHandler handler="dyna.data.common.typehandler.StringTypeHandler"/>
+	</typeHandlers>
+
 
 	<plugins>
 		<!-- 分页 -->
 		<plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>
 		<!-- 执行 -->
-		<plugin interceptor="dyna.data.plugin.SqlExecuteInterceptor"></plugin>
+		<plugin interceptor="dyna.data.common.plugin.SqlExecuteInterceptor"></plugin>
 	</plugins>
 
 </configuration>

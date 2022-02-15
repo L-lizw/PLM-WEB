@@ -53,12 +53,12 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			        updatetime)
 	        values (#{GUID},
 			        #{USERGUID},
-					#{TABLETYPE:VARCHAR:NULL},
-			        #{CLASSIFICATIONFK:VARCHAR:NULL},
-			        #{CLASSFK:VARCHAR:NULL},
-					#{CREATEUSERGUID:VARCHAR:NULL},
+					#{TABLETYPE:VARCHAR},
+			        #{CLASSIFICATIONFK:VARCHAR},
+			        #{CLASSFK:VARCHAR},
+					#{CREATEUSERGUID:VARCHAR},
 					#{CURRENTTIME:TIMESTAMP},
-					#{UPDATEUSERGUID:VARCHAR:NULL},
+					#{UPDATEUSERGUID:VARCHAR},
 					#{CURRENTTIME:TIMESTAMP})
     </insert>
     

@@ -181,16 +181,16 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                   #{ITEMVALUE}, 
                   'N', 
                   
-                  #{CREATEUSERGUID:VARCHAR:NULL},
+                  #{CREATEUSERGUID:VARCHAR},
                   #{CURRENTTIME:TIMESTAMP},
-				  #{UPDATEUSERGUID:VARCHAR:NULL},
+				  #{UPDATEUSERGUID:VARCHAR},
 				  #{CURRENTTIME:TIMESTAMP}
                   )
     </insert>
     
     <update id="updateCustColumn" parameterType="map">
             update ${TABLENAME}
-               set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR:NULL},
+               set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR},
                    UPDATETIME = #{CURRENTTIME:TIMESTAMP},
                    ITEMVALUE = #{ITEMVALUE}
              where guid = #{GUID}
@@ -198,7 +198,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     
     <update id="updateCustColumnHasNextRevision" parameterType="map">
         update ${TABLENAME}
-           set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR:NULL},
+           set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR},
                UPDATETIME = #{CURRENTTIME:TIMESTAMP},
                hasnextrevision = 'Y'
          where guid= #{GUID}
@@ -211,7 +211,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     
     <update id="releaseCustColumn" parameterType="map">
 		update ${TABLENAME}
-		   set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR:NULL},
+		   set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR},
                UPDATETIME = ${CURRENTTIME},
 		       releasetime = ${CURRENTTIME}
 		 where releasetime is null
@@ -220,7 +220,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     
     <update id="obsoleteCustColumn" parameterType="map">
 		update ${TABLENAME}
-		   set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR:NULL},
+		   set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR},
                UPDATETIME = ${CURRENTTIME},
 		       obsoletetime = ${CURRENTTIME}
 		 where obsoletetime is null

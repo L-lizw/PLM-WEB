@@ -32,19 +32,19 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                      UPDATEUSERGUID, 
                      UPDATETIME
                     )
-        VALUES(#{GUID:VARCHAR:NULL},
-               #{TEMPLATEACTRTGUID:VARCHAR:NULL},
-               #{BOGUID:VARCHAR:NULL},
-               #{HASFILE:VARCHAR:NULL},
-               #{SELECTFILE:VARCHAR:NULL},
-               #{EDITFILE:VARCHAR:NULL},
+        VALUES(#{GUID:VARCHAR},
+               #{TEMPLATEACTRTGUID:VARCHAR},
+               #{BOGUID:VARCHAR},
+               #{HASFILE:VARCHAR},
+               #{SELECTFILE:VARCHAR},
+               #{EDITFILE:VARCHAR},
                
-               #{HASEFFECTIVETIME:VARCHAR:NULL},
-               #{HASOBSOLETETIME:VARCHAR:NULL},
-               #{HASSCRIPT:VARCHAR:NULL},
-               #{CREATEUSERGUID:VARCHAR:NULL},
+               #{HASEFFECTIVETIME:VARCHAR},
+               #{HASOBSOLETETIME:VARCHAR},
+               #{HASSCRIPT:VARCHAR},
+               #{CREATEUSERGUID:VARCHAR},
                #{CURRENTTIME:TIMESTAMP},
-               #{UPDATEUSERGUID:VARCHAR:NULL},
+               #{UPDATEUSERGUID:VARCHAR},
                #{CURRENTTIME:TIMESTAMP}
               )
     </insert>

@@ -37,20 +37,20 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                                       ERPTEMPLATEGUID,
                                       ISEXPORTALL
                                      )
-        values(#{GUID:VARCHAR:NULL},
-               #{TEMPLATEGUID:VARCHAR:NULL},
-               #{ACTRTNAME:VARCHAR:NULL},
-               #{PERSCOPETYPE:VARCHAR:NULL},
-               #{EXECUTIONTYPE:VARCHAR:NULL},
+        values(#{GUID:VARCHAR},
+               #{TEMPLATEGUID:VARCHAR},
+               #{ACTRTNAME:VARCHAR},
+               #{PERSCOPETYPE:VARCHAR},
+               #{EXECUTIONTYPE:VARCHAR},
                
-               #{ISPASSED:VARCHAR:NULL},
+               #{ISPASSED:VARCHAR},
                <if  test="SCHEMEPERIODS!=null">
                #{SCHEMEPERIODS},
                </if>
                <if  test="SCHEMEPERIODS==null">
                NULL,
                </if>
-               #{OVERTIMEACTION:VARCHAR:NULL},
+               #{OVERTIMEACTION:VARCHAR},
                <if  test="MAXIMUMEXECUTORS!=null">
                #{MAXIMUMEXECUTORS},
                </if>
@@ -76,12 +76,12 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                <if  test="DAYSAFTERCLOSETIME!=null">
                NULL,
                </if>
-               #{CREATEUSERGUID:VARCHAR:NULL},
+               #{CREATEUSERGUID:VARCHAR},
                #{CURRENTTIME:TIMESTAMP},
-               #{UPDATEUSERGUID:VARCHAR:NULL},
+               #{UPDATEUSERGUID:VARCHAR},
                #{CURRENTTIME:TIMESTAMP},
-               #{ERPTEMPLATEGUID:VARCHAR:NULL},
-               #{ISEXPORTALL:VARCHAR:NULL}
+               #{ERPTEMPLATEGUID:VARCHAR},
+               #{ISEXPORTALL:VARCHAR}
               )
     </insert>
 

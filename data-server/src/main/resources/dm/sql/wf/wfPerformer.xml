@@ -19,19 +19,19 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                                  isfinish,
                                  isrechecker
                                 )
-        values(#{GUID:VARCHAR:NULL}, 
-               #{PROCRTGUID:VARCHAR:NULL}, 
-               #{ACTRTGUID:VARCHAR:NULL}, 
-               #{PERFGUID:VARCHAR:NULL},
-               #{PERFTYPE:VARCHAR:NULL}, 
-               #{PERFGROUPGUID:VARCHAR:NULL}, 
-               #{PERFROLEGUID:VARCHAR:NULL}, 
-               #{CREATEUSERGUID:VARCHAR:NULL}, 
+        values(#{GUID:VARCHAR}, 
+               #{PROCRTGUID:VARCHAR}, 
+               #{ACTRTGUID:VARCHAR}, 
+               #{PERFGUID:VARCHAR},
+               #{PERFTYPE:VARCHAR}, 
+               #{PERFGROUPGUID:VARCHAR}, 
+               #{PERFROLEGUID:VARCHAR}, 
+               #{CREATEUSERGUID:VARCHAR}, 
                #{CURRENTTIME:TIMESTAMP}, 
-               #{UPDATEUSERGUID:VARCHAR:NULL}, 
+               #{UPDATEUSERGUID:VARCHAR}, 
                #{CURRENTTIME:TIMESTAMP},
-               #{ISFINISH:VARCHAR:NULL},
-               #{ISRECHECKER:VARCHAR:NULL}
+               #{ISFINISH:VARCHAR},
+               #{ISRECHECKER:VARCHAR}
               )
     </insert>
     
@@ -49,9 +49,9 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                 #{PROCRTGUID},
                 #{ACTRTGUID},
                 #{PERFGUID},
-                #{CREATEUSERGUID:VARCHAR:NULL}, 
+                #{CREATEUSERGUID:VARCHAR}, 
                 #{CURRENTTIME:TIMESTAMP}, 
-                #{UPDATEUSERGUID:VARCHAR:NULL}, 
+                #{UPDATEUSERGUID:VARCHAR}, 
                 #{CURRENTTIME:TIMESTAMP}
                )
     </insert>

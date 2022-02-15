@@ -1,4 +1,4 @@
-package dyna.data.plugin;
+package dyna.data.common.plugin;
 
 import dyna.common.sqlbuilder.plmdynamic.DynamicSqlParamData;
 import dyna.common.sqlbuilder.plmdynamic.SqlParamData;

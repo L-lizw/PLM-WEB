@@ -58,13 +58,13 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 										     UPDATEUSERGUID
                                             )
                                       VALUES(#{GUID},
-									         #{FIELDFK:VARCHAR:NULL},
-									         #{CODE:VARCHAR:NULL},
-									         #{CRVALUE:VARCHAR:NULL},
+									         #{FIELDFK:VARCHAR},
+									         #{CODE:VARCHAR},
+									         #{CRVALUE:VARCHAR},
 									         #{CURRENTTIME:TIMESTAMP},
-										     #{CREATEUSERGUID:VARCHAR:NULL},
+										     #{CREATEUSERGUID:VARCHAR},
 										     #{CURRENTTIME:TIMESTAMP},
-										     #{UPDATEUSERGUID:VARCHAR:NULL}
+										     #{UPDATEUSERGUID:VARCHAR}
                                             )
     </insert>
     

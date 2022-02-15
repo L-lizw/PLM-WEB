@@ -25,12 +25,12 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 
 		)
 		select
-			#{GUID:VARCHAR:NULL},
-			#{SOLUTIONNAME:VARCHAR:NULL},
+			#{GUID:VARCHAR},
+			#{SOLUTIONNAME:VARCHAR},
 			#{CURRENTTIME:TIMESTAMP},
-			#{CREATEUSERGUID:VARCHAR:NULL},
+			#{CREATEUSERGUID:VARCHAR},
 			#{CURRENTTIME:TIMESTAMP},
-			#{UPDATEUSERGUID:VARCHAR:NULL}
+			#{UPDATEUSERGUID:VARCHAR}
 	</insert>
 
 	<update id="update" parameterType="dyna.common.bean.data.trans.TransformSign">

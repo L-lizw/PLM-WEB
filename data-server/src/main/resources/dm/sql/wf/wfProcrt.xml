@@ -24,24 +24,24 @@
                               wftemplateguid,
                               frominstance
                              )
-        values(#{GUID:VARCHAR:NULL}, 
-               #{PARENTGUID:VARCHAR:NULL}, 
-               #{ACTRTGUID:VARCHAR:NULL}, 
-               #{PROCRTNAME:VARCHAR:NULL}, 
-               #{DESCRIPTION:VARCHAR:NULL}, 
-               #{PROCDEFGUID:VARCHAR:NULL}, 
-               #{STATUS:VARCHAR:NULL},
-               #{CREATEUSERGUID:VARCHAR:NULL}, 
+        values(#{GUID:VARCHAR}, 
+               #{PARENTGUID:VARCHAR}, 
+               #{ACTRTGUID:VARCHAR}, 
+               #{PROCRTNAME:VARCHAR}, 
+               #{DESCRIPTION:VARCHAR}, 
+               #{PROCDEFGUID:VARCHAR}, 
+               #{STATUS:VARCHAR},
+               #{CREATEUSERGUID:VARCHAR}, 
                #{CURRENTTIME:TIMESTAMP}, 
-               #{UPDATEUSERGUID:VARCHAR:NULL}, 
+               #{UPDATEUSERGUID:VARCHAR}, 
                #{CURRENTTIME:TIMESTAMP},
                'N', 
                #{DELETETIME:DATE}, 
                #{FINISHTIME:DATE}, 
-               #{ISFINISH:VARCHAR:NULL}, 
-               #{TITLE:VARCHAR:NULL},
-               #{WFTEMPLATEGUID:VARCHAR:NULL},
-               #{FROMINSTANCE:VARCHAR:NULL}
+               #{ISFINISH:VARCHAR}, 
+               #{TITLE:VARCHAR},
+               #{WFTEMPLATEGUID:VARCHAR},
+               #{FROMINSTANCE:VARCHAR}
               )
     </insert>
 

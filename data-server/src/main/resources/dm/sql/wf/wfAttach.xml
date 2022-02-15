@@ -23,21 +23,21 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 					 instancelifcpbackup,
 					 classguid
                     )
-             values (#{PROCRTGUID:VARCHAR:NULL}, 
-                     #{INSTANCEGUID:VARCHAR:NULL}, 
-                     #{INSTANCETYPE:VARCHAR:NULL}, 
+             values (#{PROCRTGUID:VARCHAR}, 
+                     #{INSTANCEGUID:VARCHAR}, 
+                     #{INSTANCETYPE:VARCHAR}, 
                      
-                     #{CREATEUSERGUID:VARCHAR:NULL},
+                     #{CREATEUSERGUID:VARCHAR},
                      #{CURRENTTIME:TIMESTAMP},
-                     #{UPDATEUSERGUID:VARCHAR:NULL},
+                     #{UPDATEUSERGUID:VARCHAR},
                      #{CURRENTTIME:TIMESTAMP},
                      
-                     #{ISMAIN:VARCHAR:NULL},
-                     #{ISCALCULATED:VARCHAR:NULL},
-                     #{ISINVALID:VARCHAR:NULL},
-                     #{ITERATIONID:VARCHAR:NULL},
-                     #{INSTANCESTATUSBACKUP:VARCHAR:NULL},
-                     #{INSTANCELIFCPBACKUP:VARCHAR:NULL},
+                     #{ISMAIN:VARCHAR},
+                     #{ISCALCULATED:VARCHAR},
+                     #{ISINVALID:VARCHAR},
+                     #{ITERATIONID:VARCHAR},
+                     #{INSTANCESTATUSBACKUP:VARCHAR},
+                     #{INSTANCELIFCPBACKUP:VARCHAR},
                      #{CLASSGUID}
                     )
     </insert>

@@ -18,18 +18,18 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                                    perfguid,
                                    quotecomments
                                   )
-        values(#{GUID:VARCHAR:NULL}, 
-               #{PROCRTGUID:VARCHAR:NULL}, 
-               #{ACTRTGUID:VARCHAR:NULL}, 
-               #{COMMENTS:VARCHAR:NULL}, 
-               #{ATTACHGUID:VARCHAR:NULL},
-               #{CREATEUSERGUID:VARCHAR:NULL}, 
+        values(#{GUID:VARCHAR}, 
+               #{PROCRTGUID:VARCHAR}, 
+               #{ACTRTGUID:VARCHAR}, 
+               #{COMMENTS:VARCHAR}, 
+               #{ATTACHGUID:VARCHAR},
+               #{CREATEUSERGUID:VARCHAR}, 
                #{CURRENTTIME:TIMESTAMP}, 
-               #{UPDATEUSERGUID:VARCHAR:NULL}, 
+               #{UPDATEUSERGUID:VARCHAR}, 
                #{CURRENTTIME:TIMESTAMP}, 
                #{CURRENTTIME:TIMESTAMP}, 
-               #{PERFGUID:VARCHAR:NULL},
-               #{QUOTECOMMENTS:VARCHAR:NULL}
+               #{PERFGUID:VARCHAR},
+               #{QUOTECOMMENTS:VARCHAR}
               )
     </insert>
 

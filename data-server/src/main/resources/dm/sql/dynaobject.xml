@@ -444,7 +444,7 @@
 	
 	<select id="SelectLibUser" resultType="java.lang.String" parameterType="java.util.HashMap" statementType="STATEMENT">
 		select case
-	        when b.libraryuser is null then #{GUID:CHAR:NULL}
+	        when b.libraryuser is null then #{GUID:CHAR}
 			else b.libraryuser
 		   end
 		from ma_folder b

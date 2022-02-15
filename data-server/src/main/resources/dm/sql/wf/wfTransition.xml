@@ -15,14 +15,14 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                                    updateuserguid, 
                                    updatetime
                                   )
-        values(#{GUID:VARCHAR:NULL}, 
-               #{PROCRTGUID:VARCHAR:NULL}, 
-               #{TRANSITIONNAME:VARCHAR:NULL}, 
-               #{FROMACTGUID:VARCHAR:NULL}, 
-               #{TOACTGUID:VARCHAR:NULL}, 
-               #{CREATEUSERGUID:VARCHAR:NULL}, 
+        values(#{GUID:VARCHAR}, 
+               #{PROCRTGUID:VARCHAR}, 
+               #{TRANSITIONNAME:VARCHAR}, 
+               #{FROMACTGUID:VARCHAR}, 
+               #{TOACTGUID:VARCHAR}, 
+               #{CREATEUSERGUID:VARCHAR}, 
                #{CURRENTTIME:TIMESTAMP}, 
-               #{UPDATEUSERGUID:VARCHAR:NULL}, 
+               #{UPDATEUSERGUID:VARCHAR}, 
                #{CURRENTTIME:TIMESTAMP}
               )
     </insert>

@@ -29,18 +29,18 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                                 ISVALID,
                                 REQUIREDEXECUTOR
                                )
-        VALUES(#{GUID:VARCHAR:NULL},
-               #{WFTID:VARCHAR:NULL},
-               #{WFTNAME:VARCHAR:NULL},
-               #{WFNAME:VARCHAR:NULL},
-               #{BMGUID:VARCHAR:NULL},
-               #{TITLE:VARCHAR:NULL},
-               #{CREATEUSERGUID:VARCHAR:NULL},
+        VALUES(#{GUID:VARCHAR},
+               #{WFTID:VARCHAR},
+               #{WFTNAME:VARCHAR},
+               #{WFNAME:VARCHAR},
+               #{BMGUID:VARCHAR},
+               #{TITLE:VARCHAR},
+               #{CREATEUSERGUID:VARCHAR},
                #{CURRENTTIME:TIMESTAMP},
-               #{UPDATEUSERGUID:VARCHAR:NULL},
+               #{UPDATEUSERGUID:VARCHAR},
                #{CURRENTTIME:TIMESTAMP},
                '1',
-               #{REQUIREDEXECUTOR:VARCHAR:NULL}
+               #{REQUIREDEXECUTOR:VARCHAR}
               )
     </insert>
 

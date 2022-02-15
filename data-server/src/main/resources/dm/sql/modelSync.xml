@@ -30,13 +30,13 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		                    UPDATETIME
 		                   )
 		             VALUES(#{GUID},
-		                    #{MODELNAME:VARCHAR:NULL},
-		                    #{DESCRIPTION:VARCHAR:NULL},
-		                    #{VERSION:VARCHAR:NULL},
-		                    #{OMGUID:VARCHAR:NULL},
-		                    #{SYNCIP:VARCHAR:NULL},
-		                    #{REMARKS:VARCHAR:NULL},
-		                    #{OMNAME:VARCHAR:NULL}, 
+		                    #{MODELNAME:VARCHAR},
+		                    #{DESCRIPTION:VARCHAR},
+		                    #{VERSION:VARCHAR},
+		                    #{OMGUID:VARCHAR},
+		                    #{SYNCIP:VARCHAR},
+		                    #{REMARKS:VARCHAR},
+		                    #{OMNAME:VARCHAR}, 
 		                    #{CREATEUSERGUID:VARCHAR},
 		                    #{CURRENTTIME:TIMESTAMP},
 		                    #{UPDATEUSERGUID:VARCHAR},
@@ -57,7 +57,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 				and a.updatetime = (select max(updatetime)
 								  from MA_SYNC 
 						<if  test="OMGUID!=null">
-								 where OMGUID = #{OMGUID:VARCHAR:NULL}
+								 where OMGUID = #{OMGUID:VARCHAR}
 						</if>
 								 )
 			</if>

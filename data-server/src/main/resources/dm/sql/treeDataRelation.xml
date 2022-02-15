@@ -12,11 +12,11 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                                          createuserguid,
                                          createtime
                                         )
-        values(#{GUID:VARCHAR:NULL}, 
-               #{DATAGUID:VARCHAR:NULL},
-               #{SUBDATAGUID:VARCHAR:NULL},
-               #{DATATYPE:VARCHAR:NULL},
-               #{CREATEUSERGUID:VARCHAR:NULL},
+        values(#{GUID:VARCHAR}, 
+               #{DATAGUID:VARCHAR},
+               #{SUBDATAGUID:VARCHAR},
+               #{DATATYPE:VARCHAR},
+               #{CREATEUSERGUID:VARCHAR},
                #{CURRENTTIME:TIMESTAMP}
               )
     </insert>

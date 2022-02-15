@@ -97,8 +97,8 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 						updatetime
                     )
         values (#{GUID},
-        		#{SESSIONTYPE:VARCHAR:NULL},
-				#{LOGTIME:VARCHAR:NULL},
+        		#{SESSIONTYPE:VARCHAR},
+				#{LOGTIME:VARCHAR},
 				
 				#{H0:NUMERIC},
 				#{H1:NUMERIC},
@@ -125,9 +125,9 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 				#{H22:NUMERIC},
 				#{H23:NUMERIC},
 				
-				#{CREATEUSERGUID:VARCHAR:NULL},
+				#{CREATEUSERGUID:VARCHAR},
 				#{CURRENTTIME:TIMESTAMP},
-				#{UPDATEUSERGUID:VARCHAR:NULL},
+				#{UPDATEUSERGUID:VARCHAR},
 				#{CURRENTTIME:TIMESTAMP}
                )
     </insert>

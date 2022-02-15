@@ -50,14 +50,14 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			functiontype)
 		VALUES(
 			#{GUID},
-			#{PARENTGUID:VARCHAR:NULL},
-	        #{FUNCTIONNAME:VARCHAR:NULL},
+			#{PARENTGUID:VARCHAR},
+	        #{FUNCTIONNAME:VARCHAR},
 	        #{POSITION},
 	        #{CURRENTTIME:TIMESTAMP},
-	        #{CREATEUSERGUID:VARCHAR:NULL},
+	        #{CREATEUSERGUID:VARCHAR},
 	        #{CURRENTTIME:TIMESTAMP},
-	        #{CREATEUSERGUID:VARCHAR:NULL},
-	        #{FUNCTIONTYPE:VARCHAR:NULL})
+	        #{CREATEUSERGUID:VARCHAR},
+	        #{FUNCTIONTYPE:VARCHAR})
 	</insert>
 
 	<update id="update" parameterType="dyna.common.dto.acl.ACLFunctionObject">

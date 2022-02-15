@@ -75,15 +75,15 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                   #{VARVALUE},  
                   #{DATASEQ},
                   
-                  #{CREATEUSERGUID:VARCHAR:NULL},
+                  #{CREATEUSERGUID:VARCHAR},
                   #{CURRENTTIME:TIMESTAMP},
-				  #{UPDATEUSERGUID:VARCHAR:NULL},
+				  #{UPDATEUSERGUID:VARCHAR},
 				  #{CURRENTTIME:TIMESTAMP})
     </insert>
     
     <update id="updateBatchList" parameterType="map">
             update ma_pd_columnvalue 
-               set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR:NULL},
+               set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR},
                    UPDATETIME = #{CURRENTTIME:TIMESTAMP},
                    VARVALUE = #{VARVALUE}
              where guid = #{GUID}
@@ -91,7 +91,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     
     <update id="updateNextRevisionBatchList" parameterType="map">
         update ma_pd_columnvalue
-           set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR:NULL},
+           set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR},
                UPDATETIME = #{CURRENTTIME:TIMESTAMP},
                hasnextrevision = 'Y'
          where guid = #{GUID}
@@ -104,7 +104,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     
     <update id="releaseCustColumn" parameterType="map">
 		update ma_pd_columnvalue 
-		   set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR:NULL},
+		   set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR},
                UPDATETIME = ${CURRENTTIME},
 		       releasetime = ${CURRENTTIME}
 		 where releasetime is null
@@ -113,7 +113,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     
     <update id="obsoleteCustColumn" parameterType="map">
 		update ma_pd_columnvalue 
-		   set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR:NULL},
+		   set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR},
                UPDATETIME = ${CURRENTTIME},
 		       obsoletetime = ${CURRENTTIME}
 		 where releasetime is not null
@@ -127,7 +127,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     
     <update id="clearWIP" parameterType="map">
             update ma_pd_columnvalue
-               set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR:NULL},
+               set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR},
                    UPDATETIME = ${CURRENTTIME},
                    hasnextrevision = 'N'
              where hasnextrevision = 'Y' 

@@ -10,8 +10,8 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                              instanceguid
                             )
         values (
-                #{PROCRTGUID:VARCHAR:NULL}, 
-                #{INSTANCEGUID:VARCHAR:NULL}
+                #{PROCRTGUID:VARCHAR}, 
+                #{INSTANCEGUID:VARCHAR}
                )
     </insert>
 

@@ -57,17 +57,17 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                             )
                       VALUES(#{GUID:VARCHAR},
 							 #{CLASSFK:VARCHAR},
-							 #{MANDATORY:VARCHAR:NULL},
-							 #{WITHFIELD:VARCHAR:NULL},
-							 #{WITHDATE:VARCHAR:NULL},
-							 #{UESEXTENDNUMBER:VARCHAR:NULL},
-							 #{FIELDNAME:VARCHAR:NULL},
+							 #{MANDATORY:VARCHAR},
+							 #{WITHFIELD:VARCHAR},
+							 #{WITHDATE:VARCHAR},
+							 #{UESEXTENDNUMBER:VARCHAR},
+							 #{FIELDNAME:VARCHAR},
 							 #{FIELDLENGTH},
-							 #{ISNUMBERING:VARCHAR:NULL},
+							 #{ISNUMBERING:VARCHAR},
 							 #{CURRENTTIME:TIMESTAMP},
-							 #{CREATEUSERGUID:VARCHAR:NULL},
+							 #{CREATEUSERGUID:VARCHAR},
 							 #{CURRENTTIME:TIMESTAMP},
-							 #{UPDATEUSERGUID:VARCHAR:NULL}
+							 #{UPDATEUSERGUID:VARCHAR}
                             )
     </insert>
     

@@ -9,6 +9,7 @@ import dyna.app.service.AbstractServiceStub;
 import dyna.app.util.QuartzUtil;
 import dyna.app.conf.yml.ConfigurableJSSImpl;
 import dyna.app.conf.yml.ConfigurableServiceImpl;
+import dyna.app.util.SpringUtil;
 import dyna.common.conf.JobDefinition;
 import dyna.common.conf.ServiceDefinition;
 import dyna.common.dto.Queue;
@@ -49,6 +50,7 @@ public class ServerContextListenerJobPollingImpl extends AbstractServiceStub<JSS
 	@Autowired
 	private ConfigurableJSSImpl         configurableJSS;
 
+	@Autowired
 	@Qualifier("timerScheduler")
 	private Scheduler                   timerScheduler;
 

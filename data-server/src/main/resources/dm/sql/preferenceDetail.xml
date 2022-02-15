@@ -40,11 +40,11 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		)
 		VALUES(
 		#{GUID},
-		#{MASTERFK:VARCHAR:NULL},
+		#{MASTERFK:VARCHAR},
 		<if  test="DATASEQ!=null">#{DATASEQ},</if>
 		<if  test="DATASEQ==null">0,</if>
-        #{BMGUID:VARCHAR:NULL},
-		#{ITEMVALUE:VARCHAR:NULL}
+        #{BMGUID:VARCHAR},
+		#{ITEMVALUE:VARCHAR}
 		)
 	</insert>
 

@@ -13,12 +13,12 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 					 leveltype,
 					 bomtype
                     )
-        values(#{GUID:VARCHAR:NULL}, 
-               #{PROCRTGUID:VARCHAR:NULL}, 
-               #{INSTANCEGUID:VARCHAR:NULL},
-               #{VIEWNAME:VARCHAR:NULL},
-               #{LEVELTYPE:VARCHAR:NULL},
-               #{BOMTYPE:VARCHAR:NULL}
+        values(#{GUID:VARCHAR}, 
+               #{PROCRTGUID:VARCHAR}, 
+               #{INSTANCEGUID:VARCHAR},
+               #{VIEWNAME:VARCHAR},
+               #{LEVELTYPE:VARCHAR},
+               #{BOMTYPE:VARCHAR}
               )
     </insert>
 
@@ -42,11 +42,11 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                      viewname, 
                      leveltype
                     )
-        values(#{GUID:VARCHAR:NULL}, 
-               #{PROCRTGUID:VARCHAR:NULL}, 
-               #{INSTANCEGUID:VARCHAR:NULL},
-               #{VIEWNAME:VARCHAR:NULL},
-               #{LEVELTYPE:VARCHAR:NULL}
+        values(#{GUID:VARCHAR}, 
+               #{PROCRTGUID:VARCHAR}, 
+               #{INSTANCEGUID:VARCHAR},
+               #{VIEWNAME:VARCHAR},
+               #{LEVELTYPE:VARCHAR}
               )
     </insert>
 

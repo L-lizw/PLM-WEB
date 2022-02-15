@@ -71,12 +71,12 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			        updateuserguid,
 			        updatetime)
 	        values (#{GUID},
-			        #{MESSAGENAME:VARCHAR:NULL},
-			        #{MESSAGETYPE:VARCHAR:NULL},
-					#{THEME:VARCHAR:NULL},
-					#{NOTICERULE:VARCHAR:NULL},
-					#{ISSTARTEMAIL:VARCHAR:NULL},
-					#{ISSTARTINSTATIONINFO:VARCHAR:NULL},
+			        #{MESSAGENAME:VARCHAR},
+			        #{MESSAGETYPE:VARCHAR},
+					#{THEME:VARCHAR},
+					#{NOTICERULE:VARCHAR},
+					#{ISSTARTEMAIL:VARCHAR},
+					#{ISSTARTINSTATIONINFO:VARCHAR},
 					
 					#{CREATEUSERGUID},
 					#{CURRENTTIME:TIMESTAMP},
@@ -88,8 +88,8 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
         insert into ppm_messagerule_receiver
 			       (messageruleguid,
                     notifier)
-	        values (#{MESSAGERULEGUID:VARCHAR:NULL},
-			        #{NOTIFIER:VARCHAR:NULL})
+	        values (#{MESSAGERULEGUID:VARCHAR},
+			        #{NOTIFIER:VARCHAR})
     </insert>
     
     <update id="update" parameterType="dyna.common.bean.data.ppms.MessageRule">

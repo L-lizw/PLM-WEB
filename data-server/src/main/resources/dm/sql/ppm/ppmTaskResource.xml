@@ -58,17 +58,17 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			        createtime,
 			        updateuserguid,
 			        updatetime)
-	        values (#{GUID:VARCHAR:NULL},
-			        #{TASKGUID:VARCHAR:NULL},
-					#{USERGUID:VARCHAR:NULL},
-					#{PROJECTROLE:VARCHAR:NULL},
+	        values (#{GUID:VARCHAR},
+			        #{TASKGUID:VARCHAR},
+					#{USERGUID:VARCHAR},
+					#{PROJECTROLE:VARCHAR},
 					#{ISEXECUTOR},
 					#{DATASEQ},
 					#{RESOURCERATE},
 					
-					#{CREATEUSERGUID:VARCHAR:NULL},
+					#{CREATEUSERGUID:VARCHAR},
 					#{CURRENTTIME:TIMESTAMP},
-					#{UPDATEUSERGUID:VARCHAR:NULL},
+					#{UPDATEUSERGUID:VARCHAR},
 					#{CURRENTTIME:TIMESTAMP})
     </insert>
     

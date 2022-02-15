@@ -26,14 +26,14 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                      UPDATETIME,
                      CANLAUNCH
                     )
-        VALUES(#{GUID:VARCHAR:NULL},
-               #{WFTEMPLATEFK:VARCHAR:NULL},
-               #{BOGUID:VARCHAR:NULL},
-               #{CREATEUSERGUID:VARCHAR:NULL},
+        VALUES(#{GUID:VARCHAR},
+               #{WFTEMPLATEFK:VARCHAR},
+               #{BOGUID:VARCHAR},
+               #{CREATEUSERGUID:VARCHAR},
                #{CURRENTTIME:TIMESTAMP},
-               #{UPDATEUSERGUID:VARCHAR:NULL},
+               #{UPDATEUSERGUID:VARCHAR},
                #{CURRENTTIME:TIMESTAMP},
-               #{CANLAUNCH:VARCHAR:NULL}
+               #{CANLAUNCH:VARCHAR}
               )
     </insert>
 

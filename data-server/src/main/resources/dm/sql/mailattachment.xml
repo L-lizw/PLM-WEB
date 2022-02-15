@@ -40,7 +40,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		   #{INSTANCETITLE},
 		   #{CREATEUSERGUID},
 		   #{CURRENTTIME:TIMESTAMP},
-		   #{FILEGUID:VARCHAR:NULL})
+		   #{FILEGUID:VARCHAR})
 	</insert>
 	
 </mapper>

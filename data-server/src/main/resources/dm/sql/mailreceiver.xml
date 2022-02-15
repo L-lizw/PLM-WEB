@@ -9,8 +9,8 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                     (masterguid,
                      receiveuser
                     )
-        values (#{MASTERGUID:VARCHAR:NULL},
-                #{RECEIVEUSER:VARCHAR:NULL}
+        values (#{MASTERGUID:VARCHAR},
+                #{RECEIVEUSER:VARCHAR}
                )
     </insert>
     

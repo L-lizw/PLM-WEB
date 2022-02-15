@@ -11,12 +11,12 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 	
 	<insert id="insert" parameterType="dyna.common.dto.aas.Role">
 		INSERT INTO sa_role(guid,roleid,rolename,createtime,createuserguid,updatetime,updateuserguid,isvalid,description)
-		VALUES(#{GUID}，#{ROLEID}，#{ROLENAME}，#{CURRENTTIME:TIMESTAMP}，#{CREATEUSERGUID:VARCHAR:NULL}，#{CURRENTTIME:TIMESTAMP}，#{CREATEUSERGUID:VARCHAR:NULL}，
+		VALUES(#{GUID}，#{ROLEID}，#{ROLENAME}，#{CURRENTTIME:TIMESTAMP}，#{CREATEUSERGUID:VARCHAR}，#{CURRENTTIME:TIMESTAMP}，#{CREATEUSERGUID:VARCHAR}，
 		<choose>
 			<when test="ISVALID!=null">#{ISVALID}，</when>
 			<otherwise>'Y',</otherwise>
 		</choose>
-		#{DESCRIPTION:VARCHAR:NULL}
+		#{DESCRIPTION:VARCHAR}
 		)
 	</insert>
 	

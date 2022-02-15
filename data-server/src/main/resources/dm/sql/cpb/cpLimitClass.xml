@@ -26,7 +26,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 	        values (#{GUID},
 			        #{BMGUID},
 			        #{BOINFONAME},
-					#{CREATEUSERGUID:VARCHAR:NULL},
+					#{CREATEUSERGUID:VARCHAR},
 					#{CURRENTTIME:TIMESTAMP})
     </insert>
     

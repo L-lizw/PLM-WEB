@@ -144,15 +144,15 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			        createuserguid,
 			        createtime)
 	        values (#{GUID},
-	                #{TARGETGUID:VARCHAR:NULL},
-	                #{TARGETCLASSGUID:VARCHAR:NULL},
-			        #{ERPNAME:VARCHAR:NULL},
-			        #{ERPOPERATION:VARCHAR:NULL},
-			        #{CATEGORY:VARCHAR:NULL},
-			        #{ERPFACTORY:VARCHAR:NULL},
+	                #{TARGETGUID:VARCHAR},
+	                #{TARGETCLASSGUID:VARCHAR},
+			        #{ERPNAME:VARCHAR},
+			        #{ERPOPERATION:VARCHAR},
+			        #{CATEGORY:VARCHAR},
+			        #{ERPFACTORY:VARCHAR},
 					#{ITERATION},
 					
-					#{CREATEUSERGUID:VARCHAR:NULL},
+					#{CREATEUSERGUID:VARCHAR},
 					#{CURRENTTIME:TIMESTAMP})
     </insert>
 </mapper>

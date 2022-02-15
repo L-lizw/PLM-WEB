@@ -19,19 +19,19 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                              startnumber,
                              agentguid
                             )
-        values(#{GUID:VARCHAR:NULL}, 
-               #{PROCRTGUID:VARCHAR:NULL}, 
-               #{ACTRTGUID:VARCHAR:NULL}, 
-               #{DECIDE:VARCHAR:NULL}, 
-               #{COMMENTS:VARCHAR:NULL}, 
-               #{CREATEUSERGUID:VARCHAR:NULL}, 
+        values(#{GUID:VARCHAR}, 
+               #{PROCRTGUID:VARCHAR}, 
+               #{ACTRTGUID:VARCHAR}, 
+               #{DECIDE:VARCHAR}, 
+               #{COMMENTS:VARCHAR}, 
+               #{CREATEUSERGUID:VARCHAR}, 
                #{CURRENTTIME:TIMESTAMP},
-               #{UPDATEUSERGUID:VARCHAR:NULL}, 
+               #{UPDATEUSERGUID:VARCHAR}, 
                #{CURRENTTIME:TIMESTAMP},
                #{CURRENTTIME:TIMESTAMP},
-               #{PERFGUID:VARCHAR:NULL},
+               #{PERFGUID:VARCHAR},
                #{STARTNUMBER},
-               #{AGENTGUID:VARCHAR:NULL}
+               #{AGENTGUID:VARCHAR}
               )
     </insert>
 

@@ -111,31 +111,31 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                                localfilepath
                                )
         VALUES(#{GUID},
-               #{DSSFILENAME:VARCHAR:NULL},
-               #{FILENAME:VARCHAR:NULL},
+               #{DSSFILENAME:VARCHAR},
+               #{FILENAME:VARCHAR},
                <if test="ISPRIMARY!=null">#{ISPRIMARY},</if>
                <if test="ISPRIMARY==null">'N',</if>
                <if test="ISUPLOAD!=null">#{ISUPLOAD},</if>
                <if test="ISUPLOAD==null">'Y',</if>
                <if test="FILESIZE">#{FILESIZE},</if>
                <if test="FILESIZE==null">'0',</if>
-               #{FILEPATH:VARCHAR:NULL},
-               #{FILETYPE:VARCHAR:NULL},
-               #{EXTENTIONNAME:VARCHAR:NULL},
-               #{DESCRIPTION:VARCHAR:NULL},
-               #{CLASSGUID:VARCHAR:NULL},
-               #{REVISIONGUID:VARCHAR:NULL},
+               #{FILEPATH:VARCHAR},
+               #{FILETYPE:VARCHAR},
+               #{EXTENTIONNAME:VARCHAR},
+               #{DESCRIPTION:VARCHAR},
+               #{CLASSGUID:VARCHAR},
+               #{REVISIONGUID:VARCHAR},
                #{ITERATIONID:INTEGER:1},
                #{CURRENTTIME:TIMESTAMP},
-               #{CREATEUSERGUID:VARCHAR:NULL},
+               #{CREATEUSERGUID:VARCHAR},
                #{CURRENTTIME:TIMESTAMP},
-               #{CREATEUSERGUID:VARCHAR:NULL},
-               #{STORAGEID:VARCHAR:NULL},
-               #{SITEID:VARCHAR:NULL},
-               #{RELATIVEPATH:VARCHAR:NULL},
-               #{MD5:VARCHAR:NULL},
-               #{ECASTATUS:VARCHAR:NULL},
-               #{LOCALFILEPATH:VARCHAR:NULL}
+               #{CREATEUSERGUID:VARCHAR},
+               #{STORAGEID:VARCHAR},
+               #{SITEID:VARCHAR},
+               #{RELATIVEPATH:VARCHAR},
+               #{MD5:VARCHAR},
+               #{ECASTATUS:VARCHAR},
+               #{LOCALFILEPATH:VARCHAR}
                )
     </insert>
         
@@ -304,30 +304,30 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                                localfilepath
                                )
         VALUES(#{GUID},
-               #{DSSFILENAME:VARCHAR:NULL},
-               #{FILENAME:VARCHAR:NULL},
+               #{DSSFILENAME:VARCHAR},
+               #{FILENAME:VARCHAR},
                <if test="ISPRIMARY!=null">#{ISPRIMARY},</if>
                <if test="ISPRIMARY==null">'N',</if>
                <if test="ISUPLOAD!=null">#{ISUPLOAD},</if>
                <if test="ISUPLOAD==null">'Y',</if>
                <if test="FILESIZE!=null">#{FILESIZE},</if>
                <if test="FILESIZE==null">'0',</if>
-               #{FILEPATH:VARCHAR:NULL},
-               #{FILETYPE:VARCHAR:NULL},
-               #{EXTENTIONNAME:VARCHAR:NULL},
-               #{DESCRIPTION:VARCHAR:NULL},
+               #{FILEPATH:VARCHAR},
+               #{FILETYPE:VARCHAR},
+               #{EXTENTIONNAME:VARCHAR},
+               #{DESCRIPTION:VARCHAR},
                #{CURRENTTIME:TIMESTAMP},
-               #{CREATEUSERGUID:VARCHAR:NULL},
+               #{CREATEUSERGUID:VARCHAR},
                #{CURRENTTIME:TIMESTAMP},
-               #{CREATEUSERGUID:VARCHAR:NULL},
-               #{STORAGEID:VARCHAR:NULL},
-               #{SITEID:VARCHAR:NULL},
-               #{RELATIVEPATH:VARCHAR:NULL},
-               #{MD5:VARCHAR:NULL},
-               #{ECASTATUS:VARCHAR:NULL},
-               #{TABNAME:VARCHAR:NULL},
-               #{TABFKGUID:VARCHAR:NULL},
-               #{LOCALFILEPATH:VARCHAR:NULL}
+               #{CREATEUSERGUID:VARCHAR},
+               #{STORAGEID:VARCHAR},
+               #{SITEID:VARCHAR},
+               #{RELATIVEPATH:VARCHAR},
+               #{MD5:VARCHAR},
+               #{ECASTATUS:VARCHAR},
+               #{TABNAME:VARCHAR},
+               #{TABFKGUID:VARCHAR},
+               #{LOCALFILEPATH:VARCHAR}
                )
     </insert>
     
@@ -390,31 +390,31 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                                localfilepath
                                )
         VALUES(#{GUID},
-               #{DSSFILENAME:VARCHAR:NULL},
-               #{FILENAME:VARCHAR:NULL},
+               #{DSSFILENAME:VARCHAR},
+               #{FILENAME:VARCHAR},
                <if test="ISPRIMARY!=null">#{ISPRIMARY},</if>
                <if test="ISPRIMARY==null">'N',</if>
                <if test="ISUPLOAD!=null">#{ISUPLOAD},</if>
                <if test="ISUPLOAD==null">'Y',</if>
                <if test="FILESIZE!=null">#{FILESIZE},</if>
                <if test="FILESIZE==null">'0',</if>
-               #{FILEPATH:VARCHAR:NULL},
-               #{FILETYPE:VARCHAR:NULL},
-               #{EXTENTIONNAME:VARCHAR:NULL},
-               #{DESCRIPTION:VARCHAR:NULL},
+               #{FILEPATH:VARCHAR},
+               #{FILETYPE:VARCHAR},
+               #{EXTENTIONNAME:VARCHAR},
+               #{DESCRIPTION:VARCHAR},
                #{CURRENTTIME:TIMESTAMP},
-               #{CREATEUSERGUID:VARCHAR:NULL},
+               #{CREATEUSERGUID:VARCHAR},
                #{CURRENTTIME:TIMESTAMP},
-               #{CREATEUSERGUID:VARCHAR:NULL},
-               #{STORAGEID:VARCHAR:NULL},
-               #{SITEID:VARCHAR:NULL},
-               #{RELATIVEPATH:VARCHAR:NULL},
-               #{MD5:VARCHAR:NULL},
-               #{ECASTATUS:VARCHAR:NULL},
-               #{PROCESSGUID:VARCHAR:NULL},
-               #{ACTIVITYGUID:VARCHAR:NULL},
+               #{CREATEUSERGUID:VARCHAR},
+               #{STORAGEID:VARCHAR},
+               #{SITEID:VARCHAR},
+               #{RELATIVEPATH:VARCHAR},
+               #{MD5:VARCHAR},
+               #{ECASTATUS:VARCHAR},
+               #{PROCESSGUID:VARCHAR},
+               #{ACTIVITYGUID:VARCHAR},
                #{STARTNUMBER},
-               #{LOCALFILEPATH:VARCHAR:NULL}
+               #{LOCALFILEPATH:VARCHAR}
                )
     </insert>
     

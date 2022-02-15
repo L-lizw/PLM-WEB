@@ -74,16 +74,16 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                   #{UPPERLIMIT2}, 
                   'N',
                   
-                  #{CREATEUSERGUID:VARCHAR:NULL},
+                  #{CREATEUSERGUID:VARCHAR},
                   #{CURRENTTIME:TIMESTAMP},
-				  #{UPDATEUSERGUID:VARCHAR:NULL},
+				  #{UPDATEUSERGUID:VARCHAR},
 				  #{CURRENTTIME:TIMESTAMP})
     </insert>
     
     
     <update id="updateBatchList" parameterType="map">
             update MA_CONFIG_TABLE_AERQ 
-               set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR:NULL},
+               set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR},
                    UPDATETIME = #{CURRENTTIME:TIMESTAMP},
                    DATASEQ = #{DATASEQ},
                    VARIABLE1 = #{VARIABLE1},
@@ -97,7 +97,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     
     <update id="updateNextRevisionBatchList" parameterType="map">
         update MA_CONFIG_TABLE_AERQ 
-           set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR:NULL},
+           set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR},
                UPDATETIME = #{CURRENTTIME:TIMESTAMP},
                hasnextrevision = 'Y'
         where releasetime is not null 
@@ -107,7 +107,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     
     <update id="updateCustNextRevisionBatchList" parameterType="map">
             update MA_CONFIG_TABLE_CUSTM_AERQ 
-               set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR:NULL},
+               set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR},
                    UPDATETIME = #{CURRENTTIME:TIMESTAMP},
                    hasnextrevision = 'Y'
              where releasetime is not null 
@@ -126,7 +126,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     <!-- 根据列名废弃自定义列 -->
     <update id="obsoleteColumnByTitle" parameterType="map">
         update MA_CONFIG_TABLE_CUSTM_AERQ 
-           set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR:NULL},
+           set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR},
                UPDATETIME = #{CURRENTTIME:TIMESTAMP},
                HASNEXTREVISION = 'Y'
          where releasetime is not null 
@@ -174,7 +174,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     <!-- 删除工作版本对象时,同步删除配置数据 -->
     <update id="clearWIP" parameterType="map">
             update MA_CONFIG_TABLE_AERQ  
-               set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR:NULL},
+               set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR},
                    UPDATETIME = ${CURRENTTIME},
                    hasnextrevision = 'N'
              where hasnextrevision = 'Y' and obsoletetime is null and masterguid = #{MASTERGUID}
@@ -186,7 +186,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
         <!-- 删除工作版本对象时,同步删除配置数据 -->
     <update id="clearCustWIP" parameterType="map">
             update MA_CONFIG_TABLE_CUSTM_AERQ 
-               set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR:NULL},
+               set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR},
                    UPDATETIME = ${CURRENTTIME},
                    hasnextrevision = 'N'
              where hasnextrevision = 'Y' and obsoletetime is null and masterguid = #{MASTERGUID}

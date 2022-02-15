@@ -36,29 +36,29 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
            useridwx)
         values (#{GUID},
                 #{USERID},
-                #{USERNAME:VARCHAR:NULL},
+                #{USERNAME:VARCHAR},
                 #{PASSWORD},
                 <choose>
                     <when test="ISACTIVE!=null">#{ISACTIVE},</when>
                     <otherwise>'Y',</otherwise>
                 </choose>
-                #{TEL:VARCHAR:NULL},
-                #{FAX:VARCHAR:NULL},
-                #{EMAIL:VARCHAR:NULL},
-                #{DEFAULTGROUPGUID:VARCHAR:NULL},
-                   #{DEFAULTROLEGUID:VARCHAR:NULL},
+                #{TEL:VARCHAR},
+                #{FAX:VARCHAR},
+                #{EMAIL:VARCHAR},
+                #{DEFAULTGROUPGUID:VARCHAR},
+                   #{DEFAULTROLEGUID:VARCHAR},
                    #{CURRENTTIME:TIMESTAMP},
                    #{CURRENTTIME:TIMESTAMP},
                    #{CURRENTTIME:TIMESTAMP},
-                   #{CREATEUSERGUID:VARCHAR:NULL},
+                   #{CREATEUSERGUID:VARCHAR},
                    #{CURRENTTIME:TIMESTAMP},
-                   #{COUNTRY:VARCHAR:NULL},
-                   #{STATE:VARCHAR:NULL},
-                   #{CITY:VARCHAR:NULL},
-                   #{ZIPCODE:VARCHAR:NULL},
-                   #{ADDRESS:VARCHAR:NULL},
-                   #{MOBILE:VARCHAR:NULL},
-                   #{ISSHIELD:VARCHAR:NULL},
+                   #{COUNTRY:VARCHAR},
+                   #{STATE:VARCHAR},
+                   #{CITY:VARCHAR},
+                   #{ZIPCODE:VARCHAR},
+                   #{ADDRESS:VARCHAR},
+                   #{MOBILE:VARCHAR},
+                   #{ISSHIELD:VARCHAR},
                    #{USERIDWX})
     </insert>
     

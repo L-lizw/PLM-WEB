@@ -57,7 +57,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			        createtime,
 			        updateuserguid,
 			        updatetime)
-	        values (#{GUID:VARCHAR:NULL},
+	        values (#{GUID:VARCHAR},
 			        #{PROJECTGUID},
 					#{WARNINGID},
 					#{EVENTTYPE},
@@ -65,9 +65,9 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 					#{INTERVALUE},
 					#{ISENABLE},
 					
-					#{CREATEUSERGUID:VARCHAR:NULL},
+					#{CREATEUSERGUID:VARCHAR},
 					#{CURRENTTIME:TIMESTAMP},
-					#{UPDATEUSERGUID:VARCHAR:NULL},
+					#{UPDATEUSERGUID:VARCHAR},
 					#{CURRENTTIME:TIMESTAMP})
     </insert>
     

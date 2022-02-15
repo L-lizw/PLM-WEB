@@ -29,7 +29,8 @@ public class QuartzManager
 	@Bean("timerScheduler")
 	public Scheduler createScheduler() throws IOException
 	{
-		return this.schedulerFactoryBean().getScheduler();
+		Scheduler scheduler = this.schedulerFactoryBean().getScheduler();
+		return scheduler;
 	}
 
 	@Bean
@@ -46,6 +47,14 @@ public class QuartzManager
 		factoryBean.setQuartzProperties(quartzProperties);
 
 		factoryBean.setTaskExecutor(this.createExecutor());
+		try
+		{
+			factoryBean.afterPropertiesSet();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 
 		return factoryBean;
 	}

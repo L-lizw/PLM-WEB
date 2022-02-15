@@ -33,21 +33,21 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                              subprocname,
                              startnumber
                             )
-        values(#{GUID:VARCHAR:NULL}, 
-               #{ACTRTNAME:VARCHAR:NULL}, 
-               #{TITLE:VARCHAR:NULL}, 
-               #{DESCRIPTION:VARCHAR:NULL}, 
+        values(#{GUID:VARCHAR}, 
+               #{ACTRTNAME:VARCHAR}, 
+               #{TITLE:VARCHAR}, 
+               #{DESCRIPTION:VARCHAR}, 
                #{GATE}, 
-               #{PROCRTGUID:VARCHAR:NULL}, 
+               #{PROCRTGUID:VARCHAR}, 
                
-               #{ACTMODE:VARCHAR:NULL}, 
-               #{ACTTYPE:VARCHAR:NULL}, 
-               #{CHANGEPHASESTATUS:VARCHAR:NULL},
-               #{APPNAME:VARCHAR:NULL},
+               #{ACTMODE:VARCHAR}, 
+               #{ACTTYPE:VARCHAR}, 
+               #{CHANGEPHASESTATUS:VARCHAR},
+               #{APPNAME:VARCHAR},
                
-               #{CREATEUSERGUID:VARCHAR:NULL}, 
+               #{CREATEUSERGUID:VARCHAR}, 
                #{CURRENTTIME:TIMESTAMP}, 
-               #{UPDATEUSERGUID:VARCHAR:NULL}, 
+               #{UPDATEUSERGUID:VARCHAR}, 
                #{CURRENTTIME:TIMESTAMP},
                
                

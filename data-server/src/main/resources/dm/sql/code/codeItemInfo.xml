@@ -95,17 +95,17 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                                   )
                             VALUES(#{GUID:VARCHAR},
 							       #{MASTERGUID:VARCHAR},
-							       #{PARENTGUID:VARCHAR:NULL},
+							       #{PARENTGUID:VARCHAR},
 							       #{DATASEQ:NUMERIC},
-							       #{ITEMNAME:VARCHAR:NULL},
-							       #{TITLE:VARCHAR:NULL},
-							       #{DESCRIPTION:VARCHAR:NULL},
-							       #{CODE:VARCHAR:NULL},
-		                           #{ISCLASSIFICATION:VARCHAR:NULL},
+							       #{ITEMNAME:VARCHAR},
+							       #{TITLE:VARCHAR},
+							       #{DESCRIPTION:VARCHAR},
+							       #{CODE:VARCHAR},
+		                           #{ISCLASSIFICATION:VARCHAR},
 							       #{CURRENTTIME:TIMESTAMP},
-							       #{CREATEUSERGUID:VARCHAR:NULL},
+							       #{CREATEUSERGUID:VARCHAR},
 							       #{CURRENTTIME:TIMESTAMP},
-							       #{UPDATEUSERGUID:VARCHAR:NULL}
+							       #{UPDATEUSERGUID:VARCHAR}
                                   )
     </insert>
     

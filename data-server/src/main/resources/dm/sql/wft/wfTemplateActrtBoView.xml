@@ -29,15 +29,15 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                      UPDATEUSERGUID, 
                      UPDATETIME
                     )
-        VALUES(#{GUID:VARCHAR:NULL},
-               #{TEMACTBOGUID:VARCHAR:NULL},
-               #{RELATIONTYPE:VARCHAR:NULL},
-               #{RELATIONNAME:VARCHAR:NULL},
-               #{SELECTRELATION:VARCHAR:NULL},
-               #{EDITRELATION:VARCHAR:NULL},
-               #{CREATEUSERGUID:VARCHAR:NULL},
+        VALUES(#{GUID:VARCHAR},
+               #{TEMACTBOGUID:VARCHAR},
+               #{RELATIONTYPE:VARCHAR},
+               #{RELATIONNAME:VARCHAR},
+               #{SELECTRELATION:VARCHAR},
+               #{EDITRELATION:VARCHAR},
+               #{CREATEUSERGUID:VARCHAR},
                #{CURRENTTIME:TIMESTAMP},
-               #{UPDATEUSERGUID:VARCHAR:NULL},
+               #{UPDATEUSERGUID:VARCHAR},
                #{CURRENTTIME:TIMESTAMP}
               )
     </insert>
