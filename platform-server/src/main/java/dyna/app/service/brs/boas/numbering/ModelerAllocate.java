@@ -39,6 +39,7 @@ import dyna.common.systemenum.NumberingTypeEnum;
 import dyna.common.util.SetUtils;
 import dyna.common.util.StringUtils;
 import dyna.dbcommon.util.Constants;
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 import dyna.net.service.brs.BOAS;
 import dyna.net.service.brs.EMM;
@@ -54,7 +55,7 @@ import org.springframework.stereotype.Component;
 public class ModelerAllocate extends AbstractServiceStub<BOASImpl>
 {
 
-	protected <T extends Service> T getService(DataAccessService dataAccessService, Class<T> clazz) throws ServiceRequestException
+	protected <T extends ApplicationService> T getService(DataAccessService dataAccessService, Class<T> clazz) throws ServiceRequestException
 	{
 		try
 		{

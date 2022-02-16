@@ -19,9 +19,10 @@ import dyna.common.dto.DSSFileTrans;
 import dyna.common.dto.wf.ActivityRuntime;
 import dyna.common.exception.ServiceRequestException;
 import dyna.common.systemenum.JobStatus;
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 
-public interface FTS extends Service
+public interface FTS extends ApplicationService
 {
 
 	/**

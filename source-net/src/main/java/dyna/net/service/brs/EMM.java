@@ -33,6 +33,7 @@ import dyna.common.dto.template.relation.RelationTemplateInfo;
 import dyna.common.exception.ServiceRequestException;
 import dyna.common.systemenum.ModelInterfaceEnum;
 import dyna.common.systemenum.UITypeEnum;
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 
 import java.util.Date;
@@ -42,10 +43,10 @@ import java.util.Set;
 /**
  * Enterprise Model Management 企业建模信息服务
  * 
- * @author Wanglei
+ * @author Lizw
  * 
  */
-public interface EMM extends Service
+public interface EMM extends ApplicationService
 {
 	/** LifeCycle Manager **/
 

@@ -13,6 +13,7 @@ import dyna.common.bean.data.template.RelationTemplate;
 import dyna.common.bean.model.cls.NumberingModel;
 import dyna.common.bean.model.cls.NumberingObject;
 import dyna.common.bean.model.itf.InterfaceObject;
+import dyna.common.conf.ServiceDefinition;
 import dyna.common.dto.cfm.ClassficationFeature;
 import dyna.common.dto.cfm.ClassficationFeatureItemInfo;
 import dyna.common.dto.cfm.ClassificationNumberField;
@@ -95,10 +96,11 @@ import java.util.*;
 		}
 	}
 
-	@Override public void init()
+	@Override public void init(ServiceDefinition serviceDefinition)
 	{
 		try
 		{
+			super.init(serviceDefinition);
 			this.getCodeStub().init();
 		}
 		catch (ServiceRequestException e)

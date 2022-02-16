@@ -22,7 +22,6 @@ import dyna.common.systemenum.LanguageEnum;
 import dyna.common.systemenum.MailCategoryEnum;
 import dyna.common.systemenum.OperateSignEnum;
 import dyna.common.systemenum.ReportTypeEnum;
-import dyna.net.impl.ServiceProviderFactory;
 import dyna.net.service.brs.AAS;
 import dyna.net.service.brs.BOAS;
 import dyna.net.service.brs.SMS;
@@ -51,8 +50,6 @@ public class SummaryReportJob extends AbstractServiceStub<SRSImpl> implements Jo
 		String[] login = job.getFieldb().split(SRS.JOIN_CHAR);
 
 		String session = ((AASImpl) stubService.getAAS()).getLoginStub().login(login[0], login[1], login[2], LanguageEnum.getById(login[3]));
-
-		ServiceProvider serviceProvider = ServiceProviderFactory.getServiceProvider();
 
 		// SearchCondition searchCondition = null;
 
@@ -121,7 +118,7 @@ public class SummaryReportJob extends AbstractServiceStub<SRSImpl> implements Jo
 		}
 		finally
 		{
-			AAS aas = serviceProvider.getServiceInstance(AAS.class, session);
+			AAS aas = this.stubService.getAAS();
 			aas.logout();
 		}
 		return null;
@@ -141,10 +138,9 @@ public class SummaryReportJob extends AbstractServiceStub<SRSImpl> implements Jo
 
 		String session = ((AASImpl) stubService.getAAS()).getLoginStub().login(login[0], login[1], login[2], lang);
 
-		ServiceProvider serviceProvider = ServiceProviderFactory.getServiceProvider();
-		SMS sms = serviceProvider.getServiceInstance(SMS.class, session);
-		MSRM msrm = serviceProvider.getServiceInstance(MSRM.class, session);
-		BOAS boas = serviceProvider.getServiceInstance(BOAS.class, session);
+		SMS sms = this.stubService.getSMS();
+		MSRM msrm = this.stubService.getMSRM();
+		BOAS boas = this.stubService.getBOAS();
 
 		ObjectGuid productObjectGuid = this.stubService.getObjectGuidByStr(job.getFielda());
 		FoundationObject foundation = boas.getObject(productObjectGuid);
@@ -161,7 +157,7 @@ public class SummaryReportJob extends AbstractServiceStub<SRSImpl> implements Jo
 		}
 		finally
 		{
-			AAS aas = serviceProvider.getServiceInstance(AAS.class, session);
+			AAS aas = this.stubService.getAAS();
 			aas.logout();
 		}
 

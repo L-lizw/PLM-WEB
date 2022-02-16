@@ -25,6 +25,7 @@ import dyna.common.dto.wf.ApproveTemplate;
 import dyna.common.dto.wf.ApproveTemplateDetail;
 import dyna.common.dto.wf.GraphTransition;
 import dyna.common.exception.ServiceRequestException;
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 
 /**
@@ -33,7 +34,7 @@ import dyna.net.service.Service;
  * @author Wanglei
  * 
  */
-public interface WFM extends Service
+public interface WFM extends ApplicationService
 {
 
 	/**

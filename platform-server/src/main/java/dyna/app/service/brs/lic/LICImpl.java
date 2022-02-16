@@ -6,6 +6,7 @@
 package dyna.app.service.brs.lic;
 
 import dyna.app.service.BusinessRuleService;
+import dyna.common.conf.ServiceDefinition;
 import dyna.common.dto.Session;
 import dyna.common.exception.AuthorizeException;
 import dyna.common.exception.ServiceRequestException;
@@ -59,9 +60,9 @@ import java.util.List;
 	 *
 	 * @see dyna.app.service.DataAccessService#init()
 	 */
-	@Override public void init()
+	@Override public void init(ServiceDefinition serviceDefinition)
 	{
-
+		super.init(serviceDefinition);
 		licenseStub.init();
 	}
 

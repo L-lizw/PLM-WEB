@@ -85,6 +85,14 @@
             <artifactId>source-net</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <!-- lic -->
+        <dependency>
+            <groupId>com.digiwin.plm</groupId>
+            <artifactId>nist</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}\lib\NIST.jar</systemPath>
+        </dependency>
         <!-- [=============================================]-->
         <dependency>
             <groupId>com.scireum</groupId>

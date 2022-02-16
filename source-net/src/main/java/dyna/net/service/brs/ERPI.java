@@ -28,6 +28,7 @@ import dyna.common.dto.template.wft.WorkflowTemplateActPerformerInfo;
 import dyna.common.exception.ServiceNotFoundException;
 import dyna.common.exception.ServiceRequestException;
 import dyna.common.systemenum.ERPServerType;
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 
 /**
@@ -36,7 +37,7 @@ import dyna.net.service.Service;
  * @author caogc
  * 
  */
-public interface ERPI extends Service
+public interface ERPI extends ApplicationService
 {
 	/**
 	 * 所选ERP名称：易飞/易拓/WorkFlow/TipTop 通过所选ERP服务名称取得所有的配置信息

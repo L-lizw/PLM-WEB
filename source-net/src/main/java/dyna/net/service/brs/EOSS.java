@@ -15,6 +15,7 @@ import dyna.common.bean.extra.ScriptEvalResult;
 import dyna.common.bean.model.Script;
 import dyna.common.exception.ServiceRequestException;
 import dyna.common.systemenum.EventTypeEnum;
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 
 /**
@@ -23,7 +24,7 @@ import dyna.net.service.Service;
  * @author Wanglei
  * 
  */
-public interface EOSS extends Service
+public interface EOSS extends ApplicationService
 {
 
 	/**

@@ -18,6 +18,7 @@ import dyna.common.bean.data.ppms.indicator.IndicatorAnalysisVal;
 import dyna.common.bean.data.ppms.indicator.chart.IndicatorView;
 import dyna.common.bean.data.ppms.instancedomain.InstanceDomainUpdateBean;
 import dyna.common.bean.data.ppms.wbs.WBSPrepareContain;
+import dyna.common.conf.ServiceDefinition;
 import dyna.common.dto.model.bmbo.BOInfo;
 import dyna.common.exception.DynaDataException;
 import dyna.common.exception.ServiceRequestException;
@@ -72,8 +73,9 @@ import java.util.Map;
 
 	private static boolean isInit = false;
 
-	@Override public void init()
+	@Override public void init(ServiceDefinition serviceDefinition)
 	{
+		super.init(serviceDefinition);
 		indicatorConfigStub.init();
 	}
 

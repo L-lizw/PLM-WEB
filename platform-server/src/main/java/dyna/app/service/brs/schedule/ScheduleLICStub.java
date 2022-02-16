@@ -135,8 +135,7 @@ public class ScheduleLICStub extends AbstractServiceStub<ScheduleServiceImpl>
 			updateSessionRecord(standardCount, webCount);
 			// 删除系统中缓存的，数据库中已经不存在的session
 			List<Session> allSession = null;
-			//todo
-			//			DataServer.getSystemDataService().listFromCache(Session.class, null);
+			this.stubService.getSystemDataService().listFromCache(Session.class, null);
 			if (!SetUtils.isNullList(allSession))
 			{
 				for (Session session : allSession)

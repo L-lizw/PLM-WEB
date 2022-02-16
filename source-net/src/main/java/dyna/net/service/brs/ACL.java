@@ -20,6 +20,7 @@ import dyna.common.systemenum.AccessTypeEnum;
 import dyna.common.systemenum.FolderAuthorityEnum;
 import dyna.common.systemenum.ModulEnum;
 import dyna.common.systemenum.PermissibleEnum;
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 
 /**
@@ -29,7 +30,7 @@ import dyna.net.service.Service;
  * @author Wanglei
  * 
  */
-public interface ACL extends Service
+public interface ACL extends ApplicationService
 {
 
 	/**

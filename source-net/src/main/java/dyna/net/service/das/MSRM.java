@@ -7,6 +7,7 @@ package dyna.net.service.das;
 
 import java.util.Map;
 
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 
 /**
@@ -15,7 +16,7 @@ import dyna.net.service.Service;
  * @author Wanglei
  * 
  */
-public interface MSRM extends Service
+public interface MSRM extends ApplicationService
 {
 
 	/**

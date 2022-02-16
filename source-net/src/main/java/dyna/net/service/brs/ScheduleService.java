@@ -1,6 +1,7 @@
 package dyna.net.service.brs;
 
 import dyna.common.exception.ServiceRequestException;
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 
 /**
@@ -10,7 +11,7 @@ import dyna.net.service.Service;
  * @author Lizw
  * @date 2022/1/29
  **/
-public interface ScheduleService extends Service
+public interface ScheduleService extends ApplicationService
 {
 	/**
 	 * 检查session过期

@@ -5,6 +5,7 @@
  */
 package dyna.app.service;
 
+import dyna.app.conf.yml.ConfigurableServiceImpl;
 import dyna.app.core.SignableAdapter;
 import dyna.app.server.context.ApplicationServerContext;
 import dyna.app.service.das.jss.ScheduledTaskUdSessionImpl;
@@ -21,6 +22,7 @@ import dyna.common.util.StringUtils;
 import dyna.net.security.CredentialManager;
 import dyna.net.security.signature.SignatureFactory;
 import dyna.net.security.signature.UserSignature;
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -28,47 +30,47 @@ import java.util.*;
 
 /**
  * @author Wanglei
- *
  */
-public abstract class DataAccessService extends SignableAdapter implements  Transactional, Service
+public abstract class DataAccessService extends SignableAdapter implements Transactional, ApplicationService
 {
-	protected ServiceDefinition serviceDefinition = null;
+	@Autowired private   CredentialManager       credentialManager;
 
-	private String									moduleID			= null;
-	private String									serviceCredential	= null;
+	private ServiceDefinition serviceDefinition;
 
-	private String									transactionId		= null;
+	private String moduleID          = null;
+	private String serviceCredential = null;
 
-	private Map<Class<? extends Service>, Service>	referenceServiceMap	= null;
+	private String transactionId = null;
 
-	private boolean									isRefered			= false;
+	private Map<Class<? extends ApplicationService>, ApplicationService> referenceServiceMap = null;
 
-	private final Object							syncObject			= new Object();
+	private boolean isRefered = false;
 
-	private long									activeSessionTime	= 0;
+	private final Object syncObject = new Object();
 
-	private boolean									isActive			= false;
+	private long activeSessionTime = 0;
 
-	private final String							serviceUID			= StringUtils.generateRandomUID(32);
+	private boolean isActive = false;
+
+	private final String serviceUID = StringUtils.generateRandomUID(32);
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see dyna.app.core.pool.Poolable#activateObject()
 	 */
-//	@Override
-//	public void activateObject() throws Exception
-//	{
-//		isActive = true;
-//	}
+	//	@Override
+	//	public void activateObject() throws Exception
+	//	{
+	//		isActive = true;
+	//	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see dyna.app.core.Signable#clearSignature()
 	 */
-	@Override
-	public void clearSignature()
+	@Override public void clearSignature()
 	{
 		this.releaseRefService();
 		super.clearSignature();
@@ -77,15 +79,15 @@ public abstract class DataAccessService extends SignableAdapter implements  Tran
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see dyna.app.core.pool.Poolable#destroyObject()
 	 */
-//	@Override
-//	public void destroyObject() throws Exception
-//	{
-//		this.isActive = false;
-//		this.clearSignature();
-//	}
+	//	@Override
+	//	public void destroyObject() throws Exception
+	//	{
+	//		this.isActive = false;
+	//		this.clearSignature();
+	//	}
 
 	public String getOperatorGuid() throws ServiceRequestException
 	{
@@ -94,11 +96,10 @@ public abstract class DataAccessService extends SignableAdapter implements  Tran
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see dyna.app.core.Signable#setSignature(dyna.net.security.signature.Signature)
 	 */
-	@Override
-	public synchronized void setSignature(Signature signature) throws IllegalStateException
+	@Override public synchronized void setSignature(Signature signature) throws IllegalStateException
 	{
 		if (!this.isActive && signature != null)
 		{
@@ -107,9 +108,9 @@ public abstract class DataAccessService extends SignableAdapter implements  Tran
 		super.setSignature(signature);
 		if (this.isRefered == false && referenceServiceMap != null)
 		{
-			for (Iterator<Service> iter = this.referenceServiceMap.values().iterator(); iter.hasNext();)
+			for (Iterator<ApplicationService> iter = this.referenceServiceMap.values().iterator(); iter.hasNext(); )
 			{
-				Service service = iter.next();
+				ApplicationService service = iter.next();
 				if (service == this)
 				{
 					continue;
@@ -126,21 +127,20 @@ public abstract class DataAccessService extends SignableAdapter implements  Tran
 
 	/**
 	 * get other available service from current service
-	 * 
+	 *
 	 * @param <T>
 	 * @param serviceClass
 	 * @return
 	 * @throws ServiceNotFoundException
 	 */
-	@SuppressWarnings("unchecked")
-	public <T extends Service> T getRefService(Class<T> serviceClass) throws ServiceNotFoundException
+	@SuppressWarnings("unchecked") public <T extends ApplicationService> T getRefService(Class<T> serviceClass) throws ServiceNotFoundException
 	{
-		Service service = null;
+		ApplicationService service = null;
 		synchronized (this.syncObject)
 		{
 			if (this.referenceServiceMap == null)
 			{
-				this.referenceServiceMap = Collections.synchronizedMap(new HashMap<Class<? extends Service>, Service>());
+				this.referenceServiceMap = Collections.synchronizedMap(new HashMap<Class<? extends ApplicationService>, ApplicationService>());
 				Class<? extends DataAccessService> selfClass = this.getClass();
 				Class<?>[] interfaces = selfClass.getInterfaces();
 				if (interfaces != null && interfaces.length != 0)
@@ -149,7 +149,7 @@ public abstract class DataAccessService extends SignableAdapter implements  Tran
 					{
 						if (Service.class.isAssignableFrom(interfaceClass))
 						{
-							this.referenceServiceMap.put((Class<? extends Service>) interfaceClass, this);
+							this.referenceServiceMap.put((Class<? extends ApplicationService>) interfaceClass, this);
 							break;
 						}
 					}
@@ -160,8 +160,7 @@ public abstract class DataAccessService extends SignableAdapter implements  Tran
 			if (service == null)
 			{
 				//todo
-//				service = this.serviceContext.allocatService(serviceClass);
-
+				//				service = this.serviceContext.allocatService(serviceClass);
 
 				this.referenceServiceMap.put(serviceClass, service);
 
@@ -179,27 +178,26 @@ public abstract class DataAccessService extends SignableAdapter implements  Tran
 
 	/**
 	 * simple call <code>getRefService(Class)</code>
-	 * 
+	 *
 	 * @param <T>
 	 * @param serviceClass
-	 * @param sessionId
-	 *            useless, just match form parameter
+	 * @param sessionId    useless, just match form parameter
 	 * @return
 	 * @throws ServiceNotFoundException
 	 */
-	public <T extends Service> T getServiceInstance(Class<T> serviceClass, String sessionId) throws ServiceNotFoundException
+	public <T extends ApplicationService> T getServiceInstance(Class<T> serviceClass, String sessionId) throws ServiceNotFoundException
 	{
 		return this.getRefService(serviceClass);
 	}
 
 	/**
 	 * 获取服务
-	 * 
+	 *
 	 * @param serviceClass
 	 * @return
 	 * @throws ServiceNotFoundException
 	 */
-	public <T extends Service> T getServiceInstance(Class<T> serviceClass) throws ServiceNotFoundException
+	public <T extends ApplicationService> T getServiceInstance(Class<T> serviceClass) throws ServiceNotFoundException
 	{
 		return this.getServiceInstance(serviceClass, null);
 	}
@@ -229,58 +227,45 @@ public abstract class DataAccessService extends SignableAdapter implements  Tran
 	}
 
 	/**
-	 * you should overwrite this method to initialize your service context.
-	 */
-	public void init()
-	{
-	}
-
-	/**
-	 * 
 	 * @param serviceDef
 	 */
-	public final void init(ServiceDefinition serviceDef)
+	@Override
+	public void init(ServiceDefinition serviceDef)
 	{
 		this.serviceDefinition = serviceDef;
-
 		this.moduleID = serviceDef.getName();
 
-		CredentialManager cm = null;
-		//todo
-//		serverContext.getCredentialManager();
-		this.serviceCredential = cm.getModuleCredential(this.moduleID);
+		this.serviceCredential = credentialManager.getModuleCredential(this.moduleID);
 		if (StringUtils.isNullString(this.serviceCredential))
 		{
 			this.serviceCredential = UUID.randomUUID().toString();
-			cm.setModuleCredential(this.moduleID, this.serviceCredential);
-			cm.bind(this.serviceCredential, SignatureFactory.createSignature(this.moduleID));
+			credentialManager.setModuleCredential(this.moduleID, this.serviceCredential);
+			credentialManager.bind(this.serviceCredential, SignatureFactory.createSignature(this.moduleID));
 		}
-
-		this.init();
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see dyna.app.core.pool.Poolable#makeObject(java.lang.Object[])
 	 */
-//	@Override
-//	public void initObject(Object... initArgs) throws Exception
-//	{
-//		this.init((ServiceDefinition) initArgs[1]);
-//	}
+	//	@Override
+	//	public void initObject(Object... initArgs) throws Exception
+	//	{
+	//		this.init((ServiceDefinition) initArgs[1]);
+	//	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see dyna.app.core.pool.Poolable#passivateObject()
 	 */
-//	@Override
-//	public void passivateObject() throws Exception
-//	{
-//		this.isActive = false;
-//		this.clearSignature();
-//	}
+	//	@Override
+	//	public void passivateObject() throws Exception
+	//	{
+	//		this.isActive = false;
+	//		this.clearSignature();
+	//	}
 
 	private void releaseRefService()
 	{
@@ -293,8 +278,8 @@ public abstract class DataAccessService extends SignableAdapter implements  Tran
 				return;
 			}
 
-			Service service = null;
-			for (Iterator<Service> iter = this.referenceServiceMap.values().iterator(); iter.hasNext();)
+			ApplicationService service = null;
+			for (Iterator<ApplicationService> iter = this.referenceServiceMap.values().iterator(); iter.hasNext(); )
 			{
 				service = iter.next();
 				if (service.equals(this))
@@ -306,7 +291,7 @@ public abstract class DataAccessService extends SignableAdapter implements  Tran
 					((Signable) service).clearSignature();
 				}
 				//todo
-//				this.serviceContext.releaseService(service);
+				//				this.serviceContext.releaseService(service);
 			}
 			this.referenceServiceMap.clear();
 			this.referenceServiceMap = null;
@@ -315,29 +300,26 @@ public abstract class DataAccessService extends SignableAdapter implements  Tran
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see dyna.app.core.pool.Poolable#validateObject()
 	 */
-//	@Override
-//	public boolean validateObject()
-//	{
-//		return true;
-//	}
+	//	@Override
+	//	public boolean validateObject()
+	//	{
+	//		return true;
+	//	}
 
-	@Override
-	public String getFixedTransactionId()
+	@Override public String getFixedTransactionId()
 	{
 		return this.transactionId;
 	}
 
-	@Override
-	public synchronized void setFixedTransactionId(String transactionId)
+	@Override public synchronized void setFixedTransactionId(String transactionId)
 	{
 		this.transactionId = transactionId;
 	}
 
-	@Override
-	public String newTransactionId()
+	@Override public String newTransactionId()
 	{
 		String newTransacationId = StringUtils.generateRandomUID(32);
 		this.setFixedTransactionId(newTransacationId);
@@ -362,14 +344,12 @@ public abstract class DataAccessService extends SignableAdapter implements  Tran
 		}
 	}
 
-//	@Override
-//	public String getObjectUID()
-//	{
-//		return this.serviceUID;
-//	}
+	//	@Override
+	//	public String getObjectUID()
+	//	{
+	//		return this.serviceUID;
+	//	}
 
-	@Override public void setServiceDefinition(ServiceDefinition serviceDefinition)
-	{
-		this.serviceDefinition = serviceDefinition;
-	}
+
+
 }

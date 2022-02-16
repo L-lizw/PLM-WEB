@@ -28,6 +28,7 @@ import dyna.common.dto.DataRule;
 import dyna.common.dto.model.bmbo.BOInfo;
 import dyna.common.exception.ServiceRequestException;
 import dyna.common.systemenum.ConfigParameterTableType;
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 
 /**
@@ -38,7 +39,7 @@ import dyna.net.service.Service;
  * @author wwx
  * 
  */
-public interface CPB extends Service
+public interface CPB extends ApplicationService
 {
 	/**
 	 * 通过表类型取得动态列头

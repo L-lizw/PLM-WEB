@@ -55,16 +55,15 @@ import java.util.Map;
 	@Autowired private AsyncConfig             asyncConfig;
 	@Autowired private ConfigurableServerImpl  serverConfig;
 	@Autowired private ConfigurableJSSImpl     configurableJSS;
-	@Autowired private ConfigurableServiceImpl configurableService;
 
 	/*
 	 * (non-Javadoc)
 	 *
 	 * @see dyna.app.service.DataAccessService#init()
 	 */
-	@Override public void init()
+	@Override public void init(ServiceDefinition serviceDefinition)
 	{
-		ServiceDefinition serviceDefinition = configurableService.getServiceDefinition(this.getClass().getSimpleName());
+		super.init(serviceDefinition);
 		String enable = serviceDefinition.getParam().get("enable");
 		runJobQuery = !"false".equalsIgnoreCase(enable);
 		syncInit();

@@ -15,6 +15,7 @@ import dyna.common.dto.DSSFileTrans;
 import dyna.common.dto.FileType;
 import dyna.common.exception.ServiceRequestException;
 import dyna.common.systemenum.AuthorityEnum;
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 
 /**
@@ -23,7 +24,7 @@ import dyna.net.service.Service;
  * @author Wanglei
  * 
  */
-public interface DSS extends Service
+public interface DSS extends ApplicationService
 {
 
 	/**

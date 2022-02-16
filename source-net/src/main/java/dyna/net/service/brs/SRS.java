@@ -15,6 +15,7 @@ import dyna.common.bean.data.StructureObject;
 import dyna.common.dto.DataRule;
 import dyna.common.exception.ServiceRequestException;
 import dyna.common.systemenum.ReportTypeEnum;
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 
 /**
@@ -23,7 +24,7 @@ import dyna.net.service.Service;
  * @author Wanglei
  * 
  */
-public interface SRS extends Service
+public interface SRS extends ApplicationService
 {
 	public static final String	JOIN_CHAR	= "\r\n";
 

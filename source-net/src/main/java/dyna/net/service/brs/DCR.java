@@ -11,9 +11,10 @@ import dyna.common.bean.data.checkrule.End2CheckRule;
 import dyna.common.dto.wf.ProcAttach;
 import dyna.common.exception.ServiceRequestException;
 import dyna.common.systemenum.RuleTypeEnum;
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 
-public interface DCR extends Service
+public interface DCR extends ApplicationService
 {
 	/**
 	 * 取得检查规则列表

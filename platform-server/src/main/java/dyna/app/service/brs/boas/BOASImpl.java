@@ -22,6 +22,7 @@ import dyna.common.bean.data.ObjectGuid;
 import dyna.common.bean.data.StructureObject;
 import dyna.common.bean.data.foundation.ViewObject;
 import dyna.common.bean.extra.OpenInstanceModel;
+import dyna.common.conf.ServiceDefinition;
 import dyna.common.dto.BIViewHis;
 import dyna.common.dto.DSSFileInfo;
 import dyna.common.dto.DataRule;
@@ -97,8 +98,9 @@ import java.util.Set;
 	 *
 	 * @see dyna.app.service.DataAccessService#init()
 	 */
-	@Override public void init()
+	@Override public void init(ServiceDefinition serviceDefinition)
 	{
+		super.init(serviceDefinition);
 		classificationAllocate.init();
 	}
 

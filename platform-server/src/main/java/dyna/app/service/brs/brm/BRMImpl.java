@@ -8,6 +8,7 @@ package dyna.app.service.brs.brm;
 import dyna.app.service.BusinessRuleService;
 import dyna.common.bean.data.FoundationObject;
 import dyna.common.bean.data.ObjectGuid;
+import dyna.common.conf.ServiceDefinition;
 import dyna.common.dto.ReplaceConfig;
 import dyna.common.dto.ReplaceSearchConf;
 import dyna.common.exception.ServiceRequestException;
@@ -38,8 +39,9 @@ import java.util.List;
 	@Autowired private ReplaceObjectStub replaceObjectStub;
 	private            boolean           replaceControl;            // 取替代管控
 
-	@Override public void init()
+	@Override public void init(ServiceDefinition serviceDefinition)
 	{
+		super.init(serviceDefinition);
 		replaceControl = "true".equalsIgnoreCase(this.getServiceDefinition().getParam().get("ReplaceControl"));
 	}
 

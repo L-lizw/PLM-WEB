@@ -12,9 +12,10 @@ import dyna.common.bean.data.iopconfigparamter.IOPColumnValue;
 import dyna.common.bean.data.iopconfigparamter.IOPConfigParameter;
 import dyna.common.dto.DataRule;
 import dyna.common.exception.ServiceRequestException;
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 
-public interface IOP extends Service
+public interface IOP extends ApplicationService
 {
 	/**
 	 * end1发布时，同时发布配置规则

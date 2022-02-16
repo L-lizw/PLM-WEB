@@ -48,6 +48,7 @@ import dyna.common.systemenum.DecisionEnum;
 import dyna.common.systemenum.MailMessageType;
 import dyna.common.systemenum.PerformerTypeEnum;
 import dyna.common.systemenum.RelationTemplateTypeEnum;
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 
 /**
@@ -56,7 +57,7 @@ import dyna.net.service.Service;
  * @author Wanglei
  * 
  */
-public interface WFI extends Service
+public interface WFI extends ApplicationService
 {
 	public static final String	SAVE_ATTACH_ERROR			= "SAVEATTACHERROR";
 	public static final String	CHANGEPHASE_ERROR			= "CHANGEPHASEERROR";

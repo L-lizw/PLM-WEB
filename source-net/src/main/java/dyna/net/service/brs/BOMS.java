@@ -21,6 +21,7 @@ import dyna.common.dto.ECEffectedBOMRelation;
 import dyna.common.dto.template.bom.BOMCompare;
 import dyna.common.exception.DynaDataException;
 import dyna.common.exception.ServiceRequestException;
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 
 /**
@@ -29,7 +30,7 @@ import dyna.net.service.Service;
  * @author caogc
  * 
  */
-public interface BOMS extends Service
+public interface BOMS extends ApplicationService
 {
 
 	/**

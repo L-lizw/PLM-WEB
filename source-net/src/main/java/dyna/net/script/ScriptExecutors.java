@@ -11,6 +11,7 @@ import dyna.common.bean.data.InputObject;
 import dyna.common.bean.extra.ScriptEvalResult;
 import dyna.common.bean.model.Script;
 import dyna.common.systemenum.ScriptFileType;
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 
 /**
@@ -25,7 +26,7 @@ public class ScriptExecutors
 	private static ScriptExecutor	jsExecutor	= new ScriptExecutorJSImpl();
 
 	public static ScriptEvalResult executeScriptAtServer(Script script, String scriptContent, InputObject inputObject,
-			Service provider, String sessionId)
+			ApplicationService provider, String sessionId)
 					throws Exception
 					{
 		ScriptEvalResult ret = null;

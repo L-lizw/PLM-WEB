@@ -19,6 +19,7 @@ import dyna.common.exception.ServiceRequestException;
 import dyna.common.systemenum.LanguageEnum;
 import dyna.common.systemenum.MailCategoryEnum;
 import dyna.common.systemenum.MailMessageType;
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 
 /**
@@ -27,7 +28,7 @@ import dyna.net.service.Service;
  * @author caogc
  * 
  */
-public interface SMS extends Service
+public interface SMS extends ApplicationService
 {
 	/**
 	 * 获取邮件附件

@@ -9,6 +9,7 @@ import dyna.common.bean.data.StructureObject;
 import dyna.common.bean.data.configparamter.*;
 import dyna.common.bean.data.foundation.ViewObject;
 import dyna.common.bean.data.structure.BOMStructure;
+import dyna.common.conf.ServiceDefinition;
 import dyna.common.dto.DataRule;
 import dyna.common.dto.model.bmbo.BOInfo;
 import dyna.common.exception.ServiceNotFoundException;
@@ -57,8 +58,9 @@ import java.util.List;
 
 	public DocumentMark exportDocument;
 
-	@Override public void init()
+	@Override public void init(ServiceDefinition serviceDefinition)
 	{
+		super.init(serviceDefinition);
 		this.initParam();
 		this.initExportConfigFile();
 	}

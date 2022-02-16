@@ -25,7 +25,6 @@ import dyna.common.systemenum.ReportTypeEnum;
 import dyna.common.systemenum.SystemStatusEnum;
 import dyna.common.util.DateFormat;
 import dyna.common.util.StringUtils;
-import dyna.net.impl.ServiceProviderFactory;
 import dyna.net.service.brs.AAS;
 import dyna.net.service.brs.BOAS;
 import dyna.net.service.brs.CPB;
@@ -57,10 +56,10 @@ public class ConfigBOMRepeortJob extends AbstractServiceStub<SRSImpl> implements
 
 		String session = ((AASImpl) this.stubService.getAAS()).getLoginStub().login(login[0], login[1], login[2], LanguageEnum.getById(login[3]));
 
-		ServiceProvider serviceProvider = ServiceProviderFactory.getServiceProvider();
-		BOAS boas = serviceProvider.getServiceInstance(BOAS.class, session);
-		CPB cpb = serviceProvider.getServiceInstance(CPB.class, session);
-		EMM emm = serviceProvider.getServiceInstance(EMM.class, session);
+		BOAS boas = this.stubService.getBOAS();
+		CPB cpb = this.stubService.getCPB();
+		EMM emm = this.stubService.getEMM();
+		AAS aas = this.stubService.getAAS();
 
 		ObjectGuid objectGuid = this.stubService.getObjectGuidByStr(job.getFielda());
 		ClassInfo classInfo = emm.getClassByGuid(objectGuid.getClassGuid());
@@ -130,7 +129,6 @@ public class ConfigBOMRepeortJob extends AbstractServiceStub<SRSImpl> implements
 		}
 		finally
 		{
-			AAS aas = serviceProvider.getServiceInstance(AAS.class, session);
 			aas.logout();
 		}
 
@@ -150,10 +148,10 @@ public class ConfigBOMRepeortJob extends AbstractServiceStub<SRSImpl> implements
 		LanguageEnum lang = LanguageEnum.getById(login[3]);
 		String session = ((AASImpl) stubService.getAAS()).getLoginStub().login(login[0], login[1], login[2], lang);
 
-		ServiceProvider serviceProvider = ServiceProviderFactory.getServiceProvider();
-		SMS sms = serviceProvider.getServiceInstance(SMS.class, session);
-		MSRM msrm = serviceProvider.getServiceInstance(MSRM.class, session);
-		BOAS boas = serviceProvider.getServiceInstance(BOAS.class, session);
+		SMS sms = this.stubService.getSMS();
+		MSRM msrm = this.stubService.getMSRM();
+		BOAS boas = this.stubService.getBOAS();
+		AAS aas = this.stubService.getAAS();
 
 		ObjectGuid itemObjectGuid = this.stubService.getObjectGuidByStr(job.getFielda());
 		FoundationObject instance = boas.getObject(itemObjectGuid);
@@ -167,7 +165,6 @@ public class ConfigBOMRepeortJob extends AbstractServiceStub<SRSImpl> implements
 		}
 		finally
 		{
-			AAS aas = serviceProvider.getServiceInstance(AAS.class, session);
 			aas.logout();
 		}
 

@@ -47,6 +47,7 @@ import dyna.common.dto.model.bmbo.BOInfo;
 import dyna.common.exception.ServiceRequestException;
 import dyna.common.systemenum.ppms.IndicatorTimeRangeEnum;
 import dyna.common.systemenum.ppms.WorkItemAuthEnum;
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 
 /**
@@ -55,7 +56,7 @@ import dyna.net.service.Service;
  * @author WagnLHB
  * 
  */
-public interface PPMS extends Service
+public interface PPMS extends ApplicationService
 {
 
 	/**

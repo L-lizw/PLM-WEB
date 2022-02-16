@@ -28,7 +28,6 @@ import dyna.common.systemenum.SystemStatusEnum;
 import dyna.common.util.BooleanUtils;
 import dyna.common.util.DateFormat;
 import dyna.common.util.EnvUtils;
-import dyna.net.impl.ServiceProviderFactory;
 import dyna.net.service.brs.AAS;
 import dyna.net.service.brs.BOMS;
 import dyna.net.service.brs.SMS;
@@ -57,8 +56,8 @@ public class BOMReportJob extends AbstractServiceStub<SRSImpl> implements JobExe
 		String[] login = job.getFielde().split(SRS.JOIN_CHAR);
 		String session = ((AASImpl) this.stubService.getAAS()).getLoginStub().login(login[0], login[1], login[2], LanguageEnum.getById(login[3]));
 
-		ServiceProvider serviceProvider = ServiceProviderFactory.getServiceProvider();
-		BOMS boms = serviceProvider.getServiceInstance(BOMS.class, session);
+		BOMS boms = this.stubService.getBOMS();
+		AAS aas = this.stubService.getAAS();
 
 		String[] fielda = job.getFielda().split(SRS.JOIN_CHAR);
 		ObjectGuid end1ObjectGuid = this.stubService.getObjectGuidByStr(fielda[0]);
@@ -202,7 +201,6 @@ public class BOMReportJob extends AbstractServiceStub<SRSImpl> implements JobExe
 		}
 		finally
 		{
-			AAS aas = serviceProvider.getServiceInstance(AAS.class, session);
 			aas.logout();
 		}
 
@@ -222,10 +220,10 @@ public class BOMReportJob extends AbstractServiceStub<SRSImpl> implements JobExe
 		LanguageEnum lang = LanguageEnum.getById(login[3]);
 		String session = ((AASImpl) stubService.getAAS()).getLoginStub().login(login[0], login[1], login[2], lang);
 
-		ServiceProvider serviceProvider = ServiceProviderFactory.getServiceProvider();
-		SMS sms = serviceProvider.getServiceInstance(SMS.class, session);
-		MSRM msrm = serviceProvider.getServiceInstance(MSRM.class, session);
-		BOMS boms = serviceProvider.getServiceInstance(BOMS.class, session);
+		AAS aas = this.stubService.getAAS();
+		SMS sms = this.stubService.getSMS();
+		MSRM msrm = this.stubService.getMSRM();
+		BOMS boms = this.stubService.getBOMS();
 
 		ObjectGuid bomViewObjectGuid = this.stubService.getObjectGuidByStr(job.getFielda());
 		BOMView bomView = boms.getBOMView(bomViewObjectGuid);
@@ -239,7 +237,6 @@ public class BOMReportJob extends AbstractServiceStub<SRSImpl> implements JobExe
 		}
 		finally
 		{
-			AAS aas = serviceProvider.getServiceInstance(AAS.class, session);
 			aas.logout();
 		}
 

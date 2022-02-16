@@ -17,6 +17,7 @@ import dyna.common.systemenum.ApplicationTypeEnum;
 import dyna.common.systemenum.LanguageEnum;
 import dyna.common.systemenum.UserWorkFolderTypeEnum;
 import dyna.net.security.signature.UserSignature;
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 
 /**
@@ -25,7 +26,7 @@ import dyna.net.service.Service;
  * @author Wanglei
  * 
  */
-public interface AAS extends Service
+public interface AAS extends ApplicationService
 {
 	/**
 	 * (重新)激活组<br>

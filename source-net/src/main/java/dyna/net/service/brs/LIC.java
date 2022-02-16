@@ -9,6 +9,7 @@ import java.util.List;
 
 import dyna.common.dto.Session;
 import dyna.common.exception.ServiceRequestException;
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 
 /**
@@ -17,7 +18,7 @@ import dyna.net.service.Service;
  * @author Wanglei
  * 
  */
-public interface LIC extends Service
+public interface LIC extends ApplicationService
 {
 	/**
 	 * 直接删除session

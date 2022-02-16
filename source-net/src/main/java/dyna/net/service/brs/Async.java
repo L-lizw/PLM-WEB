@@ -17,6 +17,7 @@ import dyna.common.dto.template.wft.WorkflowTemplateScopeRTInfo;
 import dyna.common.exception.ServiceRequestException;
 import dyna.common.systemenum.LanguageEnum;
 import dyna.net.security.signature.UserSignature;
+import dyna.net.service.ApplicationService;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -29,7 +30,7 @@ import java.util.concurrent.CompletableFuture;
  * @author Lizw
  * @date 2022/1/27
  **/
-public interface Async
+public interface Async extends ApplicationService
 {
 
 	/**

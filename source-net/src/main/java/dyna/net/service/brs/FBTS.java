@@ -15,6 +15,7 @@ import dyna.common.dto.FileOpenConfig;
 import dyna.common.dto.FileOpenItem;
 import dyna.common.dto.FileOpenSubject;
 import dyna.common.exception.ServiceRequestException;
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 
 /**
@@ -23,7 +24,7 @@ import dyna.net.service.Service;
  * @author wangweixia
  * 
  */
-public interface FBTS extends Service
+public interface FBTS extends ApplicationService
 {
 	/**
 	 * 批量保存文件打开类型设置：包括FileOpenConfig新增，更新，删除

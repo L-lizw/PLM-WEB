@@ -9,6 +9,7 @@ import dyna.common.dto.Folder;
 import dyna.common.dto.acl.SaAclFolderLibConf;
 import dyna.common.exception.ServiceRequestException;
 import dyna.net.security.signature.UserSignature;
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.List;
  * @author Wanglei
  * 
  */
-public interface EDAP extends Service
+public interface EDAP extends ApplicationService
 {
 
 	/**

@@ -6,6 +6,7 @@
 package dyna.net.service.das;
 
 import dyna.common.util.EnvUtils;
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 import dyna.net.syncfile.transfer.TransferEnum;
 
@@ -15,7 +16,7 @@ import dyna.net.syncfile.transfer.TransferEnum;
  * @author Wanglei
  * 
  */
-public interface UDS extends Service
+public interface UDS extends ApplicationService
 {
 	public static final String	UDPKG_FOLDER	= EnvUtils.getRootPath() + "udpkg/";
 

@@ -32,7 +32,6 @@ import dyna.common.systemenum.SystemClassFieldEnum;
 import dyna.common.systemenum.SystemStatusEnum;
 import dyna.common.util.DateFormat;
 import dyna.common.util.StringUtils;
-import dyna.net.impl.ServiceProviderFactory;
 import dyna.net.service.brs.AAS;
 import dyna.net.service.brs.EMM;
 import dyna.net.service.brs.SMS;
@@ -52,9 +51,8 @@ public class AdvancedSearchJob extends AbstractServiceStub<SRSImpl> implements J
 	{
 		String[] login = job.getFieldj().split(SRS.JOIN_CHAR);
 		String session = ((AASImpl) this.stubService.getAAS()).getLoginStub().login(login[0], login[1], login[2], LanguageEnum.getById(login[3]));
-		ServiceProvider serviceProvider = ServiceProviderFactory.getServiceProvider();
-		this.srs = serviceProvider.getServiceInstance(SRS.class, session);
-		this.emm = serviceProvider.getServiceInstance(EMM.class, session);
+		this.emm = this.stubService.getEMM();
+		AAS aas = this.stubService.getAAS();
 
 		ObjectGuid object = new ObjectGuid();
 		Folder folder = new Folder();
@@ -277,7 +275,6 @@ public class AdvancedSearchJob extends AbstractServiceStub<SRSImpl> implements J
 		}
 		finally
 		{
-			AAS aas = serviceProvider.getServiceInstance(AAS.class, session);
 			aas.logout();
 		}
 
@@ -296,9 +293,9 @@ public class AdvancedSearchJob extends AbstractServiceStub<SRSImpl> implements J
 		String[] login = job.getFieldj().split("-");
 		String session = ((AASImpl) this.stubService.getAAS()).getLoginStub().login(login[0], login[1], login[2], LanguageEnum.getById(login[3]));
 
-		ServiceProvider serviceProvider = ServiceProviderFactory.getServiceProvider();
-		SMS sms = serviceProvider.getServiceInstance(SMS.class, session);
-		MSRM msrm = serviceProvider.getServiceInstance(MSRM.class, session);
+		AAS aas = this.stubService.getAAS();
+		SMS sms = this.stubService.getSMS();
+		MSRM msrm = this.stubService.getMSRM();
 		LanguageEnum lang = LanguageEnum.getById(login[3]);
 
 		String message = msrm.getMSRString("ID_APP_JSS_JOB_FAIL_SERVER_RESTART", lang.toString());
@@ -310,7 +307,6 @@ public class AdvancedSearchJob extends AbstractServiceStub<SRSImpl> implements J
 		}
 		finally
 		{
-			AAS aas = serviceProvider.getServiceInstance(AAS.class, session);
 			aas.logout();
 		}
 

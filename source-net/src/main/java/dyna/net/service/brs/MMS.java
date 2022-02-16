@@ -33,6 +33,7 @@ import dyna.common.dto.model.ui.UIField;
 import dyna.common.dto.model.ui.UIObjectInfo;
 import dyna.common.dto.model.wf.WorkflowProcessInfo;
 import dyna.common.exception.ServiceRequestException;
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 
 import java.sql.SQLException;
@@ -45,7 +46,7 @@ import java.util.Map;
  * @author Wanglei
  * 
  */
-public interface MMS extends Service
+public interface MMS extends ApplicationService
 {
 	/**
 	 * 检查业务模型，业务对象，如果有问题，有问题的数据需要执行删除操作，并对数据重新整理

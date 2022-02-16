@@ -25,6 +25,7 @@ import dyna.common.systemenum.PMSearchTypeEnum;
 import dyna.common.systemenum.PreferenceTypeEnum;
 import dyna.common.systemenum.SearchRevisionTypeEnum;
 import dyna.common.systemenum.SearchTypeEnum;
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 
 /**
@@ -34,7 +35,7 @@ import dyna.net.service.Service;
  * @author caogc
  * 
  */
-public interface POS extends Service
+public interface POS extends ApplicationService
 {
 	/**
 	 * 根据guid删除日程

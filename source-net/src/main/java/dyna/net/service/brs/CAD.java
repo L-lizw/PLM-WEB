@@ -28,6 +28,7 @@ import dyna.common.exception.ServiceRequestException;
 import dyna.common.systemenum.ApplicationTypeEnum;
 import dyna.common.systemenum.AuthorityEnum;
 import dyna.common.systemenum.ModelInterfaceEnum;
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 
 /**
@@ -36,7 +37,7 @@ import dyna.net.service.Service;
  * @author WangLHB
  * 
  */
-public interface CAD extends Service
+public interface CAD extends ApplicationService
 {
 
 	/**

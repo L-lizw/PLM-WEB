@@ -13,6 +13,7 @@ import dyna.common.bean.data.ObjectGuid;
 import dyna.common.dto.template.relation.RelationTemplateInfo;
 import dyna.common.dto.ItemProduct;
 import dyna.common.exception.ServiceRequestException;
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 
 /**
@@ -21,7 +22,7 @@ import dyna.net.service.Service;
  * @author caogc
  * 
  */
-public interface PMS extends Service
+public interface PMS extends ApplicationService
 {
 	/**
 	 * 批量添加物料的产品的List列表 <br>

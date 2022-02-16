@@ -26,6 +26,7 @@ import dyna.common.exception.DynaDataException;
 import dyna.common.exception.ServiceRequestException;
 import dyna.common.systemenum.LanguageEnum;
 import dyna.common.systemenum.RelationTemplateTypeEnum;
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 
 /**
@@ -34,7 +35,7 @@ import dyna.net.service.Service;
  * @author Wanglei
  * 
  */
-public interface BOAS extends Service
+public interface BOAS extends ApplicationService
 {
 	/**
 	 * 根据编码规则生成对象的ID <br>

@@ -23,7 +23,6 @@ import dyna.common.systemenum.LanguageEnum;
 import dyna.common.systemenum.MailCategoryEnum;
 import dyna.common.systemenum.ReportTypeEnum;
 import dyna.common.util.StringUtils;
-import dyna.net.impl.ServiceProviderFactory;
 import dyna.net.service.brs.AAS;
 import dyna.net.service.brs.SMS;
 import dyna.net.service.brs.SRS;
@@ -58,7 +57,6 @@ public class ECReportJob extends AbstractServiceStub<SRSImpl> implements JobExec
 		String[] fieldb = job.getFieldb().split(SRS.JOIN_CHAR);
 		String session = ((AASImpl) this.stubService.getAAS()).getLoginStub().login(fieldb[0], fieldb[1], fieldb[2], LanguageEnum.getById(fieldb[3]));
 
-		ServiceProvider serviceProvider = ServiceProviderFactory.getServiceProvider();
 
 		Map<String, List<String>> guidListMap = this.getAllGuidList(job);
 		ReportTypeEnum exportFileType = ReportTypeEnum.valueOf(fieldb[5]);
@@ -98,7 +96,7 @@ public class ECReportJob extends AbstractServiceStub<SRSImpl> implements JobExec
 		}
 		finally
 		{
-			AAS aas = serviceProvider.getServiceInstance(AAS.class, session);
+			AAS aas = this.stubService.getAAS();
 			aas.logout();
 		}
 
@@ -118,9 +116,8 @@ public class ECReportJob extends AbstractServiceStub<SRSImpl> implements JobExec
 		LanguageEnum lang = LanguageEnum.getById(fieldb[3]);
 		String session = ((AASImpl) this.stubService.getAAS()).getLoginStub().login(fieldb[0], fieldb[1], fieldb[2], LanguageEnum.getById(fieldb[3]));
 
-		ServiceProvider serviceProvider = ServiceProviderFactory.getServiceProvider();
-		SMS sms = serviceProvider.getServiceInstance(SMS.class, session);
-		MSRM msrm = serviceProvider.getServiceInstance(MSRM.class, session);
+		SMS sms = this.stubService.getSMS();
+		MSRM msrm = this.stubService.getMSRM();
 
 		User jobCreator = this.getUserByGuid(job.getCreateUserGuid());
 
@@ -133,7 +130,7 @@ public class ECReportJob extends AbstractServiceStub<SRSImpl> implements JobExec
 		}
 		finally
 		{
-			AAS aas = serviceProvider.getServiceInstance(AAS.class, session);
+			AAS aas = this.stubService.getAAS();
 			aas.logout();
 		}
 

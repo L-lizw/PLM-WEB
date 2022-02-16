@@ -8,6 +8,7 @@ package dyna.app.service.brs.fbt;
 import dyna.app.service.BusinessRuleService;
 import dyna.common.bean.data.FoundationObject;
 import dyna.common.bean.data.ObjectGuid;
+import dyna.common.conf.ServiceDefinition;
 import dyna.common.dto.*;
 import dyna.common.exception.ServiceRequestException;
 import dyna.common.util.StringUtils;
@@ -42,8 +43,9 @@ import java.util.List;
 	 *
 	 * @see dyna.app.service.DataAccessService#init()
 	 */
-	@Override public void init()
+	@Override public void init(ServiceDefinition serviceDefinition)
 	{
+		super.init(serviceDefinition);
 		this.webSerVerInfo = this.getServiceDefinition().getParam().get("WebServer");
 		this.webServerFilePath = this.getServiceDefinition().getParam().get("WebServerFilePath");
 		if ((StringUtils.isNullString(webServerFilePath) == false) && (webServerFilePath.endsWith(System.getProperty("file.separator")) == false))

@@ -40,6 +40,7 @@ import dyna.common.bean.model.wf.template.WorkflowTemplate;
 import dyna.common.bean.model.wf.template.WorkflowTemplateAct;
 import dyna.common.bean.model.wf.template.WorkflowTemplateActClass;
 import dyna.common.bean.model.wf.template.WorkflowTemplateVo;
+import dyna.common.conf.ServiceDefinition;
 import dyna.common.dto.DSSFileInfo;
 import dyna.common.dto.DSSFileTrans;
 import dyna.common.dto.aas.User;
@@ -107,8 +108,9 @@ import java.util.Map;
 		super.authorize(method, args);
 	}
 
-	@Override public void init()
+	@Override public void init(ServiceDefinition serviceDefinition)
 	{
+		super.init(serviceDefinition);
 		this.getWfTemplateCacheStub().loadModel();
 	}
 

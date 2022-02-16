@@ -6,6 +6,7 @@
 package dyna.net.service.das;
 
 import dyna.common.exception.ServiceRequestException;
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 
 /**
@@ -15,7 +16,7 @@ import dyna.net.service.Service;
  * @author Wanglei
  * 
  */
-public interface CSA extends Service
+public interface CSA extends ApplicationService
 {
 
 	/**

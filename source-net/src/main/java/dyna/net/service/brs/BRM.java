@@ -17,6 +17,7 @@ import dyna.common.exception.ServiceRequestException;
 import dyna.common.systemenum.ReplaceRangeEnum;
 import dyna.common.systemenum.ReplaceStatusEnum;
 import dyna.common.systemenum.ReplaceTypeEnum;
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 
 /**
@@ -25,7 +26,7 @@ import dyna.net.service.Service;
  * @author wangweixia
  * 
  */
-public interface BRM extends Service
+public interface BRM extends ApplicationService
 {
 
 	/**

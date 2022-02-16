@@ -14,6 +14,7 @@ import dyna.common.bean.data.ObjectGuid;
 import dyna.common.bean.data.StructureObject;
 import dyna.common.bean.data.structure.BOMStructure;
 import dyna.common.exception.ServiceRequestException;
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 
 /**
@@ -22,7 +23,7 @@ import dyna.net.service.Service;
  * @author cgc
  * 
  */
-public interface UECS extends Service
+public interface UECS extends ApplicationService
 {
 	/**
 	 * 保存ECP:新建和更新ECP时使用

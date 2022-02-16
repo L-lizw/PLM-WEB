@@ -1,15 +1,18 @@
 package dyna.app.service.brs.dcr.checkrule;
 
+import dyna.app.service.AbstractServiceStub;
 import dyna.app.service.DataAccessService;
+import dyna.app.service.brs.dcr.DCRImpl;
 import dyna.common.bean.data.FoundationObject;
 import dyna.common.exception.ServiceNotFoundException;
 import dyna.common.exception.ServiceRequestException;
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class AbstractCondition implements ICondition
+public abstract class AbstractCondition extends AbstractServiceStub<DCRImpl> implements ICondition
 {
 	private Map<String, FoundationObject>	dataMap				= new HashMap<>();
 
@@ -19,7 +22,7 @@ public abstract class AbstractCondition implements ICondition
 
 	private DataAccessService				service				= null;
 
-	public <T extends Service> T getServiceInstance(Class<T> serviceClass) throws ServiceRequestException
+	public <T extends ApplicationService> T getServiceInstance(Class<T> serviceClass) throws ServiceRequestException
 	{
 		try
 		{

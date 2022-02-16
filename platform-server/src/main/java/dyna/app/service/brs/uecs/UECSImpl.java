@@ -11,6 +11,7 @@ import dyna.common.bean.data.FoundationObject;
 import dyna.common.bean.data.ObjectGuid;
 import dyna.common.bean.data.StructureObject;
 import dyna.common.bean.data.structure.BOMStructure;
+import dyna.common.conf.ServiceDefinition;
 import dyna.common.dto.model.cls.ClassField;
 import dyna.common.dto.model.cls.ClassInfo;
 import dyna.common.exception.ServiceRequestException;
@@ -55,8 +56,9 @@ import java.util.Map;
 	 *
 	 * @see dyna.app.service.DataAccessService#init()
 	 */
-	@Override public void init()
+	@Override public void init(ServiceDefinition serviceDefinition)
 	{
+		super.init(serviceDefinition);
 		this.setChangeItemValueScope();
 	}
 

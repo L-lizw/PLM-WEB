@@ -7,6 +7,7 @@ package dyna.app.service.brs.acl;
 
 import dyna.app.service.BusinessRuleService;
 import dyna.common.bean.data.ObjectGuid;
+import dyna.common.conf.ServiceDefinition;
 import dyna.common.dto.aas.Group;
 import dyna.common.dto.acl.*;
 import dyna.common.exception.AuthorizeException;
@@ -71,8 +72,9 @@ public class ACLImpl extends BusinessRuleService implements ACL
 	 * @see dyna.app.service.DataAccessService#init()
 	 */
 	@Override
-	public void init()
+	public void init(ServiceDefinition serviceDefinition)
 	{
+		super.init(serviceDefinition);
 		aclSubjectStub.init();
 	}
 

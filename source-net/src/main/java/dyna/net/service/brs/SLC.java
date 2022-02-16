@@ -8,6 +8,7 @@ package dyna.net.service.brs;
 import dyna.common.dto.ConfigRuleBOLM;
 import dyna.common.dto.ConfigRuleRevise;
 import dyna.common.exception.ServiceRequestException;
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 
 /**
@@ -16,7 +17,7 @@ import dyna.net.service.Service;
  * @author caogc
  * 
  */
-public interface SLC extends Service
+public interface SLC extends ApplicationService
 {
 
 	/**

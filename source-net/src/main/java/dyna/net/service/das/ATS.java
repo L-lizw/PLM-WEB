@@ -11,6 +11,7 @@ import java.util.List;
 import dyna.common.SearchCondition;
 import dyna.common.dto.SysTrack;
 import dyna.common.exception.ServiceRequestException;
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 
 /**
@@ -19,7 +20,7 @@ import dyna.net.service.Service;
  * @author Wanglei
  * 
  */
-public interface ATS extends Service
+public interface ATS extends ApplicationService
 {
 
 	/**

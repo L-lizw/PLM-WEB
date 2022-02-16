@@ -7,6 +7,7 @@ package dyna.app.service.brs.wfm;
 
 import dyna.app.service.BusinessRuleService;
 import dyna.common.bean.data.ObjectGuid;
+import dyna.common.conf.ServiceDefinition;
 import dyna.common.dto.SystemWorkflowActivity;
 import dyna.common.dto.model.bmbo.BOInfo;
 import dyna.common.dto.model.cls.ClassInfo;
@@ -45,9 +46,9 @@ import java.util.List;
 	@Autowired private WorkflowModelCacheStub wfModelCacheStub    ;
 	@Autowired private ScriptStub             scriptStub          ;
 
-	@Override public void init()
+	@Override public void init(ServiceDefinition serviceDefinition)
 	{
-		super.init();
+		super.init(serviceDefinition);
 		this.getWfModelCacheStub().loadModel();
 	}
 

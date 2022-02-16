@@ -7,6 +7,7 @@ import dyna.common.bean.data.checkrule.CheckRule;
 import dyna.common.bean.data.checkrule.ClassConditionData;
 import dyna.common.bean.data.checkrule.ClassConditionDetailData;
 import dyna.common.bean.data.checkrule.End2CheckRule;
+import dyna.common.conf.ServiceDefinition;
 import dyna.common.dto.wf.ProcAttach;
 import dyna.common.exception.ServiceNotFoundException;
 import dyna.common.exception.ServiceRequestException;
@@ -34,8 +35,9 @@ public class DCRImpl extends BusinessRuleService implements DCR
 	private DataCheckRuleSaveStub	checkRuleSaveStub	= null;
 
 	@Override
-	public void init()
+	public void init(ServiceDefinition serviceDefinition)
 	{
+		super.init(serviceDefinition);
 		checkRuleQueryStub.init();
 		DataCheckRuleFactory.init(this);
 	}

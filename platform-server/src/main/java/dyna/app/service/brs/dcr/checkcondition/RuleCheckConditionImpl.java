@@ -16,7 +16,6 @@ import dyna.common.exception.ServiceNotFoundException;
 import dyna.common.exception.ServiceRequestException;
 import dyna.common.systemenum.RuleTypeEnum;
 import dyna.common.util.SetUtils;
-import dyna.net.impl.ServiceProviderFactory;
 import dyna.net.service.brs.BOAS;
 import dyna.net.service.brs.BOMS;
 import dyna.net.service.brs.DCR;
@@ -32,15 +31,12 @@ public class RuleCheckConditionImpl extends AbstractFieldCondition
 
 	private String				ruleId				= null;
 
-	ServiceProvider				serviceProvider		= null;
-
 	@Override
 	public boolean check() throws ServiceRequestException
 	{
 		try
 		{
-			this.serviceProvider = ServiceProviderFactory.getServiceProvider();
-			DCR dcr = this.serviceProvider.getServiceInstance(DCR.class, this.getSessionId());
+			DCR dcr = this.stubService;
 			CheckRule rule = dcr.getCheckRuleById(this.getRuleId());
 			if (rule == null || rule.getRuleType() == null)
 			{
@@ -77,8 +73,8 @@ public class RuleCheckConditionImpl extends AbstractFieldCondition
 		RelationRule relationRule = DataCheckRuleFactory.getRelationRule(rule);
 
 		// 取得BOM结构
-		BOMS boms = this.serviceProvider.getServiceInstance(BOMS.class, this.getSessionId());
-		BOAS boas = this.serviceProvider.getServiceInstance(BOAS.class, this.getSessionId());
+		BOMS boms = this.stubService.getBOMS();
+		BOAS boas = this.stubService.getBOAS();
 		List<BOMStructure> bomList = boms.listBOM(this.getFoundationObject().getObjectGuid(), rule.getRuleName(), null, null, null);
 		if (!SetUtils.isNullList(bomList))
 		{
@@ -100,7 +96,7 @@ public class RuleCheckConditionImpl extends AbstractFieldCondition
 	{
 		RelationRule relationRule = DataCheckRuleFactory.getRelationRule(rule);
 		// 取得关联关系结构
-		BOAS boas = this.serviceProvider.getServiceInstance(BOAS.class, this.getSessionId());
+		BOAS boas = this.stubService.getBOAS();
 		List<StructureObject> structureList = boas.listObjectOfRelation(this.getFoundationObject().getObjectGuid(), rule.getRuleName(), null, null, null);
 		if (!SetUtils.isNullList(structureList))
 		{
@@ -121,7 +117,7 @@ public class RuleCheckConditionImpl extends AbstractFieldCondition
 	private boolean checkWF(CheckRule rule) throws ServiceNotFoundException, ServiceRequestException
 	{
 		WFRule wfRule = DataCheckRuleFactory.getWFRule(rule);
-		WFI wfi = this.serviceProvider.getServiceInstance(WFI.class, this.getSessionId());
+		WFI wfi = this.stubService.getWFI();
 
 		List<ProcessRuntime> processList = wfi.listProcessRuntimeOfObject(this.getFoundationObject().getObjectGuid(), null);
 		if (!SetUtils.isNullList(processList))
@@ -150,7 +146,7 @@ public class RuleCheckConditionImpl extends AbstractFieldCondition
 	private boolean checkObjectField(CheckRule rule) throws ServiceRequestException, ServiceNotFoundException
 	{
 		RelationRule relationRule = DataCheckRuleFactory.getRelationRule(rule);
-		BOAS boas = this.serviceProvider.getServiceInstance(BOAS.class, this.getSessionId());
+		BOAS boas = this.stubService.getBOAS();
 
 		String ruleName = rule.getRuleName();
 		String fieldName = ruleName.split("\\.")[1];

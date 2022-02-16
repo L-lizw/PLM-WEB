@@ -15,6 +15,7 @@ import dyna.common.systemenum.FieldTypeEnum;
 import dyna.common.systemenum.SystemClassFieldEnum;
 import dyna.common.util.NumberUtils;
 import dyna.common.util.StringUtils;
+import dyna.net.service.ApplicationService;
 import dyna.net.service.Service;
 
 public abstract class AbstractStratery  extends AbstractServiceStub<BOASImpl> implements Strategy
@@ -103,7 +104,7 @@ public abstract class AbstractStratery  extends AbstractServiceStub<BOASImpl> im
 		return value;
 	}
 
-	protected <T extends Service> T getService(DataAccessService dataAccessService, Class<T> clazz) throws ServiceRequestException
+	protected <T extends ApplicationService> T getService(DataAccessService dataAccessService, Class<T> clazz) throws ServiceRequestException
 	{
 		try
 		{
