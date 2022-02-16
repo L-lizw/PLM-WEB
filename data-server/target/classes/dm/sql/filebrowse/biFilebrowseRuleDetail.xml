@@ -20,41 +20,41 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			       )
         		   values
         		   (
-			        #GUID#,
-					#MASTERFK:VARCHAR:NULL#,
-					#OBJECTTYPE:VARCHAR:NULL#,
-					#OBJECTGUID:VARCHAR:NULL#,
-					#OBJECTNAME:VARCHAR:NULL#,
-					#DATASEQ#,
-					#CURRENTTIME:TIMESTAMP#,
-					#CREATEUSERGUID:VARCHAR:NULL#,
-					#CURRENTTIME:TIMESTAMP#,
-					#UPDATEUSERGUID:VARCHAR:NULL#
+			        #{GUID},
+					#{MASTERFK:VARCHAR},
+					#{OBJECTTYPE:VARCHAR},
+					#{OBJECTGUID:VARCHAR},
+					#{OBJECTNAME:VARCHAR},
+					#{DATASEQ},
+					#{CURRENTTIME:TIMESTAMP},
+					#{CREATEUSERGUID:VARCHAR},
+					#{CURRENTTIME:TIMESTAMP},
+					#{UPDATEUSERGUID:VARCHAR}
 		           )
     </insert>
 
     <update id="update" parameterType="dyna.common.dto.FileOpenItem">
         update bi_filebrowse_rule_detail  
 		<set>
-			updatetime=#CURRENTTIME:TIMESTAMP#,
-			updateuserguid=#UPDATEUSERGUID#,
-			<if  test="MASTERFK!=null">masterfk=#MASTERFK#,</if>
-			<if  test="OBJECTTYPE!=null">objecttype=#OBJECTTYPE#,</if>
-			<if  test="OBJECTGUID!=null">objectguid=#OBJECTGUID#,</if>
-			<if  test="OBJECTNAME!=null">objectname=#OBJECTNAME#,</if>
+			updatetime=#{CURRENTTIME:TIMESTAMP},
+			updateuserguid=#{UPDATEUSERGUID},
+			<if  test="MASTERFK!=null">masterfk=#{MASTERFK},</if>
+			<if  test="OBJECTTYPE!=null">objecttype=#{OBJECTTYPE},</if>
+			<if  test="OBJECTGUID!=null">objectguid=#{OBJECTGUID},</if>
+			<if  test="OBJECTNAME!=null">objectname=#{OBJECTNAME},</if>
 		</set>
-		where guid = #GUID#
+		where guid = #{GUID}
     </update>
     
     <delete id="delete" parameterType="java.lang.String">
         delete from bi_filebrowse_rule_detail
-         where guid = #GUID# 
+         where guid = #{GUID#}
     </delete>
  
  	<select id="get" parameterType="java.lang.String" resultType="dyna.common.dto.FileOpenItem">
 		SELECT A.*
 		FROM bi_filebrowse_rule_detail A
-		WHERE A.GUID = #GUID#
+		WHERE A.GUID = #{GUID}
 	</select>
  
  	<select id="selectForLoad" parameterType="map" resultType="dyna.common.dto.FileOpenItem">

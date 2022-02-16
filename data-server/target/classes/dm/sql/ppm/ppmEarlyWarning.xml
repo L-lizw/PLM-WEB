@@ -7,10 +7,10 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     <sql id="where">
         <where>
             <if test="GUID!=null">
-                and  guid = #GUID#
+                and  guid = #{GUID}
             </if>
             <if test="PROJECTGUID!=null">
-                and  PROJECTGUID = #PROJECTGUID#
+                and  PROJECTGUID = #{PROJECTGUID}
             </if>
         </where>
     </sql>
@@ -18,10 +18,10 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     <sql id="whereWarningTask">
         <where>
             <if test="WARNINGGUID!=null">
-                and WARNINGGUID = #WARNINGGUID#
+                and WARNINGGUID = #{WARNINGGUID}
             </if>
             <if test="TASKGUID!=null">
-                and  TASKGUID = #TASKGUID#
+                and  TASKGUID = #{TASKGUID}
             </if>
         </where>
     </sql>
@@ -57,18 +57,18 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			        createtime,
 			        updateuserguid,
 			        updatetime)
-	        values (#GUID:VARCHAR:NULL#,
-			        #PROJECTGUID#,
-					#WARNINGID#,
-					#EVENTTYPE#,
+	        values (#{GUID:VARCHAR},
+			        #{PROJECTGUID},
+					#{WARNINGID},
+					#{EVENTTYPE},
 					
-					#INTERVALUE#,
-					#ISENABLE#,
+					#{INTERVALUE},
+					#{ISENABLE},
 					
-					#CREATEUSERGUID:VARCHAR:NULL#,
-					#CURRENTTIME:TIMESTAMP#,
-					#UPDATEUSERGUID:VARCHAR:NULL#,
-					#CURRENTTIME:TIMESTAMP#)
+					#{CREATEUSERGUID:VARCHAR},
+					#{CURRENTTIME:TIMESTAMP},
+					#{UPDATEUSERGUID:VARCHAR},
+					#{CURRENTTIME:TIMESTAMP})
     </insert>
     
     <insert id="insertWarningTask" parameterType="map">
@@ -78,25 +78,25 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                     TASKGUID$$CLASS,
                     TASKGUID$$MASTER
                     )
-	        values (#WARNINGGUID#,
-			        #TASKGUID#,
-			        #TASKGUID$CLASS#,
-			        #TASKGUID$MASTER#
+	        values (#{WARNINGGUID},
+			        #{TASKGUID},
+			        #{TASKGUID$CLASS},
+			        #{TASKGUID$MASTER}
 			        )
     </insert>
     
     <update id="update" parameterType="dyna.common.bean.data.ppms.EarlyWarning">
         update ppm_EarlyWarning 
              <set>
-	               <if test="PROJECTGUID!=null">PROJECTGUID = #PROJECTGUID#,</if>
-	               <if test="WARNINGID!=null">WARNINGID = #WARNINGID#,</if>
-	               <if test="EVENTTYPE!=null">EVENTTYPE = #EVENTTYPE#,</if>
+	               <if test="PROJECTGUID!=null">PROJECTGUID = #{PROJECTGUID},</if>
+	               <if test="WARNINGID!=null">WARNINGID = #{WARNINGID},</if>
+	               <if test="EVENTTYPE!=null">EVENTTYPE = #{EVENTTYPE},</if>
 	               
-	               <if test="INTERVALUE!=null">INTERVALUE = #INTERVALUE#,</if>
-	               <if test="ISENABLE!=null">ISENABLE = #ISENABLE#,</if>
+	               <if test="INTERVALUE!=null">INTERVALUE = #{INTERVALUE},</if>
+	               <if test="ISENABLE!=null">ISENABLE = #{ISENABLE},</if>
                </set>
-               updatetime = #CURRENTTIME:TIMESTAMP#,
-               updateuserguid = #UPDATEUSERGUID#
+               updatetime = #{CURRENTTIME:TIMESTAMP},
+               updateuserguid = #{UPDATEUSERGUID}
          	   <include refid="where"/>
     </update>
     

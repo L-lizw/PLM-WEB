@@ -49,7 +49,7 @@
         UPDATETIME,
         UPDATEUSERGUID
         FROM MA_CLASS_NUMBER_DETAIL A
-        WHERE GUID=#GUID#
+        WHERE GUID=#{GUID}
     </select>
     <insert id="insert" parameterType="dyna.common.dto.model.cls.NumberingObjectInfo">
         INSERT INTO MA_CLASS_NUMBER_DETAIL
@@ -73,53 +73,53 @@
         UPDATETIME,
         UPDATEUSERGUID
         )
-        VALUES(#GUID:VARCHAR#,
-        #NUMBERRULEFK:VARCHAR#,
-        #DATASEQ#,
-        #ITEMTYPE:VARCHAR:NULL#,
-        #ITEMVALUE:VARCHAR:NULL#,
-        #FIELDTYPE:VARCHAR:NULL#,
-        #FIELDCLASSNAME:VARCHAR:NULL#,
-        #PARENTGUID:VARCHAR:NULL#,
-        #STARTVALUE:VARCHAR:NULL#,
-        #ISDATEBYUSER:VARCHAR:NULL#,
-        #PREFIX:VARCHAR:NULL#,
-        #SUFFIX:VARCHAR:NULL#,
-        #FIELDLENGTH#,
-        #CONTROLLEDNUMBERFIELDGUID:VARCHAR:NULL#,
-        #FIELDNAME:VARCHAR:NULL#,
-        #CURRENTTIME:TIMESTAMP#,
-        #CREATEUSERGUID:VARCHAR:NULL#,
-        #CURRENTTIME:TIMESTAMP#,
-        #UPDATEUSERGUID:VARCHAR:NULL#
+        VALUES(#{GUID:VARCHAR},
+        #{NUMBERRULEFK:VARCHAR},
+        #{DATASEQ},
+        #{ITEMTYPE:VARCHAR},
+        #{ITEMVALUE:VARCHAR},
+        #{FIELDTYPE:VARCHAR},
+        #{FIELDCLASSNAME:VARCHAR},
+        #{PARENTGUID:VARCHAR},
+        #{STARTVALUE:VARCHAR},
+        #{ISDATEBYUSER:VARCHAR},
+        #{PREFIX:VARCHAR},
+        #{SUFFIX:VARCHAR},
+        #{FIELDLENGTH},
+        #{CONTROLLEDNUMBERFIELDGUID:VARCHAR},
+        #{FIELDNAME:VARCHAR},
+        #{CURRENTTIME:TIMESTAMP},
+        #{CREATEUSERGUID:VARCHAR},
+        #{CURRENTTIME:TIMESTAMP},
+        #{UPDATEUSERGUID:VARCHAR}
         )
     </insert>
 
     <update id="update" parameterType="dyna.common.dto.model.cls.NumberingObjectInfo">
         UPDATE MA_CLASS_NUMBER_DETAIL
         <set>
-            UPDATEUSERGUID = #UPDATEUSERGUID#,
-            UPDATETIME = #CURRENTTIME:TIMESTAMP#,
-            <if  test="NUMBERRULEFK!=null">NUMBERRULEFK=#NUMBERRULEFK#,</if>
-            <if  test="DATASEQ!=null">DATASEQ=#DATASEQ#,</if>
-            <if  test="ITEMTYPE!=null">ITEMTYPE=#ITEMTYPE#,</if>
-            <if  test="ITEMVALUE!=null">ITEMVALUE=#ITEMVALUE#,</if>
-            <if  test="FIELDTYPE!=null">FIELDTYPE=#FIELDTYPE#,</if>
-            <if  test="FIELDCLASSNAME!=null">FIELDCLASSNAME=#FIELDCLASSNAME#,</if>
-            <if  test="PARENTGUID!=null">PARENTGUID=#PARENTGUID#,</if>
-            <if  test="STARTVALUE!=null">STARTVALUE=#STARTVALUE#,</if>
-            <if  test="ISDATEBYUSER!=null">ISDATEBYUSER=#ISDATEBYUSER#,</if>
-            <if  test="PREFIX!=null">PREFIX=#PREFIX#,</if>
-            <if  test="SUFFIX!=null">SUFFIX=#SUFFIX#,</if>
-            <if  test="FIELDLENGTH!=null">FIELDLENGTH=#FIELDLENGTH#,</if>
-            <if  test="CONTROLLEDNUMBERFIELDGUID!=null">CONTROLLEDNUMBERFIELDGUID=#CONTROLLEDNUMBERFIELDGUID#,</if>
-            <if  test="FIELDNAME!=null">FIELDNAME=#FIELDNAME#,</if>
+            UPDATEUSERGUID = #{UPDATEUSERGUID},
+            UPDATETIME = #{CURRENTTIME:TIMESTAMP},
+            <if  test="NUMBERRULEFK!=null">NUMBERRULEFK=#{NUMBERRULEFK},</if>
+            <if  test="DATASEQ!=null">DATASEQ=#{DATASEQ},</if>
+            <if  test="ITEMTYPE!=null">ITEMTYPE=#{ITEMTYPE},</if>
+            <if  test="ITEMVALUE!=null">ITEMVALUE=#{ITEMVALUE},</if>
+            <if  test="FIELDTYPE!=null">FIELDTYPE=#{FIELDTYPE},</if>
+            <if  test="FIELDCLASSNAME!=null">FIELDCLASSNAME=#{FIELDCLASSNAME},</if>
+            <if  test="PARENTGUID!=null">PARENTGUID=#{PARENTGUID},</if>
+            <if  test="STARTVALUE!=null">STARTVALUE=#{STARTVALUE},</if>
+            <if  test="ISDATEBYUSER!=null">ISDATEBYUSER=#{ISDATEBYUSER},</if>
+            <if  test="PREFIX!=null">PREFIX=#{PREFIX},</if>
+            <if  test="SUFFIX!=null">SUFFIX=#{SUFFIX},</if>
+            <if  test="FIELDLENGTH!=null">FIELDLENGTH=#{FIELDLENGTH},</if>
+            <if  test="CONTROLLEDNUMBERFIELDGUID!=null">CONTROLLEDNUMBERFIELDGUID=#{CONTROLLEDNUMBERFIELDGUID},</if>
+            <if  test="FIELDNAME!=null">FIELDNAME=#{FIELDNAME},</if>
         </set>
-        WHERE GUID = #GUID#
+        WHERE GUID = #{GUID}
     </update>
 
     <delete id="delete" parameterType="java.lang.String">
-        DELETE FROM MA_CLASS_NUMBER_DETAIL WHERE GUID = #GUID#
+        DELETE FROM MA_CLASS_NUMBER_DETAIL WHERE GUID = #{GUID}
     </delete>
 
 

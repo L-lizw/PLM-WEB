@@ -13,9 +13,6 @@ package dyna.app.core.lic.mac;
 public class MacAddressMatcherWindowsImpl extends AbstractMacAddressMatcher
 {
 
-	/**
-	 * @param macAddrCommand
-	 */
 	public MacAddressMatcherWindowsImpl()
 	{
 		super("ipconfig /all", MAC_PATTERN_WIN32, MAC_SPLIT_CHAR_WIN32);

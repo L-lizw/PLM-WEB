@@ -8,25 +8,25 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
         select *
           from MA_CONFIG_TABLE_TEST_HIST a
 		<where>
-			a.FOGUID = #FOGUID#
+			a.FOGUID = #{FOGUID#{
 			<if test="CONDITIONNAME!=null">
-				and a.CONDITIONNAME = #CONDITIONNAME#
+				and a.CONDITIONNAME = #{CONDITIONNAME}
 			</if>
 			<if test="USERGUID!=null">
-				and a.USERGUID = #USERGUID#
+				and a.USERGUID = #{USERGUID}
 			</if>
 		</where>
     </select>
     
     <insert id="insert" parameterType="map">
         MERGE INTO MA_CONFIG_TABLE_TEST_HIST A
-		USING (SELECT #FOGUID# AS FOGUID,
-		              #USERGUID# AS USERGUID,
-		              #CONDITIONNAME# AS CONDITIONNAME
+		USING (SELECT #{FOGUID} AS FOGUID,
+		              #{USERGUID} AS USERGUID,
+		              #{CONDITIONNAME} AS CONDITIONNAME
 		         FROM DUAL) B
 		ON (A.FOGUID = B.FOGUID AND A.USERGUID = B.USERGUID AND A.CONDITIONNAME = B.CONDITIONNAME)
 		WHEN MATCHED THEN
-		    UPDATE SET A.CONDITIONS = #CONDITIONS#
+		    UPDATE SET A.CONDITIONS = #{CONDITIONS}
 		WHEN NOT MATCHED THEN
 		    INSERT
 		        (GUID,
@@ -35,14 +35,14 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		         CONDITIONNAME,
 		         CONDITIONS)
 		    VALUES
-		        (#GUID#,
-		         #FOGUID#,
-		         #USERGUID#,
-		         #CONDITIONNAME#,
-		         #CONDITIONS#)
+		        (#{GUID},
+		         #{FOGUID},
+		         #{USERGUID},
+		         #{CONDITIONNAME},
+		         #{CONDITIONS})
     </insert>
     
     <delete id="delete" parameterType="java.lang.String">
-        delete from MA_CONFIG_TABLE_TEST_HIST where guid = #GUID#
+        delete from MA_CONFIG_TABLE_TEST_HIST where guid = #{GUID}
     </delete>
 </mapper>

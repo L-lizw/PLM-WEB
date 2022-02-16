@@ -49,33 +49,33 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			LOCALE
 		)
 	    VALUES( 
-		    #GUID#,
-			#USERGUID:VARCHAR:NULL#,
-			#LOGINGROUPGUID:VARCHAR:NULL#,
-			#LOGINROLEGUID:VARCHAR:NULL#,
-			#IPADDRESS:VARCHAR:NULL#,
-			#HOSTNAME:VARCHAR:NULL#,
-			#CURRENTTIME:TIMESTAMP#,
-			#CURRENTTIME:TIMESTAMP#,
-			#CURRENTTIME:TIMESTAMP#,
-			#BMGUID:VARCHAR:NULL#,
-			#SITEID:VARCHAR:NULL#,
-			#CLIENTTYPE:VARCHAR:NULL#,
-			#APPTYPE:VARCHAR:NULL#,
-			#LOCALE:VARCHAR:NULL#
+		    #{GUID},
+			#{USERGUID:VARCHAR},
+			#{LOGINGROUPGUID:VARCHAR},
+			#{LOGINROLEGUID:VARCHAR},
+			#{IPADDRESS:VARCHAR},
+			#{HOSTNAME:VARCHAR},
+			#{CURRENTTIME:TIMESTAMP},
+			#{CURRENTTIME:TIMESTAMP},
+			#{CURRENTTIME:TIMESTAMP},
+			#{BMGUID:VARCHAR},
+			#{SITEID:VARCHAR},
+			#{CLIENTTYPE:VARCHAR},
+			#{APPTYPE:VARCHAR},
+			#{LOCALE:VARCHAR}
 		)
 	</insert>
 	
 	<update id="update" parameterType="map">
 	    UPDATE SA_USER_SESSION
-	       SET UPDATETIME = #CURRENTTIME:TIMESTAMP#
-               <if test="LASTACCESSTIME!=null" >LASTACCESSTIME = #LASTACCESSTIME#,</if>
-         WHERE GUID = #GUID#
+	       SET UPDATETIME = #{CURRENTTIME:TIMESTAMP}
+               <if test="LASTACCESSTIME!=null" >LASTACCESSTIME = #{LASTACCESSTIME},</if>
+         WHERE GUID = #{GUID}
 	</update>
 	
 	<delete id="delete" parameterType="java.lang.String">
 		DELETE FROM sa_user_session
-		WHERE  guid = #GUID#
+		WHERE  guid = #{GUID}
 	</delete>
 	
 	<delete id="deleteModelerSession">
@@ -97,7 +97,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			     			  )
 			   ) bmname
 		  FROM sa_user_session a
-		 WHERE guid=#guid#
+		 WHERE guid=#{guid}
 	</select>
 	  
 	

@@ -6,10 +6,14 @@
 package dyna.app.core.lic;
 
 import dyna.app.core.lic.system.SystemIDChecker;
+import dyna.app.core.lic.system.SystemIDCheckerLinuxImpl;
+import dyna.app.core.lic.system.SystemIDCheckerNixImpl;
+import dyna.app.core.lic.system.SystemIDCheckerWindowsImpl;
 import dyna.common.log.DynaLogger;
 import dyna.common.util.EnvUtils;
 import dyna.common.util.SetUtils;
 import dyna.common.util.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -41,6 +45,12 @@ public class LicenseManager
 	private static final String	LICENSE_KEY				= ".key";
 
 	public static final String	USER_ID_PREFIX			= "UserID:";
+
+	@Autowired private SystemIDCheckerWindowsImpl systemIDCheckerWindows;
+
+	@Autowired private SystemIDCheckerLinuxImpl systemIDCheckerLinux;
+
+	@Autowired private SystemIDCheckerNixImpl systemIDCheckerNix;
 
 	private Properties			prop					= new Properties();
 	private List<String>		licenseRawData			= null;
@@ -145,9 +155,31 @@ public class LicenseManager
 
 	private void readSystemIdentification(String ip)
 	{
-		SystemIDChecker idChecker = SystemIDChecker.Utils.getSystemIDChecker();
+
+		SystemIDChecker idChecker = this.getSystemIDChecker();
 		this.systemIdentification = idChecker.getSystemIdentification(this.getLicenseRawData());
 		this.isVM = idChecker.isVM();
+	}
+
+	public  SystemIDChecker getSystemIDChecker()
+	{
+		SystemIDChecker checker = null;
+		String osName = EnvUtils.getOSName();
+		DynaLogger.debug("[LIC] OS Type is : " + osName);
+
+		if (osName.toLowerCase().startsWith("window"))
+		{
+			checker = this.systemIDCheckerWindows;
+		}
+		else if (osName.toLowerCase().startsWith("linux") || osName.toLowerCase().startsWith("mac os x"))
+		{
+			checker = this.systemIDCheckerLinux;
+		}
+		else
+		{
+			checker = this.systemIDCheckerNix;
+		}
+		return checker;
 	}
 
 	private synchronized void readLicense()

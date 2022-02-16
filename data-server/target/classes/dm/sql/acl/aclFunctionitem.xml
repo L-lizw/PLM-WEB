@@ -9,16 +9,16 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
           FROM sa_acl_function_detail 
             <where>
                 <if  test="GUID!=null">
-                    and guid = #GUID#
+                    and guid = #{GUID}
                 </if>
                 <if  test="MASTERFK=null">
-                    and masterfk = #MASTERFK#
+                    and masterfk = #{MASTERFK}
                 </if>
                 <if  test="TYPEVALUE=null">
-                    and typevalue = #TYPEVALUE#
+                    and typevalue = #{TYPEVALU}
                 </if>
                  <if  test="TYPEVALUENAME=null">
-                    and typevaluename = #TYPEVALUENAME#
+                    and typevaluename = #{TYPEVALUENAME}
                 </if>
             </where>
     </select>
@@ -29,13 +29,13 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
             <where>
                 m.guid = a.masterfk
                 <if  test="POSITION!=null">
-                    and m.position = #POSITION#
+                    and m.position = #{POSITION}
                 </if>
                 <if  test="FUNCTIONTYPE!=null">
-                    and m.functiontype = #FUNCTIONTYPE#
+                    and m.functiontype = #{FUNCTIONTYPE}
                 </if>
                 <if  test="TYPEVALUE!=null">
-                    and a.typevalue = #TYPEVALUE#
+                    and a.typevalue = #{TYPEVALUE}
                 </if>
             </where>
     </select>
@@ -54,35 +54,35 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			aclvalue
 		)
         values(
-	        #GUID:VARCHAR:NULL#,
-			#MASTERFK:VARCHAR:NULL#,
-			#CREATEUSERGUID:VARCHAR:NULL#,
-			#CURRENTTIME:TIMESTAMP#,
-			#UPDATEUSERGUID:VARCHAR:NULL#,
-			#CURRENTTIME:TIMESTAMP#,
+	        #{GUID:VARCHAR},
+			#{MASTERFK:VARCHAR},
+			#{CREATEUSERGUID:VARCHAR},
+			#{CURRENTTIME:TIMESTAMP},
+			#{UPDATEUSERGUID:VARCHAR},
+			#{CURRENTTIME:TIMESTAMP},
 			
-			#TYPEVALUE:VARCHAR:NULL#,
-			#TYPEVALUENAME:VARCHAR:NULL#,
-			#ACLVALUE:VARCHAR:NULL#
+			#{TYPEVALUE:VARCHAR},
+			#{TYPEVALUENAME:VARCHAR},
+			#{ACLVALUE:VARCHAR}
 		)
     </insert>
     
     <update id="update" parameterType="dyna.common.dto.acl.ACLFunctionItem">
         update sa_acl_function_detail  
 		<set>
-            updatetime=#CURRENTTIME:TIMESTAMP#,
-            updateuserguid=#UPDATEUSERGUID#
-			<if  test="MASTERFK!=null">masterfk=#MASTERFK#,</if>
-			<if  test="TYPEVALUE!=null">typevalue=#TYPEVALUE#,</if>
-			<if  test="TYPEVALUENAME!=null">typevaluename=#TYPEVALUENAME#,</if>
-			<if  test="ACLVALUE!=null">aclvalue=#ACLVALUE#</if>
+            updatetime=#{CURRENTTIME:TIMESTAMP},
+            updateuserguid=#{UPDATEUSERGUID#{
+			<if  test="MASTERFK!=null">masterfk=#{MASTERFK},</if>
+			<if  test="TYPEVALUE!=null">typevalue=#{TYPEVALUE},</if>
+			<if  test="TYPEVALUENAME!=null">typevaluename=#{TYPEVALUENAME},</if>
+			<if  test="ACLVALUE!=null">aclvalue=#{ACLVALUE}</if>
 		</set>
-		where guid = #GUID#
+		where guid = #{GUID#{
     </update>
 
     <delete id="delete" parameterType="java.lang.String">
         delete from sa_acl_function_detail
-         where guid = #GUID# 
+         where guid = #{GUID}
     </delete>
 
 </mapper>

@@ -7,13 +7,13 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     <sql id="where">
         <where>
             <if  test="GUID!=null">
-                and   guid = #GUID#
+                and   guid = #{GUID}
             </if>
             <if  test="WARNINGGUID!=null">
-                and   WARNINGGUID = #WARNINGGUID#
+                and   WARNINGGUID = #{WARNINGGUID}
             </if>
             <if  test="NOTIFIERGUID!=null">
-                and   NOTIFIERGUID = #NOTIFIERGUID#
+                and   NOTIFIERGUID = #{NOTIFIERGUID}
             </if>
         </where>
     </sql>
@@ -34,9 +34,9 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                ppm_WarningNotifier o
          where m.rolegroupguid = n.guid
            and m.userguid = uu.guid
-           and ((o.warningguid = #WARNINGGUID# and o.notifiertype = 'USER' and o.notifierguid = m.userguid)
-                or (o.warningguid = #WARNINGGUID# and o.notifiertype = 'RIG' and o.notifierguid = n.guid)
-                or (o.warningguid = #WARNINGGUID# and o.notifiertype = 'GROUP' and o.notifierguid = n.groupguid)
+           and ((o.warningguid = #{WARNINGGUID} and o.notifiertype = 'USER' and o.notifierguid = m.userguid)
+                or (o.warningguid = #{WARNINGGUID} and o.notifiertype = 'RIG' and o.notifierguid = n.guid)
+                or (o.warningguid = #{WARNINGGUID} and o.notifiertype = 'GROUP' and o.notifierguid = n.groupguid)
                )
     </select>
     
@@ -50,7 +50,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		  from ppm_warningnotifier w
 		  <where>
 			  <if  test="WARNINGGUID!=null">
-	             and  w.warningguid = #WARNINGGUID#
+	             and  w.warningguid = #{WARNINGGUID}
 	          </if>
           </where>
     </select>
@@ -66,27 +66,27 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			        createtime,
 			        updateuserguid,
 			        updatetime)
-	        values (#GUID:VARCHAR:NULL#,
-			        #WARNINGGUID#,
-					#NOTIFIERGUID#,
-					#NOTIFIERTYPE#,
+	        values (#{GUID:VARCHAR},
+			        #{WARNINGGUID},
+					#{NOTIFIERGUID},
+					#{NOTIFIERTYPE},
 					
-					#CREATEUSERGUID:VARCHAR:NULL#,
-					#CURRENTTIME:TIMESTAMP#,
-					#UPDATEUSERGUID:VARCHAR:NULL#,
-					#CURRENTTIME:TIMESTAMP#)
+					#{CREATEUSERGUID:VARCHAR},
+					#{CURRENTTIME:TIMESTAMP},
+					#{UPDATEUSERGUID:VARCHAR},
+					#{CURRENTTIME:TIMESTAMP})
     </insert>
     
     
     <update id="update" parameterType="dyna.common.bean.data.ppms.WarningNotifier">
         update ppm_WarningNotifier 
                <set>
-	               <if test="WARNINGGUID!=null">WARNINGGUID = #WARNINGGUID#,</if>
-	               <if test="NOTIFIERGUID!=null">NOTIFIERGUID = #NOTIFIERGUID#,</if>
-	               <if test="NOTIFIERTYPE!=null">NOTIFIERTYPE = #NOTIFIERTYPE#,</if>
+	               <if test="WARNINGGUID!=null">WARNINGGUID = #{WARNINGGUID},</if>
+	               <if test="NOTIFIERGUID!=null">NOTIFIERGUID = #{NOTIFIERGUID},</if>
+	               <if test="NOTIFIERTYPE!=null">NOTIFIERTYPE = #{NOTIFIERTYPE},</if>
                </set>
-               updatetime = #CURRENTTIME:TIMESTAMP#,
-               updateuserguid = #UPDATEUSERGUID#
+               updatetime = #{CURRENTTIME:TIMESTAMP},
+               updateuserguid = #{UPDATEUSERGUID}
          	   <include refid="where"/>
     </update>
     

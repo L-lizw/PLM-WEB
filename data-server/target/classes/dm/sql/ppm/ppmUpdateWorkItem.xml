@@ -7,16 +7,16 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     <sql id="where">
         <where>
             <if  test="GUID!=null">
-                and   guid = #GUID#
+                and   guid = #{GUID}
             </if>
             <if  test="WORKITEMGUID!=null">
-                and   WORKITEMGUID = #WORKITEMGUID#
+                and   WORKITEMGUID = #{WORKITEMGUID}
             </if>
             <if  test="UPDATECONTENT!=null">
-                and   UPDATECONTENT = #UPDATECONTENT#
+                and   UPDATECONTENT = #{UPDATECONTENT}
             </if>
             <if  test="WORKITEMSTATE!=null">
-                and   WORKITEMSTATE = #WORKITEMSTATE#
+                and   WORKITEMSTATE = #{WORKITEMSTATE}
             </if>
         </where>
     </sql>
@@ -24,13 +24,13 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     <sql id="whereForwardUser">
         <where>
             <if  test="GUID!=null">
-                and   guid = #GUID#
+                and   guid = #{GUID}
             </if>
             <if  test="UPDATEWORKITEMGUID!=null">
-                and   UPDATEWORKITEMGUID = #UPDATEWORKITEMGUID#
+                and   UPDATEWORKITEMGUID = #{UPDATEWORKITEMGUID}
             </if>
             <if  test="FORWARDUSER!=null">
-                and   FORWARDUSER = #FORWARDUSER#
+                and   FORWARDUSER = #{FORWARDUSER}
             </if>
         </where>
     </sql>
@@ -48,7 +48,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
           from ppm_UpdateWorkItem_forwardUser m,
                sa_user n
          where m.FORWARDUSER = n.guid
-           and m.UPDATEWORKITEMGUID = #UPDATEWORKITEMGUID#
+           and m.UPDATEWORKITEMGUID = #{UPDATEWORKITEMGUID}
     </select>
     
     <insert id="insert" parameterType="dyna.common.bean.data.ppms.UpdateWorkItem">
@@ -62,15 +62,15 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			        createtime,
 			        updateuserguid,
 			        updatetime)
-	        values (#GUID:VARCHAR:NULL#,
-					#WORKITEMGUID#,
-					#UPDATECONTENT#,
-					#WORKITEMSTATE#,
+	        values (#{GUID:VARCHAR},
+					#{WORKITEMGUID},
+					#{UPDATECONTENT},
+					#{WORKITEMSTATE},
 					
-					#CREATEUSERGUID:VARCHAR:NULL#,
-					#CURRENTTIME:TIMESTAMP#,
-					#UPDATEUSERGUID:VARCHAR:NULL#,
-					#CURRENTTIME:TIMESTAMP#)
+					#{CREATEUSERGUID:VARCHAR},
+					#{CURRENTTIME:TIMESTAMP},
+					#{UPDATEUSERGUID:VARCHAR},
+					#{CURRENTTIME:TIMESTAMP})
     </insert>
     
     
@@ -84,26 +84,26 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			        createtime,
 			        updateuserguid,
 			        updatetime)
-	        values (#GUID:VARCHAR:NULL#,
-					#UPDATEWORKITEMGUID#,
-					#FORWARDUSER#,
+	        values (#{GUID:VARCHAR},
+					#{UPDATEWORKITEMGUID},
+					#{FORWARDUSER},
 					
-					#CREATEUSERGUID:VARCHAR:NULL#,
-					#CURRENTTIME:TIMESTAMP#,
-					#UPDATEUSERGUID:VARCHAR:NULL#,
-					#CURRENTTIME:TIMESTAMP#)
+					#{CREATEUSERGUID:VARCHAR},
+					#{CURRENTTIME:TIMESTAMP},
+					#{UPDATEUSERGUID:VARCHAR},
+					#{CURRENTTIME:TIMESTAMP})
     </insert>
     
     
     <update id="update" parameterType="dyna.common.bean.data.ppms.UpdateWorkItem">
         update ppm_UpdateWorkItem 
                  <set>
-	               <if test="WORKITEMGUID!=null">WORKITEMGUID = #WORKITEMGUID#,</if>
-	               <if test="UPDATECONTENT!=null">UPDATECONTENT = #UPDATECONTENT#,</if>
-	               <if test="WORKITEMSTATE!=null">WORKITEMSTATE = #WORKITEMSTATE#,</if>
+	               <if test="WORKITEMGUID!=null">WORKITEMGUID = #{WORKITEMGUID},</if>
+	               <if test="UPDATECONTENT!=null">UPDATECONTENT = #{UPDATECONTENT},</if>
+	               <if test="WORKITEMSTATE!=null">WORKITEMSTATE = #{WORKITEMSTATE},</if>
                </set>
-               updatetime = #CURRENTTIME:TIMESTAMP#,
-               updateuserguid = #UPDATEUSERGUID#
+               updatetime = #{CURRENTTIME:TIMESTAMP},
+               updateuserguid = #{UPDATEUSERGUID}
          	   <include refid="where"/>
     </update>
     

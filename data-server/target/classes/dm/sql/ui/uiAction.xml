@@ -12,7 +12,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 	<select id="get" parameterType="java.lang.String" resultType="dyna.common.dto.model.ui.UIAction" statementType="STATEMENT">
 		SELECT *
 		  FROM ma_class_ui_action
-		 WHERE GUID=#GUID#
+		 WHERE GUID=#{GUID}
 	</select>
 	
 	 <insert id="insert" parameterType="dyna.common.dto.model.ui.UIAction">
@@ -29,37 +29,37 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			        createtime,
 			        updateuserguid,
 			        updatetime)
-	        values (#GUID#,
-			        #UIGUID#,
-					#ACTIONGUID:VARCHAR:NULL#,
+	        values (#{GUID},
+			        #{UIGUID},
+					#{ACTIONGUID:VARCHAR},
 					
-					#ACTIONNAME:VARCHAR:NULL#,
-					#TITLE:VARCHAR:NULL#,
+					#{ACTIONNAME:VARCHAR},
+					#{TITLE:VARCHAR},
 
-					#NOTINHERIT:VARCHAR:NULL#,
+					#{NOTINHERIT:VARCHAR},
 										
-					#CREATEUSERGUID:VARCHAR:NULL#,
-					#CURRENTTIME:TIMESTAMP#,
-					#UPDATEUSERGUID:VARCHAR:NULL#,
-					#CURRENTTIME:TIMESTAMP#)
+					#{CREATEUSERGUID:VARCHAR},
+					#{CURRENTTIME:TIMESTAMP},
+					#{UPDATEUSERGUID:VARCHAR},
+					#{CURRENTTIME:TIMESTAMP})
     </insert>
 	
 	<update id="update" parameterType="dyna.common.dto.model.ui.UIAction">
 		update ma_class_ui_action
 			<set>
-		        <if test="UIGUID!=null">uiguid = #UIGUID#,</if>
-		        <if test="TITLE!=null">title = #TITLE#,</if>
-		        <if test="ACTIONGUID!=null">actionguid = #ACTIONGUID#,</if>
-		        <if test="ACTIONNAME!=null">actionname = #ACTIONNAME#,</if>
-		        <if test="NOTINHERIT!=null">notinherit = #NOTINHERIT#,</if>
+		        <if test="UIGUID!=null">uiguid = #{UIGUID},</if>
+		        <if test="TITLE!=null">title = #{TITLE},</if>
+		        <if test="ACTIONGUID!=null">actionguid = #{ACTIONGUID},</if>
+		        <if test="ACTIONNAME!=null">actionname = #{ACTIONNAME},</if>
+		        <if test="NOTINHERIT!=null">notinherit = #{NOTINHERIT},</if>
        		 </set>
-               updatetime = #CURRENTTIME:TIMESTAMP#,
-               updateuserguid = #UPDATEUSERGUID#
-         where guid = #GUID#
+               updatetime = #{CURRENTTIME:TIMESTAMP},
+               updateuserguid = #{UPDATEUSERGUID}
+         where guid = #{GUID}
 	</update>
 	
 	<delete id="delete" parameterType="java.lang.String">
-		delete from ma_class_ui_action  where guid = #GUID# 
+		delete from ma_class_ui_action  where guid = #{GUID}
 	</delete>
     
 </mapper>

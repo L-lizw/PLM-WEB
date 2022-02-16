@@ -5,7 +5,7 @@
  */
 package dyna.app.core.lic.system;
 
-import dyna.common.conf.ConfigurableConnToGuardServerImpl;
+import dyna.app.conf.yml.ConfigurableServerImpl;
 import dyna.common.log.DynaLogger;
 import dyna.common.util.EnvUtils;
 import dyna.common.util.FileUtils;
@@ -33,7 +33,7 @@ public abstract class AbstractSystemIDChecker implements SystemIDChecker
 	protected boolean	isVM			= false;
 
 	@Autowired
-	private ConfigurableConnToGuardServerImpl configurableConnToGuardServer;
+	private ConfigurableServerImpl configurableServer;
 
 	protected AbstractSystemIDChecker(String osName)
 	{
@@ -152,7 +152,7 @@ public abstract class AbstractSystemIDChecker implements SystemIDChecker
 		DataInputStream in = null;
 		try
 		{
-			socket = new Socket(configurableConnToGuardServer.getLookupServiceHost(), configurableConnToGuardServer.getLookupServicePort(),(new InetSocketAddress(ip,0)).getAddress(),0);
+			socket = new Socket(configurableServer.getGuardServiceHost(), configurableServer.getGuardServicePort(),(new InetSocketAddress(ip,0)).getAddress(),0);
 			socket.setSoTimeout(30000);
 			out = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream(), 8192));
 			in = new DataInputStream(new BufferedInputStream(socket.getInputStream(), 8192));

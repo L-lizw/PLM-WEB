@@ -16,6 +16,11 @@ plmserver:
 
   language: zh_CN
 
+  #<!-- 在GuardServer的端口 -->
+  #<!-- 設定GrardManager安裝主機的資訊，<host>中需填IP位址(若DigiwinPLM安裝於VM中需設定) -->
+  guardServiceHost: 127.0.0.1
+  guardServicePort: 1299
+
   storage-map:
     RDS001:
       id: RDS001

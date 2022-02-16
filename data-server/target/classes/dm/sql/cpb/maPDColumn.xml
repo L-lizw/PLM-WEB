@@ -21,14 +21,14 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                 </if>
             </if>
             <if test="RELEASETIME!=null">
-                and #RELEASETIME:TIMESTAMP# >= a.releasetime
-                and (a.obsoletetime is null or #RELEASETIME:TIMESTAMP# <![CDATA[ < ]]> a.obsoletetime)
-                and #RELEASETIME:TIMESTAMP# >= b.releasetime
-                and (b.obsoletetime is null or #RELEASETIME:TIMESTAMP# <![CDATA[ < ]]> b.obsoletetime)
+                and #{RELEASETIME:TIMESTAMP} >= a.releasetime
+                and (a.obsoletetime is null or #{RELEASETIME:TIMESTAMP} <![CDATA[ < ]]> a.obsoletetime)
+                and #{RELEASETIME:TIMESTAMP} >= b.releasetime
+                and (b.obsoletetime is null or #{RELEASETIME:TIMESTAMP} <![CDATA[ < ]]> b.obsoletetime)
             </if>
             and a.masterguid = b.masterguid
             and a.md_name = b.MD_NAME
-            and b.masterguid = #MASTERGUID#
+            and b.masterguid = #{MASTERGUID}
         </where>
          order by b.DATASEQ
     </select>
@@ -49,11 +49,11 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                    </if>
                </if>
                <if test="RELEASETIME!=null">
-                   and #RELEASETIME:TIMESTAMP# >= b.releasetime
-                   and (b.obsoletetime is null or #RELEASETIME:TIMESTAMP# <![CDATA[ < ]]> b.obsoletetime)
+                   and #{RELEASETIME:TIMESTAMP} >= b.releasetime
+                   and (b.obsoletetime is null or #{RELEASETIME:TIMESTAMP} <![CDATA[ < ]]> b.obsoletetime)
                </if>
-               <if test="VARNAME!=null">and b.VARNAME=#VARNAME#</if>
-               and b.masterguid = #MASTERGUID#
+               <if test="VARNAME!=null">and b.VARNAME=#{VARNAME}</if>
+               and b.masterguid = #{MASTERGUID}
            </where>
          order by b.DATASEQ
     </select>     
@@ -69,75 +69,75 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 	                               CREATETIME, 
 	                               UPDATEUSERGUID, 
 	                               UPDATETIME)
-          values (#GUID#, 
-                  #MASTERGUID#, 
-                  #VARNAME#,
-                  #VARVALUE#,  
-                  #DATASEQ#,
+          values (#{GUID}, 
+                  #{MASTERGUID}, 
+                  #{VARNAME},
+                  #{VARVALUE},  
+                  #{DATASEQ},
                   
-                  #CREATEUSERGUID:VARCHAR:NULL#,
-                  #CURRENTTIME:TIMESTAMP#,
-				  #UPDATEUSERGUID:VARCHAR:NULL#,
-				  #CURRENTTIME:TIMESTAMP#)
+                  #{CREATEUSERGUID:VARCHAR},
+                  #{CURRENTTIME:TIMESTAMP},
+				  #{UPDATEUSERGUID:VARCHAR},
+				  #{CURRENTTIME:TIMESTAMP})
     </insert>
     
     <update id="updateBatchList" parameterType="map">
             update ma_pd_columnvalue 
-               set UPDATEUSERGUID = #UPDATEUSERGUID:VARCHAR:NULL#,
-                   UPDATETIME = #CURRENTTIME:TIMESTAMP#,
-                   VARVALUE = #VARVALUE#
-             where guid = #GUID#;
+               set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR},
+                   UPDATETIME = #{CURRENTTIME:TIMESTAMP},
+                   VARVALUE = #{VARVALUE}
+             where guid = #{GUID}
     </update>
     
     <update id="updateNextRevisionBatchList" parameterType="map">
         update ma_pd_columnvalue
-           set UPDATEUSERGUID = #UPDATEUSERGUID:VARCHAR:NULL#,
-               UPDATETIME = #CURRENTTIME:TIMESTAMP#,
+           set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR},
+               UPDATETIME = #{CURRENTTIME:TIMESTAMP},
                hasnextrevision = 'Y'
-         where guid = #GUID#;
+         where guid = #{GUID}
     </update>
     
     <delete id="delete" parameterType="java.lang.String">
          delete ma_pd_columnvalue 
-          where guid = #GUID#;
+          where guid = #{GUID}
     </delete>
     
     <update id="releaseCustColumn" parameterType="map">
 		update ma_pd_columnvalue 
-		   set UPDATEUSERGUID = #UPDATEUSERGUID:VARCHAR:NULL#,
-               UPDATETIME = $CURRENTTIME$,
-		       releasetime = $CURRENTTIME$
+		   set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR},
+               UPDATETIME = ${CURRENTTIME},
+		       releasetime = ${CURRENTTIME}
 		 where releasetime is null
-		   and masterguid = #MASTERGUID#
+		   and masterguid = #{MASTERGUID}
     </update>
     
     <update id="obsoleteCustColumn" parameterType="map">
 		update ma_pd_columnvalue 
-		   set UPDATEUSERGUID = #UPDATEUSERGUID:VARCHAR:NULL#,
-               UPDATETIME = $CURRENTTIME$,
-		       obsoletetime = $CURRENTTIME$
+		   set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR},
+               UPDATETIME = ${CURRENTTIME},
+		       obsoletetime = ${CURRENTTIME}
 		 where releasetime is not null
 		   and hasnextrevision = 'Y'
-		   and masterguid = #MASTERGUID#
+		   and masterguid = #{MASTERGUID}
     </update>
     
     <delete id="deleteByMaster" parameterType="java.lang.String">
-        delete from ma_pd_columnvalue  where masterguid = #MASTERGUID#
+        delete from ma_pd_columnvalue  where masterguid = #{MASTERGUID}
     </delete>
     
     <update id="clearWIP" parameterType="map">
             update ma_pd_columnvalue
-               set UPDATEUSERGUID = #UPDATEUSERGUID:VARCHAR:NULL#,
-                   UPDATETIME = $CURRENTTIME$,
+               set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR},
+                   UPDATETIME = ${CURRENTTIME},
                    hasnextrevision = 'N'
              where hasnextrevision = 'Y' 
                and obsoletetime is null 
-               and masterguid = #MASTERGUID#;
+               and masterguid = #{MASTERGUID}
     </update>
     
     <delete id="deleteWIP" parameterType="java.lang.String">
 	        delete from ma_pd_columnvalue 
 	         where releasetime is null
-	           and masterguid = #MASTERGUID#;
+	           and masterguid = #{MASTERGUID}
     </delete>
 </mapper>

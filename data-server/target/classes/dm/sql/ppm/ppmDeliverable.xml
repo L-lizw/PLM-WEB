@@ -6,16 +6,16 @@
 
     <sql id="where">
             <if  test="GUID!=null">
-                and m.guid = #GUID#
+                and m.guid = #{GUID}
             </if>
             <if  test="PROJECTGUID!=null">
-                and  m.projectguid = #PROJECTGUID#
+                and  m.projectguid = #{PROJECTGUID}
             </if>
             <if  test="DELIVERABLEITEMGUID!=null">
-                and  m.deliverableitemguid = #DELIVERABLEITEMGUID#
+                and  m.deliverableitemguid = #{DELIVERABLEITEMGUID}
             </if>
             <if  test="INSTANCEGUID!=null">
-                and m.instanceguid = #INSTANCEGUID#
+                and m.instanceguid = #{INSTANCEGUID}
             </if>
     </sql>
 
@@ -24,7 +24,7 @@
         from ppm_deliverable m,
         ppm_deliverableitem d
         where m.deliverableitemguid = d.guid
-        and d.taskguid in ($SUBTASKGUIDLIST$)
+        and d.taskguid in (${SUBTASKGUIDLIST})
     </select>
 
     <select id="selectTaskDeliverableWithSub" parameterType="map" resultType="dyna.common.bean.data.ppms.Deliverable">
@@ -45,12 +45,12 @@
         x.createuser as createuser$$,
         x.updateuser as updateuser$$
         from ppm_deliverable m,
-        $tablename$ x,
+        ${tablename} x,
         ppm_deliverableitem d
         where m.deliverableitemguid = d.guid
         and x.guid = m.instanceguid
-        and d.taskguid in ($SUBTASKGUIDLIST$)
-        and m.instanceclassguid = #INSTANCECLASSGUID#
+        and d.taskguid in (${SUBTASKGUIDLIST})
+        and m.instanceclassguid = #{INSTANCECLASSGUID}
     </select>
 
     <select id="selectClassOfDeliverable" parameterType="map" resultType="dyna.common.bean.data.ppms.Deliverable">
@@ -78,9 +78,9 @@
         x.createuser as createuser$$,
         x.updateuser as updateuser$$
         from ppm_deliverable m,
-        $tablename$ x
+        ${tablename} x
         where x.guid = m.instanceguid
-        and m.instanceclassguid = #INSTANCECLASSGUID#
+        and m.instanceclassguid = #{INSTANCECLASSGUID}
         <include refid="where"/>
     </select>
 
@@ -97,35 +97,35 @@
         createtime,
         updateuserguid,
         updatetime)
-        values (#GUID#,
-        #PROJECTGUID#,
-        #DELIVERABLEITEMGUID#,
-        #INSTANCEGUID#,
-        #INSTANCECLASSGUID#,
-        #DATASEQ#,
+        values (#{GUID},
+        #{PROJECTGUID},
+        #{DELIVERABLEITEMGUID},
+        #{INSTANCEGUID},
+        #{INSTANCECLASSGUID},
+        #{DATASEQ},
 
-        #CREATEUSERGUID#,
-        #CURRENTTIME:TIMESTAMP#,
-        #UPDATEUSERGUID#,
-        #CURRENTTIME:TIMESTAMP#)
+        #{CREATEUSERGUID},
+        #{CURRENTTIME:TIMESTAMP},
+        #{UPDATEUSERGUID},
+        #{CURRENTTIME:TIMESTAMP})
     </insert>
 
     <update id="update" parameterType="dyna.common.bean.data.ppms.Deliverable">
         update ppm_Deliverable
          <set>
-        <if test="PROJECTGUID!=null">PROJECTGUID = #PROJECTGUID#,</if>
-        <if test="DELIVERABLEITEMGUID!=null">DELIVERABLEITEMGUID = #DELIVERABLEITEMGUID#,</if>
-        <if test="INSTANCEGUID!=null">INSTANCEGUID = #INSTANCEGUID#,</if>
-        <if test="INSTANCECLASSGUID!=null">INSTANCECLASSGUID = #INSTANCECLASSGUID#,</if>
-        <if test="DATASEQ!=null">DATASEQ = #DATASEQ#,</if>
-        <if test="CREATEUSERGUID!=null">CREATEUSERGUID = #CREATEUSERGUID#,</if>
+        <if test="PROJECTGUID!=null">PROJECTGUID = #{PROJECTGUID},</if>
+        <if test="DELIVERABLEITEMGUID!=null">DELIVERABLEITEMGUID = #{DELIVERABLEITEMGUID},</if>
+        <if test="INSTANCEGUID!=null">INSTANCEGUID = #{INSTANCEGUID},</if>
+        <if test="INSTANCECLASSGUID!=null">INSTANCECLASSGUID = #{INSTANCECLASSGUID},</if>
+        <if test="DATASEQ!=null">DATASEQ = #{DATASEQ},</if>
+        <if test="CREATEUSERGUID!=null">CREATEUSERGUID = #{CREATEUSERGUID},</if>
         </set>
-        updatetime = #CURRENTTIME:TIMESTAMP#,
-        updateuserguid = #UPDATEUSERGUID#
-        where GUID=#GUID#/>
+        updatetime = #{CURRENTTIME:TIMESTAMP},
+        updateuserguid = #{UPDATEUSERGUID}
+        where GUID=#{GUID}
     </update>
 
     <delete id="delete" parameterType="java.lang.String">
-        delete from ppm_Deliverable  where GUID =#GUID#
+        delete from ppm_Deliverable  where GUID =#{GUID}
     </delete>
 </mapper>

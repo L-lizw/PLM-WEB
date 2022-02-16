@@ -6,25 +6,25 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 
     <sql id="where">
             <if  test="GUID!=null">
-                and   guid = #GUID#
+                and   guid = #{GUID}
             </if>
             <if  test="PROJECTGUID!=null">
-                and   PROJECTGUID = #PROJECTGUID#
+                and   PROJECTGUID = #{PROJECTGUID}
             </if>
             <if  test="PROJECTGUID$CLASS!=null">
-                and   PROJECTGUID$$CLASS = #PROJECTGUID$CLASS#
+                and   PROJECTGUID$$CLASS = #{PROJECTGUID$CLASS}
             </if>
             <if  test="PRETASKGUID!=null">
-                and   PRETASKGUID = #PRETASKGUID#
+                and   PRETASKGUID = #{PRETASKGUID}
             </if>
             <if  test="PRETASKGUID$CLASS!=null">
-                and   PRETASKGUID$$CLASS = #PRETASKGUID$CLASS#
+                and   PRETASKGUID$$CLASS = #{PRETASKGUID$CLASS}
             </if>
             <if  test="TASKGUID!=null">
-                and   TASKGUID = #TASKGUID#
+                and   TASKGUID = #{TASKGUID}
             </if>
             <if  test="TASKGUID$CLASS!=null">
-                and  TASKGUID$$CLASS = #TASKGUID$CLASS#
+                and  TASKGUID$$CLASS = #{TASKGUID$CLASS}
             </if>
     </sql>
     
@@ -53,37 +53,37 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			        createtime,
 			        updateuserguid,
 			        updatetime)
-	        values (#GUID:VARCHAR:NULL#,
-			        #PROJECTGUID:VARCHAR:NULL#,
-			        #PROJECTGUID$CLASS:VARCHAR:NULL#,
-					#PRETASKGUID:VARCHAR:NULL#,
-					#PRETASKGUID$CLASS:VARCHAR:NULL#,
-					#TASKGUID:VARCHAR:NULL#,
-					#TASKGUID$CLASS:VARCHAR:NULL#,
-					#PRETASKTYPE#,
-					#DELAYTIME#,
+	        values (#{GUID:VARCHAR},
+			        #{PROJECTGUID:VARCHAR},
+			        #{PROJECTGUID$CLASS:VARCHAR},
+					#{PRETASKGUID:VARCHAR},
+					#{PRETASKGUID$CLASS:VARCHAR},
+					#{TASKGUID:VARCHAR},
+					#{TASKGUID$CLASS:VARCHAR},
+					#{PRETASKTYPE},
+					#{DELAYTIME},
 					
-					#CREATEUSERGUID:VARCHAR:NULL#,
-					#CURRENTTIME:TIMESTAMP#,
-					#UPDATEUSERGUID:VARCHAR:NULL#,
-					#CURRENTTIME:TIMESTAMP#)
+					#{CREATEUSERGUID:VARCHAR},
+					#{CURRENTTIME:TIMESTAMP},
+					#{UPDATEUSERGUID:VARCHAR},
+					#{CURRENTTIME:TIMESTAMP})
     </insert>
     
     <update id="update" parameterType="dyna.common.bean.data.ppms.TaskRelation">
         update ppm_TaskRelation 
                  <set>
-	               <if test="PROJECTGUID!=null">PROJECTGUID = #PROJECTGUID#,</if>
-	               <if test="PROJECTGUID!=null">PROJECTGUID$$CLASS = #PROJECTGUID$CLASS#,</if>
-	               <if test="PRETASKGUID!=null">PRETASKGUID = #PRETASKGUID#,</if>
-	               <if test="PRETASKGUID!=null">PRETASKGUID$$CLASS = #PRETASKGUID$CLASS#,</if>
-	               <if test="TASKGUID!=null">TASKGUID = #TASKGUID#,</if>
-	               <if test="TASKGUID!=null">TASKGUID$$CLASS = #TASKGUID$CLASS#,</if>
-	               <if test="PRETASKTYPE!=null">PRETASKTYPE = #PRETASKTYPE#,</if>
+	               <if test="PROJECTGUID!=null">PROJECTGUID = #{PROJECTGUID},</if>
+	               <if test="PROJECTGUID!=null">PROJECTGUID$$CLASS = #{PROJECTGUID$CLASS},</if>
+	               <if test="PRETASKGUID!=null">PRETASKGUID = #{PRETASKGUID},</if>
+	               <if test="PRETASKGUID!=null">PRETASKGUID$$CLASS = #{PRETASKGUID$CLASS},</if>
+	               <if test="TASKGUID!=null">TASKGUID = #{TASKGUID},</if>
+	               <if test="TASKGUID!=null">TASKGUID$$CLASS = #{TASKGUID$CLASS},</if>
+	               <if test="PRETASKTYPE!=null">PRETASKTYPE = #{PRETASKTYPE},</if>
 	               
-	               <if test="DELAYTIME!=null">DELAYTIME = #DELAYTIME#,</if>
+	               <if test="DELAYTIME!=null">DELAYTIME = #{DELAYTIME},</if>
                </set>
-               updatetime = #CURRENTTIME:TIMESTAMP#,
-               updateuserguid = #UPDATEUSERGUID#
+               updatetime = #{CURRENTTIME:TIMESTAMP},
+               updateuserguid = #{UPDATEUSERGUID}
          	   <include refid="where"/>
     </update>
     

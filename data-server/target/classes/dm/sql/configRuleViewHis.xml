@@ -11,42 +11,42 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                sa_group c
          where a.instanceboguid = b.guid
            and b.bmguid = c.bmguid
-           and c.guid = #GROUPGUID#
-           and a.createuser = #CREATEUSER#
+           and c.guid = #{GROUPGUID}
+           and a.createuser = #{CREATEUSER}
     </select>
     
     <select id="selectByUserIns" parameterType="map" resultType="dyna.common.dto.BIViewHis" statementType="STATEMENT">
         select * from bi_view_history a
-         where a.instanceguid = #INSTANCEGUID#
-           and a.createuser = #CREATEUSER#
+         where a.instanceguid = #{INSTANCEGUID}
+           and a.createuser = #{CREATEUSER}
     </select>
 
     <select id="selectByUser" parameterType="java.lang.String" resultType="dyna.common.dto.BIViewHis" statementType="STATEMENT">
         select * from bi_view_history a
-        where a.createuser = #CREATEUSER#
+        where a.createuser = #{CREATEUSER}
     </select>
      
     <insert id="insert" parameterType="dyna.common.dto.BIViewHis">
 		INSERT INTO BI_VIEW_HISTORY (INSTANCEGUID, INSTANCECLASSGUID, INSTANCEBOGUID, CREATEUSER, CREATETIME) 
-		values (#INSTANCEGUID#, #INSTANCECLASSGUID#, #INSTANCEBOGUID#, #CREATEUSER#, #CURRENTTIME:TIMESTAMP#)
+		values (#{INSTANCEGUID}, #{INSTANCECLASSGUID}, #{INSTANCEBOGUID}, #{CREATEUSER}, #{CURRENTTIME:TIMESTAMP})
     </insert>
     
     <update id="update" parameterType="dyna.common.dto.BIViewHis">
         UPDATE BI_VIEW_HISTORY
-           SET CREATETIME = #CURRENTTIME:TIMESTAMP#
-         WHERE INSTANCEGUID = #INSTANCEGUID#
-           AND CREATEUSER = #CREATEUSER#
+           SET CREATETIME = #{CURRENTTIME:TIMESTAMP}
+         WHERE INSTANCEGUID = #{INSTANCEGUID}
+           AND CREATEUSER = #{CREATEUSER}
     </update>
     
     <delete id="delete" parameterType="java.lang.String">
-	    delete from bi_view_history  where instanceguid = #INSTANCEGUID#
+	    delete from bi_view_history  where instanceguid = #{INSTANCEGUID}
     </delete>
     
     <delete id="deleteUser" parameterType="java.lang.String">
-        delete from bi_view_history  where createuser = #CREATEUSER#
+        delete from bi_view_history  where createuser = #{CREATEUSER}
     </delete>
 
     <delete id="deleteBy" parameterType="map">
-        delete from bi_view_history  where instanceguid = #INSTANCEGUID# and createuser = #CREATEUSER#
+        delete from bi_view_history  where instanceguid = #{INSTANCEGUID} and createuser = #{CREATEUSER}
     </delete>
 </mapper>

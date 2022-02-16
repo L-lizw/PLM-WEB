@@ -8,8 +8,8 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
         select a.*
           from BI_TRANSFORM_SIGN a
         <where>
-			<if  test="SOLUTIONNAME!=null">and a.SOLUTIONNAME=#SOLUTIONNAME#</if>
-			<if  test="GUID!=null">and a.GUID=#GUID#</if>
+			<if  test="SOLUTIONNAME!=null">and a.SOLUTIONNAME=#{SOLUTIONNAME}</if>
+			<if  test="GUID!=null">and a.GUID=#{GUID}</if>
 		</where>
 		order by a.createtime
 	</select>
@@ -25,27 +25,27 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 
 		)
 		select
-			#GUID:VARCHAR:NULL#,
-			#SOLUTIONNAME:VARCHAR:NULL#,
-			#CURRENTTIME:TIMESTAMP#,
-			#CREATEUSERGUID:VARCHAR:NULL#,
-			#CURRENTTIME:TIMESTAMP#,
-			#UPDATEUSERGUID:VARCHAR:NULL#
+			#{GUID:VARCHAR},
+			#{SOLUTIONNAME:VARCHAR},
+			#{CURRENTTIME:TIMESTAMP},
+			#{CREATEUSERGUID:VARCHAR},
+			#{CURRENTTIME:TIMESTAMP},
+			#{UPDATEUSERGUID:VARCHAR}
 	</insert>
 
 	<update id="update" parameterType="dyna.common.bean.data.trans.TransformSign">
 		UPDATE BI_TRANSFORM_SIGN  
 		<set>
-			updatetime=#CURRENTTIME:TIMESTAMP#,
-			updateuserguid=#UPDATEUSERGUID#,
-			<if  test="SOLUTIONNAME!=null">SOLUTIONNAME=#SOLUTIONNAME#,</if>
+			updatetime=#{CURRENTTIME:TIMESTAMP},
+			updateuserguid=#{UPDATEUSERGUID},
+			<if  test="SOLUTIONNAME!=null">SOLUTIONNAME=#{SOLUTIONNAME},</if>
 		</set>
-		WHERE guid = #GUID#
+		WHERE guid = #{GUID}
 	</update>
 
 	<delete id="delete" parameterType="java.lang.String">
 		DELETE FROM BI_TRANSFORM_SIGN 
-		WHERE guid = #GUID#
+		WHERE guid = #{GUID}
 	</delete>
 
 </mapper>

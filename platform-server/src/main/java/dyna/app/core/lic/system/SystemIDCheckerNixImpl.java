@@ -5,15 +5,19 @@
  */
 package dyna.app.core.lic.system;
 
+import dyna.common.util.EnvUtils;
+import org.springframework.stereotype.Component;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
 /**
- * @author Wanglei
+ * @author Lizw
  *
  */
+@Component
 public class SystemIDCheckerNixImpl extends AbstractSystemIDChecker
 {
 	private final int	OS_TYPE_OS		= 1;
@@ -22,13 +26,9 @@ public class SystemIDCheckerNixImpl extends AbstractSystemIDChecker
 	private final int	OS_TYPE_SUNOS	= 4;
 	private final int	OS_TYPE_LINUX	= 5;
 
-
-	/**
-	 * @param osName
-	 */
-	protected SystemIDCheckerNixImpl(String osName)
+	protected SystemIDCheckerNixImpl()
 	{
-		super(osName);
+		super(EnvUtils.getOSName());
 	}
 
 	/* (non-Javadoc)

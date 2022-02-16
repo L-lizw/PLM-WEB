@@ -9,8 +9,8 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
           from ma_config_table_info b
         <where>
             <if test="RELEASETIME!=null">
-                and #RELEASETIME:TIMESTAMP# >= b.releasetime
-                and (b.obsoletetime is null or #RELEASETIME:TIMESTAMP# <![CDATA[ < ]]> b.obsoletetime)
+                and #{RELEASETIME:TIMESTAMP} >= b.releasetime
+                and (b.obsoletetime is null or #{RELEASETIME:TIMESTAMP} <![CDATA[ < ]]> b.obsoletetime)
             </if>
             <if test="RELEASETIME==null">
                 <if test="STATUS==null">
@@ -24,9 +24,9 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                 </if>
             </if>
             <if test="TABLETYPE!=null">
-                and b.tabletype = #TABLETYPE#
+                and b.tabletype = #{TABLETYPE}
             </if>
-            and b.masterguid = #MASTERGUID#
+            and b.masterguid = #{MASTERGUID}
         </where>
          <if test="ORDERBYSEQUENCE == 'Y'">
          order by titlesequence
@@ -44,7 +44,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
           from (select count(1) cnt
 		          from ma_config_table_info
 		         where releasetime is not null
-		           and masterguid = #MASTERGUID#
+		           and masterguid = #{MASTERGUID}
                )
     </select>
     
@@ -60,86 +60,86 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		                              CREATETIME, 
 		                              UPDATEUSERGUID, 
 		                              UPDATETIME) 
-          values (#GUID#, 
-                  #UNIQUEVALUE#, 
-                  #MASTERGUID#, 
-                  #TABLETYPE#, 
-                  #TITLE#, 
-                  #TITLESEQUENCE#,
+          values (#{GUID}, 
+                  #{UNIQUEVALUE}, 
+                  #{MASTERGUID}, 
+                  #{TABLETYPE}, 
+                  #{TITLE}, 
+                  #{TITLESEQUENCE},
                   
-                  #CREATEUSERGUID:VARCHAR:NULL#,
-                  #CURRENTTIME:TIMESTAMP#,
-				  #UPDATEUSERGUID:VARCHAR:NULL#,
-				  #CURRENTTIME:TIMESTAMP#)
+                  #{CREATEUSERGUID:VARCHAR},
+                  #{CURRENTTIME:TIMESTAMP},
+				  #{UPDATEUSERGUID:VARCHAR},
+				  #{CURRENTTIME:TIMESTAMP})
     </insert>
     
     <update id="updateBatchList" parameterType="map">
             update ma_config_table_info 
-               set UPDATEUSERGUID = #UPDATEUSERGUID:VARCHAR:NULL#,
-                   UPDATETIME = #CURRENTTIME:TIMESTAMP#,
-                   title = #TITLE#,
-                   titlesequence = #TITLESEQUENCE#
-             where guid = #GUID#;
+               set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR},
+                   UPDATETIME = #{CURRENTTIME:TIMESTAMP},
+                   title = #{TITLE},
+                   titlesequence = #{TITLESEQUENCE}
+             where guid = #{GUID}
     </update>
     
     <update id="updateNextRevisionBatchList" parameterType="map">
         update MA_CONFIG_TABLE_INFO 
-           set UPDATEUSERGUID = #UPDATEUSERGUID:VARCHAR:NULL#,
-               UPDATETIME = #CURRENTTIME:TIMESTAMP#,
+           set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR},
+               UPDATETIME = #{CURRENTTIME:TIMESTAMP},
                hasnextrevision = 'Y'
          where releasetime is not null 
                and obsoletetime is null
-               and guid= #GUID#;
+               and guid= #{GUID}
     </update>
     
     <update id="release" parameterType="map">
-		update $TABLENAME$ 
-		   set UPDATEUSERGUID = #UPDATEUSERGUID:VARCHAR:NULL#,
-               UPDATETIME = $CURRENTTIME$,
-		       releasetime = $CURRENTTIME$
+		update ${TABLENAME}
+		   set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR},
+               UPDATETIME = ${CURRENTTIME},
+		       releasetime = ${CURRENTTIME}
 		 where releasetime is null
-		   and masterguid = #MASTERGUID#
+		   and masterguid = #{MASTERGUID}
     </update>
     
     <update id="obsolete" parameterType="map">
-		update $TABLENAME$ 
-		   set UPDATEUSERGUID = #UPDATEUSERGUID:VARCHAR:NULL#,
-               UPDATETIME = $CURRENTTIME$,
-		       obsoletetime = $CURRENTTIME$
+		update ${TABLENAME}
+		   set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR},
+               UPDATETIME = ${CURRENTTIME,
+		       obsoletetime = ${CURRENTTIME}
 		 where obsoletetime is null
 		   and hasnextrevision = 'Y'
-		   and masterguid = #MASTERGUID#
+		   and masterguid = #{MASTERGUI}
     </update>
     
     <delete id="delete" parameterType="map">
         delete from MA_CONFIG_TABLE_INFO 
          where guid in
-         <foreach collection="TITLEGUIDLIST" open="(" close=")" separator="," item="TEMP">#TEMP#</foreach>
+         <foreach collection="TITLEGUIDLIST" open="(" close=")" separator="," item="TEMP">#{TEMP}</foreach>
     </delete>
     
     <update id="obsoleteOnly" parameterType="map">
         update MA_CONFIG_TABLE_INFO 
-           set UPDATEUSERGUID = #UPDATEUSERGUID:VARCHAR:NULL#,
-               UPDATETIME = #CURRENTTIME:TIMESTAMP#,
+           set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR},
+               UPDATETIME = #{CURRENTTIME:TIMESTAMP},
                hasnextrevision = 'Y'
          where guid in
-         <foreach collection="TITLEGUIDLIST" open="(" close=")" separator="," item="TEMP">#TEMP#</foreach>
+         <foreach collection="TITLEGUIDLIST" open="(" close=")" separator="," item="TEMP">#{TEMP}</foreach>
     </update>
     
     <delete id="deleteByMaster" parameterType="java.lang.String">
-        delete from MA_CONFIG_TABLE_INFO  where masterguid = #MASTERGUID#
+        delete from MA_CONFIG_TABLE_INFO  where masterguid = #{MASTERGUID}
     </delete>
     
     <update id="clearWIP" parameterType="map">
             update MA_CONFIG_TABLE_INFO  
-               set UPDATEUSERGUID = #UPDATEUSERGUID:VARCHAR:NULL#,
-                   UPDATETIME = $CURRENTTIME$,
+               set UPDATEUSERGUID = #{UPDATEUSERGUID:VARCHAR},
+                   UPDATETIME = ${CURRENTTIME},
                    hasnextrevision = 'N'
-             where hasnextrevision = 'Y' and obsoletetime is null and masterguid = #MASTERGUID#;
+             where hasnextrevision = 'Y' and obsoletetime is null and masterguid = #{MASTERGUID}
     </update>
     <delete id="deleteWIP" parameterType="java.lang.String">
 	        delete from MA_CONFIG_TABLE_INFO 
 	         where releasetime is null
-	           and masterguid = #MASTERGUID#;
+	           and masterguid = #{MASTERGUID}
     </delete>
 </mapper>

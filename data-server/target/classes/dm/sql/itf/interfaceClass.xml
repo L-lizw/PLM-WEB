@@ -13,11 +13,11 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     
 	<insert id="insert" parameterType="map">
 	    INSERT INTO MA_INTERFACE_CLASS(GUID, INTERFACEGUID, CLASSGUID)
-	    VALUES(#GUID#, #INTERFACEGUID#, #CLASSGUID#)
+	    VALUES(#{GUID}, #{INTERFACEGUID}, #{CLASSGUID})
 	</insert>
 	
 	<delete id="delete" parameterType="java.lang.String">
-        DELETE FROM MA_INTERFACE_CLASS WHERE GUID = #GUID#
+        DELETE FROM MA_INTERFACE_CLASS WHERE GUID = #{GUID}
     </delete>
     
     <delete id="deleteBy" parameterType="map">
@@ -25,10 +25,10 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
         <where>
             1=2,
             <if  test="INTERFACEGUID!=null">
-                or INTERFACEGUID=#INTERFACEGUID#
+                or INTERFACEGUID=#{INTERFACEGUID}
             </if>
             <if  test="CLASSGUID!=null">
-                or CLASSGUID=#CLASSGUID#
+                or CLASSGUID=#{CLASSGUID}
             </if>
         </where>
        

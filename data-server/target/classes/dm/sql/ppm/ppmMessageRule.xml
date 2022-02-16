@@ -7,31 +7,31 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     <sql id="where">
         <where>
             <if  test="GUID!=null">
-                and  GUID = #GUID#
+                and  GUID = #{GUID}
             </if>
             <if  test="MESSAGENAME!=null">
-                and  MESSAGENAME = #MESSAGENAME#
+                and  MESSAGENAME = #{MESSAGENAME}
             </if>
             <if  test="MESSAGETYPE!=null">
-                and MESSAGETYPE = #MESSAGETYPE#
+                and MESSAGETYPE = #{MESSAGETYPE}
             </if>
             <if  test="THEME!=null">
-                and THEME = #THEME#
+                and THEME = #{THEME}
             </if>
             <if  test="NOTICERULE!=null">
-                and NOTICERULE = #NOTICERULE#
+                and NOTICERULE = #{NOTICERULE}
             </if>
             <if  test="ISSTARTEMAIL!=null">
-                and  ISSTARTEMAIL = #ISSTARTEMAIL#
+                and  ISSTARTEMAIL = #{ISSTARTEMAIL}
             </if>
             <if  test="ISSTARTINSTATIONINFO!=null">
-                and  ISSTARTINSTATIONINFO = #ISSTARTINSTATIONINFO#
+                and  ISSTARTINSTATIONINFO = #{ISSTARTINSTATIONINFO}
             </if>
             <if  test="CREATEUSERGUID!=null">
-                and  CREATEUSERGUID = #CREATEUSERGUID#
+                and  CREATEUSERGUID = #{CREATEUSERGUID}
             </if>
             <if  test="UPDATEUSERGUID!=null">
-                and  UPDATEUSERGUID = #UPDATEUSERGUID#
+                and  UPDATEUSERGUID = #{UPDATEUSERGUID}
             </if>
         </where>
     </sql>
@@ -39,7 +39,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     <sql id="whereMessageNotifier">
         <where>
             <if  test="MESSAGERULEGUID!=null">
-                and messageruleguid = #MESSAGERULEGUID#
+                and messageruleguid = #{MESSAGERULEGUID}
             </if>
         </where>
     </sql>
@@ -70,48 +70,48 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			        createtime,
 			        updateuserguid,
 			        updatetime)
-	        values (#GUID#,
-			        #MESSAGENAME:VARCHAR:NULL#,
-			        #MESSAGETYPE:VARCHAR:NULL#,
-					#THEME:VARCHAR:NULL#,
-					#NOTICERULE:VARCHAR:NULL#,
-					#ISSTARTEMAIL:VARCHAR:NULL#,
-					#ISSTARTINSTATIONINFO:VARCHAR:NULL#,
+	        values (#{GUID},
+			        #{MESSAGENAME:VARCHAR},
+			        #{MESSAGETYPE:VARCHAR},
+					#{THEME:VARCHAR},
+					#{NOTICERULE:VARCHAR},
+					#{ISSTARTEMAIL:VARCHAR},
+					#{ISSTARTINSTATIONINFO:VARCHAR},
 					
-					#CREATEUSERGUID#,
-					#CURRENTTIME:TIMESTAMP#,
-					#UPDATEUSERGUID#,
-					#CURRENTTIME:TIMESTAMP#)
+					#{CREATEUSERGUID},
+					#{CURRENTTIME:TIMESTAMP},
+					#{UPDATEUSERGUID},
+					#{CURRENTTIME:TIMESTAMP})
     </insert>
     
     <insert id="insertMessageNotifier" parameterType="map">
         insert into ppm_messagerule_receiver
 			       (messageruleguid,
                     notifier)
-	        values (#MESSAGERULEGUID:VARCHAR:NULL#,
-			        #NOTIFIER:VARCHAR:NULL#)
+	        values (#{MESSAGERULEGUID:VARCHAR},
+			        #{NOTIFIER:VARCHAR})
     </insert>
     
     <update id="update" parameterType="dyna.common.bean.data.ppms.MessageRule">
         update ppm_messagerule 
                  <set>
-	               <if test="MESSAGENAME!=null">MESSAGENAME = #MESSAGENAME#,</if>
-	               <if test="MESSAGETYPE!=null">MESSAGETYPE = #MESSAGETYPE#,</if>
-	               <if test="THEME!=null">THEME = #THEME#,</if>
-	               <if test="NOTICERULE!=null">NOTICERULE = #NOTICERULE#,</if>
-	               <if test="ISSTARTEMAIL!=null">ISSTARTEMAIL = #ISSTARTEMAIL#,</if>
-	               <if test="ISSTARTINSTATIONINFO!=null">ISSTARTINSTATIONINFO = #ISSTARTINSTATIONINFO#,</if>
+	               <if test="MESSAGENAME!=null">MESSAGENAME = #{MESSAGENAME},</if>
+	               <if test="MESSAGETYPE!=null">MESSAGETYPE = #{MESSAGETYPE},</if>
+	               <if test="THEME!=null">THEME = #{THEME},</if>
+	               <if test="NOTICERULE!=null">NOTICERULE = #{NOTICERULE},</if>
+	               <if test="ISSTARTEMAIL!=null">ISSTARTEMAIL = #{ISSTARTEMAIL},</if>
+	               <if test="ISSTARTINSTATIONINFO!=null">ISSTARTINSTATIONINFO = #{ISSTARTINSTATIONINFO},</if>
                </set>
-               updatetime = #CURRENTTIME:TIMESTAMP#,
-               updateuserguid = #UPDATEUSERGUID#
-         where guid = #GUID#
+               updatetime = #{CURRENTTIME:TIMESTAMP},
+               updateuserguid = #{UPDATEUSERGUID}
+         where guid = #{GUID}
     </update>
     
     <delete id="delete" parameterType="map">
-        delete from ppm_messagerule where guid = #GUID#
+        delete from ppm_messagerule where guid = #{GUID}
     </delete>
     
     <delete id="deleteMessageNotifier" parameterType="java.lang.String">
-        delete from ppm_messagerule_receiver where MESSAGERULEGUID = #MESSAGERULEGUID#
+        delete from ppm_messagerule_receiver where MESSAGERULEGUID = #{MESSAGERULEGUID}
     </delete>
 </mapper>

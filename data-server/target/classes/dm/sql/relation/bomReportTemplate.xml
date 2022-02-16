@@ -8,13 +8,13 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
         select * from bi_bom_report_template brt 
         <where>
             <if test="BOMTEMPLATEGUID!=null" >
-                and brt.bomtemplateguid = #BOMTEMPLATEGUID#
+                and brt.bomtemplateguid = #{BOMTEMPLATEGUID}
             </if>
             <if test="VIEWCLASSGUID!=null" >
-				and brt.viewclassguid = #VIEWCLASSGUID#
+				and brt.viewclassguid = #{VIEWCLASSGUID}
             </if>
             <if test="STRUCTURECLASSGUID!=null" >
-				and brt.structureclassguid = #STRUCTURECLASSGUID#
+				and brt.structureclassguid = #{STRUCTURECLASSGUID}
             </if>
         </where>
     </select>
@@ -36,30 +36,30 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			        createtime,
 			        updateuserguid,
 			        updatetime)
-	        values (#GUID#,
-			        #BOMTEMPLATEGUID:VARCHAR:NULL#,
-					#BOMREPORTTEMPLATENAME:VARCHAR:NULL#,				
-					#BOMREPORTTEMPLATE:VARCHAR:NULL#,
-					#BOMREPORTEXPORTBOMTREE:VARCHAR:NULL#,
-					#BOMREPORTEXPORTBOMLIST:VARCHAR:NULL#,		
-					#BOMREPORTEXPORTBOORCL:VARCHAR:NULL#,
-					#BOMREPORTEXPORTBO:VARCHAR:NULL#,
-					#BOMREPORTEXPORTCLASSIFICATION:VARCHAR:NULL#,
-					#BOMSCRIPTFILENAME:VARCHAR:NULL#,
+	        values (#{GUID},
+			        #{BOMTEMPLATEGUID:VARCHAR},
+					#{BOMREPORTTEMPLATENAME:VARCHAR},				
+					#{BOMREPORTTEMPLATE:VARCHAR},
+					#{BOMREPORTEXPORTBOMTREE:VARCHAR},
+					#{BOMREPORTEXPORTBOMLIST:VARCHAR},		
+					#{BOMREPORTEXPORTBOORCL:VARCHAR},
+					#{BOMREPORTEXPORTBO:VARCHAR},
+					#{BOMREPORTEXPORTCLASSIFICATION:VARCHAR},
+					#{BOMSCRIPTFILENAME:VARCHAR},
 					
-					#CREATEUSERGUID:VARCHAR:NULL#,
-					#CURRENTTIME:TIMESTAMP#,
-					#UPDATEUSERGUID:VARCHAR:NULL#,
-					#CURRENTTIME:TIMESTAMP#)
+					#{CREATEUSERGUID:VARCHAR},
+					#{CURRENTTIME:TIMESTAMP},
+					#{UPDATEUSERGUID:VARCHAR},
+					#{CURRENTTIME:TIMESTAMP})
     </insert>    
     
     <delete id="delete" parameterType="java.lang.String">
-        delete from bi_bom_report_template  where guid = #GUID#
+        delete from bi_bom_report_template  where guid = #{GUID}
     </delete>
     
     <select id="get" parameterType="java.lang.String" resultType="dyna.common.dto.template.bom.BOMReportTemplate" statementType="STATEMENT">
 		SELECT a.* 
 		  FROM bi_bom_report_template a
-		 WHERE guid=#guid#
+		 WHERE guid=#{guid}
 	</select>
 </mapper>

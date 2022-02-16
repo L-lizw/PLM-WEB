@@ -21,8 +21,6 @@ public class ConfigLoaderFactory
 	@Autowired
 	private  ConfigLoaderMSRImpl               msrLoader      = null;
 	@Autowired
-	private  ConfigLoaderConnToGuardServerImpl connToGSLoader = null;
-	@Autowired
 	private  ConfigLoaderConnToDSImpl   connToDSLoader = null;
 
 	public  ConfigLoaderClientImpl getLoader4Client()
@@ -38,11 +36,6 @@ public class ConfigLoaderFactory
 	public  ConfigLoaderMSRImpl getLoader4MSR()
 	{
 		return msrLoader;
-	}
-
-	public  ConfigLoaderConnToGuardServerImpl getLoader4ConnToGS()
-	{
-		return connToGSLoader;
 	}
 
 	public  ConfigLoaderConnToDSImpl getLoader4ConnToDS()

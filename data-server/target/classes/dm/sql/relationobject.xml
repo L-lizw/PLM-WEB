@@ -7,25 +7,25 @@
 
 	<update id="updateOwnerContract" parameterType="java.util.HashMap">
 		update $END2TABLE$
-		   set ownercontract        = #OWNERCONTRACT#,
-		       ownercontract$$master = #OWNERCONTRACTMASTER#,
-		       ownercontract$$class  = #OWNERCONTRACTCLASS#
+		   set ownercontract        = #{OWNERCONTRACT},
+		       ownercontract$$master = #{OWNERCONTRACTMASTER},
+		       ownercontract$$class  = #{OWNERCONTRACTCLASS}
 		 where exists (select *
-		          from $VIEWTABLE$ b, $STRUCTABLE$ c
+		          from ${VIEWTABLE} b, ${STRUCTABLE} c
 		         where b.guid = c.viewfk
 		           and a.masterfk = c.end2$$master
-		           and b.templateid = #TEMPLATEID#
-		           and b.end1 = #OWNERCONTRACT#)
+		           and b.templateid = #{TEMPLATEID}
+		           and b.end1 = #{OWNERCONTRACT})
 		   and a.latestrevision like '%m%'
 	</update>
 	
 	<update id="clearItemOfContent" parameterType="java.util.HashMap">
-		update $END2TABLE$ 
+		update ${END2TABLE}
 		   set orderitem        = null,
 		       orderitem$$master = null,
 		       orderitem$$class  = null
-		 where orderitem = #ORDERITEM#
-		   and ownercontract = #OWNERCONTRACT#
+		 where orderitem = #{ORDERITEM}
+		   and ownercontract = #{OWNERCONTRACT}
 	</update>
 	
 </mapper>

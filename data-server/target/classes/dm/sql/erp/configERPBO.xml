@@ -10,7 +10,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                   from sa_bm_bo m,
                        sa_businessobject n
                  where m.boguid = n.guid
-                   and m.bmguid = #GROUPBMGUID#
+                   and m.bmguid = #{GROUPBMGUID}
                    and n.boname = a.boname) BOTITLE
 	</sql>
 
@@ -25,12 +25,12 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		<include refid="selectFeilds" />
 		<include refid="from" />
 		<where>
-			<if  test="GUID!=null">and a.guid=#GUID#</if>
-			<if  test="TEMPLATEGUID!=null">aand .templateguid=#TEMPLATEGUID#</if>
-			<if  test="END2BONAME!=null">and a.boname=#BONAME#</if>
-			<if  test="BMGUID!=null">and a.BMGUID=#BMGUID#</if>
-			<if  test="CREATEUSERGUID!=null">and a.createuserguid=#CREATEUSERGUID#</if>
-			<if  test="CREATETIME!=null">and a.createtime=#CREATETIME#</if>
+			<if  test="GUID!=null">and a.guid=#{GUID}</if>
+			<if  test="TEMPLATEGUID!=null">aand .templateguid=#{TEMPLATEGUID}</if>
+			<if  test="END2BONAME!=null">and a.boname=#{BONAME}</if>
+			<if  test="BMGUID!=null">and a.BMGUID=#{BMGUID}</if>
+			<if  test="CREATEUSERGUID!=null">and a.createuserguid=#{CREATEUSERGUID}</if>
+			<if  test="CREATETIME!=null">and a.createtime=#{CREATETIME}</if>
 		</where>
 		<include refid="orderby" />
 	</select>
@@ -49,39 +49,39 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		updatetime
 		)
 		VALUES(
-		#GUID#,
-		#TEMPLATEGUID:VARCHAR:NULL#,
-		#BONAME:VARCHAR:NULL#,
-		#BMGUID:VARCHAR:NULL#,
-		#CREATEUSERGUID:VARCHAR:NULL#,
+		#{GUID},
+		#{TEMPLATEGUID:VARCHAR},
+		#{BONAME:VARCHAR},
+		#{BMGUID:VARCHAR},
+		#{CREATEUSERGUID:VARCHAR},
 		
-		#CURRENTTIME:TIMESTAMP#,
-		#UPDATEUSERGUID:VARCHAR:NULL#,
-		#CURRENTTIME:TIMESTAMP#
+		#{CURRENTTIME:TIMESTAMP},
+		#{UPDATEUSERGUID:VARCHAR},
+		#{CURRENTTIME:TIMESTAMP}
 		)
 	</insert>
 
 	<update id="update" parameterType="dyna.common.dto.erp.ERPBOConfig">
 		UPDATE bi_config_erp_acl_bo 
 		<set>
-			updateuserguid = #UPDATEUSERGUID#,
-			updatetime = #CURRENTTIME:TIMESTAMP#,
-			<if  test="GUID!=null">and guid=#GUID#,</if>
-			<if  test="TEMPLATEGUID!=null">and templateguid=#TEMPLATEGUID#,</if>
-			<if  test="BONAME!=null">and BONAME=#BONAME#,</if>
-			<if  test="BMGUID!=null">and BMGUID=#BMGUID#,</if>
+			updateuserguid = #{UPDATEUSERGUID},
+			updatetime = #{CURRENTTIME:TIMESTAMP},
+			<if  test="GUID!=null">and guid=#{GUID},</if>
+			<if  test="TEMPLATEGUID!=null">and templateguid=#{TEMPLATEGUID},</if>
+			<if  test="BONAME!=null">and BONAME=#{BONAME},</if>
+			<if  test="BMGUID!=null">and BMGUID=#{BMGUID},</if>
 		</set>
-		WHERE guid = #GUID#
+		WHERE guid = #{GUID}
 	</update>
 
 	<delete id="delete" parameterType="java.lang.String">
 		DELETE FROM bi_config_erp_acl_bo 
-		WHERE guid = #GUID#
+		WHERE guid = #{GUID}
 	</delete>
 	
 	<delete id="deleteWithMasterfk" parameterType="map">
 		DELETE FROM bi_config_erp_acl_bo 
-		WHERE templateguid = #TEMPLATEGUID#
+		WHERE templateguid = #{TEMPLATEGUID}
 	</delete>
 
 </mapper>

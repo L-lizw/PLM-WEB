@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 import dyna.app.core.lic.License;
 import dyna.app.core.lic.LicenseDecipher;
 import dyna.common.log.DynaLogger;
+import dyna.common.util.EnvUtils;
 import dyna.common.util.StringUtils;
 
 /**
@@ -110,6 +111,10 @@ public abstract class AbstractMacAddressMatcher implements MacAddressMatcher
 
 		Matcher a = this.getMacAddressResult();
 
+		if(a == null)
+		{
+			return;
+		}
 		while (a.find())
 		{
 			String mac = a.group();
@@ -150,6 +155,10 @@ public abstract class AbstractMacAddressMatcher implements MacAddressMatcher
 			e.printStackTrace();
 		}
 
+		if(p == null)
+		{
+			return null;
+		}
 		BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
 		String output = "", currentLine = "";
 

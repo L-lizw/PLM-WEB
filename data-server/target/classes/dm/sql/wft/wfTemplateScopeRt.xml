@@ -12,7 +12,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     <select id="get" parameterType="java.lang.String" resultType="dyna.common.dto.template.wft.WorkflowTemplateScopeRTInfo" statementType="STATEMENT">
 		SELECT A.* 
 		  FROM WF_TEMPLATE_SCOPERT A
-		 WHERE GUID=#GUID#
+		 WHERE GUID=#{GUID}
 	</select>
 
     <insert id="insert" parameterType="dyna.common.dto.template.wft.WorkflowTemplateScopeRTInfo">
@@ -25,18 +25,18 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 					 UPDATEUSERGUID, 
 					 UPDATETIME
                     )
-        VALUES(#GUID:VARCHAR:NULL#,
-               #WFTEMPLATEFK:VARCHAR:NULL#,
-               #TEMPLATEID:VARCHAR:NULL#,
-               #CREATEUSERGUID:VARCHAR:NULL#,
-               #CURRENTTIME:TIMESTAMP#,
-               #UPDATEUSERGUID:VARCHAR:NULL#,
-               #CURRENTTIME:TIMESTAMP#
+        VALUES(#{GUID:VARCHAR},
+               #{WFTEMPLATEFK:VARCHAR},
+               #{TEMPLATEID:VARCHAR},
+               #{CREATEUSERGUID:VARCHAR},
+               #{CURRENTTIME:TIMESTAMP},
+               #{UPDATEUSERGUID:VARCHAR},
+               #{CURRENTTIME:TIMESTAMP}
               )
     </insert>
 
     <delete id="delete" parameterType="java.lang.String">
-        DELETE FROM WF_TEMPLATE_SCOPERT WHERE GUID = #GUID#
+        DELETE FROM WF_TEMPLATE_SCOPERT WHERE GUID = #{GUID}
     </delete>
 
 </mapper>

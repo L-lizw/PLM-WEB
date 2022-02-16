@@ -21,7 +21,7 @@
 		FROM SA_GROUP A
 		LEFT JOIN SA_BUSINESSMODEL C
 		ON A.BMGUID = C.GUID
-		WHERE A.GUID = #GUID#
+		WHERE A.GUID = #{GUID}
 	</select>
 
 	<insert id="insert" parameterType="dyna.common.dto.aas.Group">
@@ -48,73 +48,73 @@
 		calendarguid
 		)
 		VALUES(
-		#GUID#,
-		#PARENTGROUPGUID:VARCHAR:NULL#,
-		#GROUPID#,
-		#GROUPNAME#,
-		#BMGUID#,
+		#{GUID},
+		#{PARENTGROUPGUID:VARCHAR},
+		#{GROUPID},
+		#{GROUPNAME},
+		#{BMGUID},
 
 		<choose>
 			<when test="ISADMIN != null">
-				#ISADMIN#,
+				#{ISADMIN},
 			</when>
 			<otherwise>
 				'N',
 			</otherwise>
 		</choose>
-		#CURRENTTIME:TIMESTAMP#,
-		#CREATEUSERGUID:VARCHAR:NULL#,
-		#CURRENTTIME:TIMESTAMP#,
-		#CREATEUSERGUID:VARCHAR:NULL#,
+		#{CURRENTTIME:TIMESTAMP},
+		#{CREATEUSERGUID:VARCHAR},
+		#{CURRENTTIME:TIMESTAMP},
+		#{CREATEUSERGUID:VARCHAR},
 
 		<choose>
 			<when test="ISVALID != null">
-				#ISVALID#,
+				#{ISVALID},
 			</when>
 			<otherwise>
 				'Y',
 			</otherwise>
 		</choose>
 
-		#DESCRIPTION:VARCHAR:NULL#,
-		#STORAGEID:VARCHAR:NULL#,
+		#{DESCRIPTION:VARCHAR},
+		#{STORAGEID:VARCHAR},
 
-		#SITEID:VARCHAR:NULL#,
-		#LIBRARYGUID#,
-		#CALENDARGUID#
+		#{SITEID:VARCHAR},
+		#{LIBRARYGUID},
+		#{CALENDARGUID}
 		)
 	</insert>
 
 	<update id="update" parameterType="dyna.common.dto.aas.Group">
 		update sa_group
 		<set>
-			updatetime = #CURRENTTIME:TIMESTAMP#
-			<if test="PARENTGROUPGUID!=null">parentgroupguid = #PARENTGROUPGUID#,</if>
-			<if test="GROUPID!=null">groupid = #GROUPID#,</if>
-			<if test="GROUPNAME!=null">groupname = #GROUPNAME#,</if>
+			updatetime = #{CURRENTTIME:TIMESTAMP}
+			<if test="PARENTGROUPGUID!=null">parentgroupguid = {PARENTGROUPGUID},</if>
+			<if test="GROUPID!=null">groupid = #{GROUPID},</if>
+			<if test="GROUPNAME!=null">groupname = #{GROUPNAME},</if>
 			<choose>
-				<when test="ISADMIN!=null">isadmin = #ISADMIN#,</when>
+				<when test="ISADMIN!=null">isadmin = #{ISADMIN},</when>
 				<otherwise>isadmin = 'N',</otherwise>
 			</choose>
 			<choose>
-				<when test="ISVALID!=null">isvalid = #ISVALID#,</when>
+				<when test="ISVALID!=null">isvalid = #{ISVALID},</when>
 				<otherwise>isvalid = 'Y',</otherwise>
 			</choose>
-			<if test="DESCRIPTION!=null">description = #DESCRIPTION#,</if>
-			<if test="BMGUID!=null">BMGUID = #BMGUID#,</if>
-			<if test="STORAGEGUID!=null">storageguid = #STORAGEGUID#,</if>
-			<if test="UPDATEUSERGUID!=null">updateuserguid = #UPDATEUSERGUID#,</if>
-			<if test="STORAGEID!=null">storageid = #STORAGEID#,</if>
-			<if test="SITEID!=null">siteid = #SITEID#,</if>
-			<if test="LIBRARYGUID!=null">libraryguid = #LIBRARYGUID#,</if>
-			<if test="CALENDARGUID!=null">calendarguid = #CALENDARGUID#,</if>
+			<if test="DESCRIPTION!=null">description = #{DESCRIPTION},</if>
+			<if test="BMGUID!=null">BMGUID = #{BMGUID},</if>
+			<if test="STORAGEGUID!=null">storageguid = #{STORAGEGUID},</if>
+			<if test="UPDATEUSERGUID!=null">updateuserguid = #{UPDATEUSERGUID},</if>
+			<if test="STORAGEID!=null">storageid = #{STORAGEID},</if>
+			<if test="SITEID!=null">siteid = #{SITEID},</if>
+			<if test="LIBRARYGUID!=null">libraryguid = #{LIBRARYGUID},</if>
+			<if test="CALENDARGUID!=null">calendarguid = #{CALENDARGUID},</if>
 		</set>
-		where guid = #GUID#
+		where guid = #{GUID}
 
 	</update>
 
 	<delete id="delete" parameterType="java.lang.String">
-		delete from sa_group where guid =#GUID#
+		delete from sa_group where guid =#{GUID}
 	</delete>
 
 </mapper>

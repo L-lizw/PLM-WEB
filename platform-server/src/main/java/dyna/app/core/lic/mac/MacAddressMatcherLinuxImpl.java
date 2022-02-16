@@ -13,9 +13,6 @@ package dyna.app.core.lic.mac;
 public class MacAddressMatcherLinuxImpl extends AbstractMacAddressMatcher
 {
 
-	/**
-	 * @param macAddrCommand
-	 */
 	public MacAddressMatcherLinuxImpl()
 	{
 		super("/sbin/ifconfig -a", MAC_PATTERN_LINUX, MAC_SPLIT_CHAR_LINUX);

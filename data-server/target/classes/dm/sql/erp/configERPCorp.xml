@@ -8,11 +8,11 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		 select * from 
 		 	bi_config_erp_corp  a
 		<where>
-			<if  test="GUID!=null">and a.guid=#GUID#</if>
-			<if  test="COMPANYDH!=null">and a.companydh=#COMPANYDH#</if>
-			<if  test="COMPANYJC!=null">and a.companyjc=#COMPANYJC#</if>
-			<if  test="CREATEUSERGUID!=null">and a.createuserguid=#CREATEUSERGUID#</if>
-			<if  test="ERPTYPEFLAG!=null">and a.erptypeflag=#ERPTYPEFLAG#</if>
+			<if  test="GUID!=null">and a.guid=#{GUID}</if>
+			<if  test="COMPANYDH!=null">and a.companydh=#{COMPANYDH}</if>
+			<if  test="COMPANYJC!=null">and a.companyjc=#{COMPANYJC}</if>
+			<if  test="CREATEUSERGUID!=null">and a.createuserguid=#{CREATEUSERGUID}</if>
+			<if  test="ERPTYPEFLAG!=null">and a.erptypeflag=#{ERPTYPEFLAG}</if>
 		</where>
 	</select>
 	
@@ -20,10 +20,10 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		 select * from 
 		 	bi_config_erp_acl_corp a
 		<where>
-			<if  test="GUID!=null">and a.guid=#GUID#</if>
-			<if  test="TEMPLATEGUID!=null">and a.templateguid=#TEMPLATEGUID#</if>
-			<if  test="COMPANYDH!=null">and a.companydh=#COMPANYDH#</if>
-			<if  test="CREATEUSERGUID!=null">and a.createuserguid=#CREATEUSERGUID#</if>
+			<if  test="GUID!=null">and a.guid=#{GUID}</if>
+			<if  test="TEMPLATEGUID!=null">and a.templateguid=#{TEMPLATEGUID}</if>
+			<if  test="COMPANYDH!=null">and a.companydh=#{COMPANYDH}</if>
+			<if  test="CREATEUSERGUID!=null">and a.createuserguid=#{CREATEUSERGUID}</if>
 		</where>
 	</select>
 	
@@ -41,15 +41,15 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		erptypeflag
 		)
 		VALUES(
-		#GUID#,
-		#COMPANYDH:VARCHAR:NULL#,
-		#COMPANYJC:VARCHAR:NULL#,
-		#CREATEUSERGUID:VARCHAR:NULL#,
+		#{GUID},
+		#{COMPANYDH:VARCHAR},
+		#{COMPANYJC:VARCHAR},
+		#{CREATEUSERGUID:VARCHAR},
 		
-		#CURRENTTIME:TIMESTAMP#,
-		#UPDATEUSERGUID:VARCHAR:NULL#,
-		#CURRENTTIME:TIMESTAMP#,
-		#ERPTYPEFLAG:VARCHAR:NULL#
+		#{CURRENTTIME:TIMESTAMP},
+		#{UPDATEUSERGUID:VARCHAR},
+		#{CURRENTTIME:TIMESTAMP},
+		#{ERPTYPEFLAG:VARCHAR}
 		)
 	</insert>
 	
@@ -66,24 +66,24 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		updatetime
 		)
 		VALUES(
-		#GUID#,
-		#TEMPLATEGUID:VARCHAR:NULL#,
-		#COMPANYDH:VARCHAR:NULL#,
-		#CREATEUSERGUID:VARCHAR:NULL#,
+		#{GUID},
+		#{TEMPLATEGUID:VARCHAR},
+		#{COMPANYDH:VARCHAR},
+		#{CREATEUSERGUID:VARCHAR},
 		
-		#CURRENTTIME:TIMESTAMP#,
-		#UPDATEUSERGUID:VARCHAR:NULL#,
-		#CURRENTTIME:TIMESTAMP#
+		#{CURRENTTIME:TIMESTAMP},
+		#{UPDATEUSERGUID:VARCHAR},
+		#{CURRENTTIME:TIMESTAMP}
 		)
 	</insert>
 	
 	<delete id="deleteForAll" parameterType="java.lang.String">
 		delete from bi_config_erp_corp  
-		 where erptypeflag=#ERPTYPEFLAG#
+		 where erptypeflag=#{ERPTYPEFLAG}
 	</delete>
 	
 	<delete id="deleteForAcl" parameterType="java.lang.String">
 		DELETE FROM bi_config_erp_acl_corp 
-		WHERE templateguid = #TEMPLATEGUID#
+		WHERE templateguid = #{TEMPLATEGUID}
 	</delete> 
 </mapper>

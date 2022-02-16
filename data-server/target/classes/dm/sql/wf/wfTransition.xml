@@ -15,15 +15,15 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                                    updateuserguid, 
                                    updatetime
                                   )
-        values(#GUID:VARCHAR:NULL#, 
-               #PROCRTGUID:VARCHAR:NULL#, 
-               #TRANSITIONNAME:VARCHAR:NULL#, 
-               #FROMACTGUID:VARCHAR:NULL#, 
-               #TOACTGUID:VARCHAR:NULL#, 
-               #CREATEUSERGUID:VARCHAR:NULL#, 
-               #CURRENTTIME:TIMESTAMP#, 
-               #UPDATEUSERGUID:VARCHAR:NULL#, 
-               #CURRENTTIME:TIMESTAMP#
+        values(#{GUID:VARCHAR}, 
+               #{PROCRTGUID:VARCHAR}, 
+               #{TRANSITIONNAME:VARCHAR}, 
+               #{FROMACTGUID:VARCHAR}, 
+               #{TOACTGUID:VARCHAR}, 
+               #{CREATEUSERGUID:VARCHAR}, 
+               #{CURRENTTIME:TIMESTAMP}, 
+               #{UPDATEUSERGUID:VARCHAR}, 
+               #{CURRENTTIME:TIMESTAMP}
               )
     </insert>
 
@@ -33,19 +33,19 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
         FROM wf_transition a  
         <where>
             <if test="GUID!=null" >
-                and a.guid = #GUID#
+                and a.guid = #{GUID}
             </if>
             <if test="PROCRTGUID!=null" >
-                and a.procrtguid = #PROCRTGUID#
+                and a.procrtguid = #{PROCRTGUID}
             </if>
             <if test="FROMACTGUID!=null" >
-                and a.fromactguid = #FROMACTGUID#
+                and a.fromactguid = #{FROMACTGUID}
             </if>
             <if test="TOACTGUID!=null" >
-                and a.toactguid = #TOACTGUID#
+                and a.toactguid = #{TOACTGUID}
             </if>
             <if test="TRANSIYIONNAME!=null" >
-                and a.transitionname = #TRANSIYIONNAME#
+                and a.transitionname = #{TRANSIYIONNAME}
             </if>
         </where>
     </select>

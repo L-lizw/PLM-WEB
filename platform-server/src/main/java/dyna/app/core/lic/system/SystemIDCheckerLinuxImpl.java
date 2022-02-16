@@ -9,21 +9,22 @@ import java.util.List;
 
 import dyna.app.core.lic.mac.MacAddressMatcher;
 import dyna.app.core.lic.mac.MacAddressMatcherLinuxImpl;
+import dyna.common.util.EnvUtils;
+import org.springframework.stereotype.Component;
 
 /**
- * @author Wanglei
+ * @author Lizw
  *
  */
+@Component
 public class SystemIDCheckerLinuxImpl extends AbstractSystemIDChecker
 {
-	private MacAddressMatcher	macAddressMatcher	= new MacAddressMatcherLinuxImpl();
+	private MacAddressMatcher	macAddressMatcher	;
 
-	/**
-	 * @param osName
-	 */
-	protected SystemIDCheckerLinuxImpl(String osName)
+	protected SystemIDCheckerLinuxImpl()
 	{
-		super(osName);
+		super(EnvUtils.getOSName());
+		macAddressMatcher = new MacAddressMatcherLinuxImpl();
 	}
 
 	/* (non-Javadoc)

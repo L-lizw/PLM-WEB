@@ -6,31 +6,31 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 
 	<sql id="where">
 			<if  test="ID!=null">
-				and B.MD_ID LIKE '%$ID$%'
+				and B.MD_ID LIKE '%${ID}%'
 			</if>
 			<if  test="NAME!=null">
-				and B.MD_NAME LIKE '%$NAME$%'
+				and B.MD_NAME LIKE '%${NAME}%'
 			</if>
 			<if  test="STATUS!=null">
-				and B.STATUS = #STATUS#
+				and B.STATUS = #{STATUS}
 			</if>
 			<if  test="PRJNAME!=null">
-				and C.GUID = #PRJNAME#
+				and C.GUID = #{PRJNAME}
 			</if>
 			<if  test="CREATOR!=null">
-				and B.CREATEUSER = #CREATOR#
+				and B.CREATEUSER = #{CREATOR}
 			</if>
 			<if  test="TYPE!=null">
-				and B.CLASSGUID = #TYPE#
+				and B.CLASSGUID = #{TYPE}
 			</if>
 			<if  test="CLASSIFICATION">
-				and B.CLASSIFICATION = #CLASSIFICATION#
+				and B.CLASSIFICATION = #{CLASSIFICATION}
 			</if>
 	</sql>
 	<select id="selectCount" parameterType="map" resultType="dyna.common.bean.data.ppms.RptDeliverable">
 		  SELECT COUNT(1)  rowcount$$ 
 		          FROM PPM_DELIVERABLE A
-		    INNER JOIN ($DELIVERTABLENAME$) B
+		    INNER JOIN (${DELIVERTABLENAME}) B
 		            ON A.INSTANCEGUID = B.GUID
 		    INNER JOIN PPM_DELIVERABLEITEM D
 		            ON A.DELIVERABLEITEMGUID = D.GUID
@@ -39,13 +39,13 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		                                X.MD_NAME,
 		                                X.OWNERUSER,
 		                                X.OWNERGROUP
-		                  FROM $PROJECTTABLENAME$ X
+		                  FROM ${PROJECTTABLENAME} X
 		            INNER JOIN PPM_PROJECTROLE Y
 		                    ON X.GUID = Y.TYPEGUID
 		            INNER JOIN PPM_ROLEMEMBERS Z
 		                    ON Y.GUID = Z.PROJECTROLEGUID
-		                 WHERE Z.USERGUID = #USERGUID#
-		                   AND X.CLASSGUID = #CLASSGUID#) C
+		                 WHERE Z.USERGUID = #{USERGUID}
+		                   AND X.CLASSGUID = #{CLASSGUID}) C
 		            ON D.PROJECTGUID = C.GUID
 		         WHERE 1=1
 		         <include refid = "where" />
@@ -54,7 +54,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 	<select id="receiverSelectCount" parameterType="map" resultType="dyna.common.bean.data.ppms.RptDeliverable">
 		SELECT COUNT(1)  rowcount$$ 
           FROM PPM_DELIVERABLE A
-    INNER JOIN ($DELIVERTABLENAME$) B
+    INNER JOIN (${DELIVERTABLENAME}) B
             ON A.INSTANCEGUID = B.GUID
     INNER JOIN PPM_DELIVERABLEITEM D
             ON A.DELIVERABLEITEMGUID = D.GUID
@@ -63,8 +63,8 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                        X.MD_NAME, 
                        X.OWNERUSER, 
                        X.OWNERGROUP
-                  FROM $PROJECTTABLENAME$ X
-                 WHERE X.CLASSGUID = #CLASSGUID#) C
+                  FROM ${PROJECTTABLENAME} X
+                 WHERE X.CLASSGUID = #{CLASSGUID}) C
             ON D.PROJECTGUID = C.GUID
          WHERE 1=1
          <include refid = "where" />
@@ -85,7 +85,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		               A.CREATETIME SUBMITTEDTIME,
 		               B.CREATETIME CREATIONTIME
 		          FROM PPM_DELIVERABLE A
-		    INNER JOIN ($DELIVERTABLENAME$) B
+		    INNER JOIN (${DELIVERTABLENAME}) B
 		            ON A.INSTANCEGUID = B.GUID
 		    INNER JOIN PPM_DELIVERABLEITEM D
 		            ON A.DELIVERABLEITEMGUID = D.GUID
@@ -94,18 +94,18 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		                                X.MD_NAME,
 		                                X.OWNERUSER,
 		                                X.OWNERGROUP
-		                  FROM $PROJECTTABLENAME$ X
+		                  FROM ${PROJECTTABLENAME} X
 		            INNER JOIN PPM_PROJECTROLE Y
 		                    ON X.GUID = Y.TYPEGUID
 		            INNER JOIN PPM_ROLEMEMBERS Z
 		                    ON Y.GUID = Z.PROJECTROLEGUID
-		                 WHERE Z.USERGUID = #USERGUID#
-		                   AND X.CLASSGUID = #CLASSGUID#) C
+		                 WHERE Z.USERGUID = #{USERGUID}
+		                   AND X.CLASSGUID = #{CLASSGUID}) C
 		            ON D.PROJECTGUID = C.GUID
 		         WHERE 1=1
 		         <include refid = "where" />
 	         <if test = "SORTFIELD!=null">
-                 ORDER BY $SORTFIELD$
+                 ORDER BY ${SORTFIELD}
              </if>
              <if test = "SORTFIELD==null">
                  ORDER BY B.CREATETIME DESC
@@ -127,7 +127,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                A.CREATETIME as SUBMITTEDTIME,
                B.CREATETIME as CREATIONTIME 
           FROM PPM_DELIVERABLE A
-    INNER JOIN ($DELIVERTABLENAME$) B
+    INNER JOIN (${DELIVERTABLENAME}) B
             ON A.INSTANCEGUID = B.GUID
     INNER JOIN PPM_DELIVERABLEITEM D
             ON A.DELIVERABLEITEMGUID = D.GUID
@@ -136,13 +136,13 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                        X.MD_NAME, 
                        X.OWNERUSER, 
                        X.OWNERGROUP
-                  FROM $PROJECTTABLENAME$ X
-                 WHERE X.CLASSGUID = #CLASSGUID#) C
+                  FROM ${PROJECTTABLENAME} X
+                 WHERE X.CLASSGUID = #{CLASSGUID}) C
             ON D.PROJECTGUID = C.GUID
          WHERE 1=1
          <include refid = "where" />
          <if test = "SORTFIELD!=null">
-             ORDER BY $SORTFIELD$
+             ORDER BY ${SORTFIELD}
          </if>
          <if test = "SORTFIELD==null">
              ORDER BY B.CREATETIME DESC
@@ -154,7 +154,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 	      FROM PPM_DELIVERABLE A
 	     WHERE INSTANCECLASSGUID IS NOT NULL
 	      <if test="PRJNAME!=null">
-			  and PROJECTGUID = #PRJNAME#
+			  and PROJECTGUID = #{PRJNAME}
           </if>
 	</select>
 </mapper>

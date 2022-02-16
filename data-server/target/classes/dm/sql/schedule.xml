@@ -21,15 +21,15 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		<include refid="selectFeilds" />
 		<include refid="from" />
 		<where>
-			<if  test="GUID!=null">and a.guid=#GUID#</if>
-			<if  test="OWNERUSERGUID!=null">and a.owneruserguid=#OWNERUSERGUID#</if>
-			<if  test="SCHEDULETITLE!=null">and a.scheduletitle=#SCHEDULETITLE#</if>
-			<if  test="SCHEDULECONTENT!=null">and a.schedulecontent=#SCHEDULECONTENT#</if>
-			<if  test="SCHEDULEDATE!=null">and a.scheduledate=#SCHEDULEDATE#</if>
-			<if  test="CREATEUSER!=null">and a.createuser=#CREATEUSER#</if>
-			<if  test="CREATETIME!=null">and a.createtime=#CREATETIME#</if>
-			<if  test="UPDATEUSER!=null">and a.updateuser=#UPDATEUSER#</if>
-			<if  test="UPDATETIME!=null">and a.updatetime=#UPDATETIME#</if>
+			<if  test="GUID!=null">and a.guid=#{GUID}</if>
+			<if  test="OWNERUSERGUID!=null">and a.owneruserguid=#{OWNERUSERGUID}</if>
+			<if  test="SCHEDULETITLE!=null">and a.scheduletitle=#{SCHEDULETITLE}</if>
+			<if  test="SCHEDULECONTENT!=null">and a.schedulecontent=#{SCHEDULECONTENT}</if>
+			<if  test="SCHEDULEDATE!=null">and a.scheduledate=#{SCHEDULEDATE}</if>
+			<if  test="CREATEUSER!=null">and a.createuser=#{CREATEUSER}</if>
+			<if  test="CREATETIME!=null">and a.createtime=#{CREATETIME}</if>
+			<if  test="UPDATEUSER!=null">and a.updateuser=#{UPDATEUSER}</if>
+			<if  test="UPDATETIME!=null">and a.updatetime=#{UPDATETIME}</if>
 		</where>
 		<include refid="orderby" />
 	</select>
@@ -48,35 +48,35 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		a.updatetime
 		)
 		VALUES(
-		#GUID#,
-		#OWNERUSERGUID:VARCHAR:NULL#,
-		#SCHEDULETITLE:VARCHAR:NULL#,
-		#SCHEDULECONTENT:VARCHAR:NULL#,
-		#SCHEDULEDATE:VARCHAR:NULL#,
-		#CREATEUSER:VARCHAR:NULL#,
-		#CURRENTTIME:TIMESTAMP#,
-		#UPDATEUSER:VARCHAR:NULL#,
-		#CURRENTTIME:TIMESTAMP#
+		#{GUID},
+		#{OWNERUSERGUID:VARCHAR},
+		#{SCHEDULETITLE:VARCHAR},
+		#{SCHEDULECONTENT:VARCHAR},
+		#{SCHEDULEDATE:VARCHAR},
+		#{CREATEUSER:VARCHAR},
+		#{CURRENTTIME:TIMESTAMP},
+		#{UPDATEUSER:VARCHAR},
+		#{CURRENTTIME:TIMESTAMP}
 		)
 	</insert>
 
 	<update id="update" parameterType="dyna.common.dto.MySchedule">
 		UPDATE SA_USER_SCHEDULE 
 		<set>
-			updateuser = #UPDATEUSER#,
-			updatetime = #CURRENTTIME:TIMESTAMP#,
-			<if  test="OWNERUSERGUID!=null">a.owneruserguid=#OWNERUSERGUID#,</if>
-			<if  test="SCHEDULETITLE!=null">a.scheduletitle=#SCHEDULETITLE#,</if>
-			<if  test="SCHEDULECONTENT!=null">a.schedulecontent=#SCHEDULECONTENT#,</if>
-			<if  test="SCHEDULEDATE!=null">a.scheduledate=#SCHEDULEDATE#,</if>
+			updateuser = #{UPDATEUSER},
+			updatetime = #{CURRENTTIME:TIMESTAMP},
+			<if  test="OWNERUSERGUID!=null">a.owneruserguid=#{OWNERUSERGUID},</if>
+			<if  test="SCHEDULETITLE!=null">a.scheduletitle=#{SCHEDULETITLE},</if>
+			<if  test="SCHEDULECONTENT!=null">a.schedulecontent=#{SCHEDULECONTENT},</if>
+			<if  test="SCHEDULEDATE!=null">a.scheduledate=#{SCHEDULEDATE},</if>
 		</set>
-		WHERE guid = #GUID#
-		AND updatetime = #UPDATETIME#
+		WHERE guid = #{GUID}
+		AND updatetime = #{UPDATETIME}
 	</update>
 
 	<delete id="delete" parameterType="java.lang.String">
 		DELETE FROM SA_USER_SCHEDULE 
-		WHERE guid = #GUID#
+		WHERE guid = #{GUID}
 	</delete>
 
 </mapper>

@@ -24,7 +24,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		       UPDATETIME,
 		       UPDATEUSERGUID
 		  FROM MA_LIFECYCLE_MASTER
-		 WHERE GUID=#GUID#
+		 WHERE GUID=#{GUID}
 	</select>
 	
 	 <insert id="insert" parameterType="dyna.common.dto.model.lf.LifecycleInfo">
@@ -38,31 +38,31 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			        createtime,
 			        updateuserguid,
 			        updatetime)
-	        values (#GUID:VARCHAR#,
-			        #LCMNAME:VARCHAR:NULL#,
+	        values (#{GUID:VARCHAR},
+			        #{LCMNAME:VARCHAR},
 					
-					#DESCRIPTION:VARCHAR:NULL#,
+					#{DESCRIPTION:VARCHAR},
 					
-					#CREATEUSERGUID:VARCHAR:NULL#,
-					#CURRENTTIME:TIMESTAMP#,
-					#UPDATEUSERGUID:VARCHAR:NULL#,
-					#CURRENTTIME:TIMESTAMP#)
+					#{CREATEUSERGUID:VARCHAR},
+					#{CURRENTTIME:TIMESTAMP},
+					#{UPDATEUSERGUID:VARCHAR},
+					#{CURRENTTIME:TIMESTAMP})
     </insert>
 	
 	<update id="update" parameterType="dyna.common.dto.model.lf.LifecycleInfo">
 		update MA_LIFECYCLE_MASTER
 			<set>
-				updatetime = #CURRENTTIME:TIMESTAMP#,
-				updateuserguid = #UPDATEUSERGUID#,
-		        <if test="LCMNAME!=null">lcmname = #LCMNAME#,</if>
-		        <if test="DESCRIPTION!=null">description = #DESCRIPTION#,</if>
+				updatetime = #{CURRENTTIME:TIMESTAMP},
+				updateuserguid = #{UPDATEUSERGUID},
+		        <if test="LCMNAME!=null">lcmname = #{LCMNAME},</if>
+		        <if test="DESCRIPTION!=null">description = #{DESCRIPTION},</if>
        		 </set>
 
-         where guid = #GUID#
+         where guid = #{GUID}
 	</update>
 	
 	<delete id="delete" parameterType="java.lang.String">
-		delete from MA_LIFECYCLE_MASTER  where guid = #GUID# 
+		delete from MA_LIFECYCLE_MASTER  where guid = #{GUID}
 	</delete>
     
 </mapper>

@@ -9,44 +9,44 @@
 	    SELECT CF$$.GUID AS GUID$$,
 	           CF$$.FOUNDATIONFK,
 	           CF$$.CLASSIFICATIONITEMGUID AS CLASSIFICATION$$
-               $REVISIONCOLUMNS$
-	      from $CFTABLENAME$ CF$$
+               ${REVISIONCOLUMNS}
+	      from ${CFTABLENAME} CF$$
 	           <if test="TABLESQL!=null and TABLESQL !=''">
-	           $TABLESQL$
+	           ${TABLESQL}
 	           </if>
 	      <where>
-			  CF$$.FOUNDATIONFK = #FOUNDATIONFK#
-	          <if test="CFITEMFK!=null and CFITEMFK != ''">AND CF$$.CLASSIFICATIONITEMGUID=#CFITEMFK#</if>
-	          <if test="WHERESQL!=null and WHERESQL!=''">$WHERESQL$</if>
+			  CF$$.FOUNDATIONFK = #{FOUNDATIONFK}
+	          <if test="CFITEMFK!=null and CFITEMFK != ''">AND CF$$.CLASSIFICATIONITEMGUID=#{CFITEMFK}</if>
+	          <if test="WHERESQL!=null and WHERESQL!=''">${WHERESQL}</if>
 	      </where>
 	</select>
 	
 	<delete id="deleteClassificationData" parameterType="map">
-	    DELETE FROM $TABLE$
-	        <if test="WHERE!=null">$WHERE$</if>
+	    DELETE FROM ${TABLE}
+	        <if test="WHERE!=null">${WHERE}</if>
 	</delete>
 	
 	<delete id="deleteOverflowCFIterationData" parameterType="java.util.Map">
-	    DELETE FROM $CFTABLENAME$_I 
-	     WHERE FOUNDATIONFK = #FOUNDATIONGUID#
-	       AND CLASSIFICATIONITEMGUID = #CLASSIFICATIONITEMGUID#
-	       AND ITERATIONID <![CDATA[<=]]> ($MAXITERATIONID$ - $LIMITITERATION$)
+	    DELETE FROM ${CFTABLENAME}_I
+	     WHERE FOUNDATIONFK = #{FOUNDATIONGUID}
+	       AND CLASSIFICATIONITEMGUID = #{CLASSIFICATIONITEMGUID}
+	       AND ITERATIONID <![CDATA[<=]]> (${MAXITERATIONID} - ${LIMITITERATION})
 	</delete>
 	
 	<insert id="insertCFIterationData" parameterType="java.util.Map">
-	    INSERT INTO $CFTABLENAME$_I(GUID, 
+	    INSERT INTO ${CFTABLENAME}_I(GUID,
 	                                FOUNDATIONFK, 
 	                                ITERATIONID,
 	                                CLASSIFICATIONITEMGUID
-	                                $ITERATIONCOLUMNS$)
-	    SELECT #GUID#, 
+	                                ${ITERATIONCOLUMNS})
+	    SELECT #{GUID}, 
 	           F$$.GUID, 
-	           #ITERATIONID#,
+	           #{ITERATIONID},
 	           B.CLASSIFICATIONITEMGUID
-	           $ITERATIONCOLUMNS$
-	      FROM $TABLENAME$ F$$,
-	           $CFTABLENAME$ B
+	           ${ITERATIONCOLUMNS}
+	      FROM ${TABLENAME} F$$,
+	           ${CFTABLENAME} B
 	     WHERE F$$.GUID = B.FOUNDATIONFK
-	       AND B.GUID = #CFGUID#
+	       AND B.GUID = #{CFGUID}
 	</insert>
 </mapper>

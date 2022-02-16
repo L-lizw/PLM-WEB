@@ -9,21 +9,22 @@ import java.util.List;
 
 import dyna.app.core.lic.mac.MacAddressMatcher;
 import dyna.app.core.lic.mac.MacAddressMatcherWindowsImpl;
+import dyna.common.util.EnvUtils;
+import org.springframework.stereotype.Component;
 
 /**
- * @author Wanglei
+ * @author Lizw
  *
  */
+@Component
 public class SystemIDCheckerWindowsImpl extends AbstractSystemIDChecker
 {
-	private MacAddressMatcher	macAddressMatcher	= new MacAddressMatcherWindowsImpl();
+	private MacAddressMatcher	macAddressMatcher	;
 
-	/**
-	 * @param osName
-	 */
-	protected SystemIDCheckerWindowsImpl(String osName)
+	protected SystemIDCheckerWindowsImpl()
 	{
-		super(osName);
+		super(EnvUtils.getOSName());
+		macAddressMatcher = new MacAddressMatcherWindowsImpl();
 		this.vMCheckCommand="VirtualMachine.exe";
 	}
 

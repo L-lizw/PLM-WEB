@@ -44,38 +44,38 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		from bi_mail a
 		<where>
 			<if  test="GUID!=null">
-				and a.guid = #GUID#
+				and a.guid = #{GUID}
 			</if>
 			<if  test="PARENTGUID!=null">
-				and a.parentguid = #PARENTGUID#
+				and a.parentguid = #{PARENTGUID}
 			</if>
 			<if  test="ISREAD!=null">
-				and a.isread = #ISREAD#
+				and a.isread = #{ISREAD}
 			</if>
 			<if  test="TITLE!=null">
-				and upper(a.title) like upper('%$TITLE$%')
+				and upper(a.title) like upper('%${TITLE}%')
 			</if>
 			<if  test="CONTENTS!=null">
-				and upper(a.contents) like upper('%$CONTENTS$%')
+				and upper(a.contents) like upper('%${CONTENTS}%')
 			</if>
 			<if  test="SENDERUSER!=null">
-				and a.senderuser = #SENDERUSER#
+				and a.senderuser = #{SENDERUSER}
 			</if>
 			<if  test="FROMTIME!=null">
-				and a.createtime >=#FROMTIME:DATE#
+				and a.createtime >=#{FROMTIME:DATE}
 			</if>
 			<if  test="TOTIME!=null">
-				and a.createtime <![CDATA[<=]]>#TOTIME:DATE#
+				and a.createtime <![CDATA[<=]]>#{TOTIME:DATE}
 			</if>
 			<if  test="CREATETIME!=null">
-				and a.createtime = #CURRENTTIME:DATE#
+				and a.createtime = #{CURRENTTIME:DATE}
 			</if>
 			<if  test="MODULETYPE!=null">
-				and a.moduletype in ($MODULETYPE$)
+				and a.moduletype in (${MODULETYPE})
 			</if>
 		</where>
 		<if test="ORDERBY!=null">
-			$ORDERBY$
+			${ORDERBY}
 		</if>
 		<if test="ORDERBY==null">
 			ORDER BY A.UPDATETIME DESC
@@ -85,13 +85,13 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 	<select id="getInboxCount" parameterType="map" resultType="dyna.common.dto.Mail">
 		select count(guid)  rowcount$$
 		from bi_mail a
-		where a.receiveuser = #USERGUID# and a.origmailguid is not null and
+		where a.receiveuser = #{USERGUID} and a.origmailguid is not null and
 		a.isintrash = 'N'
 			<if  test="CATEGORY!=null">
-				and a.category = #CATEGORY#
+				and a.category = #{CATEGORY}
 			</if>
 			<if  test="ISREAD!=null">
-				and a.isread = #ISREAD#
+				and a.isread = #{ISREAD}
 			</if>
 			<if   test="HASCATEGORY == 'TRUE'">
 				and a.category in ('1','2','3')
@@ -100,22 +100,22 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 				and a.category not in ('1','2','3')
 			</if>
 			<if  test="TITLE!=null">
-				and upper(a.title) like upper('%$TITLE$%')
+				and upper(a.title) like upper('%${TITLE}%')
 			</if>
 			<if  test="CONTENTS!=null">
-				and upper(a.contents) like upper('%$CONTENTS$%')
+				and upper(a.contents) like upper('%${CONTENTS}%')
 			</if>
 			<if  test="SENDERUSER!=null">
-				and a.senderuser = #SENDERUSER#
+				and a.senderuser = #{SENDERUSER}
 			</if>
 			<if  test="FROMTIME!=null">
-				and a.createtime>=#FROMTIME:DATE#
+				and a.createtime>=#{FROMTIME:DATE}
 			</if>
 			<if  test="TOTIME!=null">
-				and a.createtime<![CDATA[<=]]>#TOTIME:DATE#
+				and a.createtime<![CDATA[<=]]>#{TOTIME:DATE}
 			</if>
 			<if  test="CREATETIME!=null">
-				and a.createtime = #CURRENTTIME:TIMESTAMP#
+				and a.createtime = #{CURRENTTIME:TIMESTAMP}
 			</if>
 			<if  test="MODULETYPE!=null">
 				and a.moduletype in ($MODULETYPE$)
@@ -129,13 +129,13 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		select
 		<include refid="selectfields" />
 		from bi_mail a
-		where a.receiveuser = #USERGUID# and a.origmailguid is not null and
+		where a.receiveuser = #{USERGUID} and a.origmailguid is not null and
 		a.isintrash = 'N'
 			<if  test="CATEGORY!=null">
-				and a.category = #CATEGORY#
+				and a.category = #{CATEGORY}
 			</if>
 			<if  test="ISREAD!=null">
-				and a.isread = #ISREAD#
+				and a.isread = #{ISREAD}
 			</if>
 			<if   test="HASCATEGORY == 'TRUE'">
 				and a.category in ('1','2','3')
@@ -144,31 +144,31 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 				and a.category not in ('1','2','3')
 			</if>
 			<if  test="TITLE!=null">
-				and upper(a.title) like upper('%$TITLE$%')
+				and upper(a.title) like upper('%${TITLE}%')
 			</if>
 			<if  test="CONTENTS!=null">
-				and upper(a.contents) like upper('%$CONTENTS$%')
+				and upper(a.contents) like upper('%${CONTENTS}%')
 			</if>
 			<if  test="SENDERUSER!=null">
-				and a.senderuser = #SENDERUSER#
+				and a.senderuser = #{SENDERUSER}
 			</if>
 			<if  test="FROMTIME!=null">
-				and a.createtime>=#FROMTIME:DATE#
+				and a.createtime>=#{FROMTIME:DATE}
 			</if>
 			<if  test="TOTIME!=null">
-				and a.createtime<![CDATA[<=]]>#TOTIME:DATE#
+				and a.createtime<![CDATA[<=]]>#{TOTIME:DATE}
 			</if>
 			<if  test="CREATETIME!=null">
-				and a.createtime = #CURRENTTIME:TIMESTAMP#
+				and a.createtime = #{CURRENTTIME:TIMESTAMP}
 			</if>
 			<if  test="MODULETYPE!=null">
-				and a.moduletype in ($MODULETYPE$)
+				and a.moduletype in (${MODULETYPE})
 			</if>
 			<if  test="MODULETYPEEXCEPT!=null">
-				and a.moduletype not in ($MODULETYPE$)
+				and a.moduletype not in (${MODULETYPE})
 			</if>
 		<if test="ORDERBY!=null">
-			$ORDERBY$
+			${ORDERBY}
 		</if>
 		<if test="ORDERBY==null">
 			ORDER BY A.UPDATETIME DESC
@@ -179,31 +179,31 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		select m.* from (select
 		<include refid="selectfields" />
 		from bi_mail a
-		where a.senderuser = #USERGUID# and a.origmailguid is null and a.isintrash
+		where a.senderuser = #{USERGUID} and a.origmailguid is null and a.isintrash
 		= 'N'
 			<if  test="TITLE!=null">
-				and upper(a.title) like upper('%$TITLE$%')
+				and upper(a.title) like upper('%${TITLE}%')
 			</if>
 			<if  test="CONTENTS!=null">
-				and upper(a.contents) like upper('%$CONTENTS$%')
+				and upper(a.contents) like upper('%${CONTENTS}%')
 			</if>
 			<if  test="SENDERUSER!=null">
-				and a.senderuser = #SENDERUSER#
+				and a.senderuser = #{SENDERUSER}
 			</if>
 			<if  test="FROMTIME!=null">
-				and a.createtime>=#FROMTIME:DATE#
+				and a.createtime>=#{FROMTIME:DATE}
 			</if>
 			<if  test="TOTIME!=null">
-				and a.createtime<![CDATA[<=]]>#TOTIME:DATE#
+				and a.createtime<![CDATA[<=]]>#{TOTIME:DATE}
 			</if>
 			<if  test="CREATETIME!=null">
-				and a.createtime = #CURRENTTIME:TIMESTAMP#
+				and a.createtime = #{CURRENTTIME:TIMESTAMP}
 			</if>
 			<if  test="MODULETYPE!=null">
-				and a.moduletype in ($MODULETYPE$)
+				and a.moduletype in (${MODULETYPE})
 			</if>
 		<if test="ORDERBY">
-			$ORDERBY$
+			${ORDERBY}
 		</if>
 		) m
 	</select>
@@ -212,8 +212,8 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		select m.* from (select
 		<include refid="selectfields" />
 		from bi_mail a
-		WHERE ((a.receiveuser = #USERGUID# and a.origmailguid is not null) or
-		(a.senderuser = #USERGUID# and a.origmailguid is null)) and
+		WHERE ((a.receiveuser = #{USERGUID} and a.origmailguid is not null) or
+		(a.senderuser = #{USERGUID} and a.origmailguid is null)) and
 		a.isintrash = 'Y'
 			<if  test="TITLE!=null">
 				and upper(a.title) LIKE upper('%$TITLE$%')
@@ -222,22 +222,22 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 				and upper(a.contents) LIKE upper('%$CONTENTS$%')
 			</if>
 			<if  test="SENDERUSER!=null">
-				and a.senderuser = #SENDERUSER#
+				and a.senderuser = #{SENDERUSER}
 			</if>
 			<if  test="FROMTIME!=null">
-				and a.createtime>=#FROMTIME:DATE#
+				and a.createtime>=#{FROMTIME:DATE}
 			</if>
 			<if  test="TOTIME!=null">
-				and a.createtime<![CDATA[<=]]>#TOTIME:DATE#
+				and a.createtime<![CDATA[<=]]>#{TOTIME:DATE}
 			</if>
 			<if  test="CREATETIME!=null">
-				and a.createtime = #CURRENTTIME:TIMESTAMP#
+				and a.createtime = #{CURRENTTIME:TIMESTAMP}
 			</if>
 			<if  test="MODULETYPE!=null">
-				and a.moduletype in ($MODULETYPE$)
+				and a.moduletype in (${MODULETYPE})
 			</if>
 		<if test="ORDERBY">
-			$ORDERBY$
+			${ORDERBY}
 		</if>
 		) m
 	</select>
@@ -246,7 +246,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 	<select id="getCountForNotRead" parameterType="java.lang.String" resultType="java.lang.Integer">
 		select count(1) notReadCount
 		from bi_mail t
-		where t.receiveuser = #RECEIVEUSER#
+		where t.receiveuser = #{RECEIVEUSER}
 		and t.isread = 'N'
 		and t.origmailguid is not null
 		and t.isintrash = 'N'
@@ -277,59 +277,59 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		receivermasterguid,
 		startnumber
 		)
-		values(#GUID#,
-		#ORIGMAILGUID:VARCHAR:NULL#,
-		#CATEGORY:VARCHAR:NULL#,
-		#READTIME:TIMESTAMP#,
-		#PROCESSTIME:TIMESTAMP#,
+		values(#{GUID},
+		#{ORIGMAILGUID:VARCHAR},
+		#{CATEGORY:VARCHAR},
+		#{READTIME:TIMESTAMP},
+		#{PROCESSTIME:TIMESTAMP},
 		<if test="ISREAD!=null">
-			#ISREAD#,
+			#{ISREAD},
 		</if>
 		<if test="ISREAD==null">
 			'N',
 		</if>
 		<if test="ISPROCESS!=null">
-			#ISPROCESS#,
+			#{ISPROCESS},
 		</if>
 		<if test="ISPROCESS==null">
 			'N',
 		</if>
-		#SENDERUSER:VARCHAR:NULL#,
-		#RECEIVEUSER:VARCHAR:NULL#,
-		#CURRENTTIME:TIMESTAMP#,
+		#{SENDERUSER:VARCHAR},
+		#{RECEIVEUSER:VARCHAR},
+		#{CURRENTTIME:TIMESTAMP},
 		<if test="ISINTRASH!=null">
-			#ISINTRASH#,
+			#{ISINTRASH},
 		</if>
 		<if test="ISINTRASH==null">
 			'N',
 		</if>
-		#CREATEUSERGUID:VARCHAR:NULL#,
-		#CURRENTTIME:TIMESTAMP#,
-		#CREATEUSERGUID:VARCHAR:NULL#,
-		#CURRENTTIME:TIMESTAMP#,
+		#{CREATEUSERGUID:VARCHAR},
+		#{CURRENTTIME:TIMESTAMP},
+		#{CREATEUSERGUID:VARCHAR},
+		#{CURRENTTIME:TIMESTAMP},
 		<if test="HASATTACHMENT!=null">
-			#HASATTACHMENT#,
+			#{HASATTACHMENT},
 		</if>
 		<if test="HASATTACHMENT==null">
 			'N',
 		</if>
-		#TITLE:VARCHAR:NULL#,
+		#{TITLE:VARCHAR},
 		<if test="PROCRTGUID!=null">
-			#PROCRTGUID#,
+			#{PROCRTGUID},
 		</if>
 		<if test="PROCRTGUID==null">
 			'',
 		</if>
 		<if test="ACTRTGUID!=null">
-			#ACTRTGUID#,
+			#{ACTRTGUID},
 		</if>
 		<if test="ACTRTGUID==null">
 			'',
 		</if>
-		#CONTENTS:VARCHAR:NULL#,
-		#MODULETYPE:VARCHAR:NULL#,
-		#RECEIVERMASTERGUID:VARCHAR:NULL#,
-		#STARTNUMBER#
+		#{CONTENTS:VARCHAR},
+		#{MODULETYPE:VARCHAR},
+		#{RECEIVERMASTERGUID:VARCHAR},
+		#{STARTNUMBER}
 		)
 	</insert>
 
@@ -337,96 +337,96 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		update bi_mail
 		<set>
 			<if test="ISINTRASH!=null">
-				isintrash = #ISINTRASH#,
+				isintrash = #{ISINTRASH},
 			</if>
 			<if test="ISREAD!=null">
-				isread = #ISREAD#,
-				readtime = #CURRENTTIME:TIMESTAMP#,
+				isread = #{ISREAD},
+				readtime = #{CURRENTTIME:TIMESTAMP},
 			</if>
 			<if test="ISPROCESS!=null">
-				isprocess = #ISPROCESS#,
-				processtime = #CURRENTTIME:TIMESTAMP#,
+				isprocess = #{ISPROCESS},
+				processtime = #{CURRENTTIME:TIMESTAMP},
 			</if>
 			<if test="CATEGORY!=null">
-				category = #CATEGORY#,
+				category = #{CATEGORY},
 			</if>
 			<if test="MODULETYPE!=null">
-				moduletype = #MODULETYPE#,
+				moduletype = #{MODULETYPE},
 			</if>
 		</set>
-		updatetime= #CURRENTTIME:TIMESTAMP#,
-		updateuserguid=#UPDATEUSERGUID#
-		where guid = #GUID#
-		and updatetime = #UPDATETIME#
+		updatetime= #{CURRENTTIME:TIMESTAMP},
+		updateuserguid=#{UPDATEUSERGUID}
+		where guid = #{GUID}
+		and updatetime = #{UPDATETIME}
 	</update>
 
 	<delete id="delete" parameterType="java.lang.String">
-		delete from bi_mail  where guid = #GUID#
+		delete from bi_mail  where guid = #{GUID}
 	</delete>
 
 	<delete id="deleteAdvanced" parameterType="map">
 		delete from bi_mail 
 		<where>
-			<if  test="GUID!=null">and guid=#GUID#
+			<if  test="GUID!=null">and guid=#{GUID}
 			</if>
-			<if  test="ORIGMAILGUID!=null">and origmailguid=#ORIGMAILGUID#
+			<if  test="ORIGMAILGUID!=null">and origmailguid=#{ORIGMAILGUID}
 			</if>
-			<if  test="CATEGORY!=null">and category=#CATEGORY#
+			<if  test="CATEGORY!=null">and category=#{CATEGORY]
 			</if>
-			<if  test="SENDERUSER!=null">and senderuser=#SENDERUSER#
+			<if  test="SENDERUSER!=null">and senderuser=#{SENDERUSER}
 			</if>
-			<if  test="RECEIVEUSER!=null">and receiveuser=#RECEIVEUSER#
+			<if  test="RECEIVEUSER!=null">and receiveuser=#{RECEIVEUSER}
 			</if>
-			<if  test="RECEIVETIME!=null">and eceivetime=#RECEIVETIME#
+			<if  test="RECEIVETIME!=null">and eceivetime=#{RECEIVETIME}
 			</if>
-			<if  test="ISINTRASH!=null">and isintrash=#ISINTRASH#
+			<if  test="ISINTRASH!=null">and isintrash=#{ISINTRASH}
 			</if>
-			<if  test="CREATEUSERGUID!=null">and createuserguid=#CREATEUSERGUID#
+			<if  test="CREATEUSERGUID!=null">and createuserguid=#{CREATEUSERGUID}
 			</if>
-			<if  test="CREATETIME!=null">and createtime=#CREATETIME#
+			<if  test="CREATETIME!=null">and createtime=#{CREATETIME}
 			</if>
-			<if  test="UPDATEUSERGUID!=null">and updateuserguid=#UPDATEUSERGUID#
+			<if  test="UPDATEUSERGUID!=null">and updateuserguid=#{UPDATEUSERGUID}
 			</if>
-			<if  test="UPDATETIME!=null">and updatetime=#UPDATETIME#
+			<if  test="UPDATETIME!=null">and updatetime=#{UPDATETIME}
 			</if>
-			<if  test="HASATTACHMENT!=null">and hasattachment=#HASATTACHMENT#
+			<if  test="HASATTACHMENT!=null">and hasattachment=#{HASATTACHMENT}
 			</if>
-			<if  test="TITLE!=null">and title=#TITLE#
+			<if  test="TITLE!=null">and title=#{TITLE}
 			</if>
-			<if  test="CONTENTS!=null">and contents=#CONTENTS#
+			<if  test="CONTENTS!=null">and contents=#{CONTENTS}
 			</if>
-			<if  test="ISREAD!=null">and isread=#ISREAD#
+			<if  test="ISREAD!=null">and isread=#{ISREAD}
 			</if>
-			<if  test="ISPROCESS!=null">and isprocess=#ISPROCESS#
+			<if  test="ISPROCESS!=null">and isprocess=#{ISPROCESS}
 			</if>
-			<if  test="READTIME!=null">and READTIME=#READTIME#
+			<if  test="READTIME!=null">and READTIME=#{READTIME}
 			</if>
-			<if  test="PROCESSTIME!=null">and PROCESSTIME=#PROCESSTIME#
+			<if  test="PROCESSTIME!=null">and PROCESSTIME=#{PROCESSTIME}
 			</if>
-			<if  test="MODULETYPE!=null">and moduletype=#MODULETYPE#
+			<if  test="MODULETYPE!=null">and moduletype=#{MODULETYPE}
 			</if>
 		</where>
 	</delete>
 
 	<delete id="deleteIsintrash" parameterType="java.lang.String">
 		delete from bi_mail 
-		where (receiveuser = #USERGUID# or senderuser = #USERGUID#) and
+		where (receiveuser = #{USERGUID} or senderuser = #{USERGUID}) and
 		isintrash = 'Y'
 	</delete>
 
 	<select id="selectReceiverByMasterGuid" parameterType="java.lang.String"
 		resultType="dyna.common.dto.Mail">
-		select receiveuser from bi_mail_receiveruser where masterguid = #MASTERGUID#
+		select receiveuser from bi_mail_receiveruser where masterguid = #{MASTERGUID}
 	</select>
 
 	<delete id="deleteMailOutOfDate" parameterType="map">
 		delete from bi_mail 
-		where receiveuser = #USERGUID#
+		where receiveuser = #{USERGUID}
 		and moduletype <![CDATA[ <> ]]>
 		'8'
-		and receiveuser = #USERGUID#
+		and receiveuser = #{USERGUID}
 		and createtime <![CDATA[ < ]]>
-		#MESSAGEDAY:DATE#
+		#{MESSAGEDAY:DATE}
 	</delete>
 
 	<delete id="deleteMailReceiverOutOfDate" parameterType="map">
@@ -435,18 +435,18 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		where m.masterguid = a.receivermasterguid
 		and a.moduletype <![CDATA[ <> ]]>
 		'8'
-		and a.receiveuser = #USERGUID#
+		and a.receiveuser = #{USERGUID}
 		and a.createtime <![CDATA[ < ]]>
-		#MESSAGEDAY:DATE#
+		#{MESSAGEDAY:DATE}
 		)
 	</delete>
 
 	<delete id="deleteWorkflowOutOfDate" parameterType="map">
 		delete from bi_mail 
-		where receiveuser = #USERGUID#
-		and receiveuser = #USERGUID#
+		where receiveuser = #{USERGUID}
+		and receiveuser = #{USERGUID}
 		and createtime <![CDATA[ < ]]>
-		#MESSAGEDAY:DATE#
+		#{MESSAGEDAY:DATE}
 		and exists(select 1 from wf_procrt b
 		where procrtguid = b.guid
 		and b.status in ('CLOSED', 'CANCEL', 'OBSOLETE')
@@ -459,9 +459,9 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		wf_procrt b
 		where m.masterguid = a.receivermasterguid
 		and a.procrtguid = b.guid
-		and a.receiveuser = #USERGUID#
+		and a.receiveuser = #{USERGUID}
 		and a.createtime <![CDATA[ < ]]>
-		#MESSAGEDAY:DATE#
+		#{MESSAGEDAY:DATE}
 		and b.status in ('CLOSED', 'CANCEL', 'OBSOLETE')
 		)
 	</delete>

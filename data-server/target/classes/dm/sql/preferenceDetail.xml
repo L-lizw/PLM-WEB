@@ -20,11 +20,11 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		<include refid="selectFeilds" />
 		<include refid="from" />
 		<where>
-			<if  test="GUID!=null">and a.guid=#GUID#</if>
-			<if  test="MASTERFK!=null">and a.masterfk=#MASTERFK#</if>
-			<if  test="DATASEQ!=null">and a.dataseq=#DATASEQ#</if>
-            <if  test="BMGUID!=null">and a.bmguid=#BMGUID#</if>
-			<if  test="ITEMVALUE!=null">and a.ITEMVALUE=#ITEMVALUE#</if>
+			<if  test="GUID!=null">and a.guid=#{GUID}</if>
+			<if  test="MASTERFK!=null">and a.masterfk=#{MASTERFK}</if>
+			<if  test="DATASEQ!=null">and a.dataseq=#{DATASEQ}</if>
+            <if  test="BMGUID!=null">and a.bmguid=#{BMGUID}</if>
+			<if  test="ITEMVALUE!=null">and a.ITEMVALUE=#{ITEMVALUE}</if>
 		</where>
 		<include refid="orderby" />
 	</select>
@@ -39,41 +39,41 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		ITEMVALUE
 		)
 		VALUES(
-		#GUID#,
-		#MASTERFK:VARCHAR:NULL#,
-		<if  test="DATASEQ!=null">#DATASEQ#,</if>
+		#{GUID},
+		#{MASTERFK:VARCHAR},
+		<if  test="DATASEQ!=null">#{DATASEQ},</if>
 		<if  test="DATASEQ==null">0,</if>
-        #BMGUID:VARCHAR:NULL#,
-		#ITEMVALUE:VARCHAR:NULL#
+        #{BMGUID:VARCHAR},
+		#{ITEMVALUE:VARCHAR}
 		)
 	</insert>
 
 	<update id="update" parameterType="map">
 		UPDATE sa_preference_detail 
 		<set>
-			<if  test="MASTERFK!=null">masterfk=#MASTERFK#,</if>
-			<if  test="DATASEQ!=null">dataseq=#DATASEQ#,</if>
-			<if  test="ITEMVALUE!=null">itemvalue=#ITEMVALUE#,</if>
-            <if  test="BMGUID!=null">bmguid=#BMGUID#,</if>
+			<if  test="MASTERFK!=null">masterfk=#{MASTERFK},</if>
+			<if  test="DATASEQ!=null">dataseq=#{DATASEQ},</if>
+			<if  test="ITEMVALUE!=null">itemvalue=#{ITEMVALUE},</if>
+            <if  test="BMGUID!=null">bmguid=#{BMGUID},</if>
 		</set>
-		WHERE guid = #GUID#
+		WHERE guid = #{GUID}
 	</update>
 
 	<delete id="delete" parameterType="java.lang.String">
 		DELETE FROM sa_preference_detail 
-		WHERE guid = #GUID#
+		WHERE guid = #{GUID}
 	</delete>
 
 	<delete id="deleteWithMasterfk" parameterType="java.lang.String">
 		DELETE FROM sa_preference_detail 
-		WHERE masterfk = #MASTERFK#
+		WHERE masterfk = #{MASTERFK}
 	</delete>
 
     <delete id="deleteWithBmguid" parameterType="map">
         DELETE FROM sa_preference_detail 
-        WHERE masterfk = #MASTERFK#
+        WHERE masterfk = #{MASTERFK}
           <if  test="BMGUID!=null">
-          AND bmguid = #BMGUID#
+          AND bmguid = #{BMGUID}
           </if>
     </delete>
 

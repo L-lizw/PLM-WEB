@@ -36,7 +36,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			   UPDATETIME,
 			   UPDATEUSERGUID
 		  FROM MA_CLASS_NUMBER A
-		 WHERE GUID=#GUID#
+		 WHERE GUID=#{GUID}
 	</select>
 	
 	 <insert id="insert" parameterType="dyna.common.dto.model.cls.NumberingModelInfo">
@@ -55,41 +55,41 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 							   UPDATETIME,
 							   UPDATEUSERGUID
                             )
-                      VALUES(#GUID:VARCHAR#,
-							 #CLASSFK:VARCHAR#,
-							 #MANDATORY:VARCHAR:NULL#,
-							 #WITHFIELD:VARCHAR:NULL#,
-							 #WITHDATE:VARCHAR:NULL#,
-							 #UESEXTENDNUMBER:VARCHAR:NULL#,
-							 #FIELDNAME:VARCHAR:NULL#,
-							 #FIELDLENGTH#,
-							 #ISNUMBERING:VARCHAR:NULL#,
-							 #CURRENTTIME:TIMESTAMP#,
-							 #CREATEUSERGUID:VARCHAR:NULL#,
-							 #CURRENTTIME:TIMESTAMP#,
-							 #UPDATEUSERGUID:VARCHAR:NULL#
+                      VALUES(#{GUID:VARCHAR},
+							 #{CLASSFK:VARCHAR},
+							 #{MANDATORY:VARCHAR},
+							 #{WITHFIELD:VARCHAR},
+							 #{WITHDATE:VARCHAR},
+							 #{UESEXTENDNUMBER:VARCHAR},
+							 #{FIELDNAME:VARCHAR},
+							 #{FIELDLENGTH},
+							 #{ISNUMBERING:VARCHAR},
+							 #{CURRENTTIME:TIMESTAMP},
+							 #{CREATEUSERGUID:VARCHAR},
+							 #{CURRENTTIME:TIMESTAMP},
+							 #{UPDATEUSERGUID:VARCHAR}
                             )
     </insert>
     
     <update id="update" parameterType="dyna.common.dto.model.cls.NumberingModelInfo">
         UPDATE MA_CLASS_NUMBER
 		<set>
-			UPDATEUSERGUID = #UPDATEUSERGUID#,
-			UPDATETIME =#CURRENTTIME:TIMESTAMP#,
-			<if  test="CLASSFK!=null">CLASSFK=#CLASSFK#,</if>
-			<if  test="MANDATORY!=null">MANDATORY=#MANDATORY#,</if>
-			<if  test="WITHFIELD!=null">WITHFIELD=#WITHFIELD#,</if>
-			<if  test="WITHDATE!=null">WITHDATE=#WITHDATE#,</if>
-			<if  test="UESEXTENDNUMBER!=null">UESEXTENDNUMBER=#UESEXTENDNUMBER#,</if>
-			<if  test="FIELDNAME!=null">FIELDNAME=#FIELDNAME#,</if>
-			<if  test="FIELDLENGTH!=null">FIELDLENGTH=#FIELDLENGTH#,</if>
-			<if  test="ISNUMBERING!=null">ISNUMBERING=#ISNUMBERING#,</if>
+			UPDATEUSERGUID = #{UPDATEUSERGUID},
+			UPDATETIME =#{CURRENTTIME:TIMESTAMP},
+			<if  test="CLASSFK!=null">CLASSFK=#{CLASSFK},</if>
+			<if  test="MANDATORY!=null">MANDATORY=#{MANDATORY},</if>
+			<if  test="WITHFIELD!=null">WITHFIELD=#{WITHFIELD},</if>
+			<if  test="WITHDATE!=null">WITHDATE=#{WITHDATE},</if>
+			<if  test="UESEXTENDNUMBER!=null">UESEXTENDNUMBER=#{UESEXTENDNUMBER},</if>
+			<if  test="FIELDNAME!=null">FIELDNAME=#{FIELDNAME},</if>
+			<if  test="FIELDLENGTH!=null">FIELDLENGTH=#{FIELDLENGTH},</if>
+			<if  test="ISNUMBERING!=null">ISNUMBERING=#{ISNUMBERING},</if>
 		</set>
-        WHERE GUID = #GUID#
+        WHERE GUID = #{GUID}
     </update>
     
     <delete id="delete" parameterType="java.lang.String">
-        DELETE FROM MA_CLASS_NUMBER WHERE GUID = #GUID#
+        DELETE FROM MA_CLASS_NUMBER WHERE GUID = #{GUID}
     </delete>
     
 </mapper>

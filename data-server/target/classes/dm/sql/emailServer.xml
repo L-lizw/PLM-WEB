@@ -9,19 +9,19 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		  from bi_config_rule_mailserver a
 		<where>
 			<if  test="GUID!=null">
-				and a.guid = #GUID#
+				and a.guid = #{GUID}
 			</if>
 			<if  test="USERNAME!=null">
-				and a.username=#USERNAME#
+				and a.username=#{USERNAME}
 			</if>
 			<if  test="SMTP!=null">
-				and a.smtp=#SMTP#
+				and a.smtp=#{SMTP}
 			</if>
 			<if  test="ISSHOWWARN!=null">
-				and a.isshowwarn=#ISSHOWWARN#
+				and a.isshowwarn=#{ISSHOWWARN}
 			</if>
 			<if  test="FROMADDRESS!=null">
-				and a.fromaddress=#FROMADDRESS#
+				and a.fromaddress=#{FROMADDRESS}
 			</if>
 		</where>
 	order by a.username
@@ -41,45 +41,45 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		   	isshowwarn,
 		   	fromaddress
 	   	)
-		select  #GUID#,
-				#USERNAME#,
-				#PASSWORD#,
-		       	#SMTP#,
-				#CREATEUSERGUID:VARCHAR:NULL#,
-				#CURRENTTIME:TIMESTAMP#,
-				#CREATEUSERGUID:VARCHAR:NULL#,
-				#CURRENTTIME:TIMESTAMP#,
-				#ISSHOWWARN:VARCHAR:NULL#,
-				#FROMADDRESS# 
+		select  #{GUID},
+				#{USERNAME},
+				#{PASSWORD},
+		       	#{SMTP},
+				#{CREATEUSERGUID:VARCHAR},
+				#{CURRENTTIME:TIMESTAMP},
+				#{CREATEUSERGUID:VARCHAR},
+				#{CURRENTTIME:TIMESTAMP},
+				#{ISSHOWWARN:VARCHAR},
+				#{FROMADDRESS}
 	</insert>
 	
 	<update id="update" parameterType="dyna.common.dto.EmailServer">
 		update bi_config_rule_mailserver
 	       <set>
 	       <if test="USERNAME!=null">
-	       username = #USERNAME#,
+	       username = #{USERNAME},
 	       </if>
 	       <if test="PASSWORD!=null">
-	       password = #PASSWORD#,
+	       password = #{PASSWORD},
 	       </if>
 	       <if test="SMTP!=null">
-	       smtp = #SMTP#,
+	       smtp = #{SMTP},
 	       </if>
 	       <if test="ISSHOWWARN!=null">
-	       isshowwarn = #ISSHOWWARN#,
+	       isshowwarn = #{ISSHOWWARN},
 	       </if>
 	       <if test="FROMADDRESS!=null">
-	       fromaddress = #FROMADDRESS#,
+	       fromaddress = #{FROMADDRESS},
 	       </if>
 	       </set>
-	       updateuserguid = #UPDATEUSERGUID#,
-	       updatetime = #CURRENTTIME:TIMESTAMP#
-		where guid = #GUID#
+	       updateuserguid = #{UPDATEUSERGUID},
+	       updatetime = #{CURRENTTIME:TIMESTAMP}
+		where guid = #{GUID}
 	</update>
 	
 	<delete id="delete" parameterType="java.lang.String">
 		delete from bi_config_rule_mailserver
-		 where guid = #GUID#
+		 where guid = #{GUID}
 	</delete>
 	
 </mapper>

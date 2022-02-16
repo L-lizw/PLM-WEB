@@ -12,7 +12,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     <select id="get" parameterType="java.lang.String" resultType="dyna.common.dto.template.wft.WorkflowTemplateActCompanyInfo" statementType="STATEMENT">
 		SELECT *
 		  FROM WF_TEMPLATE_ACTRT_COMPANY
-		 WHERE GUID = #GUID#
+		 WHERE GUID = #{GUID}
 	</select>
 
     <insert id="insert" parameterType="dyna.common.dto.template.wft.WorkflowTemplateActCompanyInfo">
@@ -26,19 +26,19 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                      UPDATEUSERGUID, 
                      UPDATETIME
                     )
-        VALUES(#GUID:VARCHAR:NULL#,
-               #TEMPLATEACTRTGUID:VARCHAR:NULL#,
-               #COMPANYNAME:VARCHAR:NULL#,
+        VALUES(#{GUID:VARCHAR},
+               #{TEMPLATEACTRTGUID:VARCHAR},
+               #{COMPANYNAME:VARCHAR},
                
-               #CREATEUSERGUID:VARCHAR:NULL#,
-               #CURRENTTIME:TIMESTAMP#,
-               #UPDATEUSERGUID:VARCHAR:NULL#,
-               #CURRENTTIME:TIMESTAMP#
+               #{CREATEUSERGUID:VARCHAR},
+               #{CURRENTTIME:TIMESTAMP},
+               #{UPDATEUSERGUID:VARCHAR},
+               #{CURRENTTIME:TIMESTAMP}
               )
     </insert>
 
     <delete id="delete" parameterType="java.lang.String">
-        DELETE FROM WF_TEMPLATE_ACTRT_COMPANY WHERE GUID = #GUID#
+        DELETE FROM WF_TEMPLATE_ACTRT_COMPANY WHERE GUID = #{GUID}
     </delete>
 
 </mapper>

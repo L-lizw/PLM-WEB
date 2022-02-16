@@ -34,106 +34,106 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
            mobile,
            isshield,
            useridwx)
-        values (#GUID#,
-                #USERID#,
-                #USERNAME:VARCHAR:NULL#,
-                #PASSWORD#,
+        values (#{GUID},
+                #{USERID},
+                #{USERNAME:VARCHAR},
+                #{PASSWORD},
                 <choose>
-                    <when test="ISACTIVE!=null">#ISACTIVE#,</when>
+                    <when test="ISACTIVE!=null">#{ISACTIVE},</when>
                     <otherwise>'Y',</otherwise>
                 </choose>
-                #TEL:VARCHAR:NULL#,
-                #FAX:VARCHAR:NULL#,
-                #EMAIL:VARCHAR:NULL#,
-                #DEFAULTGROUPGUID:VARCHAR:NULL#,
-                   #DEFAULTROLEGUID:VARCHAR:NULL#,
-                   #CURRENTTIME:TIMESTAMP#,
-                   #CURRENTTIME:TIMESTAMP#,
-                   #CURRENTTIME:TIMESTAMP#,
-                   #CREATEUSERGUID:VARCHAR:NULL#,
-                   #CURRENTTIME:TIMESTAMP#,
-                   #COUNTRY:VARCHAR:NULL#,
-                   #STATE:VARCHAR:NULL#,
-                   #CITY:VARCHAR:NULL#,
-                   #ZIPCODE:VARCHAR:NULL#,
-                   #ADDRESS:VARCHAR:NULL#,
-                   #MOBILE:VARCHAR:NULL#,
-                   #ISSHIELD:VARCHAR:NULL#,
-                   #USERIDWX#)
+                #{TEL:VARCHAR},
+                #{FAX:VARCHAR},
+                #{EMAIL:VARCHAR},
+                #{DEFAULTGROUPGUID:VARCHAR},
+                   #{DEFAULTROLEGUID:VARCHAR},
+                   #{CURRENTTIME:TIMESTAMP},
+                   #{CURRENTTIME:TIMESTAMP},
+                   #{CURRENTTIME:TIMESTAMP},
+                   #{CREATEUSERGUID:VARCHAR},
+                   #{CURRENTTIME:TIMESTAMP},
+                   #{COUNTRY:VARCHAR},
+                   #{STATE:VARCHAR},
+                   #{CITY:VARCHAR},
+                   #{ZIPCODE:VARCHAR},
+                   #{ADDRESS:VARCHAR},
+                   #{MOBILE:VARCHAR},
+                   #{ISSHIELD:VARCHAR},
+                   #{USERIDWX})
     </insert>
     
     
     <update id="update" parameterType="dyna.common.dto.aas.User">
         update sa_user
            <set>
-               updatetime = #CURRENTTIME:TIMESTAMP#, updateuserguid = #UPDATEUSERGUID#,
+               updatetime = #{CURRENTTIME:TIMESTAMP}, updateuserguid = #{UPDATEUSERGUID},
                <if test="USERID!=null">
-               userid = #USERID#,
+               userid = #{USERID},
                </if>
                <if test="USERNAME!=null">
-               username = #USERNAME#,
+               username = #{USERNAME},
                </if>
                <if test="PASSWORD!=null">
-               password = #PASSWORD#,
+               password = #{PASSWORD},
                </if>
                <if test="ISACTIVE!=null">
-               isactive = #ISACTIVE#,
+               isactive = #{ISACTIVE},
                </if>
                <if test="TE!=nullL">
-               tel = #TEL#,
+               tel = #{TEL},
                </if>
                <if test="FAX!=null">
-               fax = #FAX#,
+               fax = #{FAX},
                </if>
                <if test="EMAIL!=null">
-               email = #EMAIL#,
+               email = #{EMAIL},
                </if>
                <if test="DEFAULTGROUPGUID!=null">
-               defaultgroupguid = #DEFAULTGROUPGUID#,
+               defaultgroupguid = #{DEFAULTGROUPGUID},
                </if>
                <if test="DEFAULTROLEGUID!=null">
-               defaultroleguid = #DEFAULTROLEGUID#,
+               defaultroleguid = #{DEFAULTROLEGUID},
                </if>
                <if test="LATESTLOGINTIME!=null">
-               latestlogintime = #CURRENTTIME:TIMESTAMP#,
+               latestlogintime = #{CURRENTTIME:TIMESTAMP},
                </if>
                <if test="COUNTRY!=null">
-               country = #COUNTRY#,
+               country = #{COUNTRY},
                </if>
                <if test="STATE!=null">
-               state = #STATE#,
+               state = #{STATE},
                </if>
                <if test="CITY!=null">
-               city = #CITY#,
+               city = #{CITY},
                </if>
                <if test="ZIPCODE!=null">
-               zipcode = #ZIPCODE#,
+               zipcode = #{ZIPCODE},
                </if>
                <if test="ADDRESS!=null">
-               address = #ADDRESS#,
+               address = #{ADDRESS},
                </if>
                <if test="MOBILE!=null">
-               mobile = #MOBILE#,
+               mobile = #{MOBILE},
                </if>
                <if test="ISSHIELD!=null">
-               isshield = #ISSHIELD#,
+               isshield = #{ISSHIELD},
                </if>
                <if test="USERIDWX!=null">
-               useridwx = #USERIDWX#,
+               useridwx = #{USERIDWX},
                </if>
            </set>
-        where guid = #GUID#
+        where guid = #{GUID}
     </update>
     
     <delete id="delete" parameterType="java.lang.String">
         delete from sa_user
-         where guid = #GUID#
+         where guid = #{GUID}
     </delete>
     
 	<select id="get" parameterType="java.lang.String" resultType="dyna.common.dto.aas.User" statementType="STATEMENT">
 		SELECT a.* 
 		  FROM sa_user a
-		 WHERE guid=#guid#
+		 WHERE guid=#{guid}
 	</select>
     
 </mapper>

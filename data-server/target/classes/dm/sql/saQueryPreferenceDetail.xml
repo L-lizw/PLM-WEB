@@ -7,22 +7,22 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     <sql id="where">
         <where>
             <if  test="GUID!=null">
-                and d.guid = #GUID#
+                and d.guid = #{GUID}
             </if>
             <if  test="MASTERFK!=null">
-                and d.masterfk = #MASTERFK#
+                and d.masterfk = #{MASTERFK}
             </if>
             <if  test="CUSTOMFIELD!=null">
-                and d.customfield = #CUSTOMFIELD#
+                and d.customfield = #{CUSTOMFIELD}
             </if>
             <if  test="DATASEQ!=null">
-                and d.dataseq = #DATASEQ#
+                and d.dataseq = #{DATASEQ}
             </if>
             <if  test="CREATEUSERGUID!=null">
-                and d.createuserguid = #CREATEUSERGUID#
+                and d.createuserguid = #{CREATEUSERGUID}
             </if>
             <if  test="UPDATEUSERGUID!=null">
-                and d.updateuserguid = #UPDATEUSERGUID#
+                and d.updateuserguid = #{UPDATEUSERGUID}
             </if>
         </where>
     </sql>
@@ -50,34 +50,34 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			        updateuserguid,
 			        updatetime)
         values
-			       (#GUID#,
-			        #MASTERFK#,
-					#CUSTOMFIELD:VARCHAR:NULL#,
-					#DATASEQ:NUMERIC#,
+			       (#{GUID},
+			        #{MASTERFK},
+					#{CUSTOMFIELD:VARCHAR},
+					#{DATASEQ:NUMERIC},
 					 
-					#CREATEUSERGUID:VARCHAR:NULL#,
-					#CURRENTTIME:TIMESTAMP#,
-					#UPDATEUSERGUID:VARCHAR:NULL#,
-					#CURRENTTIME:TIMESTAMP#)
+					#{CREATEUSERGUID:VARCHAR},
+					#{CURRENTTIME:TIMESTAMP},
+					#{UPDATEUSERGUID:VARCHAR},
+					#{CURRENTTIME:TIMESTAMP})
     </insert>
     
     <update id="update" parameterType="dyna.common.dto.SaQueryPreferenceDetail">
         update sa_query_preference_detail
         <set>
-	        <if test="MASTERFK!=null">masterfk = #MASTERFK#,</if>
-	        <if test="CUSTOMFIELD!=null">customfield = #CUSTOMFIELD#,</if>
-	        <if test="DATASEQ!=null">dataseq = #DATASEQ#,</if>
+	        <if test="MASTERFK!=null">masterfk = #{MASTERFK},</if>
+	        <if test="CUSTOMFIELD!=null">customfield = #{CUSTOMFIELD},</if>
+	        <if test="DATASEQ!=null">dataseq = #{DATASEQ},</if>
         </set>
-               updatetime = #CURRENTTIME:TIMESTAMP#,
-               updateuserguid = #UPDATEUSERGUID#
-         where guid = #GUID#
+               updatetime = #{CURRENTTIME:TIMESTAMP},
+               updateuserguid = #{UPDATEUSERGUID}
+         where guid = #{GUID}
     </update>
     
     <delete id="delete" parameterType="map">
-        delete from sa_query_preference_detail where guid = #GUID#
+        delete from sa_query_preference_detail where guid = #{GUID}
     </delete>
     
     <delete id="deleteDetailByMaster" parameterType="java.lang.String">
-        delete from sa_query_preference_detail where masterfk = #MASTERFK#
+        delete from sa_query_preference_detail where masterfk = #{MASTERFK}
     </delete>
 </mapper>

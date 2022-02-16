@@ -29,7 +29,7 @@
 	<select id="get" parameterType="java.lang.String" resultType="dyna.common.dto.model.bmbo.BOInfo" statementType="STATEMENT">
 		SELECT *
 		FROM SA_BUSINESSOBJECT
-		WHERE GUID=#GUID#
+		WHERE GUID=#{GUID}
 	</select>
 
 	<insert id="insert" parameterType="dyna.common.dto.model.bmbo.BOInfo">
@@ -54,50 +54,50 @@
 		createtime,
 		updateuserguid,
 		updatetime)
-		values (#GUID#,
-		#BONAME#,
-		#TITLE:VARCHAR:NULL#,
+		values (#{GUID},
+		#{BONAME},
+		#{TITLE:VARCHAR},
 
-		#CLASSGUID:VARCHAR:NULL#,
-		#CLASSIFICATIONGUID:VARCHAR:NULL#,
-		#MODELTYPE:VARCHAR:NULL#,
+		#{CLASSGUID:VARCHAR},
+		#{CLASSIFICATIONGUID:VARCHAR},
+		#{MODELTYPE:VARCHAR},
 		
-		#BOTYPE:VARCHAR:NULL#,
-		#SHOWCLASSIFICATION:VARCHAR:NULL#,
-		#DESCRIPTION:VARCHAR:NULL#,
+		#{BOTYPE:VARCHAR},
+		#{SHOWCLASSIFICATION:VARCHAR},
+		#{DESCRIPTION:VARCHAR},
 		
-		#BMGUID:VARCHAR:NULL#,
-		#DATASEQ#,
-		#PARENTBOGUID:VARCHAR:NULL#,
+		#{BMGUID:VARCHAR},
+		#{DATASEQ},
+		#{PARENTBOGUID:VARCHAR},
 
-		#CREATEUSERGUID:VARCHAR:NULL#,
-		#CURRENTTIME:TIMESTAMP#,
-		#UPDATEUSERGUID:VARCHAR:NULL#,
-		#CURRENTTIME:TIMESTAMP#)
+		#{CREATEUSERGUID:VARCHAR},
+		#{CURRENTTIME:TIMESTAMP},
+		#{UPDATEUSERGUID:VARCHAR},
+		#{CURRENTTIME:TIMESTAMP})
 	</insert>
 
 	<update id="update" parameterType="dyna.common.dto.model.bmbo.BOInfo">
 		update sa_businessobject  set
 		<set>
-			updatetime = #CURRENTTIME:TIMESTAMP#,
-			updateuserguid = #UPDATEUSERGUID#,
-			<if test="BONAME!=null">boname = #BONAME#,</if>
-			<if test="TITLE!=null">title = #TITLE#,</if>
-			<if test="CLASSGUID!=null">classguid = #CLASSGUID#,</if>
-			<if test="CLASSIFICATIONGUID!=null">classificationguid = #CLASSIFICATIONGUID#,</if>
-			<if test="MODELTYPE!=null">modeltype = #MODELTYPE#,</if>
-			<if test="BOTYPE!=null">BOTYPE = #BOTYPE#,</if>
-			<if test="SHOWCLASSIFICATION!=null">showclassification = #SHOWCLASSIFICATION#,</if>
-			<if test="DESCRIPTION!=null">description = #DESCRIPTION#,</if>
-			<if test="BMGUID!=null">bmguid = #BMGUID#,</if>
-		    <if test="DATASEQ!=null">DATASEQ = #DATASEQ#,</if>
-		    <if test="PARENTBOGUID!=null">parentboguid = #PARENTBOGUID#,</if>
+			updatetime = #{CURRENTTIME:TIMESTAMP},
+			updateuserguid = #{UPDATEUSERGUID},
+			<if test="BONAME!=null">boname = #{BONAME},</if>
+			<if test="TITLE!=null">title = #{TITLE},</if>
+			<if test="CLASSGUID!=null">classguid = #{CLASSGUID},</if>
+			<if test="CLASSIFICATIONGUID!=null">classificationguid = #{CLASSIFICATIONGUID},</if>
+			<if test="MODELTYPE!=null">modeltype = #{MODELTYPE},</if>
+			<if test="BOTYPE!=null">BOTYPE = #{BOTYPE},</if>
+			<if test="SHOWCLASSIFICATION!=null">showclassification = #{SHOWCLASSIFICATION},</if>
+			<if test="DESCRIPTION!=null">description = #{DESCRIPTION},</if>
+			<if test="BMGUID!=null">bmguid = #{BMGUID},</if>
+		    <if test="DATASEQ!=null">DATASEQ = #{DATASEQ},</if>
+		    <if test="PARENTBOGUID!=null">parentboguid = #{PARENTBOGUID},</if>
 		</set>
-		where guid = #GUID#
+		where guid = #{GUID}
 	</update>
 
 	<delete id="delete" parameterType="java.lang.String">
-		delete from sa_businessobject where guid = #GUID#
+		delete from sa_businessobject where guid = #{GUID}
 	</delete>
 
 </mapper>

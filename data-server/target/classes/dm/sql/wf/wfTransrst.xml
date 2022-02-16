@@ -15,15 +15,15 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                                  updateuserguid, 
                                  updatetime
                                 ) 
-        values(#GUID:VARCHAR:NULL#, 
-               #INOUTTYPE:VARCHAR:NULL#, 
-               #CONNTYPE:VARCHAR:NULL#, 
-               #ACTRTGUID:VARCHAR:NULL#, 
-               #PROCRTGUID:VARCHAR:NULL#,
-               #CREATEUSERGUID:VARCHAR:NULL#, 
-               #CURRENTTIME:TIMESTAMP#, 
-               #UPDATEUSERGUID:VARCHAR:NULL#, 
-               #CURRENTTIME:TIMESTAMP#
+        values(#{GUID:VARCHAR}, 
+               #{INOUTTYPE:VARCHAR}, 
+               #{CONNTYPE:VARCHAR}, 
+               #{ACTRTGUID:VARCHAR}, 
+               #{PROCRTGUID:VARCHAR},
+               #{CREATEUSERGUID:VARCHAR}, 
+               #{CURRENTTIME:TIMESTAMP}, 
+               #{UPDATEUSERGUID:VARCHAR}, 
+               #{CURRENTTIME:TIMESTAMP}
               )
     </insert>
 
@@ -31,13 +31,13 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
         select * from wf_transrst  
             <where>
                 <if test="GUID!=null" >
-                    and guid = #GUID#
+                    and guid = #{GUID}
                 </if>
                 <if test="PROCRTGUID!=null" >
-                    and procrtguid = #PROCRTGUID#
+                    and procrtguid = #{PROCRTGUID}
                 </if>
                 <if test="ACTRTGUID!=null" >
-                    and actrtguid = #ACTRTGUID#
+                    and actrtguid = #{ACTRTGUID}
                 </if>
             </where>
     </select>

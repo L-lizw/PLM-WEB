@@ -46,107 +46,107 @@
 	<sql id="whereFuzzy">
 		<where>
 			<if  test="GUID!=null">
-				and q.guid = #GUID#
+				and q.guid = #{GUID}
 			</if>
 			<if  test="JOBID!=null">
-				and q.job = #JOBID#
+				and q.job = #{JOBID}
 			</if>
 			<if  test="OWNERUSERGUID!=null">
-				and q.owneruserguid = #OWNERUSERGUID#
+				and q.owneruserguid = #{OWNERUSERGUID}
 			</if>
 			<if  test="JOBSTATUS!=null">
-				and q.jobstatus = #JOBSTATUS#
+				and q.jobstatus = #{JOBSTATUS}
 			</if>
 			<if  test="EXECUTORCLASS!=null">
-				and q.executorclass = #EXECUTORCLASS#
+				and q.executorclass = #{EXECUTORCLASS}
 			</if>
 			<if  test="ISSINGLETHREAD!=null">
-				and q.issinglethread = #ISSINGLETHREAD#
+				and q.issinglethread = #{ISSINGLETHREAD}
 			</if>
 			<if  test="JOBTYPE!=null">
-				and q.jobtype = #JOBTYPE#
+				and q.jobtype = #{JOBTYPE}
 			</if>
 			<if  test="PRIORITY!=null">
-				and q.priority = #PRIORITY#
+				and q.priority = #{PRIORITY}
 			</if>
 			<if  test="SERVERID!=null">
-				and q.serverid = #SERVERID#
+				and q.serverid = #{SERVERID}
 			</if>
 			<if  test="FILEGUID!=null">
-				and q.fileguid = #FILEGUID#
+				and q.fileguid = #{FILEGUID}
 			</if>
 			<if  test="JOBGROUP!=null">
-				and q.jobgroup = #JOBGROUP#
+				and q.jobgroup = #{JOBGROUP}
 			</if>
 			<if  test="CREATEUSERGUID!=null">
-				and q.createuserguid = #CREATEUSERGUID#
+				and q.createuserguid = #{CREATEUSERGUID}
 			</if>
 			<if  test="CREATEFROMTIME!=null" >
-				and q.createtime>=#CREATEFROMTIME:DATE#
+				and q.createtime>=#{CREATEFROMTIME:DATE}
 			</if>
 			<if  test="CREATETOTIME!=null" >
-				and q.createtime<![CDATA[<=]]>#CREATEFROMTIME:DATE#
+				and q.createtime<![CDATA[<=]]>#{CREATEFROMTIME:DATE}
 			</if>
 			<if  test="UPDATEFROMTIME!=null" >
-				and q.updatetime>=#UPDATEFROMTIME:DATE#
+				and q.updatetime>=#{UPDATEFROMTIME:DATE}
 			</if>
 			<if  test="UPDATETOTIME!=null" >
-				and q.updatetime<![CDATA[<=]]>#UPDATEFROMTIME:DATE#
+				and q.updatetime<![CDATA[<=]]>#{UPDATEFROMTIME:DATE}
 			</if>
 
 			<if  test="JOBNAME!=null">
-				and q.jobname like '%$JOBNAME$%'
+				and q.jobname like '%${JOBNAME}%'
 			</if>
 			<if  test="DESCRIPTION!=null">
-				and q.description like '%$DESCRIPTION$%'
+				and q.description like '%${DESCRIPTION}%'
 			</if>
 			<if  test="FIELDA!=null">
-				and q.fielda like '%$FIELDA$%'
+				and q.fielda like '%${FIELDA}%'
 			</if>
 			<if  test="FIELDB!=null">
-				and q.fieldb like '%$FIELDB$%'
+				and q.fieldb like '%${FIELDB}%'
 			</if>
 			<if  test="FIELDC!=null">
-				and q.fieldc like '%$FIELDC$%'
+				and q.fieldc like '%${FIELDC}%'
 			</if>
 			<if  test="FIELDD!=null">
-				and q.fieldd like '%$FIELDD$%'
+				and q.fieldd like '%${FIELDD}%'
 			</if>
 			<if  test="FIELDE!=null">
-				and q.fielde like '%$FIELDE$%'
+				and q.fielde like '%${FIELDE}%'
 			</if>
 			<if  test="FIELDF!=null">
-				and q.fieldf like '%$FIELDF$%'
+				and q.fieldf like '%${FIELDF}%'
 			</if>
 			<if  test="FIELDG!=null">
-				and q.fieldg like '%$FIELDG$%'
+				and q.fieldg like '%${FIELDG}%'
 			</if>
 			<if  test="FIELDH!=null">
-				and q.fieldh like '%$FIELDH$%'
+				and q.fieldh like '%${FIELDH}%'
 			</if>
 			<if  test="FIELDI!=null">
-				and q.fieldi like '%$FIELDI$%'
+				and q.fieldi like '%${FIELDI}%'
 			</if>
 			<if  test="FIELDJ!=null">
-				and q.fieldj like '%$FIELDJ$%'
+				and q.fieldj like '%${FIELDJ}%'
 			</if>
 			<if  test="FIELDK!=null">
-				and q.fieldk like '%$FIELDK$%'
+				and q.fieldk like '%${FIELDK}%'
 			</if>
 			<if  test="FIELDL!=null">
-				and q.fieldl like '%$FIELDL$%'
+				and q.fieldl like '%${FIELDL}%'
 			</if>
 			<if  test="FIELDM!=null">
-				and q.fieldm like '%$FIELDM$%'
+				and q.fieldm like '%${FIELDM}%'
 			</if>
 			<if  test="FIELDN!=null">
-				and q.fieldn like '%$FIELDN$%'
+				and q.fieldn like '%${FIELDN}%'
 			</if>
 			<if  test="FIELDO!=null">
-				and q.fieldo like '%$FIELDO$%'
+				and q.fieldo like '%${FIELDO}%'
 			</if>
 			<if  test="EXECUTRESULT!=null">
-				and q.executresult like '%$EXECUTRESULT$%'
+				and q.executresult like '%${EXECUTRESULT}%'
 			</if>
 		</where>
 	</sql>
@@ -162,7 +162,7 @@
 		from sa_job_queue q
 		<include refid="whereFuzzy"/>
 		<if test="ORDERBY!=null">
-			order by $ORDERBY$
+			order by ${ORDERBY}
 		</if>
 		<if test="ORDERBY==null">
 			ORDER BY Q.UPDATETIME DESC
@@ -171,46 +171,46 @@
 
 	<sql id="where">
 			<if  test="GUID!=null">
-				and guid = #GUID#
+				and guid = #{GUID}
 			</if>
 			<if  test="JOBID!=null">
-				and jobid = #JOBID#
+				and jobid = #{JOBID}
 			</if>
 			<if  test="JOBNAME!=null">
-				and jobname = #JOBNAME#
+				and jobname = #{JOBNAME}
 			</if>
 			<if  test="OWNERUSERGUID!=null">
-				and owneruserguid = #OWNERUSERGUID#
+				and owneruserguid = #{OWNERUSERGUID}
 			</if>
 			<if  test="JOBSTATUS!=null">
-				and jobstatus = #JOBSTATUS#
+				and jobstatus = #{JOBSTATUS}
 			</if>
 			<if  test="ISSINGLETHREAD!=null">
-				and issinglethread = #ISSINGLETHREAD#
+				and issinglethread = #{ISSINGLETHREAD}
 			</if>
 			<if  test="JOBTYPE!=null">
-				and jobtype = #JOBTYPE#
+				and jobtype = #{JOBTYPE}
 			</if>
 			<if  test="PRIORITY!=null">
-				and priority = #PRIORITY#
+				and priority = #{PRIORITY}
 			</if>
 			<if  test="EXECUTRESULT!=null">
-				and q.executresult like '%$EXECUTRESULT$%'
+				and q.executresult like '%${EXECUTRESULT}%'
 			</if>
 			<if  test="SERVERID!=null">
-				and serverid = #SERVERID#
+				and serverid = #{SERVERID}
 			</if>
 			<if  test="FILEGUID!=null">
-				and fileguid = #FILEGUID#
+				and fileguid = #{FILEGUID}
 			</if>
 			<if  test="DESCRIPTION!=null">
-				and description = #DESCRIPTION#
+				and description = #{DESCRIPTION}
 			</if>
 			<if  test="FIELDH!=null">
-				and fieldh = #FIELDH#
+				and fieldh = #{FIELDH}
 			</if>
 			<if  test="CREATEUSERGUID!=null">
-				and createuserguid = #CREATEUSERGUID#
+				and createuserguid = #{CREATEUSERGUID}
 			</if>
 	</sql>
 
@@ -222,7 +222,7 @@
 		where 1 = 1
 		<include refid="where"/>
 		<if test="ORDERBY!=null">
-			order by $ORDERBY$
+			order by ${ORDERBY}
 		</if>
 		<if test="ORDERBY==null">
 			ORDER BY Q.UPDATETIME DESC
@@ -235,7 +235,7 @@
 		from sa_job_queue q
 		where 1 = 1
 		<if  test="JOBTYPE!=null">
-			and jobtype = #JOBTYPE#
+			and jobtype = #{JOBTYPE}
 		</if>
 		<if  test="CREATEUSERGUID!=null">
 			and createuserguid = #{CREATEUSERGUID}
@@ -292,90 +292,90 @@
 		updateuserguid,
 		updatetime
 		)
-		values (#GUID#,
-		#JOBID:VARCHAR:NULL#,
-		#JOBNAME:VARCHAR:NULL#,
-		#OWNERUSERGUID:VARCHAR:NULL#,
-		#JOBSTATUS:NUMERIC#,
-		#EXECUTORCLASS:VARCHAR:NULL#,
-		#ISSINGLETHREAD:VARCHAR:NULL#,
-		#JOBTYPE:VARCHAR:NULL#,
-		#PRIORITY:NUMERIC#,
-		#EXECUTRESULT:VARCHAR:NULL#,
-		#FILEGUID:VARCHAR:NULL#,
+		values (#{GUID},
+		#{JOBID:VARCHAR},
+		#{JOBNAME:VARCHAR},
+		#{OWNERUSERGUID:VARCHAR},
+		#{JOBSTATUS:NUMERIC},
+		#{EXECUTORCLASS:VARCHAR},
+		#{ISSINGLETHREAD:VARCHAR},
+		#{JOBTYPE:VARCHAR},
+		#{PRIORITY:NUMERIC},
+		#{EXECUTRESULT:VARCHAR},
+		#{FILEGUID:VARCHAR},
 
-		#DESCRIPTION:VARCHAR:NULL#,
-		#FIELDA:VARCHAR:NULL#,
-		#FIELDB:VARCHAR:NULL#,
-		#FIELDC:VARCHAR:NULL#,
-		#FIELDD:VARCHAR:NULL#,
-		#FIELDE:VARCHAR:NULL#,
-		#FIELDF:VARCHAR:NULL#,
-		#FIELDG:VARCHAR:NULL#,
-		#FIELDH:VARCHAR:NULL#,
-		#FIELDI:VARCHAR:NULL#,
+		#{DESCRIPTION:VARCHAR},
+		#{FIELDA:VARCHAR},
+		#{FIELDB:VARCHAR},
+		#{FIELDC:VARCHAR},
+		#{FIELDD:VARCHAR},
+		#{FIELDE:VARCHAR},
+		#{FIELDF:VARCHAR},
+		#{FIELDG:VARCHAR},
+		#{FIELDH:VARCHAR},
+		#{FIELDI:VARCHAR},
 
-		#FIELDJ:VARCHAR:NULL#,
-		#FIELDK:VARCHAR:NULL#,
-		#FIELDL:VARCHAR:NULL#,
-		#FIELDM:VARCHAR:NULL#,
-		#FIELDN:VARCHAR:NULL#,
-		#FIELDO:VARCHAR:NULL#,
-		#SERVERID:VARCHAR:NULL#,
-		#JOBGROUP:VARCHAR:NULL#,
-		#CREATEUSERGUID:VARCHAR:NULL#,
-		#CURRENTTIME:TIMESTAMP#,
-		#UPDATEUSERGUID:VARCHAR:NULL#,
-		#CURRENTTIME:TIMESTAMP#
+		#{FIELDJ:VARCHAR},
+		#{FIELDK:VARCHAR},
+		#{FIELDL:VARCHAR},
+		#{FIELDM:VARCHAR},
+		#{FIELDN:VARCHAR},
+		#{FIELDO:VARCHAR},
+		#{SERVERID:VARCHAR},
+		#{JOBGROUP:VARCHAR},
+		#{CREATEUSERGUID:VARCHAR},
+		#{CURRENTTIME:TIMESTAMP},
+		#{UPDATEUSERGUID:VARCHAR},
+		#{CURRENTTIME:TIMESTAMP}
 		)
 	</insert>
 
 	<update id="update" parameterType="dyna.common.dto.Queue">
 		update sa_job_queue
 		<set>
-			updateuserguid = #UPDATEUSERGUID#,
-			updatetime = #CURRENTTIME:TIMESTAMP#,
-			<if  test="JOBID!=null">jobid=#JOBID#,</if>
-			<if  test="JOBNAME!=null">jobname=#JOBNAME#,</if>
-			<if  test="OWNERUSERGUID!=null">owneruserguid=#OWNERUSERGUID#,</if>
-			<if  test="JOBSTATUS!=null">jobstatus=#JOBSTATUS#,</if>
-			<if  test="EXECUTORCLASS!=null">executorclass=#EXECUTORCLASS#,</if>
+			updateuserguid = #{UPDATEUSERGUID},
+			updatetime = #{CURRENTTIME:TIMESTAMP},
+			<if  test="JOBID!=null">jobid=#{JOBID},</if>
+			<if  test="JOBNAME!=null">jobname=#{JOBNAME},</if>
+			<if  test="OWNERUSERGUID!=null">owneruserguid=#{OWNERUSERGUID},</if>
+			<if  test="JOBSTATUS!=null">jobstatus=#{JOBSTATUS},</if>
+			<if  test="EXECUTORCLASS!=null">executorclass=#{EXECUTORCLASS},</if>
 
-			<if  test="ISSINGLETHREAD!=null">issinglethread=#ISSINGLETHREAD#,</if>
-			<if  test="JOBTYPE!=null">jobtype=#JOBTYPE#,</if>
-			<if  test="PRIORITY!=null">priority=#PRIORITY#,</if>
-			<if  test="EXCUTRESULT!=null">excutresult=#EXCUTRESULT#,</if>
-			<if  test="DESCRIPTION!=null">description=#DESCRIPTION#,</if>
-			<if  test="FILEGUID!=null">fileguid=#FILEGUID#,</if>
+			<if  test="ISSINGLETHREAD!=null">issinglethread=#{ISSINGLETHREAD},</if>
+			<if  test="JOBTYPE!=null">jobtype=#{JOBTYPE},</if>
+			<if  test="PRIORITY!=null">priority=#{PRIORITY},</if>
+			<if  test="EXCUTRESULT!=null">excutresult=#{EXCUTRESULT},</if>
+			<if  test="DESCRIPTION!=null">description=#{DESCRIPTION},</if>
+			<if  test="FILEGUID!=null">fileguid=#{FILEGUID},</if>
 
-			<if  test="FIELDA!=null">fielda=#FIELDA#,</if>
-			<if  test="FIELDB!=null">fieldb=#FIELDB#,</if>
-			<if  test="FIELDC!=null">fieldc=#FIELDC#,</if>
-			<if  test="FIELDD!=null">fieldd=#FIELDD#,</if>
-			<if  test="FIELDE!=null">fielde=#FIELDE#,</if>
-			<if  test="FIELDF!=null">fieldf=#FIELDF#,</if>
-			<if  test="FIELDG!=null">fieldg=#FIELDG#,</if>
-			<if  test="FIELDH!=null">fieldh=#FIELDH#,</if>
-			<if  test="FIELDI!=null">fieldi=#FIELDI#,</if>
-			<if  test="FIELDJ!=null">fieldj=#FIELDJ#,</if>
-			<if  test="FIELDH!=null">fieldk=#FIELDK#,</if>
-			<if  test="FIELDL!=null">fieldl=#FIELDL#,</if>
-			<if  test="FIELDM!=null">fieldm=#FIELDM#,</if>
-			<if  test="FIELDN!=null">fieldn=#FIELDN#,</if>
-			<if  test="FIELDO!=null">fieldo=#FIELDO#,</if>
-			<if  test="FIELDO!=null">serverid=#SERVERID#,</if>
+			<if  test="FIELDA!=null">fielda=#{FIELDA},</if>
+			<if  test="FIELDB!=null">fieldb=#{FIELDB},</if>
+			<if  test="FIELDC!=null">fieldc=#{FIELDC},</if>
+			<if  test="FIELDD!=null">fieldd=#{FIELDD},</if>
+			<if  test="FIELDE!=null">fielde=#{FIELDE},</if>
+			<if  test="FIELDF!=null">fieldf=#{FIELDF},</if>
+			<if  test="FIELDG!=null">fieldg=#{FIELDG},</if>
+			<if  test="FIELDH!=null">fieldh=#{FIELDH},</if>
+			<if  test="FIELDI!=null">fieldi=#{FIELDI},</if>
+			<if  test="FIELDJ!=null">fieldj=#{FIELDJ},</if>
+			<if  test="FIELDH!=null">fieldk=#{FIELDK},</if>
+			<if  test="FIELDL!=null">fieldl=#{FIELDL},</if>
+			<if  test="FIELDM!=null">fieldm=#{FIELDM},</if>
+			<if  test="FIELDN!=null">fieldn=#{FIELDN},</if>
+			<if  test="FIELDO!=null">fieldo=#{FIELDO},</if>
+			<if  test="FIELDO!=null">serverid=#{SERVERID},</if>
 		</set>
-		where guid = #GUID#
+		where guid = #{GUID}
 	</update>
 
 	<delete id="delete" parameterType="java.lang.String">
-		delete from sa_job_queue  where guid = #GUID#
+		delete from sa_job_queue  where guid = #{GUID}
 	</delete>
 
 	<delete id="deleteTimeOutJobByType" parameterType="dyna.common.dto.Queue">
 		delete from sa_job_queue
-		where JOBTYPE = #JOBTYPE#
-		and jobstatus in ($LISTJOBSTATUS$)
-		and createtime <![CDATA[<=]]>#CURRENTDATE:TIMESTAMP#
+		where JOBTYPE = #{JOBTYPE}
+		and jobstatus in (${LISTJOBSTATUS})
+		and createtime <![CDATA[<=]]>#{CURRENTDATE:TIMESTAMP}
 	</delete>
 </mapper>

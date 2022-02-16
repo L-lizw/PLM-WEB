@@ -8,9 +8,9 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
         select a.*
           from BI_RULE_CLASS_CONDITION a
         <where>
-			<if  test="CONDITIONNAME!=null">and a.CONDITIONNAME=#CONDITIONNAME#</if>
-			<if  test="CLASSNAME!=null">and a.CLASSNAME=#CLASSNAME#</if>
-			<if  test="GUID!=null">and a.GUID=#GUID#</if>
+			<if  test="CONDITIONNAME!=null">and a.CONDITIONNAME=#{CONDITIONNAME#{</if>
+			<if  test="CLASSNAME!=null">and a.CLASSNAME=#{CLASSNAME#{</if>
+			<if  test="GUID!=null">and a.GUID=#{GUID#{</if>
 		</where>
 		order by updatetime desc
 	</select>
@@ -27,31 +27,31 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			updateuserguid
 		)
 		select
-			#GUID:VARCHAR:NULL#,
-			#CONDITIONNAME:VARCHAR:NULL#,
-			#CLASSNAME:VARCHAR:NULL#,
+			#{GUID:VARCHAR},
+			#{CONDITIONNAME:VARCHAR},
+			#{CLASSNAME:VARCHAR},
 
-			#CURRENTTIME:TIMESTAMP#,
-			#CREATEUSERGUID:VARCHAR:NULL#,
-			#CURRENTTIME:TIMESTAMP#,
-			#UPDATEUSERGUID:VARCHAR:NULL#
+			#{CURRENTTIME:TIMESTAMP},
+			#{CREATEUSERGUID:VARCHAR},
+			#{CURRENTTIME:TIMESTAMP},
+			#{UPDATEUSERGUID:VARCHAR}
 	</insert>
 	
 	<update id="update" parameterType="dyna.common.bean.data.checkrule.ClassConditionData">
 		UPDATE BI_RULE_CLASS_CONDITION
 		<set>
-			updatetime=#CURRENTTIME:TIMESTAMP#,
-			updateuserguid=#UPDATEUSERGUID#,
-			<if  test="CONDITIONNAME!=null">CONDITIONNAME=#CONDITIONNAME#,</if>
-			<if  test="CLASSNAME!=null">CLASSNAME=#CLASSNAME#,</if>
+			updatetime=#{CURRENTTIME:TIMESTAMP},
+			updateuserguid=#{UPDATEUSERGUID},
+			<if  test="CONDITIONNAME!=null">CONDITIONNAME=#{CONDITIONNAME},</if>
+			<if  test="CLASSNAME!=null">CLASSNAME=#{CLASSNAME},</if>
 
 		</set>
-		WHERE guid = #GUID#
+		WHERE guid = #{GUID}
 	</update>
 
 	<delete id="delete" parameterType="java.lang.String">
 		DELETE FROM BI_RULE_CLASS_CONDITION 
-		WHERE guid = #GUID#
+		WHERE guid = #{GUID}
 	</delete>
 	
 	<delete id="deleteAll">

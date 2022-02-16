@@ -5,17 +5,17 @@
     "../mybatis-3-mapper.dtd">
 <mapper namespace="dyna.common.dtomapper.DynaObjectMapper">
 	<insert id="insert" parameterType="java.util.HashMap">
-		INSERT INTO $table$(GUID,$fieldlist$)
-		VALUES(#GUID#,$fieldvalues$)
+		INSERT INTO ${table}(GUID,${fieldlist})
+		VALUES(#{GUID},${fieldvalues})
 	</insert>
 	
 	<insert id="insertSelectOne" parameterType="java.util.HashMap">
-		INSERT INTO $TABLETO$(GUID,$FIELDLIST$)
-		select #GUID#,$FIELDVALUES$
-		  from $TABLEFROM$
+		INSERT INTO ${TABLETO}(GUID,${FIELDLIST})
+		select #{GUID},${FIELDVALUES}
+		  from ${TABLEFROM}
 		  <where>
 			  <if test="WHERESQL!=null">
-			      $WHERESQL$
+			      ${WHERESQL}
 			  </if>
 		  </where>
 	</insert>
@@ -46,7 +46,7 @@
 		                     lastaccessuserguid, 
 		                     ecastatus
 		                     )
-		    select #GUID#,
+		    select #{GUID},
 		           DSSFILENAME,
 		           FILENAME,
 		           isprimary, 
@@ -58,11 +58,11 @@
 		           extentionname, 
 		           description, 
 		           classguid, 
-		           #INSTANCEGUID# revisionguid, 
-		           (select iterationid from $TABLENAME$ where guid = #INSTANCEGUID#) iterationid, 
-		           #CURRENTTIME:TIMESTAMP# createtime, 
+		           #{INSTANCEGUID} revisionguid,
+		           (select iterationid from ${TABLENAME} where guid = #{INSTANCEGUID}) iterationid,
+		           #{CURRENTTIME:TIMESTAMP} createtime,
 		           createuserguid, 
-		           #CURRENTTIME:TIMESTAMP# updatetime, 
+		           #{CURRENTTIME:TIMESTAMP} updatetime,
 		           updateuserguid, 
 		           siteid, 
 		           md5,
@@ -71,8 +71,8 @@
 		           lastaccessuserguid, 
 		           ecastatus
 		    from bi_file a
-		   where revisionguid = #INSTANCEGUID#
-		     and a.iterationid = (select iterationid-1 from $TABLENAME$ where guid = #INSTANCEGUID#)
+		   where revisionguid = #{INSTANCEGUID}
+		     and a.iterationid = (select iterationid-1 from $TABLENAME$ where guid = #{INSTANCEGUID})
 	</insert>
 	
 	<update id="updatePrimaryFileToFoundation" parameterType="java.util.HashMap">
@@ -80,26 +80,26 @@
 	       set  fileguid=
 		       (select guid 
 		          from bi_file a
-		         where a.revisionguid = #GUID#
-		           and a.iterationid = #ITERATIONID#
+		         where a.revisionguid = #{GUID}
+		           and a.iterationid = #{ITERATIONID}
 		           and a.isprimary = 'Y'),
 		   	   filename =
 		       (select a.filename 
 		          from bi_file a
-		         where a.revisionguid = #GUID#
-		           and a.iterationid = #ITERATIONID#
+		         where a.revisionguid = #{GUID}
+		           and a.iterationid = #{ITERATIONID}
 		           and a.isprimary = 'Y'),
 		       filetype =
 		       (select  a.filetype
 		          from bi_file a
-		         where a.revisionguid = #GUID#
-		           and a.iterationid = #ITERATIONID#
+		         where a.revisionguid = #{GUID}
+		           and a.iterationid = #{ITERATIONID}
 		           and a.isprimary = 'Y')
-	     where guid = #GUID#
+	     where guid = #{GUID}
 	</update>
 	
 	<select id="selectFoundationFile" parameterType="java.util.HashMap" resultType="dyna.common.bean.xml.UpperKeyMap">
-	    select fileguid, filename, filetype from $TABLENAME$ where guid = #GUID# and fileguid is not null
+	    select fileguid, filename, filetype from ${TABLENAME} where guid = #{GUID} and fileguid is not null
 	</select>
 	
 	<update id="updatePrimaryFileToIteration" parameterType="java.util.HashMap">
@@ -107,82 +107,82 @@
 	       set  fileguid=
 		       (select guid 
 		          from bi_file a
-		         where a.revisionguid = #GUID#
-		           and a.iterationid = #ITERATIONID#
+		         where a.revisionguid = #{GUID}
+		           and a.iterationid = #{ITERATIONID}
 		           and a.isprimary = 'Y'),
 		   	   filename =
 		       (select a.filename 
 		          from bi_file a
-		         where a.revisionguid = #GUID#
-		           and a.iterationid = #ITERATIONID#
+		         where a.revisionguid = #{GUID}
+		           and a.iterationid = #{ITERATIONID}
 		           and a.isprimary = 'Y'),
 		       filetype =
 		       (select  a.filetype
 		          from bi_file a
-		         where a.revisionguid = #GUID#
-		           and a.iterationid = #ITERATIONID#
+		         where a.revisionguid = #{GUID}
+		           and a.iterationid = #{ITERATIONID}
 		           and a.isprimary = 'Y')
-	     where foundationfk = #GUID#
-	     	   and iterationid = #ITERATIONID#
+	     where foundationfk = #{GUID}
+	     	   and iterationid = #{ITERATIONID}
 	</update>
 
 	<insert id="insertAll" parameterType="java.lang.String">
-		$SQL$
+		${SQL}
 	</insert>
 	
 	<insert id="insertSelect" parameterType="java.util.HashMap">
-		insert into $TABLE$(guid, $FIELDLIST$)
+		insert into ${TABLE}(guid, ${FIELDLIST})
 		<foreach collection="PARAMS" separator="union" item="PARAMS">
-		select #GUID#,
-		       #PARAMS#
+		select #{GUID},
+		       #{PARAMS}
 		</foreach>
 	</insert>
 	
 	<update id="update" parameterType="java.util.HashMap">
-		UPDATE $table$ SET $updatestatement$
-		WHERE guid=#GUID# AND
-		updatetime=#UPDATETIME:TIMESTAMP#
+		UPDATE ${table} SET ${updatestatement}
+		WHERE guid=#{GUID} AND
+		updatetime=#{UPDATETIME:TIMESTAMP}
 	</update>
 
 	<update id="save" parameterType="java.util.HashMap">
-		UPDATE $table$ SET $updatestatement$
+		UPDATE ${table} SET ${updatestatement}
 		<where>
 			<if  test="GUID!=null">
-				and guid=#GUID#
+				and guid=#{GUID}
 	  		</if>
 	  		<if  test="MASTERGUID!=null">
-				and masterfk=#MASTERGUID#
+				and masterfk=#{MASTERGUID}
 	  		</if>
 	  		<if  test="FOUNDATIONFK!=null">
-				and foundationfk=#FOUNDATIONFK#
+				and foundationfk=#{FOUNDATIONFK}
 	  		</if>
 			<if  test="UPDATETIME!=null">
-				and updatetime = #UPDATETIME:TIMESTAMP#
+				and updatetime = #{UPDATETIME:TIMESTAMP}
 	        </if>
 			<if  test="REVISIONFK!=null">
-				and revisionfk=#REVISIONFK#
+				and revisionfk=#{REVISIONFK}
 	  		</if>
 			<if  test="STRUCTUREFK!=null">
-				and structurefk=#STRUCTUREFK#
+				and structurefk=#{STRUCTUREFK}
 	  		</if>
 			<if  test="STATUS!=null">
-				and status=#STATUS#
+				and status=#{STATUS}
 	  		</if>
 			<if  test="CHECKOUTUSER!=null">
-				and checkoutuser=#CHECKOUTUSER#
+				and checkoutuser=#{CHECKOUTUSER}
 	  		</if>
 			<if  test="VIEWCHECKOUTUSER!=null">
-				and exists (select 1 from $VIEWTABLE$ where guid = viewfk and checkoutuser = #VIEWCHECKOUTUSER#)
+				and exists (select 1 from ${VIEWTABLE} where guid = viewfk and checkoutuser = #{VIEWCHECKOUTUSER})
 	  		</if>
 	  		<if  test="COMMITFOLDER!=null">
-				and commitfolder=#COMMITFOLDER#
+				and commitfolder=#{COMMITFOLDER}
 	  		</if>
 			<if  test="WFGUID!=null">
 				and not exists (select 1
                             from wf_freshattach b, 
                                  wf_procrt c
                            where b.procrtguid = c.guid
-                             and b.instanceguid = #WFGUID#
+                             and b.instanceguid = #{WFGUID}
                              and c.status = 'RUNNING'
                              and (b.isinvalid is null or b.isinvalid = 'N')
                          )
@@ -191,26 +191,26 @@
 	</update>
 	
 	<update id="updateDynamic" parameterType="dyna.common.sqlbuilder.plmdynamic.update.DynamicUpdateParamData">
-		$UPDATEALL$
+		${UPDATEALL}
     </update>
     
     <insert id="insertDynamic" parameterType="dyna.common.sqlbuilder.plmdynamic.insert.DynamicInsertParamData">
-		$UPDATEALL$
+		${UPDATEALL}
     </insert>
 
 	<update id="updateAll" parameterType="java.lang.String">
-		$UPDATEALL$
+		${UPDATEALL}
 	  </update>
 
 	<update id="checkin" parameterType="java.util.HashMap">
-		update $table$
+		update ${table}
 		set ischeckout='N', 
 			iterationid=iterationid,
 			checkoutuser=NULL,
 			checkouttime=NULL,
-			updateuser=#UPDATEUSER#,
-			updatetime=#CURRENTTIME:TIMESTAMP#
-		where guid=#GUID# 
+			updateuser=#{UPDATEUSER},
+			updatetime=#{CURRENTTIME:TIMESTAMP}
+		where guid=#{GUID}
 		and ischeckout='Y' 
        	and (status = 'ECP' or status = 'WIP')
         and obsoletetime is null
@@ -223,19 +223,19 @@
                            and b.isinvalid = 'N'
                        )
 		<if test="UPDATETIME">
-			AND updatetime = #UPDATETIME:TIMESTAMP#
+			AND updatetime = #{UPDATETIME:TIMESTAMP}
 	  	</if>
 		<if test="CHECKOUTUSER">
-			AND checkoutuser=#CHECKOUTUSER#
+			AND checkoutuser=#{CHECKOUTUSER}
 	  	</if>
 	</update>
 
 	<update id="transferCheckout" parameterType="java.util.HashMap">
-		update $table$ 
-		   set checkoutuser=#TOUSERGUID#,
-		   	   updatetime = #CURRENTTIME:TIMESTAMP#,
-			   updateuser = #UPDATEUSER#
-		where guid in ($GUID$)
+		update ${table}
+		   set checkoutuser=#{TOUSERGUID},
+		   	   updatetime = #{CURRENTTIME:TIMESTAMP},
+			   updateuser = #{UPDATEUSER}
+		where guid in (${GUID})
 		  and ischeckout = 'Y'
           and not exists (select 1
                             from wf_freshattach b, 
@@ -246,12 +246,12 @@
                              and b.isinvalid = 'N'
                          )
 		  and exists (select 0 
-		  				from $table$ b
-		  			   where b.updatetime = #UPDATETIME:TIMESTAMP#
-		  			     and b.guid in ($GUID$)
+		  				from ${table} b
+		  			   where b.updatetime = #{UPDATETIME:TIMESTAMP}
+		  			     and b.guid in (${GUID})
 		  			 )
 			<if  test="CHECKOUTUSER!=null">
-				and checkoutuser=#CHECKOUTUSER#
+				and checkoutuser=#{CHECKOUTUSER}
 	  		</if>
 			<if  test="STATUS!=null">
 				and  (status = 'ECP' or status = 'WIP')
@@ -260,116 +260,116 @@
 	</update>
 
 	<update id="obsolete" parameterType="java.util.HashMap">
-			update $table$
-			   set obsoletetime = #CURRENTTIME:TIMESTAMP#,
-				   obsoleteuser = #OBSOLETEUSER#,
-				   updateuser = #UPDATEUSER#,
-				   updatetime = #CURRENTTIME:TIMESTAMP#
+			update ${table}
+			   set obsoletetime = #{CURRENTTIME:TIMESTAMP},
+				   obsoleteuser = #{OBSOLETEUSER},
+				   updateuser = #{UPDATEUSER},
+				   updatetime = #{CURRENTTIME:TIMESTAMP}
 		     where 1 = 1
             <if  test="GUID!=null">
-				and  GUID = #GUID#
+				and  GUID = #{GUID}
             </if>
             <if  test="MASTERFK!=null">
-				and MASTERFK = #MASTERFK#
+				and MASTERFK = #{MASTERFK}
             </if>
 	</update>
 	
 	<update id="release" parameterType="java.util.HashMap">
-			update $table$
-			   set releasetime = #CURRENTTIME:TIMESTAMP#,
+			update ${table}
+			   set releasetime = #{CURRENTTIME:TIMESTAMP},
 				   status      = 'RLS',
-				   updateuser  = #UPDATEUSER#,
-				   updatetime  = #CURRENTTIME:TIMESTAMP#
-			 where guid = #GUID#
+				   updateuser  = #{UPDATEUSER},
+				   updatetime  = #{CURRENTTIME:TIMESTAMP}
+			 where guid = #{GUID}
 				and releasetime is null
 	</update>
 
 	<update id="saveFile" parameterType="java.util.HashMap">
-		update $table$ 
+		update ${table}
 		   set 
 		<if test="FILEGUID">
-			   fileguid = #FILEGUID#
+			   fileguid = #{FILEGUID}
 		</if>
 		<if test="FILENAME">
-			   ,filename = #FILENAME#
+			   ,filename = #{FILENAME}
 		</if>
 		<if test="FILETYPE">
-			   ,filetype = #FILETYPE#
+			   ,filetype = #{FILETYPE}
 		</if>
 		<if test="MD5">
-			   ,md5 = #MD5#
+			   ,md5 = #{MD5}
 		</if>
-		 where guid = #GUID#
+		 where guid = #{GUID}
 	</update>
 	
 	<update id="unlockAllByECO" parameterType="java.util.HashMap">
-	    update $table$
+	    update ${table}
 	       set ecflag = null,
 	           ecflag$$class = null,
 	           ecflag$$master = null
-	     where ecflag = #ECFLAG#
-	       and ecflag$$class = #ECFLAGCLASS#
-	       and ecflag$$master = #ECFLAGMASTER#
+	     where ecflag = #{ECFLAG}
+	       and ecflag$$class = #{ECFLAGCLASS}
+	       and ecflag$$master = #{ECFLAGMASTER}
 	</update>
 
 	<update id="changeViewBomLocation" parameterType="java.util.HashMap">
-		update $viewtable$
+		update ${viewtable}
 	       set locationlib = (select locationlib
-		                        from $end1table$
-		                       where guid = #END1GUID#
+		                        from ${end1table}
+		                       where guid = #{END1GUID}
 		                     )
-	     where end1 = #END1GUID#
+	     where end1 = #{END1GUID}
 	</update>
 	
 	<update id="saveOwner" parameterType="java.util.HashMap">
-		update $tablename$
-		   set owneruser = #OWNERUSERGUID#, 
-		       ownergroup = #OWNERGROUPGUID#,
-		       updatetime=#CURRENTTIME:TIMESTAMP#,
-		   	   updateuser=#UPDATEUSERGUID#
-		 where guid = #FOUNDATIONGUID#
+		update ${tablename}
+		   set owneruser = #{OWNERUSERGUID}, 
+		       ownergroup = #{OWNERGROUPGUID},
+		       updatetime=#{CURRENTTIME:TIMESTAMP},
+		   	   updateuser=#{UPDATEUSERGUID}
+		 where guid = #{FOUNDATIONGUID}
 	</update>
 	
 	<update id="saveSystemSpecialFiled" parameterType="java.util.HashMap">
-		update $tablename$
-		   set $UPDATESTATEMENT$
-			 where guid = #GUID#
+		update ${tablename}
+		   set ${UPDATESTATEMENT}
+			 where guid = #{GUID}
 	 	<if  test="CHECKOUTUSER!=null">
-			and CHECKOUTUSER = #CHECKOUTUSER#
+			and CHECKOUTUSER = #{CHECKOUTUSER}
         </if>
 	</update>
 	
 	<!-- 恢复（取消废弃） --> 
 	<update id="resume" parameterType="java.util.HashMap">
-		update $tablename$
+		update ${tablename}
 		   set obsoletetime = null,
 		       obsoleteuser = null,
-		       updateuser = #USERGUID#,
-		       updatetime = #CURRENTTIME:TIMESTAMP#
+		       updateuser = #{USERGUID},
+		       updatetime = #{CURRENTTIME:TIMESTAMP}
 		where 1 = 1
 		<if  test="GUID!=null">
-			and GUID = #GUID#
+			and GUID = #{GUID}
 		</if>
 		<if  test="MASTERFK!=null">
-			and MASTERFK = #MASTERFK#
+			and MASTERFK = #{MASTERFK}
 		</if>
 	</update>
 	
 	<!-- 状态变更 --> 
 	<update id="changeStatus" parameterType="java.util.HashMap">
-		update $TABLENAME$
+		update ${TABLENAME}
 		   set <if test="UPDATECOLUMNS">
-			   $UPDATECOLUMNS$
+			   ${UPDATECOLUMNS}
 			   </if>
-		       updateuser = #UPDATEUSERGUID#,
-		       updatetime = #CURRENTTIME:TIMESTAMP#
-		 where guid = #GUID#
+		       updateuser = #{UPDATEUSERGUID},
+		       updatetime = #{CURRENTTIME:TIMESTAMP}
+		 where guid = #{GUID}
 	</update>
 	 
 	<select id="select" parameterType="java.util.HashMap" resultType="dyna.common.bean.xml.UpperKeyMap" statementType="STATEMENT">
-		SELECT $fieldlist$ 
-		  FROM $table$
-		 WHERE guid=#GUID#
+		SELECT ${fieldlist}
+		  FROM ${table}
+		 WHERE guid=#{GUID}
 	</select>
 	
 	<select id="pingQuery" resultType="java.lang.String" statementType="STATEMENT">
@@ -383,21 +383,21 @@
 	</select>
  
 	<select id="selectAutoHalf" parameterType="java.util.HashMap" resultType="dyna.common.bean.xml.UpperKeyMap" statementType="STATEMENT">
-		select $SELECT$
-		from $FROM$
-		where $WHERE$
+		select ${SELECT}
+		from ${FROM}
+		where ${WHERE}
 	</select>
 	
 	<select id="selectAuto" parameterType="java.lang.String" resultType="java.lang.String" statementType="STATEMENT">
-	    $SQL$
+	    ${SQL}
 	</select>
 
 	<!-- 查询structure下master是否重复 -->
 	<select id="getEnd2masterCount" parameterType="map" resultType="java.lang.String" statementType="STATEMENT">
 		select count(1)
-		  from $STRUCTABLE$ t
-		 where t.viewfk = #VIEWGUID#
-		   and t.end2$$master = #END2MASTERGUID#
+		  from ${STRUCTABLE} t
+		 where t.viewfk = #{VIEWGUID}
+		   and t.end2$$master = #{END2MASTERGUID}
 	</select>
 	
 	<select id="getStructureByGuid" parameterType="java.util.HashMap" resultType="dyna.common.bean.data.StructureObjectImpl" statementType="STATEMENT">
@@ -406,8 +406,8 @@
 	           <if test="fieldsql!=null" >
 	               $fieldsql$,
 	           </if>
-	      from $STRUCTABLE$ f$$
-	     where f$$.guid = #GUID#
+	      from ${STRUCTABLE} f$$
+	     where f$$.guid = #{GUID}
 	</select>
 
 	<select id="iswfdata" parameterType="java.lang.String" resultType="dyna.common.bean.xml.UpperKeyMap" statementType="STATEMENT">
@@ -416,7 +416,7 @@
                   from wf_freshattach b, 
                        wf_procrt c
                  where b.procrtguid = c.guid
-                   and b.instanceguid = #END1GUID#
+                   and b.instanceguid = #{END1GUID}
                    and c.status = 'RUNNING'
                    and b.isinvalid = 'N'
                )
@@ -426,8 +426,8 @@
 		select a.md_id id$$,
 			   a.md_name name$$,
 			   a.alterid alterid$$
-		  from $TABLENAME$ a
-		 where a.guid = #MASTERGUID#
+		  from ${TABLENAME} a
+		 where a.guid = #{MASTERGUID}
  	</select>
 
 	<select id="checkLibName" resultType="java.lang.Integer" parameterType="java.util.HashMap" statementType="STATEMENT">
@@ -437,51 +437,51 @@
 		        end cont
 		  from (select count(1) cou
 		          from ma_folder a
-		         where a.foldername = #NAME#
+		         where a.foldername = #{NAME}
 		           and a.classification = '4'
 		       ) b
 	</select>
 	
 	<select id="SelectLibUser" resultType="java.lang.String" parameterType="java.util.HashMap" statementType="STATEMENT">
 		select case
-	        when b.libraryuser is null then #GUID:CHAR:NULL#
+	        when b.libraryuser is null then #{GUID:CHAR}
 			else b.libraryuser
 		   end
 		from ma_folder b
-		where b.guid = #PARENTGUID#
+		where b.guid = #{PARENTGUID}
 	</select>
 	
 	<select id="getMasterGuidByFoundationGuid" resultType="java.lang.String" parameterType="java.util.HashMap">
 		select f.masterfk
-		  from $tablename$ f
-		  where f.guid = #GUID#
+		  from ${tablename} f
+		  where f.guid = #{GUID}
 	</select>
 	
 	<select id="getCheckoutUser" resultType="java.lang.String" parameterType="java.util.HashMap">
 		select f.checkoutuser
-		  from $tablename$ f
-		  where f.guid = #GUID#
+		  from ${tablename} f
+		  where f.guid = #{GUID}
 	</select>
 	
 	<delete id="delete" parameterType="java.util.HashMap">
-		DELETE FROM $table$ 
-		WHERE guid = #GUID#
+		DELETE FROM ${table}
+		WHERE guid = #{GUID}
 		<if test="CHECKOUTUSER">
-			and exists (select 0 from $VAITETABLE$ where guid = viewfk and checkoutuser = #CHECKOUTUSER#) 
+			and exists (select 0 from ${VAITETABLE} where guid = viewfk and checkoutuser = #{CHECKOUTUSER})
 		</if>
 	</delete>
 	
 	<delete id="deleteAllStruc" parameterType="java.util.HashMap">
-		DELETE FROM $table$ 
-		 WHERE viewfk = #VIEWGUID#
+		DELETE FROM ${table}
+		 WHERE viewfk = #{VIEWGUID}
 	</delete>
 
 	<delete id="deleteMaster" parameterType="java.util.HashMap">
-		delete from $mastertablename$
+		delete from ${mastertablename}
 		 where guid = (select a.masterfk
-						 from $tablename$ a
+						 from ${tablename} a
 					    where (a.status = 'ECP' or a.status = 'WIP')
-					      and (a.obsoletetime is null or a.obsoletetime  <![CDATA[ > ]]> #CURRENTTIME:TIMESTAMP#)
+					      and (a.obsoletetime is null or a.obsoletetime  <![CDATA[ > ]]> #{CURRENTTIME:TIMESTAMP})
 					      and not exists (select 1 from (select count(*) coun
 						                    from wf_freshattach b, 
 							                     wf_procrt c
@@ -489,22 +489,22 @@
 							                 and b.instanceguid = a.guid
 							                 and c.status = 'RUNNING'
 							                 and b.isinvalid = 'N'
-							                 and a.guid = #GUID#) f where f.coun = 1
+							                 and a.guid = #{GUID}) f where f.coun = 1
 							             )
 					   <if test="UPDATETIME">
-						  and updatetime = #UPDATETIME:TIMESTAMP#
+						  and updatetime = #{UPDATETIME:TIMESTAMP}
 			           </if>
 			              and ischeckout = 'N'
-			              and a.guid = #GUID#
+			              and a.guid = #{GUID}
 					  )
 	</delete>
 	 
 	<delete id="deleteMasterByMasterGuid" parameterType="java.util.HashMap">
-		delete from $mastertablename$ 
-		  where guid = #MASTERGUID# 	
+		delete from ${mastertablename}
+		  where guid = #{MASTERGUID}
 		  and not exists (select 1
-		  			  from $tablename$ a
-		  			 where masterfk = #MASTERGUID#
+		  			  from ${tablename} a
+		  			 where masterfk = #{MASTERGUID}
         			   and exists (select 1
 				                         from wf_freshattach b, 
 				                              wf_procrt c
@@ -518,38 +518,38 @@
 	</delete>
 	
 	<delete id="deleteRevisionByMaster" parameterType="java.util.HashMap">
-	  delete from $tablename$  where masterfk = #MASTERFK#
+	  delete from ${tablename}  where masterfk = #{MASTERFK}
 	</delete>
 
 	<delete id="deleteRevision" parameterType="java.util.HashMap">
-		delete from $tablename$ 
+		delete from ${tablename}
 		 where (status = 'ECP' or status = 'WIP')
            and obsoletetime is null
-		   and guid = #GUID#
+		   and guid = #{GUID}
 		   and not exists (select 1
 			                  from wf_freshattach b, 
 			                       wf_procrt c
 			                 where b.procrtguid = c.guid
-			                   and b.instanceguid = #GUID#
+			                   and b.instanceguid = #{GUID}
 			                   and c.status = 'RUNNING'
 			                   and b.isinvalid = 'N'
 			              )
 		   <if test="UPDATETIME">
-		   and updatetime = #UPDATETIME:TIMESTAMP#
+		   and updatetime = #{UPDATETIME:TIMESTAMP}
 		   </if>
 		   <if test="ISCHECKOUT">
-		   and ischeckout = #ISCHECKOUT#
+		   and ischeckout = #{ISCHECKOUT}
 		   </if>
 	</delete>
 
 	<delete id="deleteAllStructure" parameterType="java.util.HashMap">
-	    delete from $STRUCTABLE$
-	     where viewfk = #VIEWFK#
+	    delete from ${STRUCTABLE}
+	     where viewfk = #{VIEWFK}
 	</delete>
     
 	<delete id="deleteAutoHalf" parameterType="java.util.HashMap" >
-		delete from $DELETE$
-		where $WHERE$
+		delete from ${DELETE}
+		where ${WHERE}
 	</delete>
 	
     <select id="getAllRevisionByMaster" resultType="dyna.common.bean.xml.UpperKeyMap" parameterType="java.util.HashMap" statementType="STATEMENT">
@@ -561,12 +561,12 @@
                (select m.classname
                   from ma_class m
                  where m.guid = b.classguid) classname$$
-          from $tablename$ b
-         where b.masterfk = #MASTERFK#
+          from ${tablename} b
+         where b.masterfk = #{MASTERFK}
     </select>
 	
 	<select id="selectEnd2ClassOfStruc" parameterType="java.util.HashMap" resultType="java.lang.String">
-	    select distinct s.end2$$class from $BASETABLENAME$ s where s.viewfk = #ORIGVIEWGUID# and s.end2$$class is not null
+	    select distinct s.end2$$class from ${BASETABLENAME} s where s.viewfk = #{ORIGVIEWGUID} and s.end2$$class is not null
 	</select>
 	
 	<insert id="insertAllStructureInfo" parameterType="java.util.HashMap">
@@ -575,55 +575,55 @@
 		                                origstructureguid, 
 		                                viewfk
 		                               )
-						         select #GUID#,
+						         select #{GUID},
 						                sys_guid(),
 										s.guid,
-										#DESTVIEWGUID#
-								   from $BASETABLENAME$ s,
+										#{DESTVIEWGUID}
+								   from ${BASETABLENAME} s,
 								        (select m.masterfk
-								           from ($tablesql$) m
+								           from (${tablesql}) m
 								          where m.latestrevision like '%m%'
 								            and m.status <![CDATA[<>]]> 'OBS') f
 								  where s.end2$$master = f.masterfk
-								    and s.viewfk = #ORIGVIEWGUID#
+								    and s.viewfk = #{ORIGVIEWGUID}
 	</insert>
 	
 	<insert id="copyStructure" parameterType="java.util.HashMap">
-	    insert into $BASETABLENAME$(guid, 
+	    insert into ${BASETABLENAME}(guid,
 	                             viewfk, 
-	                             $REVISION_COLUMN$
+	                             ${REVISION_COLUMN}
 	                            )
                           select deststructureguid, 
                                  s.viewfk, 
-                                 $REVISION_COLUMN$
+                                 ${REVISION_COLUMN}
                             from TEMP_VIEW_STRUCTURE s, 
-                                 $BASETABLENAME$ a
+                                 ${BASETABLENAME} a
                            where s.origstructureguid = a.guid
-                             and s.guid = #STRUCTUREGUID#
+                             and s.guid = #{STRUCTUREGUID}
 	</insert>
 	
 	<update id="updateEnd2ToNull" parameterType="java.util.HashMap">
-		update $STRUCTABLE$ 
+		update ${STRUCTABLE}
 		   set end2 = case (select t.end2type
-		                        from $VIEWTABLE$ v, 
+		                        from ${VIEWTABLE} v,
 		                             bi_relation_template t
 		                       where v.templateid = t.templateid
-		                         and v.guid = #VIEWGUID#)
+		                         and v.guid = #{VIEWGUID})
 		                  when '2' then s.end2
 		                  else null
 		                end
-		 where viewfk = #VIEWGUID#
+		 where viewfk = #{VIEWGUID}
 	</update>
 		
 	<select id="getRevisionIdSequence" parameterType="java.util.HashMap" resultType="java.lang.Integer">
 	    select (case 
 			      when max(revisionidsequence) is null then 0
 			      else max(revisionidsequence)
-			    end) + 1 from $BASETABLENAME$ where masterfk = #MASTERFK#
+			    end) + 1 from ${BASETABLENAME} where masterfk = #{MASTERFK}
 	</select>
 		
 	<delete id="deleteAll" parameterType="java.lang.String">
-	    delete from $TABLENAME$
+	    delete from ${TABLENAME}
 	</delete>
     <select id="lockForCheckout1" resultType="dyna.common.bean.data.FoundationObjectImpl" parameterType="map">
         select md_id id$$,
@@ -631,9 +631,9 @@
                iterationid iterationid$$,
                status status$$,
                ischeckout ischeckout$$
-          from $TABLENAME$ 
-         where guid = #GUID# 
-         and updatetime=#UPDATETIME#
+          from ${TABLENAME}
+         where guid = #{GUID}
+         and updatetime=#{UPDATETIME}
     </select>
 	
     <select id="lockForCheckout" resultType="dyna.common.bean.data.FoundationObjectImpl" parameterType="map">
@@ -643,16 +643,16 @@
                iterationid iterationid$$,
                status status$$,
                ischeckout ischeckout$$
-          from $TABLENAME$ 
-         where guid = #GUID# 
+          from ${TABLENAME}
+         where guid = #{GUID}
     </select>
     
     <select id="selectMaxIterationId" resultType="java.lang.Integer" parameterType="map">
-        select max(iterationid) from $TABLENAME$ where $FILTER$
+        select max(iterationid) from ${TABLENAME} where ${FILTER}
     </select>
     
     <select id="isLockInWF" resultType="java.lang.String" parameterType="java.lang.String">
-        select 'Y' from wf_lock a where a.instanceguid = #GUID#
+        select 'Y' from wf_lock a where a.instanceguid = #{GUID}
     </select>
     
     <select id="getConfigRuleRevise" resultType="dyna.common.bean.xml.UpperKeyMap">
@@ -661,8 +661,8 @@
     
     <select id="selectDataCountOfLibrary" parameterType="java.util.HashMap" resultType="java.lang.Integer">
         select count(guid)
-          from $TABLENAME$ a
-         where a.locationlib = #LOCATIONLIB#
+          from ${TABLENAME} a
+         where a.locationlib = #{LOCATIONLIB}
            and exists (select 1 from ma_class b
                         where a.classguid = b.guid
                           and b.nonqueryable = 'N'

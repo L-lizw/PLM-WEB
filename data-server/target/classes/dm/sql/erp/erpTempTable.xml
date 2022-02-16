@@ -5,23 +5,23 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 <mapper namespace="dyna.common.dtomapper.erp.tmptab.ERPtempDataMapper">
 
 	<select id="select" parameterType="map" resultType="dyna.common.dto.erp.tmptab.ERPtempData">
-		SELECT a.*,s.jobstatus FROM $TABLE$ a,SA_JOB_QUEUE S
-		where a.JOBGUID = S.GUID(+) AND a.CATEGORY = #CATEGORY# AND a.ITEMGUID = #ITEMGUID# 
+		SELECT a.*,s.jobstatus FROM ${TABLE} a,SA_JOB_QUEUE S
+		where a.JOBGUID = S.GUID(+) AND a.CATEGORY = #{CATEGOR} AND a.ITEMGUID = #{ITEMGUID}
 	</select>
 	
 	<insert id="insert" parameterType="dyna.common.dto.erp.tmptab.ERPtempData">
-		INSERT INTO $TABLE$ (ITEMGUID,CATEGORY,JOBGUID,STAMP,ISFIRST) <!-- A($FIELDA$,$FIELDB$,$FIELDC$)  -->
-		VALUES(#ITEMGUID#,#CATEGORY#,#JOBGUID#,#STAMP#,#ISFIRST#)
+		INSERT INTO ${TABLE} (ITEMGUID,CATEGORY,JOBGUID,STAMP,ISFIRST) <!-- A($FIELDA$,$FIELDB$,$FIELDC$)  -->
+		VALUES(#{ITEMGUID},#{CATEGORY},#{JOBGUID},#{STAMP},#{ISFIRST})
 	</insert>
 	
 	<update id="update" parameterType="dyna.common.dto.erp.tmptab.ERPtempData">
-		Update $TABLE$ set
-		<if test="STAMP">STAMP = #STAMP#,</if>
-		<if test="ISFIRST">ISFIRST=#ISFIRST#,</if>
-		<if test="JOBGUID">JOBGUID=#JOBGUID#</if>
+		Update ${TABLE} set
+		<if test="STAMP">STAMP = #{STAMP},</if>
+		<if test="ISFIRST">ISFIRST=#{ISFIRST},</if>
+		<if test="JOBGUID">JOBGUID=#{JOBGUID}</if>
 		<where>
-			<if  test="ITEMGUID!=null">and ITEMGUID=#ITEMGUID#</if>
-			<if  test="CATEGORY!=null">and CATEGORY=#CATEGORY#</if>
+			<if  test="ITEMGUID!=null">and ITEMGUID=#{ITEMGUID}</if>
+			<if  test="CATEGORY!=null">and CATEGORY=#{CATEGORY}</if>
 		</where>
 	</update>
 	

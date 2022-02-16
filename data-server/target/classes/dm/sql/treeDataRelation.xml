@@ -12,37 +12,37 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                                          createuserguid,
                                          createtime
                                         )
-        values(#GUID:VARCHAR:NULL#, 
-               #DATAGUID:VARCHAR:NULL#,
-               #SUBDATAGUID:VARCHAR:NULL#,
-               #DATATYPE:VARCHAR:NULL#,
-               #CREATEUSERGUID:VARCHAR:NULL#,
-               #CURRENTTIME:TIMESTAMP#
+        values(#{GUID:VARCHAR}, 
+               #{DATAGUID:VARCHAR},
+               #{SUBDATAGUID:VARCHAR},
+               #{DATATYPE:VARCHAR},
+               #{CREATEUSERGUID:VARCHAR},
+               #{CURRENTTIME:TIMESTAMP}
               )
     </insert>
 
     <select id="selectAllSubData" parameterType="java.util.HashMap" resultType="dyna.common.dto.TreeDataRelation" >
         select distinct subdataguid
           from ma_treedata_relation
-         where dataguid = #DATAGUID#
-           and datatype = #DATATYPE#
+         where dataguid = #{DATAGUID}
+           and datatype = #{DATATYPE}
     </select>
 
     <select id="selectAllParentData" parameterType="java.util.HashMap" resultType="dyna.common.dto.TreeDataRelation">
         select distinct subdataguid
           from ma_treedata_relation
-         where subdataguid = #SUBDATAGUID#
-           and datatype = #DATATYPE#
+         where subdataguid = #{SUBDATAGUID}
+           and datatype = #{DATATYPE}
     </select>
 
     <delete id="deleteBy" parameterType="java.util.HashMap">
         delete from ma_treedata_relation
-         where (subdataguid = #SUBDATAGUID# or dataguid = #DATAGUID#)
-           and datatype = #DATATYPE#
+         where (subdataguid = #{SUBDATAGUID} or dataguid = #{DATAGUID})
+           and datatype = #{DATATYPE}
     </delete>
 
     <delete id="deleteByType" parameterType="java.lang.String">
         delete from ma_treedata_relation
-         where datatype = #DATATYPE#
+         where datatype = #{DATATYPE}
     </delete>
 </mapper>

@@ -8,36 +8,36 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		SELECT * FROM TEMP_ERP_TOTAL a
 		<where>
 			<if  test="ERPTYPE!=null">
-				and a.ERPTYPE = #ERPTYPE#
+				and a.ERPTYPE = #{ERPTYPE}
 			</if>
 			<if  test="FACTORY!=null">
-				and a.FACTORY = #FACTORY#
+				and a.FACTORY = #{FACTORY}
 			</if>
 			<if  test="SERVERIP!=null">
-				and a.SERVERIP = #SERVERIP#
+				and a.SERVERIP = #{SERVERIP}
 			</if>
 			<if  test="GUID!=null">
-				and a.GUID = #GUID#
+				and a.GUID = #{GUID}
 			</if>
 		</where>
 	</select>
 	
 	<insert id="insert" parameterType="dyna.common.dto.erp.tmptab.ERPTempTableInfo">
 		INSERT INTO TEMP_ERP_TOTAL (GUID, ERPTYPE,FACTORY,SERVERIP,BASETABLENAME)
-		VALUES(#GUID#, #ERPTYPE#,#FACTORY#,#SERVERIP#,#BASETABLENAME#)
+		VALUES(#{GUID}, #{ERPTYPE},#{FACTORY},#{SERVERIP},#{BASETABLENAME})
 	</insert>
 	
 	<update id="createTable" parameterType="map">
-	create table $table$
+	create table ${table}
 	(
-		$fielda$ not null,
-		$fieldb$ not null,
-		$fieldc$ ,
-		$fieldd$ ,
-		$fielde$ 
+		${fielda} not null,
+		${fieldb} not null,
+		${fieldc} ,
+		${fieldd} ,
+		${fielde}
 	)
 	</update>
 	<update id="createTableIndex" parameterType="map">
-		CREATE UNIQUE INDEX $indexname$ ON $table$ (itemguid, category)
+		CREATE UNIQUE INDEX ${indexname} ON ${table} (itemguid, category)
 	</update>
 </mapper>

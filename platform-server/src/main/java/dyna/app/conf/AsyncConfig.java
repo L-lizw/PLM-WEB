@@ -34,7 +34,7 @@ public class AsyncConfig
 
 
 	@Autowired
-	private ConfigurableServerImpl serverConfig = null;
+	private ConfigurableServerImpl serverConfig;
 
 	/***
 	 * 多线程任务池

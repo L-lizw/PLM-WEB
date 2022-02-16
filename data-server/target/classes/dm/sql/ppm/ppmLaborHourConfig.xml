@@ -7,7 +7,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     <sql id="where">
         <where>
             <if test="GUID!=null">
-                and guid = #GUID#
+                and guid = #{GUID}
             </if>
         </where>
     </sql>
@@ -32,32 +32,32 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			        createtime,
 			        updateuserguid,
 			        updatetime)
-	        values (#GUID#,
-	         		#STANDARDHOUR#,
-	                #OVERLOADHOUR#,
-	                #UNDERLOADHOUR#,
-	                #FREEZETIME#,
-					#ISSAVEASPERSONALLOG#,
-					#ISMODIFICATIONAUDITHOUR#,
+	        values (#{GUID},
+	         		#{STANDARDHOUR},
+	                #{OVERLOADHOUR},
+	                #{UNDERLOADHOUR},
+	                #{FREEZETIME},
+					#{ISSAVEASPERSONALLOG},
+					#{ISMODIFICATIONAUDITHOUR},
 					
-					#CREATEUSERGUID#,
-					#CURRENTTIME:TIMESTAMP#,
-					#UPDATEUSERGUID#,
-					#CURRENTTIME:TIMESTAMP#)
+					#{CREATEUSERGUID},
+					#{CURRENTTIME:TIMESTAMP},
+					#{UPDATEUSERGUID},
+					#{CURRENTTIME:TIMESTAMP})
     </insert>
     
     <update id="update" parameterType="dyna.common.bean.data.ppms.LaborHourConfig">
         update ppm_laborhourconfig 
                 <set>
-	               <if test="STANDARDHOUR!=null">STANDARDHOUR = #STANDARDHOUR#,</if>
-	               <if test="OVERLOADHOUR!=null">OVERLOADHOUR = #OVERLOADHOUR#,</if>
-	               <if test="UNDERLOADHOUR!=null">UNDERLOADHOUR = #UNDERLOADHOUR#,</if>
-	               <if test="FREEZETIME!=null">FREEZETIME = #FREEZETIME#,</if>
-	               <if test="ISSAVEASPERSONALLOG!=null">ISSAVEASPERSONALLOG = #ISSAVEASPERSONALLOG#,</if>
-	               <if test="ISMODIFICATIONAUDITHOUR!=null">ISMODIFICATIONAUDITHOUR = #ISMODIFICATIONAUDITHOUR#,</if>
+	               <if test="STANDARDHOUR!=null">STANDARDHOUR = #{STANDARDHOUR},</if>
+	               <if test="OVERLOADHOUR!=null">OVERLOADHOUR = #{OVERLOADHOUR},</if>
+	               <if test="UNDERLOADHOUR!=null">UNDERLOADHOUR = #{UNDERLOADHOUR},</if>
+	               <if test="FREEZETIME!=null">FREEZETIME = #{FREEZETIME},</if>
+	               <if test="ISSAVEASPERSONALLOG!=null">ISSAVEASPERSONALLOG = #{ISSAVEASPERSONALLOG},</if>
+	               <if test="ISMODIFICATIONAUDITHOUR!=null">ISMODIFICATIONAUDITHOUR = #{ISMODIFICATIONAUDITHOUR},</if>
                </set>
-               updatetime = #CURRENTTIME:TIMESTAMP#,
-               updateuserguid = #UPDATEUSERGUID#
+               updatetime = #{CURRENTTIME:TIMESTAMP},
+               updateuserguid = #{{UPDATEUSERGUID}
           	   <include refid="where"/>
     </update>
     

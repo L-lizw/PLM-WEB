@@ -21,42 +21,42 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			       )
         		   values
         		   (
-			        #GUID:VARCHAR:NULL#,
-					#TYPENAME:VARCHAR:NULL#,
-					#APPPATH:VARCHAR:NULL#,
-					#FILETYPE:VARCHAR:NULL#,
-					#RELATIONNAME:VARCHAR:NULL#,
-					#SYNFILETYPE:VARCHAR:NULL#,
-					#TOOLTYPE:VARCHAR:NULL#,
-					#CURRENTTIME:TIMESTAMP#,
-					#CREATEUSERGUID:VARCHAR:NULL#,
-					#CURRENTTIME:TIMESTAMP#,
-					#UPDATEUSERGUID:VARCHAR:NULL#
+			        #{GUID:VARCHAR},
+					#{TYPENAME:VARCHAR},
+					#{APPPATH:VARCHAR},
+					#{FILETYPE:VARCHAR},
+					#{RELATIONNAME:VARCHAR},
+					#{SYNFILETYPE:VARCHAR},
+					#{TOOLTYPE:VARCHAR},
+					#{CURRENTTIME:TIMESTAMP},
+					#{CREATEUSERGUID:VARCHAR},
+					#{CURRENTTIME:TIMESTAMP},
+					#{UPDATEUSERGUID:VARCHAR}
 		           )
     </insert>
 
     <update id="update" parameterType="dyna.common.dto.FileOpenConfig">
         update bi_filebrowse_type  
 		<set>
-			updatetime=#CURRENTTIME:TIMESTAMP#,
-			updateuserguid=#UPDATEUSERGUID#,
-			<if  test="TYPENAME!=null">TYPENAME=#TYPENAME#,</if>
-			<if  test="APPPATH!=null">apppath=#APPPATH#,</if>
-			<if  test="FILETYPE!=null">filetype=#FILETYPE#,</if>
-			<if  test="RELATIONNAME!=null">relationname=#RELATIONNAME#,</if>
-			<if  test="SYNFILETYPE!=null">synfiletype=#SYNFILETYPE#,</if>
-			<if  test="TOOLTYPE!=null">tooltype=#TOOLTYPE#,</if>
+			updatetime=#{CURRENTTIME:TIMESTAMP},
+			updateuserguid=#{UPDATEUSERGUID},
+			<if  test="TYPENAME!=null">TYPENAME=#{TYPENAME},</if>
+			<if  test="APPPATH!=null">apppath=#{APPPATH},</if>
+			<if  test="FILETYPE!=null">filetype=#{FILETYPE},</if>
+			<if  test="RELATIONNAME!=null">relationname=#{RELATIONNAME},</if>
+			<if  test="SYNFILETYPE!=null">synfiletype=#{SYNFILETYPE},</if>
+			<if  test="TOOLTYPE!=null">tooltype=#{TOOLTYPE},</if>
 		</set>
-		where guid = #GUID#
+		where guid = #{GUID}
     </update>
     
     <delete id="delete" parameterType="java.lang.String">
         delete from bi_filebrowse_type
-         where guid = #GUID# 
+         where guid = #{GUID}
     </delete>
     
     <select id="get" parameterType="java.lang.String" resultType="dyna.common.dto.FileOpenConfig">
-        select * from bi_filebrowse_type a  where guid = #GUID# 
+        select * from bi_filebrowse_type a  where guid = #{GUID}
     </select>
 
     <select id="selectForLoad" parameterType="map" resultType="dyna.common.dto.FileOpenConfig">

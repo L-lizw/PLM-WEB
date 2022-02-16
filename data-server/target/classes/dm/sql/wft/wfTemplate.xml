@@ -12,7 +12,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     <select id="get" parameterType="java.lang.String" resultType="dyna.common.dto.template.wft.WorkflowTemplateInfo" statementType="STATEMENT">
 		SELECT *
 		  FROM WF_TEMPLATE
-		 WHERE GUID = #GUID#
+		 WHERE GUID = #{GUID}
 	</select>
 
     <insert id="insert" parameterType="dyna.common.dto.template.wft.WorkflowTemplateInfo">
@@ -29,53 +29,53 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                                 ISVALID,
                                 REQUIREDEXECUTOR
                                )
-        VALUES(#GUID:VARCHAR:NULL#,
-               #WFTID:VARCHAR:NULL#,
-               #WFTNAME:VARCHAR:NULL#,
-               #WFNAME:VARCHAR:NULL#,
-               #BMGUID:VARCHAR:NULL#,
-               #TITLE:VARCHAR:NULL#,
-               #CREATEUSERGUID:VARCHAR:NULL#,
-               #CURRENTTIME:TIMESTAMP#,
-               #UPDATEUSERGUID:VARCHAR:NULL#,
-               #CURRENTTIME:TIMESTAMP#,
+        VALUES(#{GUID:VARCHAR},
+               #{WFTID:VARCHAR},
+               #{WFTNAME:VARCHAR},
+               #{WFNAME:VARCHAR},
+               #{BMGUID:VARCHAR},
+               #{TITLE:VARCHAR},
+               #{CREATEUSERGUID:VARCHAR},
+               #{CURRENTTIME:TIMESTAMP},
+               #{UPDATEUSERGUID:VARCHAR},
+               #{CURRENTTIME:TIMESTAMP},
                '1',
-               #REQUIREDEXECUTOR:VARCHAR:NULL#
+               #{REQUIREDEXECUTOR:VARCHAR}
               )
     </insert>
 
     <update id="update" parameterType="java.util.HashMap">
         UPDATE WF_TEMPLATE 
                <set>
-                   UPDATEUSERGUID = #UPDATEUSERGUID#,
-                   UPDATETIME = #CURRENTTIME:TIMESTAMP#,
+                   UPDATEUSERGUID = #{UPDATEUSERGUID},
+                   UPDATETIME = #{CURRENTTIME:TIMESTAMP},
                    <if test="ID" >
-                       WFTID = #WFTID#,
+                       WFTID = #{WFTID},
                    </if>
                    <if test="WFTNAME" >
-                       WFTNAME = #WFTNAME#,
+                       WFTNAME = #{WFTNAME},
                    </if>
                    <if test="WFNAME" >
-                       WFNAME = #WFNAME#,
+                       WFNAME = #{WFNAME},
                    </if>
                    <if test="BMGUID" >
-                       BMGUID = #BMGUID#,
+                       BMGUID = #{BMGUID},
                    </if>
                    <if test="TITLE" >
-                       TITLE = #TITLE#,
+                       TITLE = #{TITLE},
                    </if>
                    <if test="ISVALID" >
-                       ISVALID = #ISVALID#,
+                       ISVALID = #{ISVALID},
                    </if>
                    <if test="REQUIREDEXECUTOR" >
-                       REQUIREDEXECUTOR = #REQUIREDEXECUTOR#,
+                       REQUIREDEXECUTOR = #{REQUIREDEXECUTOR},
                    </if>
                </set>
-         WHERE GUID = #GUID#
+         WHERE GUID = #{GUID}
     </update>
 
     <delete id="delete" parameterType="java.lang.String">
-        DELETE FROM WF_TEMPLATE WHERE GUID = #GUID#
+        DELETE FROM WF_TEMPLATE WHERE GUID = #{GUID}
     </delete>
 
 </mapper>

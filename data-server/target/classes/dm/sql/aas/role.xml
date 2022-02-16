@@ -11,50 +11,50 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 	
 	<insert id="insert" parameterType="dyna.common.dto.aas.Role">
 		INSERT INTO sa_role(guid,roleid,rolename,createtime,createuserguid,updatetime,updateuserguid,isvalid,description)
-		VALUES(#GUID#,#ROLEID#,#ROLENAME#,#CURRENTTIME:TIMESTAMP#,#CREATEUSERGUID:VARCHAR:NULL#,#CURRENTTIME:TIMESTAMP#,#CREATEUSERGUID:VARCHAR:NULL#,
+		VALUES(#{GUID}，#{ROLEID}，#{ROLENAME}，#{CURRENTTIME:TIMESTAMP}，#{CREATEUSERGUID:VARCHAR}，#{CURRENTTIME:TIMESTAMP}，#{CREATEUSERGUID:VARCHAR}，
 		<choose>
-			<when test="ISVALID!=null">#ISVALID#,</when>
+			<when test="ISVALID!=null">#{ISVALID}，</when>
 			<otherwise>'Y',</otherwise>
 		</choose>
-		#DESCRIPTION:VARCHAR:NULL#
+		#{DESCRIPTION:VARCHAR}
 		)
 	</insert>
 	
 	<update id="update" parameterType="dyna.common.dto.aas.Role">
 		UPDATE sa_role
 			<set>
-				updatetime=#CURRENTTIME:TIMESTAMP#,
-				updateuserguid=#UPDATEUSERGUID#,
+				updatetime=#{CURRENTTIME:TIMESTAMP}，
+				updateuserguid=#{UPDATEUSERGUID}，
 				<if test="ROLEID!=null">
-					roleid = #ROLEID#,
+					roleid = #{ROLEID}，
 				</if>
 				<if test="ROLENAME!=null">
-					rolename = #ROLENAME#,
+					rolename = #{ROLENAME}，
 				</if>
 				<if test="ISVALID!=null">
-					isvalid = #ISVALID#,
+					isvalid = #{ISVALID}，
 				</if>
 				<if test="ISVALID==null">
 					isvalid = 'Y',
 				</if>
 				<if test="DESCRIPTION!=null">
-					description = #DESCRIPTION#,
+					description = #{DESCRIPTION}，
 				</if>
 			</set>
-		WHERE guid = #GUID#
+		WHERE guid = #{GUID}
 	</update>
 	
 	
 	
 	<delete id="delete" parameterType="java.lang.String">
 		DELETE FROM sa_role
-		WHERE guid = #GUID#
+		WHERE guid = #{GUID}
 	</delete>
 	
 	<select id="get" parameterType="java.lang.String" resultType="dyna.common.dto.aas.Role" statementType="STATEMENT">
 		SELECT a.* 
 		  FROM sa_role a
-		 WHERE guid=#guid#
+		 WHERE guid=#{guid}
 	</select>
 	
 </mapper>

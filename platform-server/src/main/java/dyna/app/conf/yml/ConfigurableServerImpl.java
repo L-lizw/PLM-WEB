@@ -5,10 +5,7 @@
  */
 package dyna.app.conf.yml;
 
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 import dyna.common.bean.serv.DSServerBean;
@@ -16,7 +13,6 @@ import dyna.common.bean.serv.DSStorage;
 import dyna.common.systemenum.LanguageEnum;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 /**
@@ -42,14 +38,17 @@ public class ConfigurableServerImpl
 	private Integer threadPoolCount;
 	private Integer threadPoolDelay;
 	private Integer scheduledThreadPoolCount;
+	private String	guardServiceHost	= "127.0.0.1";
+	private int		guardServicePort	= 1299;
 
-	private final Map<String, DSServerBean>	dsserverBeanMap				= new HashMap<String, DSServerBean>();
-	private final Map<String, DSStorage>	storageMap					= new HashMap<String, DSStorage>();
-	private LanguageEnum					lang						= LanguageEnum.EN;
+
+	private final Map<String, DSServerBean> dsserverMap = new HashMap<String, DSServerBean>();
+	private final Map<String, DSStorage>    storageMap  = new HashMap<String, DSStorage>();
+	private LanguageEnum                    lang        = LanguageEnum.EN;
 
 	public void addDSServerBean(DSServerBean dsserverBean)
 	{
-		this.dsserverBeanMap.put(dsserverBean.getId(), dsserverBean);
+		this.dsserverMap.put(dsserverBean.getId(), dsserverBean);
 	}
 
 	public void addDSStorage(DSStorage storage)
@@ -63,7 +62,7 @@ public class ConfigurableServerImpl
 
 	public DSServerBean getDSServerBean(String ftpId)
 	{
-		return this.dsserverBeanMap.get(ftpId);
+		return this.dsserverMap.get(ftpId);
 	}
 
 	public DSStorage getDSStorage(String storageId)

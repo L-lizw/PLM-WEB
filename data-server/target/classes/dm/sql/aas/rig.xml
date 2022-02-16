@@ -17,9 +17,9 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     
 	<insert id="insert" parameterType="dyna.common.dto.aas.RIG">
 		INSERT INTO sa_role_group(guid,roleguid,groupguid,createtime,createuserguid,updatetime,updateuserguid,isvalid)
-		VALUES(#GUID#,#ROLEGUID#,#GROUPGUID#,#CURRENTTIME:TIMESTAMP#,#CREATEUSERGUID#,#CURRENTTIME:TIMESTAMP#,#CREATEUSERGUID#,
+		VALUES(#{GUID},#{ROLEGUID},#{GROUPGUID},#{CURRENTTIME:TIMESTAMP},#{CREATEUSERGUID},#{CURRENTTIME:TIMESTAMP},#{CREATEUSERGUID},
 		<choose>
-			<when test="ISVALID!=null">#ISVALID#</when>
+			<when test="ISVALID!=null">#{ISVALID}</when>
 			<otherwise>'Y'</otherwise>
 		</choose>
 		)
@@ -28,22 +28,22 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 	<update id="update" parameterType="dyna.common.dto.aas.RIG">
 		update sa_role_group
 			<set>
-				updatetime = #CURRENTTIME:TIMESTAMP#
-				<if  test="ROLEGUID!=null">roleguid=#ROLEGUID#,</if>
-				<if  test="GROUPGUID!=null">groupguid=#GROUPGUID#,</if>
-				<if  test="CREATETIME!=null">createtime=#CREATETIME#,</if>
-				<if  test="CREATEUSERGUID!=null">createuserguid=#CREATEUSERGUID#,</if>
-				<if  test="UPDATEUSERGUID!=null">updateuserguid=#UPDATEUSERGUID#,</if>
-				<if  test="ISVALID!=null">isvalid=#ISVALID#,</if>
+				updatetime = #{CURRENTTIME:TIMESTAM}
+				<if  test="ROLEGUID!=null">roleguid=#{ROLEGUID},</if>
+				<if  test="GROUPGUID!=null">groupguid=#GROUPGUID},</if>
+				<if  test="CREATETIME!=null">createtime=#{CREATETIME},</if>
+				<if  test="CREATEUSERGUID!=null">createuserguid=#{CREATEUSERGUID},</if>
+				<if  test="UPDATEUSERGUID!=null">updateuserguid=#{UPDATEUSERGUID},</if>
+				<if  test="ISVALID!=null">isvalid=#{ISVALID},</if>
 			</set>
-		 where guid = #GUID#
+		 where guid = #{GUID}
 	</update>
 	
 	
 
 	<delete id="delete" parameterType="java.lang.String">
 		DELETE FROM sa_role_group
-		WHERE guid = #GUID#	
+		WHERE guid = #{GUID}
 	</delete>
 	
 	<select id="get" parameterType="java.lang.String" resultType="dyna.common.dto.aas.RIG" statementType="STATEMENT">
@@ -55,7 +55,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		  FROM sa_role_group a, sa_role b, sa_group c
 		WHERE a.roleguid = b.guid
 		   AND a.groupguid = c.guid
-		   and a.guid=#guid#
+		   and a.guid=#{guid}
 	</select>
 
 </mapper>

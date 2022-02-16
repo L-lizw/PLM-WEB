@@ -13,7 +13,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 	<select id="get" resultType="dyna.common.dto.model.wf.WorkflowActivityInfo" statementType="STATEMENT">
 		select a.*
 		from ma_wf_act a
-		where guid = #GUID#
+		where guid = #{GUID}
 	</select>
 	
 	<insert id="insert" parameterType="java.util.HashMap">
@@ -40,54 +40,54 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		updateuserguid
 		)
 		values (
-		#GUID:VARCHAR:NULL#,
-		#MAWFFK:VARCHAR:NULL#,
-		#ACTNAME:VARCHAR:NULL#,
-		#DESCRIPTION:VARCHAR:NULL#,
-		#TITLE:VARCHAR:NULL#,
-		#POSITION:VARCHAR:NULL#,
-		#GATE#,
-		#ACTIVITYTYPE:VARCHAR:NULL#,
-		#ROUTEMODEL:VARCHAR:NULL#,
-		#STARTMIN:VARCHAR:NULL#,
-		#STARTMAX:VARCHAR:NULL#,
-		#SUBWFNAME:VARCHAR:NULL#,
-		#SUBTYPE:VARCHAR:NULL#,
-		#DATASEQ#,
-		#PROCESSMODE:VARCHAR:NULL#,
+		#{GUID:VARCHAR},
+		#{MAWFFK:VARCHAR},
+		#{ACTNAME:VARCHAR},
+		#{DESCRIPTION:VARCHAR},
+		#{TITLE:VARCHAR},
+		#{POSITION:VARCHAR},
+		#{GATE},
+		#{ACTIVITYTYPE:VARCHAR},
+		#{ROUTEMODEL:VARCHAR},
+		#{STARTMIN:VARCHAR},
+		#{STARTMAX:VARCHAR},
+		#{SUBWFNAME:VARCHAR},
+		#{SUBTYPE:VARCHAR},
+		#{DATASEQ},
+		#{PROCESSMODE:VARCHAR},
 
-		#CURRENTTIME:TIMESTAMP#,
-		#CREATEUSERGUID:VARCHAR:NULL#,
-		#CURRENTTIME:TIMESTAMP#,
-		#UPDATEUSERGUID:VARCHAR:NULL#
+		#{CURRENTTIME:TIMESTAMP},
+		#{CREATEUSERGUID:VARCHAR},
+		#{CURRENTTIME:TIMESTAMP},
+		#{UPDATEUSERGUID:VARCHAR}
 		)
 	</insert>
 	
 	<update id="update" parameterType="java.util.HashMap">
 		update ma_wf_act 
 		<set>
-			updatetime=#CURRENTTIME:TIMESTAMP#,
-			updateuserguid=#UPDATEUSERGUID#,
-			<if  test="MAWFFK!=null">mawffk=#MAWFFK#,</if>
-			<if  test="ACTNAME!=null">actname=#ACTNAME#,</if>
-			<if  test="DESCRIPTION!=null">description=#DESCRIPTION#,</if>
-			<if  test="TITLE!=null">title=#TITLE#,</if>
-			<if  test="POSITION!=null">position=#POSITION#,</if>
-			<if  test="GATE!=null">gate=#GATE#,</if>
-			<if  test="ACTIVITYTYPE!=null">ACTIVITYTYPE=#ACTIVITYTYPE#,</if>
-			<if  test="ROUTEMODEL!=null">ROUTEMODEL=#ROUTEMODEL#,</if>
-			<if  test="STARTMIN!=null">startmin=#STARTMIN#,</if>
-			<if  test="STARTMAX!=null">startmax=#STARTMAX#,</if>
-			<if  test="SUBWFNAME!=null">SUBWFNAME=#SUBWFNAME#,</if>
-			<if  test="SUBTYPE!=null">subtype=#SUBTYPE#,</if>
-			<if  test="DATASEQ!=null">DATASEQ=#DATASEQ#,</if>
-			<if  test="PROCESSMODE!=null">PROCESSMODE=#PROCESSMODE#,</if>
+			updatetime=#{CURRENTTIME:TIMESTAMP},
+			updateuserguid=#{UPDATEUSERGUID},
+			<if  test="MAWFFK!=null">mawffk=#{MAWFFK},</if>
+			<if  test="ACTNAME!=null">actname=#{ACTNAME},</if>
+			<if  test="DESCRIPTION!=null">description=#{DESCRIPTION},</if>
+			<if  test="TITLE!=null">title=#{TITLE},</if>
+			<if  test="POSITION!=null">position=#{POSITION},</if>
+			<if  test="GATE!=null">gate=#{GATE},</if>
+			<if  test="ACTIVITYTYPE!=null">ACTIVITYTYPE=#{ACTIVITYTYPE},</if>
+			<if  test="ROUTEMODEL!=null">ROUTEMODEL=#{ROUTEMODEL},</if>
+			<if  test="STARTMIN!=null">startmin=#{STARTMIN},</if>
+			<if  test="STARTMAX!=null">startmax=#{STARTMAX},</if>
+			<if  test="SUBWFNAME!=null">SUBWFNAME=#{SUBWFNAME},</if>
+			<if  test="SUBTYPE!=null">subtype=#{SUBTYPE},</if>
+			<if  test="DATASEQ!=null">DATASEQ=#{DATASEQ},</if>
+			<if  test="PROCESSMODE!=null">PROCESSMODE=#{PROCESSMODE},</if>
 		</set>
-		WHERE guid = #GUID#
+		WHERE guid = #{GUID}
 	</update>
 	
 	<delete id="delete" parameterType="java.lang.String">
-		delete from ma_wf_act  where guid = #GUID#
+		delete from ma_wf_act  where guid = #{GUID}
 		
 	</delete>
 </mapper>

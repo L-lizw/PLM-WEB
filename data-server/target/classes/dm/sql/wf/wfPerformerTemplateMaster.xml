@@ -15,14 +15,14 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                                  updateuserguid, 
                                  updatetime
                                 )
-        values(#GUID:VARCHAR:NULL#, 
-               #PERFTEMPLATENAME:VARCHAR:NULL#, 
-               #PROCRTNAME:VARCHAR:NULL#, 
+        values(#{GUID:VARCHAR}, 
+               #{PERFTEMPLATENAME:VARCHAR}, 
+               #{PROCRTNAME:VARCHAR}, 
              
-               #CREATEUSERGUID:VARCHAR:NULL#, 
-               #CURRENTTIME:TIMESTAMP#, 
-               #UPDATEUSERGUID:VARCHAR:NULL#, 
-               #CURRENTTIME:TIMESTAMP#
+               #{CREATEUSERGUID:VARCHAR}, 
+               #{CURRENTTIME:TIMESTAMP}, 
+               #{UPDATEUSERGUID:VARCHAR}, 
+               #{CURRENTTIME:TIMESTAMP}
               )
     </insert>
     
@@ -30,16 +30,16 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     <sql id="where">
         <where>
             <if  test="GUID!=null">
-                and b.guid = #GUID#
+                and b.guid = #{GUID}
             </if>
             <if  test="PERFTEMPLATENAME!=null">
-                and b.perftemplatename = #MD_NAME#
+                and b.perftemplatename = #{MD_NAME}
             </if>
             <if  test="PROCRTNAME!=null">
-                and b.procrtname = #PROCRTNAME#
+                and b.procrtname = #{PROCRTNAME}
             </if>
             <if  test="CREATEUSERGUID!=null">
-                and b.createuserguid = #CREATEUSERGUID#
+                and b.createuserguid = #{CREATEUSERGUID}
             </if>
         </where>
     </sql>
@@ -62,21 +62,21 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     <update id="update" parameterType="map">
         update wf_performertemplate_master 
         <set>
-            updatetime = #CURRENTTIME:TIMESTAMP#,
-            updateuserguid = #UPDATEUSERGUID#,
-            <if  test="PERFTEMPLATENAME!=null">perftemplatename = #PERFTEMPLATENAME#,</if>
-            <if  test="PROCRTNAME!=null">procrtname = #PROCRTNAME#,</if>
+            updatetime = #{CURRENTTIME:TIMESTAMP},
+            updateuserguid = #{UPDATEUSERGUID},
+            <if  test="PERFTEMPLATENAME!=null">perftemplatename = #{PERFTEMPLATENAME},</if>
+            <if  test="PROCRTNAME!=null">procrtname = #{PROCRTNAME},</if>
         </set>
-         where guid = #GUID#
+         where guid = #{GUID}
     </update>
     
     <delete id="delete" parameterType="map">
-        delete from wf_performertemplate_master  where guid = #GUID# 
+        delete from wf_performertemplate_master  where guid = #{GUID}
     </delete>
     
     
     <delete id="deleteAdvance" parameterType="java.lang.String">
-        delete from wf_performertemplate_master where perftemplatename = #PERFTEMPLATENAME# 
+        delete from wf_performertemplate_master where perftemplatename = #{PERFTEMPLATENAME}
     </delete>
     
 </mapper>

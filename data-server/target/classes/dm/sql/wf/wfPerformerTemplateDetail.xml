@@ -19,18 +19,18 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                                  updateuserguid, 
                                  updatetime
                                 )
-        values(#GUID:VARCHAR:NULL#, 
-               #MASTERFK:VARCHAR:NULL#, 
-               #ACTRTNAME:VARCHAR:NULL#, 
-               #PERFGUID:VARCHAR:NULL#, 
-               #PERFTYPE:VARCHAR:NULL#, 
-               #PERFGROUPGUID:VARCHAR:NULL#, 
-               #PERFROLEGUID:VARCHAR:NULL#, 
+        values(#{GUID:VARCHAR}, 
+               #{MASTERFK:VARCHAR}, 
+               #{ACTRTNAME:VARCHAR}, 
+               #{PERFGUID:VARCHAR}, 
+               #{PERFTYPE:VARCHAR}, 
+               #{PERFGROUPGUID:VARCHAR}, 
+               #{PERFROLEGUID:VARCHAR}, 
                
-               #CREATEUSERGUID:VARCHAR:NULL#, 
-               #CURRENTTIME:TIMESTAMP#, 
-               #UPDATEUSERGUID:VARCHAR:NULL#, 
-               #CURRENTTIME:TIMESTAMP#
+               #{CREATEUSERGUID:VARCHAR}, 
+               #{CURRENTTIME:TIMESTAMP}, 
+               #{UPDATEUSERGUID:VARCHAR}, 
+               #{CURRENTTIME:TIMESTAMP}
               )
     </insert>
     
@@ -38,22 +38,22 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     <sql id="where">
         <where>
             <if  test="GUID!=null">
-                b.guid = #GUID#
+                b.guid = #{GUID}
             </if>
             <if  test="MASTERFK!=null">
-                b.masterfk = #MASTERFK#
+                b.masterfk = #{MASTERFK}
             </if>
             <if  test="ACTRTNAME!=null">
-                b.actrtname = #ACTRTNAME#
+                b.actrtname = #{ACTRTNAME}
             </if>
             <if  test="PERFGUID!=null">
-                b.perfguid = #PERFGUID#
+                b.perfguid = #{PERFGUID}
             </if>
             <if  test="PERFTYPE!=null">
-                b.perftype = #PERFTYPE#
+                b.perftype = #{PERFTYPE}
             </if>
             <if  test="CREATEUSERGUID!=null">
-                b.createuserguid = #CREATEUSERGUID#
+                b.createuserguid = #{CREATEUSERGUID}
             </if>
         </where>
     </sql>
@@ -83,12 +83,12 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
                       from wf_performertemplate_detail d,
                            wf_performertemplate_master n
                      where d.masterfk = n.guid
-                       and n.guid = #GUID#
+                       and n.guid = #{GUID}
                        and exists (select 1
                                      from ma_wf_act m,
                                           ma_wf n
                                     where m.mawffk = n.guid
-                                      and n.wfname = #PROCRTNAME#
+                                      and n.wfname = #{PROCRTNAME}
                                       and m.actname = d.actrtname
                                   )
     </select>
@@ -97,18 +97,18 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     <update id="update" parameterType="map">
         update wf_performertemplate_detail
         <set>
-            updatetime = #CURRENTTIME:TIMESTAMP#,
-            updateuserguid = #UPDATEUSERGUID#,
-            <if  test="ACTRTNAME!=null">actrtname = #ACTRTNAME#,</if>
-            <if  test="PERFGUID!=null">perfguid = #PERFGUID#,</if>
-            <if  test="PERFTYPE!=null">perftype = #PERFTYPE#,</if>
+            updatetime = #{CURRENTTIME:TIMESTAMP},
+            updateuserguid = #{UPDATEUSERGUID},
+            <if  test="ACTRTNAME!=null">actrtname = #{ACTRTNAME},</if>
+            <if  test="PERFGUID!=null">perfguid = #{PERFGUID},</if>
+            <if  test="PERFTYPE!=null">perftype = #{PERFTYPE},</if>
         </set>
-        where guid = #GUID#
+        where guid = #{GUID}
     </update>
     
     
     <delete id="delete" parameterType="map">
-        delete from wf_performertemplate_detail  where guid = #GUID# 
+        delete from wf_performertemplate_detail  where guid = #{GUID}
     </delete>
     
     
@@ -116,22 +116,22 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
         delete from wf_performertemplate_detail 
        <where>
             <if  test="GUID!=null">
-                and guid = #GUID#
+                and guid = #{GUID}
             </if>
             <if  test="MASTERFK!=null">
-                and masterfk = #MASTERFK#
+                and masterfk = #{MASTERFK}
             </if>
             <if  test="ACTRTNAME!=null">
-                and actrtname = #ACTRTNAME#
+                and actrtname = #{ACTRTNAME}
             </if>
             <if  test="PERFGUID!=null">
-                and perfguid = #PERFGUID#
+                and perfguid = #{PERFGUID}
             </if>
             <if  test="PERFTYPE!=null">
-                and perftype = #PERFTYPE#
+                and perftype = #{PERFTYPE}
             </if>
             <if  test="CREATEUSERGUID!=null">
-                and createuserguid = #CREATEUSERGUID#
+                and createuserguid = #{CREATEUSERGUID}
             </if>
         </where>
     </delete>
