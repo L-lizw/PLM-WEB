@@ -24,6 +24,7 @@ import dyna.net.service.data.model.ClassModelService;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -33,6 +34,7 @@ import java.util.List;
  *
  * @author Lizw
  */
+@Order(2)
 @DubboService public class WFMImpl extends BusinessRuleService implements WFM
 {
 	@DubboReference private ClassModelService classModelService;

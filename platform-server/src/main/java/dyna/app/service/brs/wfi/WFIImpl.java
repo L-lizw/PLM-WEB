@@ -60,6 +60,7 @@ import dyna.net.service.data.*;
 import dyna.net.service.data.model.ClassModelService;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Method;
@@ -70,8 +71,9 @@ import java.util.Map;
 /**
  * WFI 实现类
  *
- * @author Wanglei
+ * @author Lizw
  */
+@Order(1)
 @Service public class WFIImpl extends BusinessRuleService implements WFI
 {
 	@DubboReference private AclService        aclService;
