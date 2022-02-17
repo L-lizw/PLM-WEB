@@ -1,6 +1,6 @@
 package dyna.app.service.brs.erpi.tracker;
 
-import dyna.app.core.track.impl.DefaultTrackerRendererImpl;
+import dyna.app.server.core.track.impl.DefaultTrackerRendererImpl;
 import dyna.common.bean.track.Tracker;
 
 public class TRERPImpl extends DefaultTrackerRendererImpl

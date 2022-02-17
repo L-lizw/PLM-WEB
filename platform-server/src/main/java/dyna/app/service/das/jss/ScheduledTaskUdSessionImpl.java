@@ -5,7 +5,7 @@
  */
 package dyna.app.service.das.jss;
 
-import dyna.app.core.sch.AbstractScheduledTask;
+import dyna.app.server.core.sch.AbstractScheduledTask;
 import dyna.common.log.DynaLogger;
 import dyna.common.util.StringUtils;
 

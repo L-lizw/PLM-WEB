@@ -5,7 +5,7 @@
  */
 package dyna.app.service.brs.dss;
 
-import dyna.app.core.track.annotation.Tracked;
+import dyna.app.server.core.track.annotation.Tracked;
 import dyna.app.service.BusinessRuleService;
 import dyna.app.service.brs.dss.tracked.TRDSSFile;
 import dyna.app.service.brs.dss.tracked.TRDSSFileInfoImpl;

@@ -5,7 +5,7 @@
  */
 package dyna.app.service.brs.bom.tracked;
 
-import dyna.app.core.track.impl.TRFoundationImpl;
+import dyna.app.server.core.track.impl.TRFoundationImpl;
 import dyna.app.server.context.ApplicationServerContext;
 import dyna.app.service.brs.boas.BOASImpl;
 import dyna.common.bean.data.FoundationObject;
@@ -13,7 +13,6 @@ import dyna.common.bean.data.ObjectGuid;
 import dyna.common.bean.data.StructureObject;
 import dyna.common.bean.data.foundation.ViewObject;
 import dyna.common.bean.track.Tracker;
-import dyna.common.exception.ServiceNotFoundException;
 import dyna.common.exception.ServiceRequestException;
 import dyna.common.log.DynaLogger;
 import dyna.common.util.StringUtils;

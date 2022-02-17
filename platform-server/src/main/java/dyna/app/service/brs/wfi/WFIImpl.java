@@ -5,8 +5,8 @@
  */
 package dyna.app.service.brs.wfi;
 
-import dyna.app.core.track.annotation.Tracked;
-import dyna.app.core.track.impl.TRFoundationImpl;
+import dyna.app.server.core.track.annotation.Tracked;
+import dyna.app.server.core.track.impl.TRFoundationImpl;
 import dyna.app.service.BusinessRuleService;
 import dyna.app.service.brs.boas.BOASImpl;
 import dyna.app.service.brs.boas.tracked.TROpenObjectImpl;

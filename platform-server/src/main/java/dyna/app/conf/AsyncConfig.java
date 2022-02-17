@@ -1,6 +1,6 @@
 package dyna.app.conf;
 
-import dyna.app.core.sch.AsyncScheduler;
+import dyna.app.server.core.sch.AsyncScheduler;
 import dyna.app.conf.yml.ConfigurableServerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

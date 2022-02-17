@@ -496,8 +496,9 @@ public class SDSOperateDataStub extends DSAbstractServiceStub<SystemDataServiceI
 		{
 			Class mapperClass = this.stubService.getAutoScan().getEntryMapperMap().get(systemClass);
 			Object mapper = SpringUtil.getBean(mapperClass);
-			Method method = mapperClass.getMethod(sqlStatementId);
-			return (int) method.invoke(mapper, paramMap);
+			Method method = mapperClass.getMethod(sqlStatementId, Map.class);
+			Object result = method.invoke(mapper, paramMap);
+			return result == null? 0 : (Integer) result;
 		}
 		catch (Exception e)
 		{

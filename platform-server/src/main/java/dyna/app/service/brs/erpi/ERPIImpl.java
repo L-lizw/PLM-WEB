@@ -5,7 +5,7 @@
  */
 package dyna.app.service.brs.erpi;
 
-import dyna.app.core.track.annotation.Tracked;
+import dyna.app.server.core.track.annotation.Tracked;
 import dyna.app.service.BusinessRuleService;
 import dyna.app.service.brs.erpi.cross.util.CrossConfigureManager;
 import dyna.app.service.brs.erpi.tracker.TRERPImpl;

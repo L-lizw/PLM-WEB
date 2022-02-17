@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.List;
 
 import dyna.app.conf.AsyncConfig;
-import dyna.app.core.sch.PriorityScheduledTask;
+import dyna.app.server.core.sch.PriorityScheduledTask;
 import dyna.app.service.AbstractQuartzJobStub;
 import dyna.common.dto.Queue;
 import dyna.common.log.DynaLogger;

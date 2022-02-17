@@ -1,6 +1,6 @@
 package dyna.app.service.brs.boas.tracked;
 
-import dyna.app.core.track.impl.TRFoundationImpl;
+import dyna.app.server.core.track.impl.TRFoundationImpl;
 import dyna.common.bean.data.FoundationObject;
 import dyna.common.bean.track.Tracker;
 import dyna.common.util.StringUtils;

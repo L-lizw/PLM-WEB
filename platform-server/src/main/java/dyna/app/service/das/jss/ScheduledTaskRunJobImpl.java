@@ -7,7 +7,7 @@ package dyna.app.service.das.jss;
 
 import dyna.app.server.context.ApplicationServerContext;
 import dyna.app.util.SpringUtil;
-import dyna.app.core.sch.AbstractScheduledTask;
+import dyna.app.server.core.sch.AbstractScheduledTask;
 import dyna.common.conf.JobDefinition;
 import dyna.common.dto.Queue;
 import dyna.common.dto.aas.User;

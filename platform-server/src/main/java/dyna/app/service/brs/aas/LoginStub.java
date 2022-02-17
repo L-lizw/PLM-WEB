@@ -5,7 +5,7 @@
  */
 package dyna.app.service.brs.aas;
 
-import dyna.app.core.lic.LicenseException;
+import dyna.app.server.core.lic.LicenseException;
 import dyna.app.service.AbstractServiceStub;
 import dyna.app.service.brs.lic.LICImpl;
 import dyna.app.service.helper.ServiceRequestExceptionWrap;

@@ -6,6 +6,7 @@
 package dyna.app.conf.yml;
 
 import dyna.common.conf.ServiceDefinition;
+import dyna.common.util.SetUtils;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -55,6 +56,21 @@ public class ConfigurableServiceImpl
 	public ServiceDefinition getServiceDefinition(String serviceID)
 	{
 		return this.services.get(serviceID);
+	}
+
+	public ServiceDefinition getServiceDefinitionByclass(String className)
+	{
+		if(!SetUtils.isNullMap(services))
+		{
+			for(ServiceDefinition serviceDefinition:services.values())
+			{
+				if(serviceDefinition.getName().equals(className))
+				{
+					return serviceDefinition;
+				}
+			}
+		}
+		return null;
 	}
 
 

@@ -5,7 +5,7 @@
  */
 package dyna.app.service.brs.wfi.track;
 
-import dyna.app.core.track.impl.DefaultTrackerRendererImpl;
+import dyna.app.server.core.track.impl.DefaultTrackerRendererImpl;
 import dyna.app.server.context.ApplicationServerContext;
 import dyna.app.service.brs.wfi.WFIImpl;
 import dyna.common.bean.track.Tracker;

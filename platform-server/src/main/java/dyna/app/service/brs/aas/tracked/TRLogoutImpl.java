@@ -5,7 +5,7 @@
  */
 package dyna.app.service.brs.aas.tracked;
 
-import dyna.app.core.track.impl.DefaultTrackerRendererImpl;
+import dyna.app.server.core.track.impl.DefaultTrackerRendererImpl;
 import dyna.common.bean.signature.Signature;
 import dyna.common.bean.track.Tracker;
 import dyna.net.security.signature.UserSignature;

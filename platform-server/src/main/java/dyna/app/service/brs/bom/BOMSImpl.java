@@ -5,7 +5,7 @@
  */
 package dyna.app.service.brs.bom;
 
-import dyna.app.core.track.annotation.Tracked;
+import dyna.app.server.core.track.annotation.Tracked;
 import dyna.app.service.BusinessRuleService;
 import dyna.app.service.brs.bom.tracked.TRSaveStructureImpl;
 import dyna.app.service.helper.TrackedDesc;

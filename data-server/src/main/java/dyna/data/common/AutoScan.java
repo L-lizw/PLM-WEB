@@ -4,10 +4,9 @@ import dyna.common.annotation.Cache;
 import dyna.common.annotation.EntryMapper;
 import dyna.common.bean.data.DynamicTableBean;
 import dyna.common.bean.data.SystemObject;
-import dyna.common.util.AnnotationUtil;
+import dyna.common.util.PackageScanUtil;
 import dyna.common.util.SetUtils;
 import lombok.Data;
-import org.apache.poi.hssf.record.formula.functions.T;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -39,7 +38,7 @@ public class AutoScan<T extends SystemObject>
 	private void loadEntryDaoInfo()
 	{
 		entryMapperMap = new HashMap<>();
-		Set<Class<?>> set = AnnotationUtil.scanAnnotation("dyna.common", EntryMapper.class);
+		Set<Class<?>> set = PackageScanUtil.scanAnnotation("dyna.common", EntryMapper.class);
 		if (!SetUtils.isNullSet(set))
 		{
 			for (Class<?> entryClass : set)
@@ -62,7 +61,7 @@ public class AutoScan<T extends SystemObject>
 	private void loadTableData()
 	{
 		dynamicTableBeanMap = new HashMap<>();
-		Set<Class<?>> set = AnnotationUtil.scanAnnotation(SCAN_BEAN_ANNOTATION_PACKAGE, Cache.class);
+		Set<Class<?>> set = PackageScanUtil.scanAnnotation(SCAN_BEAN_ANNOTATION_PACKAGE, Cache.class);
 		if (!SetUtils.isNullSet(set))
 		{
 			for (Class<?> clz : set)

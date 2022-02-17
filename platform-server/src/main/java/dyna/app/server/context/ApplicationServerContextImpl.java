@@ -5,15 +5,12 @@
  */
 package dyna.app.server.context;
 
-import dyna.app.core.i18n.NLSManager;
-import dyna.app.core.lic.License;
-import dyna.app.core.lic.LicenseDaemon;
-import dyna.app.core.lic.LicenseException;
-import dyna.app.core.lic.LicenseManager;
-import dyna.app.core.lic.system.SystemIDCheckerLinuxImpl;
-import dyna.app.core.lic.system.SystemIDCheckerNixImpl;
-import dyna.app.core.lic.system.SystemIDCheckerWindowsImpl;
-import dyna.app.core.track.TrackerManager;
+import dyna.app.server.core.i18n.NLSManager;
+import dyna.app.server.core.lic.License;
+import dyna.app.server.core.lic.LicenseDaemon;
+import dyna.app.server.core.lic.LicenseException;
+import dyna.app.server.core.lic.LicenseManager;
+import dyna.app.server.core.track.TrackerManager;
 import dyna.common.conf.ConfigurableConnToDSImpl;
 import dyna.app.conf.yml.ConfigurableServerImpl;
 import dyna.common.context.AbstractSvContext;
