@@ -35,23 +35,26 @@ public class ApplicationServiceCommonRunner implements CommandLineRunner
 
 		if(!SetUtils.isNullSet(set))
 		{
-			Map<Integer, ApplicationService> orderServiceMap = new HashMap<>();
+			Map<Integer, Class<?>> orderServiceMap = new HashMap<>();
 
 			for(Class<?> serviceClass:set)
 			{
+				ServiceDefinition serviceDefinition = configurableService.getServiceDefinitionByclass(serviceClass.getSimpleName());
+				if(serviceDefinition == null)
+				{
+					continue;
+				}
 				ApplicationService service = (ApplicationService) SpringUtil.getBean(serviceClass);
 				Order order = serviceClass.getAnnotation(Order.class);
 				if(order!=null)
 				{
 					int sequence = order.value();
-					orderServiceMap.put(sequence, service);
+					orderServiceMap.put(sequence, serviceClass);
 					continue;
 				}
-				System.out.println(serviceClass.getSimpleName());
-				ServiceDefinition serviceDefinition = configurableService.getServiceDefinitionByclass(serviceClass.getSimpleName());
-				DynaLogger.info(serviceDefinition.getDescription()+"init ...");
+				DynaLogger.info(serviceDefinition.getDescription()+" init ...");
 				service.init(serviceDefinition);
-				DynaLogger.info(serviceDefinition.getDescription()+"init success");
+				DynaLogger.info(serviceDefinition.getDescription()+" init success");
 			}
 
 			if(!SetUtils.isNullMap(orderServiceMap))
@@ -67,11 +70,11 @@ public class ApplicationServiceCommonRunner implements CommandLineRunner
 
 				for(Integer order:orderList)
 				{
-					ApplicationService service = orderServiceMap.get(order);
-					ServiceDefinition serviceDefinition = configurableService.getServiceDefinitionByclass(service.getClass().getSimpleName());
-					DynaLogger.info(serviceDefinition.getDescription()+"init ...");
+					ApplicationService service = (ApplicationService) SpringUtil.getBean(orderServiceMap.get(order));
+					ServiceDefinition serviceDefinition = configurableService.getServiceDefinitionByclass(orderServiceMap.get(order).getSimpleName());
+					DynaLogger.info(serviceDefinition.getDescription()+" init ...");
 					service.init(serviceDefinition);
-					DynaLogger.info(serviceDefinition.getDescription()+"init success");
+					DynaLogger.info(serviceDefinition.getDescription()+" init success");
 				}
 			}
 		}

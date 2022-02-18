@@ -6,9 +6,11 @@
 package dyna.data.service.sdm;
 
 import com.github.pagehelper.PageHelper;
+import dyna.common.bean.data.DynaObject;
 import dyna.common.bean.data.SystemObject;
 import dyna.common.dto.DSSFileInfo;
 import dyna.common.dtomapper.DynaObjectMapper;
+import dyna.common.dtomapper.checkrule.ClassConditionDataMapper;
 import dyna.common.exception.DynaDataException;
 import dyna.common.systemenum.DataExceptionEnum;
 import dyna.common.util.SetUtils;
@@ -16,6 +18,7 @@ import dyna.common.util.StringUtils;
 import dyna.data.common.util.SpringUtil;
 import dyna.data.service.DSAbstractServiceStub;
 import dyna.dbcommon.exception.DynaDataExceptionAll;
+import org.apache.poi.hssf.record.formula.functions.T;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
@@ -31,14 +34,13 @@ import java.util.Map;
  *
  * @author ZhangHW
  */
-@Component
-public class SDSOperateDataStub extends DSAbstractServiceStub<SystemDataServiceImpl>
+@Component public class SDSOperateDataStub extends DSAbstractServiceStub<SystemDataServiceImpl>
 {
-	private static final String	INSERT_STATEMENT			= "insert";
-	private static final String	UPDATE_STATEMENT			= "update";
-	private static final String	DELETE_STATEMENT			= "delete";
-	private static final String	DELETE_STATEMENT_ADVANCED	= "deleteAdvanced";
-	private static final String	SELECT_STATEMENT			= "select";
+	private static final String INSERT_STATEMENT          = "insert";
+	private static final String UPDATE_STATEMENT          = "update";
+	private static final String DELETE_STATEMENT          = "delete";
+	private static final String DELETE_STATEMENT_ADVANCED = "deleteAdvanced";
+	private static final String SELECT_STATEMENT          = "select";
 
 	/**
 	 * 保存一条记录（根据是否有guid来进行insert或update)
@@ -78,7 +80,7 @@ public class SDSOperateDataStub extends DSAbstractServiceStub<SystemDataServiceI
 	public <T extends SystemObject> String save(T systemObject, String sqlStatementId, boolean isUpdate) throws DynaDataException
 	{
 		String className = systemObject.getClass().getName();
-		Class mapperClass =  this.stubService.getAutoScan().getEntryMapperMap().get(systemObject.getClass());
+		Class mapperClass = this.stubService.getAutoScan().getEntryMapperMap().get(systemObject.getClass());
 		Object mapperBean = SpringUtil.getBean(mapperClass);
 		Method method = null;
 		try
@@ -224,7 +226,7 @@ public class SDSOperateDataStub extends DSAbstractServiceStub<SystemDataServiceI
 
 		try
 		{
-			Class mapperCLass =  this.stubService.getAutoScan().getEntryMapperMap().get(systemObject.getClass());
+			Class mapperCLass = this.stubService.getAutoScan().getEntryMapperMap().get(systemObject.getClass());
 			Object mapper = SpringUtil.getBean(mapperCLass);
 			Method method = null;
 
@@ -233,7 +235,7 @@ public class SDSOperateDataStub extends DSAbstractServiceStub<SystemDataServiceI
 			{
 				if (updateId == null)
 				{
-					updateId =  UPDATE_STATEMENT;
+					updateId = UPDATE_STATEMENT;
 				}
 
 				method = mapperCLass.getMethod(updateId);
@@ -345,7 +347,7 @@ public class SDSOperateDataStub extends DSAbstractServiceStub<SystemDataServiceI
 	 *
 	 * @param searchConditionMap
 	 * @return record object, or null if there is no search result or search result
-	 *         length > 1
+	 * length > 1
 	 * @throws DynaDataException
 	 */
 	public <T extends SystemObject> T queryObject(Class<T> systemClass, Map<String, Object> searchConditionMap) throws DynaDataException
@@ -389,8 +391,7 @@ public class SDSOperateDataStub extends DSAbstractServiceStub<SystemDataServiceI
 	 * @return
 	 * @throws DynaDataException
 	 */
-	@SuppressWarnings("unchecked")
-	public <T extends SystemObject> T getObject(Class<T> systemClass, String guid, String sqlStatementId) throws DynaDataException
+	@SuppressWarnings("unchecked") public <T extends SystemObject> T getObject(Class<T> systemClass, String guid, String sqlStatementId) throws DynaDataException
 	{
 		try
 		{
@@ -498,7 +499,7 @@ public class SDSOperateDataStub extends DSAbstractServiceStub<SystemDataServiceI
 			Object mapper = SpringUtil.getBean(mapperClass);
 			Method method = mapperClass.getMethod(sqlStatementId, Map.class);
 			Object result = method.invoke(mapper, paramMap);
-			return result == null? 0 : (Integer) result;
+			return result == null ? 0 : (Integer) result;
 		}
 		catch (Exception e)
 		{
@@ -509,8 +510,7 @@ public class SDSOperateDataStub extends DSAbstractServiceStub<SystemDataServiceI
 	/**
 	 * 根据guid删除记录
 	 *
-	 * @param systemClass
-	 *            class to be deleted
+	 * @param systemClass class to be deleted
 	 * @param guid
 	 * @return successful or not
 	 * @throws DynaDataException
@@ -524,7 +524,7 @@ public class SDSOperateDataStub extends DSAbstractServiceStub<SystemDataServiceI
 			Class mapperClass = this.stubService.getAutoScan().getEntryMapperMap().get(systemClass);
 			Object mapper = SpringUtil.getBean(mapperClass);
 			Method method = mapperClass.getMethod(DELETE_STATEMENT);
-			return (int)method.invoke(mapper, guid) == 1;
+			return (int) method.invoke(mapper, guid) == 1;
 		}
 		catch (Exception e)
 		{
@@ -535,8 +535,7 @@ public class SDSOperateDataStub extends DSAbstractServiceStub<SystemDataServiceI
 	/**
 	 * 删除记录
 	 *
-	 * @param systemObject
-	 *            to be deleted
+	 * @param systemObject to be deleted
 	 * @return successful or not
 	 * @throws DynaDataException
 	 */
@@ -557,52 +556,60 @@ public class SDSOperateDataStub extends DSAbstractServiceStub<SystemDataServiceI
 	 * @return ArrayList
 	 * @throws SQLException
 	 */
-	@SuppressWarnings("unchecked")
-	private <T extends SystemObject> List<T> select(String className, Map<String, Object> searchConditionMap, String orderby, boolean isAscOrder, String sqlStatementId)
-			throws DynaDataException
+	@SuppressWarnings("unchecked") private <T extends SystemObject> List<T> select(String className, Map<String, Object> searchConditionMap, String orderby, boolean isAscOrder,
+			String sqlStatementId) throws DynaDataException
 	{
-		if (searchConditionMap == null)
-		{
-			searchConditionMap = new HashMap<>();
-		}
-
-		String classGuid = (String) searchConditionMap.get("CLASSGUID");
-
 		try
 		{
+			if (searchConditionMap == null)
+			{
+				searchConditionMap = new HashMap<>();
+			}
+
+			String classGuid = (String) searchConditionMap.get("CLASSGUID");
+
+			T paramObject = (T) Class.forName(className).newInstance();
+			if (!SetUtils.isNullMap(searchConditionMap))
+			{
+				searchConditionMap.forEach((key, value) -> {
+					paramObject.put(key, value);
+				});
+			}
+
 			Class mapperClass = this.stubService.getAutoScan().getEntryMapperMap().get(Class.forName(className));
 			Object mapper = SpringUtil.getBean(mapperClass);
 
 			if (StringUtils.isGuid(classGuid))
 			{
-				searchConditionMap.put("tablename", this.stubService.getDsCommonService().getTableName(classGuid));
+				paramObject.put("tablename", this.stubService.getDsCommonService().getTableName(classGuid));
 			}
 
+			Class paramClazz = Map.class;
 			if (sqlStatementId == null)
 			{
-				sqlStatementId = className + "." + SELECT_STATEMENT;
+				sqlStatementId = SELECT_STATEMENT;
+				paramClazz = DynaObject.class;
 			}
 
-			searchConditionMap.put("CURRENTTIME", new Date());
+			paramObject.put("CURRENTTIME", new Date());
 
-			Integer rowsPerPage = (Integer) searchConditionMap.get("ROWSPERPAGE");
-			Integer currentPage = (Integer) searchConditionMap.get("CURRENTPAGE");
-			Method method = mapperClass.getMethod(sqlStatementId, Map.class);
-
+			Integer rowsPerPage = (Integer) paramObject.get("ROWSPERPAGE");
+			Integer currentPage = (Integer) paramObject.get("CURRENTPAGE");
+			Method method = mapperClass.getMethod(sqlStatementId, paramClazz);
 			List<T> result;
 			if (rowsPerPage != null && currentPage != null)
 			{
 				PageHelper.startPage(currentPage, rowsPerPage);
-				result = (List<T>) method.invoke(mapper, searchConditionMap);
+				result = (List<T>) method.invoke(mapper, paramObject);
 			}
 			else
 			{
-				result = (List<T>) method.invoke(mapper, searchConditionMap);
+				result = (List<T>) method.invoke(mapper, paramObject);
 			}
-			searchConditionMap.remove("CURRENTTIME");
+			((HashMap<String, Object>) paramObject).remove("CURRENTTIME");
 			if (StringUtils.isGuid(classGuid))
 			{
-				searchConditionMap.remove("tablename");
+				((HashMap<String, Object>) paramObject).remove("tablename");
 			}
 			return result;
 
@@ -637,7 +644,7 @@ public class SDSOperateDataStub extends DSAbstractServiceStub<SystemDataServiceI
 				for (Map<String, Object> paramMap : paramList)
 				{
 					paramMap.put("CURRENTTIME", new Date());
-					returnValue += (int)method.invoke(mapper, paramMap);
+					returnValue += (int) method.invoke(mapper, paramMap);
 					paramMap.remove("CURRENTTIME");
 				}
 			}
@@ -673,7 +680,7 @@ public class SDSOperateDataStub extends DSAbstractServiceStub<SystemDataServiceI
 				for (Map<String, Object> paramMap : paramList)
 				{
 					paramMap.put("CURRENTTIME", new Date());
-					returnValue += (int)method.invoke(mapper, paramMap);
+					returnValue += (int) method.invoke(mapper, paramMap);
 					paramMap.remove("CURRENTTIME");
 				}
 			}
@@ -710,7 +717,7 @@ public class SDSOperateDataStub extends DSAbstractServiceStub<SystemDataServiceI
 				for (Map<String, Object> paramMap : paramList)
 				{
 					paramMap.put("CURRENTTIME", new Date());
-					returnValue += (int)method.invoke(mapper, paramMap);
+					returnValue += (int) method.invoke(mapper, paramMap);
 					paramMap.remove("CURRENTTIME");
 				}
 			}

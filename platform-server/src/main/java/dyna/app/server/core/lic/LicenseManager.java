@@ -71,7 +71,7 @@ public class LicenseManager
 		{
 			String prefixPath = EnvUtils.getConfRootPath();
 
-			stream = new FileInputStream(prefixPath + "conf/" + PROPERTY_FILE);
+			stream = new FileInputStream(prefixPath + "lic/" + PROPERTY_FILE);
 			this.prop.load(stream);
 		}
 		catch (Exception e)
@@ -105,7 +105,7 @@ public class LicenseManager
 		}
 		else
 		{
-			this.licenseRawData = this.readFile(prefixPath + "conf/" + LIC_FILE);
+			this.licenseRawData = this.readFile(prefixPath + "lic/" + LIC_FILE);
 		}
 
 	}
