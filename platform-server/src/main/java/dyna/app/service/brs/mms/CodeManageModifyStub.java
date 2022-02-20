@@ -50,7 +50,7 @@ public class CodeManageModifyStub extends AbstractServiceStub<MMSImpl>
 			newCodeObejctInfo.setUpdateUserGuid(currentUserguid);
 			sds.save(newCodeObejctInfo);
 
-			List<CodeItemInfo> firstLevelCodeItemList = this.stubService.getEMM().listSubCodeItemForMaster(sourceCodeObjectInfo.getGuid(), null);
+			List<CodeItemInfo> firstLevelCodeItemList = this.stubService.getEmm().listSubCodeItemForMaster(sourceCodeObjectInfo.getGuid(), null);
 			if (!SetUtils.isNullList(firstLevelCodeItemList))
 			{
 				for (CodeItemInfo codeItemInfo : firstLevelCodeItemList)
@@ -109,7 +109,7 @@ public class CodeManageModifyStub extends AbstractServiceStub<MMSImpl>
 			newCodeItemInfo.setUpdateUserGuid(currentUserguid);
 			sds.save(newCodeItemInfo);
 
-			List<CodeItemInfo> subCodeItemInfoList = this.stubService.getEMM().listSubCodeItemForDetail(sourcCodeItemInfo.getGuid());
+			List<CodeItemInfo> subCodeItemInfoList = this.stubService.getEmm().listSubCodeItemForDetail(sourcCodeItemInfo.getGuid());
 			if (!SetUtils.isNullList(subCodeItemInfoList))
 			{
 				for (CodeItemInfo subCodeItemInfo : subCodeItemInfoList)

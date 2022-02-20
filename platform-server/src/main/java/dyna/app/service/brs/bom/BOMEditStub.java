@@ -92,12 +92,12 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 			List<ObjectGuid> end2ObjectGuidList = new ArrayList<ObjectGuid>();
 			end2ObjectGuidList.add(bomStructure.getEnd2ObjectGuid());
 			viewObject.getTemplateID();
-			BOMTemplateInfo bomTemplate = this.stubService.getEMM().getBOMTemplateById(viewObject.getTemplateID());
-			this.stubService.getDCR().check(viewObject.getEnd1ObjectGuid(), end2ObjectGuidList, bomTemplate.getName(), RuleTypeEnum.BOM);
+			BOMTemplateInfo bomTemplate = this.stubService.getEmm().getBOMTemplateById(viewObject.getTemplateID());
+			this.stubService.getDcr().check(viewObject.getEnd1ObjectGuid(), end2ObjectGuidList, bomTemplate.getName(), RuleTypeEnum.BOM);
 
-			EOSS eoss = this.stubService.getEOSS();
+			EOSS eoss = this.stubService.getEoss();
 			// 处理取替代，并且设置bomStructure上取替代的标识
-			((BRMImpl) this.stubService.getBRM()).getReplaceObjectStub().dealWithHistoryReplaceData(null, null, bomStructure, viewObject.getName(), true, true);
+			((BRMImpl) this.stubService.getBrm()).getReplaceObjectStub().dealWithHistoryReplaceData(null, null, bomStructure, viewObject.getName(), true, true);
 			// !invoke unlink.before
 			eoss.executeDeleteBeforeEvent(bomStructure);
 
@@ -136,7 +136,7 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 				throw new ServiceRequestException("ID_APP_VEIW_NOT_FOUND", "view not found");
 			}
 
-			end1 = this.stubService.getBOAS().getObjectByGuid(viewObject.getEnd1ObjectGuid());
+			end1 = this.stubService.getBoas().getObjectByGuid(viewObject.getEnd1ObjectGuid());
 			if (SystemStatusEnum.OBSOLETE.equals(viewObject.getStatus()) || SystemStatusEnum.PRE.equals(viewObject.getStatus()))
 			{
 				throw new ServiceRequestException("ID_APP_VEIW_STATUS_NOT_UPDATE", "view not update");
@@ -161,7 +161,7 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 
 			if (end1 != null)
 			{
-				String bmGuid = this.stubService.getEMM().getCurrentBizModel().getGuid();
+				String bmGuid = this.stubService.getEmm().getCurrentBizModel().getGuid();
 				List<FoundationObject> end1List = new ArrayList<>();
 				end1List.add(end1);
 				this.stubService.getAsync().updateUHasBOM(end1List, bmGuid);
@@ -204,7 +204,7 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 			bomStructure.setViewObjectGuid(viewObjectGuid);
 			bomStructure.setEnd2ObjectGuid(end2ObjectGuid);
 
-			EOSS eoss = this.stubService.getEOSS();
+			EOSS eoss = this.stubService.getEoss();
 
 			// !invoke link.before
 			eoss.executeAddBeforeEvent(bomStructure);
@@ -220,11 +220,11 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 			{
 				throw new DynaDataExceptionAll("linkBOM() youself.", null, DataExceptionEnum.DS_RELATION_SELF);
 			}
-			BOMTemplateInfo bomTemplate = this.stubService.getEMM().getBOMTemplateById((String) bomViewObject.get(ViewObject.TEMPLATE_ID));
+			BOMTemplateInfo bomTemplate = this.stubService.getEmm().getBOMTemplateById((String) bomViewObject.get(ViewObject.TEMPLATE_ID));
 
 			if (bomTemplate != null)
 			{
-				List<BOMTemplateEnd2> boInfoList = this.stubService.getEMM().getBOMTemplate(bomTemplate.getGuid()).getBOMTemplateEnd2List();
+				List<BOMTemplateEnd2> boInfoList = this.stubService.getEmm().getBOMTemplate(bomTemplate.getGuid()).getBOMTemplateEnd2List();
 				boolean end2Auth = false;
 				if (!SetUtils.isNullList(boInfoList))
 				{
@@ -232,7 +232,7 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 
 					for (BOMTemplateEnd2 boInfo : boInfoList)
 					{
-						BOInfo tempboinfo = this.stubService.getEMM().getCurrentBoInfoByName(boInfo.getEnd2BoName(), false);
+						BOInfo tempboinfo = this.stubService.getEmm().getCurrentBoInfoByName(boInfo.getEnd2BoName(), false);
 						if (tempboinfo.getClassGuid().equals(end2ObjectGuid.getClassGuid()))
 						{
 							end2Auth = true;
@@ -240,7 +240,7 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 						}
 						else
 						{
-							List<ClassInfo> list = this.stubService.getEMM().listAllSubClassInfoOnlyLeaf(null, tempboinfo.getClassName());
+							List<ClassInfo> list = this.stubService.getEmm().listAllSubClassInfoOnlyLeaf(null, tempboinfo.getClassName());
 							if (list != null)
 							{
 								for (ClassInfo info : list)
@@ -265,12 +265,12 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 				// DCR规则检查
 				List<ObjectGuid> end2ObjectGuidList = new ArrayList<ObjectGuid>();
 				end2ObjectGuidList.add(end2ObjectGuid);
-				this.stubService.getDCR().check(bomViewObject.getEnd1ObjectGuid(), end2ObjectGuidList, bomTemplate.getName(), RuleTypeEnum.BOM);
+				this.stubService.getDcr().check(bomViewObject.getEnd1ObjectGuid(), end2ObjectGuidList, bomTemplate.getName(), RuleTypeEnum.BOM);
 			}
 
 			String key = BOMStructure.BOMKEY;
 			bomStructure.put(key, UUID.randomUUID().toString().replace("-", "").toUpperCase());
-			FoundationObject end2FoundationObject = this.stubService.getBOAS().getObjectByGuid(end2ObjectGuid);
+			FoundationObject end2FoundationObject = this.stubService.getBoas().getObjectByGuid(end2ObjectGuid);
 			if (end2FoundationObject != null && end2FoundationObject.getStatus() == SystemStatusEnum.OBSOLETE)
 			{
 				throw new ServiceRequestException("ID_APP_OBJECT_OBSOLETED", "instace has benn obsoleted", null, end2FoundationObject.getFullName());
@@ -278,7 +278,7 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 
 			if (isCheckField)
 			{
-				String message = ((BOASImpl) this.stubService.getBOAS()).getFSaverStub().checkDynaObjectField(bomStructure);
+				String message = ((BOASImpl) this.stubService.getBoas()).getFSaverStub().checkDynaObjectField(bomStructure);
 
 				if (!StringUtils.isNullString(message))
 				{
@@ -297,7 +297,7 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 			retbomStructure.setViewObjectGuid(viewObjectGuid);
 			bomStructure = retbomStructure;
 			// 处理取替代，并且设置bomStructure上取替代的标识
-			((BRMImpl) this.stubService.getBRM()).getReplaceObjectStub().dealWithHistoryReplaceData(null, null, bomStructure, bomViewObject.getName(), false, false);
+			((BRMImpl) this.stubService.getBrm()).getReplaceObjectStub().dealWithHistoryReplaceData(null, null, bomStructure, bomViewObject.getName(), false, false);
 			if (bomStructure.isRsFlag())
 			{
 				//todo
@@ -360,12 +360,12 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 
 			if (bomViewObject != null)
 			{
-				end1FoundationObject = this.stubService.getBOAS().getObjectByGuid(bomViewObject.getEnd1ObjectGuid());
+				end1FoundationObject = this.stubService.getBoas().getObjectByGuid(bomViewObject.getEnd1ObjectGuid());
 				if (end1FoundationObject != null && end1FoundationObject.getStatus() == SystemStatusEnum.OBSOLETE)
 				{
 					throw new ServiceRequestException("ID_APP_OBJECT_OBSOLETED", "instace has benn obsoleted", null, end1FoundationObject.getFullName());
 				}
-				BOMTemplateInfo bomTemplate = this.stubService.getEMM().getBOMTemplateById((String) bomViewObject.get(ViewObject.TEMPLATE_ID));
+				BOMTemplateInfo bomTemplate = this.stubService.getEmm().getBOMTemplateById((String) bomViewObject.get(ViewObject.TEMPLATE_ID));
 				if (bomTemplate != null)
 				{
 					if (bomTemplate != null)
@@ -384,7 +384,7 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 								}
 								if (end2MasterGuidList.contains(bomStructure.getEnd2ObjectGuid().getMasterGuid()))
 								{
-									FoundationObject objectByGuid = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObjectByGuid(bomStructure.getEnd2ObjectGuid(),
+									FoundationObject objectByGuid = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObjectByGuid(bomStructure.getEnd2ObjectGuid(),
 											false);
 
 									throw new ServiceRequestException("ID_APP_BOMEDIT_CANT_CONECT_BOMVIEW", "end2 is not relation", null, objectByGuid.getFullName());
@@ -404,7 +404,7 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 
 			if (isCheckField)
 			{
-				String message = ((BOASImpl) this.stubService.getBOAS()).getFSaverStub().checkDynaObjectField(bomStructure);
+				String message = ((BOASImpl) this.stubService.getBoas()).getFSaverStub().checkDynaObjectField(bomStructure);
 
 				if (!StringUtils.isNullString(message))
 				{
@@ -441,7 +441,7 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 			this.stubService.getAsync().systemTrack(this.getTrackerBuilder(), this.stubService.getSignature(), null, args, returnObj);
 			if (end1FoundationObject != null)
 			{
-				String bmGuid = this.stubService.getEMM().getCurrentBizModel().getGuid();
+				String bmGuid = this.stubService.getEmm().getCurrentBizModel().getGuid();
 				List<FoundationObject> end1List = new ArrayList<>();
 				end1List.add(end1FoundationObject);
 				this.stubService.getAsync().updateUHasBOM(end1List, bmGuid);
@@ -487,7 +487,7 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 			// 先创建一个View 然后再关联
 			if (isNeedCreate)
 			{
-				BOMTemplateInfo bomTemplate = this.stubService.getEMM().getBOMTemplateByName(end1Object, viewName);
+				BOMTemplateInfo bomTemplate = this.stubService.getEmm().getBOMTemplateByName(end1Object, viewName);
 
 				if (bomTemplate == null)
 				{
@@ -558,13 +558,13 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 					throw new ServiceRequestException(DataExceptionEnum.DS_NO_LINK_AUTH.getMsrId(), "", null, itemView.getFullName());
 				}
 			}
-			FoundationObject foundationObject = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObjectByGuid(itemView.getEnd1ObjectGuid(), false);
+			FoundationObject foundationObject = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObjectByGuid(itemView.getEnd1ObjectGuid(), false);
 			if (foundationObject != null && foundationObject.getStatus() == SystemStatusEnum.OBSOLETE)
 			{
 				throw new ServiceRequestException("ID_APP_OBJECT_OBSOLETED", "object has bean obsoleted", null, foundationObject.getFullName());
 			}
 
-			BOMTemplateInfo bomTemplate = this.stubService.getEMM().getBOMTemplateById(itemView.getTemplateID());
+			BOMTemplateInfo bomTemplate = this.stubService.getEmm().getBOMTemplateById(itemView.getTemplateID());
 			List<String> end2MasterGuidList = new ArrayList<String>();
 			if (!bomTemplate.isIncorporatedMaster())
 			{
@@ -579,7 +579,7 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 				}
 			}
 
-			end1 = this.stubService.getBOAS().getObjectByGuid(itemView.getEnd1ObjectGuid());
+			end1 = this.stubService.getBoas().getObjectByGuid(itemView.getEnd1ObjectGuid());
 
 //			this.stubService.getTransactionManager().startTransaction(this.stubService.getFixedTransactionId());
 
@@ -595,7 +595,7 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 				}
 				if (ECOperateTypeEnum.MODIFY.toString().equals(ecEffectedBOMRelation.getEcOperate()))
 				{
-					FoundationObject end2 = this.stubService.getBOAS().getObject(bomStructure.getEnd2ObjectGuid());
+					FoundationObject end2 = this.stubService.getBoas().getObject(bomStructure.getEnd2ObjectGuid());
 					if (end2 != null && end2.getStatus() == SystemStatusEnum.OBSOLETE)
 					{
 						throw new ServiceRequestException("ID_APP_OBJECT_OBSOLETED", "instace has benn obsoleted", null, end2.getFullName());
@@ -615,7 +615,7 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 							{
 								if (end2MasterGuidList.contains(newEnd2MasterGuid))
 								{
-									FoundationObject objectByGuid = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObjectByGuid(bomStructure.getEnd2ObjectGuid(),
+									FoundationObject objectByGuid = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObjectByGuid(bomStructure.getEnd2ObjectGuid(),
 											false);
 
 									throw new ServiceRequestException("ID_APP_BOMEDIT_CANT_CONECT_BOMVIEW", "end2 is not relation", null, objectByGuid.getFullName());
@@ -628,13 +628,13 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 						// 处理取替代，并且设置bomStructure上取替代的标识
 						ObjectGuid componentItemObjectGuid = new ObjectGuid((String) bomStructure.getOriginalValue("END2$CLASSGUID"), null,
 								(String) bomStructure.getOriginalValue("END2$"), (String) bomStructure.getOriginalValue("END2$MASTERFK"), null);
-						((BRMImpl) this.stubService.getBRM()).getReplaceObjectStub().dealWithHistoryReplaceData(null, componentItemObjectGuid, bomStructure, bomTemplate.getName(),
+						((BRMImpl) this.stubService.getBrm()).getReplaceObjectStub().dealWithHistoryReplaceData(null, componentItemObjectGuid, bomStructure, bomTemplate.getName(),
 								true, false);
 						ObjectGuid replaceComponentItemObjectGuid = bomStructure.getEnd2ObjectGuid();
 						if ((String) bomStructure.getOriginalValue("END2$MASTERFK") != null
 								&& !((String) bomStructure.getOriginalValue("END2$MASTERFK")).equals(replaceComponentItemObjectGuid.getMasterGuid()))
 						{
-							((BRMImpl) this.stubService.getBRM()).getReplaceObjectStub().dealWithHistoryReplaceData(null, null, bomStructure, bomTemplate.getName(), false, false);
+							((BRMImpl) this.stubService.getBrm()).getReplaceObjectStub().dealWithHistoryReplaceData(null, null, bomStructure, bomTemplate.getName(), false, false);
 						}
 					}
 					bomStructure = this.stubService.getBomStub().saveBOMInner(bomStructure, bomTemplate.getPrecise() == BomPreciseType.PRECISE, isCheckField,
@@ -667,7 +667,7 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 							{
 								if (end2MasterGuidList.contains(bomStructure.getEnd2ObjectGuid().getMasterGuid()))
 								{
-									FoundationObject objectByGuid = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObjectByGuid(bomStructure.getEnd2ObjectGuid(),
+									FoundationObject objectByGuid = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObjectByGuid(bomStructure.getEnd2ObjectGuid(),
 											false);
 
 									throw new ServiceRequestException("ID_APP_BOMEDIT_CANT_CONECT_BOMVIEW", "end2 is not relation", null, objectByGuid.getFullName());
@@ -732,7 +732,7 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 		{
 			if (end1 != null)
 			{
-				String bmGuid = this.stubService.getEMM().getCurrentBizModel().getGuid();
+				String bmGuid = this.stubService.getEmm().getCurrentBizModel().getGuid();
 				List<FoundationObject> end1List = new ArrayList<>();
 				end1List.add(end1);
 				this.stubService.getAsync().updateUHasBOM(end1List, bmGuid);
@@ -744,7 +744,7 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 
 	public boolean cadToBom(FoundationObject cad, String bomTemplateGuid, boolean isRoot, FoundationObject end12, boolean isYS) throws ServiceRequestException
 	{
-		BOMTemplate bomTemplate = this.stubService.getEMM().getBOMTemplate(bomTemplateGuid);
+		BOMTemplate bomTemplate = this.stubService.getEmm().getBOMTemplate(bomTemplateGuid);
 		String sessionId = this.stubService.getUserSignature().getCredential();
 		try
 		{
@@ -762,7 +762,7 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 				else
 				{
 					// 查找end1
-					List<FoundationObject> end1List = this.stubService.getBOAS().listWhereReferenced(cad.getObjectGuid(), BuiltinRelationNameEnum.ITEMCAD3D.toString(), null, null);
+					List<FoundationObject> end1List = this.stubService.getBoas().listWhereReferenced(cad.getObjectGuid(), BuiltinRelationNameEnum.ITEMCAD3D.toString(), null, null);
 					if (!SetUtils.isNullList(end1List))
 					{
 						end1 = end1List.get(0);
@@ -791,10 +791,10 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 				List<FoundationObject> end2CADList = new ArrayList<FoundationObject>();
 				List<StructureObject> end2CADStructureList = null;
 
-				RelationTemplateInfo tmp = this.stubService.getEMM().getRelationTemplateByName(cad.getObjectGuid(), "MODEL-STRUCTURE");
+				RelationTemplateInfo tmp = this.stubService.getEmm().getRelationTemplateByName(cad.getObjectGuid(), "MODEL-STRUCTURE");
 				if (tmp != null)
 				{
-					ViewObject viewObject = this.stubService.getBOAS().getRelationByEND1(cad.getObjectGuid(), tmp.getName());
+					ViewObject viewObject = this.stubService.getBoas().getRelationByEND1(cad.getObjectGuid(), tmp.getName());
 					if (viewObject != null)
 					{
 						SearchCondition condition = null;
@@ -802,7 +802,7 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 
 						condition = SearchConditionFactory.createSearchConditionForStructure(structureClassName);
 						List<String> uiNameList = new ArrayList<String>();
-						List<UIObjectInfo> uiObjectList = this.stubService.getEMM().listUIObjectInCurrentBizModel(structureClassName, UITypeEnum.FORM, true);
+						List<UIObjectInfo> uiObjectList = this.stubService.getEmm().listUIObjectInCurrentBizModel(structureClassName, UITypeEnum.FORM, true);
 						if (!SetUtils.isNullList(uiObjectList))
 						{
 							for (UIObjectInfo uiObject : uiObjectList)
@@ -813,7 +813,7 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 						condition.setResultUINameList(uiNameList);
 						condition.addResultField("BOMRelated");
 
-						List<FoundationObject> end2CADListtem = this.stubService.getBOAS().listFoundationObjectOfRelation(viewObject.getObjectGuid(), condition, null, null, true);
+						List<FoundationObject> end2CADListtem = this.stubService.getBoas().listFoundationObjectOfRelation(viewObject.getObjectGuid(), condition, null, null, true);
 						end2CADStructureList = this.listObjectOfRelation(viewObject.getObjectGuid(), condition);
 
 						if (!isYS)
@@ -866,7 +866,7 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 
 					for (FoundationObject foundationObject : end2CADList)
 					{
-						List<FoundationObject> foList = this.stubService.getBOAS().listWhereReferenced(foundationObject.getObjectGuid(),
+						List<FoundationObject> foList = this.stubService.getBoas().listWhereReferenced(foundationObject.getObjectGuid(),
 								BuiltinRelationNameEnum.ITEMCAD3D.toString(), null, null);
 
 						if (!SetUtils.isNullList(foList))
@@ -884,7 +884,7 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 					boolean isNew = false;
 					int increment = 10;
 					int length = -1;
-					List<BOMTemplateInfo> templsit = this.stubService.getEMM().listBOMTemplateByEND1(end1.getObjectGuid());
+					List<BOMTemplateInfo> templsit = this.stubService.getEmm().listBOMTemplateByEND1(end1.getObjectGuid());
 					if (SetUtils.isNullList(templsit))
 					{
 						throw new ServiceRequestException("ID_APP_CADTOBOM_NOT_SAME_BOM_TEMPLATE", "End1: " + end1.getFullName() + "  Has No BOM Template!");
@@ -919,7 +919,7 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 
 					if (bomView == null)
 					{
-						if (Constants.isSupervisor(true, this.stubService) && !this.stubService.getACL().hasFoundationCreateACL(bomTemplate.getViewClassName()))
+						if (Constants.isSupervisor(true, this.stubService) && !this.stubService.getAcl().hasFoundationCreateACL(bomTemplate.getViewClassName()))
 						{
 							throw new ServiceRequestException("ID_APP_CADTOBOM_ACL", "has no authority");
 						}
@@ -1086,9 +1086,9 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 	private void checkFoundationFieldRegex(BOMStructure bomStructure) throws ServiceRequestException
 	{
 		String classGuid = bomStructure.getObjectGuid().getClassGuid();
-		ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(classGuid);
+		ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(classGuid);
 
-		List<ClassField> listFieldOfClass = this.stubService.getEMM().listFieldOfClass(classInfo.getName());
+		List<ClassField> listFieldOfClass = this.stubService.getEmm().listFieldOfClass(classInfo.getName());
 		if (!SetUtils.isNullList(listFieldOfClass))
 		{
 			for (ClassField field : listFieldOfClass)
@@ -1099,7 +1099,7 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 					boolean matches = pattern.matcher(StringUtils.convertNULLtoString(bomStructure.get(field.getName()))).matches();
 					if (matches)
 					{
-						UIField uiField = this.stubService.getEMM().getUIFieldByName(classInfo.getName(), field.getName());
+						UIField uiField = this.stubService.getEmm().getUIFieldByName(classInfo.getName(), field.getName());
 						String title = uiField == null ? field.getName() : uiField.getTitle(this.stubService.getUserSignature().getLanguageEnum());
 						throw new ServiceRequestException("ID_CLIENT_VALIDATOR_REGEXLEGAL", "field value ilegal.", null, title);
 					}
@@ -1140,7 +1140,7 @@ public class BOMEditStub extends AbstractServiceStub<BOMSImpl>
 	{
 		try
 		{
-			List<StructureObject> temList = this.stubService.getBOAS().listObjectOfRelation(viewObject, searchCondition, null, null);
+			List<StructureObject> temList = this.stubService.getBoas().listObjectOfRelation(viewObject, searchCondition, null, null);
 			if (!SetUtils.isNullList(temList))
 			{
 				List<String> end2GuidList = new ArrayList<String>();

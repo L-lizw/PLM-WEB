@@ -104,19 +104,6 @@ public abstract class AbstractStratery  extends AbstractServiceStub<BOASImpl> im
 		return value;
 	}
 
-	protected <T extends ApplicationService> T getService(DataAccessService dataAccessService, Class<T> clazz) throws ServiceRequestException
-	{
-		try
-		{
-			return dataAccessService.getRefService(clazz);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
 	protected Object getValue(Map<String, FoundationObject> classificationMap, ClassificationNumberField field, ClassficationFeatureItem item, String fieldName)
 	{
 		FoundationObject foundation = null;

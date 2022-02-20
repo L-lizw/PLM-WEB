@@ -73,8 +73,8 @@ public class ConfigRuleBOLMStub extends AbstractServiceStub<SLCImpl>
 
 	private boolean isShare(ConfigRuleBOLM bolm) throws ServiceRequestException
 	{
-		BMInfo bminfo = this.stubService.getEMM().getSharedBizModel();
-		BOInfo bo = this.stubService.getEMM().getBizObject(bminfo.getGuid(), bolm.getBOGuid());
+		BMInfo bminfo = this.stubService.getEmm().getSharedBizModel();
+		BOInfo bo = this.stubService.getEmm().getBizObject(bminfo.getGuid(), bolm.getBOGuid());
 		return bo!=null;
 	}
 
@@ -105,13 +105,13 @@ public class ConfigRuleBOLMStub extends AbstractServiceStub<SLCImpl>
 
 	private String getShareBO(String boguid) throws ServiceRequestException 
 	{
-		BOInfo bo = this.stubService.getEMM().getCurrentBizObjectByGuid(boguid);
+		BOInfo bo = this.stubService.getEmm().getCurrentBizObjectByGuid(boguid);
 		if (bo==null)
 		{
 			return boguid;
 		}
-		BMInfo bminfo = this.stubService.getEMM().getSharedBizModel();
-		bo = this.stubService.getEMM().getBoInfoByNameAndBM(bminfo.getGuid(), bo.getBOName());
+		BMInfo bminfo = this.stubService.getEmm().getSharedBizModel();
+		bo = this.stubService.getEmm().getBoInfoByNameAndBM(bminfo.getGuid(), bo.getBOName());
 		if (bo==null)
 		{
 			return boguid;
@@ -123,10 +123,10 @@ public class ConfigRuleBOLMStub extends AbstractServiceStub<SLCImpl>
 	{
 		ConfigRuleBOLM configRuleBOLM = null;
 		BOInfo boInfo = null;
-		if ("ALL".equalsIgnoreCase(bmGuid) || this.stubService.getEMM().getSharedBizModel().getGuid().equalsIgnoreCase(bmGuid))
+		if ("ALL".equalsIgnoreCase(bmGuid) || this.stubService.getEmm().getSharedBizModel().getGuid().equalsIgnoreCase(bmGuid))
 		{
-			bmGuid = this.stubService.getEMM().getSharedBizModel().getGuid();
-			boInfo = this.stubService.getEMM().getBizObject(bmGuid, boGuid);
+			bmGuid = this.stubService.getEmm().getSharedBizModel().getGuid();
+			boInfo = this.stubService.getEmm().getBizObject(bmGuid, boGuid);
 			if (boInfo == null)
 			{
 				throw new ServiceRequestException("ID_APP_BUSINESS_OBJECT_NOT_EXIST", "boGuid not found :" + boGuid, null, boGuid);
@@ -134,13 +134,13 @@ public class ConfigRuleBOLMStub extends AbstractServiceStub<SLCImpl>
 		}
 		else 
 		{
-			boInfo = this.stubService.getEMM().getBizObject(bmGuid, boGuid);
+			boInfo = this.stubService.getEmm().getBizObject(bmGuid, boGuid);
 			if (boInfo == null)
 			{
 				throw new ServiceRequestException("ID_APP_BUSINESS_OBJECT_NOT_EXIST", "boGuid not found :" + boGuid, null, boGuid);
 			}
-			String shareBmGuid = this.stubService.getEMM().getSharedBizModel().getGuid();
-			BOInfo sboInfo = this.stubService.getEMM().getBoInfoByNameAndBM(shareBmGuid,boInfo.getBOName());
+			String shareBmGuid = this.stubService.getEmm().getSharedBizModel().getGuid();
+			BOInfo sboInfo = this.stubService.getEmm().getBoInfoByNameAndBM(shareBmGuid,boInfo.getBOName());
 			if (boInfo!=null)
 			{
 				bmGuid=shareBmGuid;
@@ -162,7 +162,7 @@ public class ConfigRuleBOLMStub extends AbstractServiceStub<SLCImpl>
 				}
 				else
 				{
-					parentBO = this.stubService.getEMM().getBizObject(bmGuid, parentBO.getParentBOGuid());
+					parentBO = this.stubService.getEmm().getBizObject(bmGuid, parentBO.getParentBOGuid());
 				}
 			}
 			searchConditionMap.clear();
@@ -177,10 +177,10 @@ public class ConfigRuleBOLMStub extends AbstractServiceStub<SLCImpl>
 		// 继承
 		if (!boGuid.equalsIgnoreCase(configRuleBOLM.getBOGuid()))
 		{
-			ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(boInfo.getClassGuid());
-			ClassInfo parentClassInfo = this.stubService.getEMM().getClassByGuid(boInfo.getClassGuid());
-			LifecycleInfo lifecycleInfo = this.stubService.getEMM().getLifecycleInfoByGuid(classInfo.getLifecycle());
-			LifecycleInfo lifecycleInfoParent = this.stubService.getEMM().getLifecycleInfoByGuid(parentClassInfo.getLifecycle());
+			ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(boInfo.getClassGuid());
+			ClassInfo parentClassInfo = this.stubService.getEmm().getClassByGuid(boInfo.getClassGuid());
+			LifecycleInfo lifecycleInfo = this.stubService.getEmm().getLifecycleInfoByGuid(classInfo.getLifecycle());
+			LifecycleInfo lifecycleInfoParent = this.stubService.getEmm().getLifecycleInfoByGuid(parentClassInfo.getLifecycle());
 			boolean isLifecycleColne = true;
 			if (lifecycleInfo != null && lifecycleInfoParent != null && lifecycleInfo.getGuid().equals(lifecycleInfoParent.getGuid()))
 			{
@@ -219,19 +219,19 @@ public class ConfigRuleBOLMStub extends AbstractServiceStub<SLCImpl>
 
 //			this.stubService.getTransactionManager().startTransaction(this.stubService.getFixedTransactionId());
 
-			if (BOMTemplateInfo.ALL.equalsIgnoreCase(bmGuid) || this.stubService.getEMM().getSharedBizModel().getGuid().equalsIgnoreCase(bmGuid))
+			if (BOMTemplateInfo.ALL.equalsIgnoreCase(bmGuid) || this.stubService.getEmm().getSharedBizModel().getGuid().equalsIgnoreCase(bmGuid))
 			{
-				bmGuid = this.stubService.getEMM().getSharedBizModel().getGuid();
+				bmGuid = this.stubService.getEmm().getSharedBizModel().getGuid();
 			}
 			else
 			{
-				BOInfo bo = this.stubService.getEMM().getBizObject(bmGuid,configRuleBOLM.getBOGuid());
+				BOInfo bo = this.stubService.getEmm().getBizObject(bmGuid,configRuleBOLM.getBOGuid());
 				if (bo==null)
 				{
 					return null;
 				}
-				String shareBmGuid = this.stubService.getEMM().getSharedBizModel().getGuid();
-				bo = this.stubService.getEMM().getBoInfoByNameAndBM(shareBmGuid,bo.getBOName());
+				String shareBmGuid = this.stubService.getEmm().getSharedBizModel().getGuid();
+				bo = this.stubService.getEmm().getBoInfoByNameAndBM(shareBmGuid,bo.getBOName());
 				if (bo!=null)
 				{
 					bmGuid=shareBmGuid;

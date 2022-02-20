@@ -62,7 +62,7 @@ public class IterationStub extends AbstractServiceStub<BOASImpl>
 			SearchCondition searchCondition = SearchConditionFactory.createSearchCondition(objectGuid, null, false);
 
 			// get ui model object for this object.
-			List<UIObjectInfo> uiObjectList = this.stubService.getEMM().listUIObjectInCurrentBizModel(objectGuid.getClassName(), UITypeEnum.FORM, true);
+			List<UIObjectInfo> uiObjectList = this.stubService.getEmm().listUIObjectInCurrentBizModel(objectGuid.getClassName(), UITypeEnum.FORM, true);
 			if (!SetUtils.isNullList(uiObjectList))
 			{
 				for (UIObjectInfo uiObject : uiObjectList)
@@ -88,7 +88,7 @@ public class IterationStub extends AbstractServiceStub<BOASImpl>
 				this.stubService.getClassificationStub().makeClassificationFoundation(foundation, searchCondition, bmGuid, String.valueOf(foundation.getIterationId()));
 			}
 
-			EMM emm = this.stubService.getEMM();
+			EMM emm = this.stubService.getEmm();
 
 			Set<String> fieldNames = emm.getObjectFieldNamesInSC(searchCondition);
 			Set<String> fieldCodeNames = emm.getCodeFieldNamesInSC(searchCondition);
@@ -99,7 +99,7 @@ public class IterationStub extends AbstractServiceStub<BOASImpl>
 				decoratorFactory.decorateFoundationObjectCode(fieldCodeNames, fObject, emm, bmGuid);
 				fObject.put("$IterationFoGuid$", objectGuid.getGuid());
 			}
-			decoratorFactory.decorateFoundationObject(fieldNames, results, this.stubService.getEMM(), sessionId);
+			decoratorFactory.decorateFoundationObject(fieldNames, results, this.stubService.getEmm(), sessionId);
 
 			return results;
 		}
@@ -124,7 +124,7 @@ public class IterationStub extends AbstractServiceStub<BOASImpl>
 			this.stubService.getInstanceService().rollbackIteration(objectGuid, iterationId, false, sessionId);
 
 			// delete file
-			((DSSImpl) this.stubService.getDSS()).getFileInfoStub().rollbackFile(objectGuid, object.getIterationId(), iterationId);
+			((DSSImpl) this.stubService.getDss()).getFileInfoStub().rollbackFile(objectGuid, object.getIterationId(), iterationId);
 		}
 		catch (ServiceRequestException e)
 		{

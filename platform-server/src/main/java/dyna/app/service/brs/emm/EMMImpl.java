@@ -41,11 +41,14 @@ import dyna.common.systemenum.UITypeEnum;
 import dyna.common.util.SetUtils;
 import dyna.net.security.signature.UserSignature;
 import dyna.net.service.brs.AAS;
+import dyna.net.service.brs.DSS;
 import dyna.net.service.brs.EMM;
 import dyna.net.service.brs.LIC;
 import dyna.net.service.data.RelationService;
 import dyna.net.service.data.SystemDataService;
 import dyna.net.service.data.model.*;
+import lombok.AccessLevel;
+import lombok.Getter;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,8 +59,9 @@ import java.util.*;
 /**
  * Enterprise Model Management implementation
  *
- * @author Wanglei
+ * @author Lizw
  */
+@Getter(AccessLevel.PROTECTED)
 @Service public class EMMImpl extends BusinessRuleService implements EMM
 {
 
@@ -71,6 +75,13 @@ import java.util.*;
 	@DubboReference private LifecycleModelService        lifecycleModelService;
 	@DubboReference private RelationService              relationService;
 	@DubboReference private SystemDataService            systemDataService;
+
+	@Autowired
+	private AAS aas;
+	@Autowired
+	private DSS dss;
+	@Autowired
+	private LIC lic;
 
 	@Autowired private CodeStub              codeStub             ;
 	@Autowired private BMStub                bmStub               ;
@@ -154,30 +165,16 @@ import java.util.*;
 		return this.systemDataService;
 	}
 
-	public synchronized AAS getAAS() throws ServiceRequestException
+	public  AAS getAAS()
 	{
-		try
-		{
-			return this.getRefService(AAS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
+		return this.aas;
 	}
 
-	protected synchronized LIC getLIC() throws ServiceRequestException
+	public DSS getDSS()
 	{
-		try
-		{
-			return this.getRefService(LIC.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
+		return this.dss;
 	}
+
 
 	public InterfaceStub getInterfaceStub()
 	{

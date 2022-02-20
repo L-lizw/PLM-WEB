@@ -169,13 +169,13 @@ public class PerformerStub extends AbstractServiceStub<WFIImpl>
 		List<Performer> actualPerformerList = this.dbStub.selectActPerformerActual(actrtGuid);
 
 		// 取得角色所属的所有组角色
-		List<RIG> rigList = this.stubService.getAAS().listRIGByRoleGuid(roleGuid);
+		List<RIG> rigList = this.stubService.getAas().listRIGByRoleGuid(roleGuid);
 		if (!SetUtils.isNullList(rigList))
 		{
 			for (RIG rig : rigList)
 			{
 				// 取得当前设置的用户组角色下的所有用户
-				List<User> userInGroupList = this.stubService.getAAS().listUserByRoleInGroup(rig.getGuid());
+				List<User> userInGroupList = this.stubService.getAas().listUserByRoleInGroup(rig.getGuid());
 
 				// 判断是否所有用户均已完成
 				if (!SetUtils.isNullList(userInGroupList))
@@ -201,13 +201,13 @@ public class PerformerStub extends AbstractServiceStub<WFIImpl>
 		List<Performer> actualPerformerList = this.dbStub.selectActPerformerActual(actrtGuid);
 
 		// 取得角色所属的所有组角色
-		List<RIG> rigList = this.stubService.getAAS().listRIGByRoleGuid(roleGuid);
+		List<RIG> rigList = this.stubService.getAas().listRIGByRoleGuid(roleGuid);
 		if (!SetUtils.isNullList(rigList))
 		{
 			for (RIG rig : rigList)
 			{
 				// 取得当前设置的用户组角色下的所有用户
-				List<User> userInGroupList = this.stubService.getAAS().listUserByRoleInGroup(rig.getGuid());
+				List<User> userInGroupList = this.stubService.getAas().listUserByRoleInGroup(rig.getGuid());
 
 				// 判断是否所有用户均已完成
 				if (!SetUtils.isNullList(userInGroupList))
@@ -233,7 +233,7 @@ public class PerformerStub extends AbstractServiceStub<WFIImpl>
 		List<Performer> actualPerformerList = this.dbStub.selectActPerformerActual(actrtGuid);
 
 		// 取得当前设置的用户组角色下的所有用户
-		List<User> userInGroupList = this.stubService.getAAS().listUserByRoleInGroup(rigGuid);
+		List<User> userInGroupList = this.stubService.getAas().listUserByRoleInGroup(rigGuid);
 
 		// 判断是否所有用户均已完成
 		if (!SetUtils.isNullList(userInGroupList))
@@ -256,7 +256,7 @@ public class PerformerStub extends AbstractServiceStub<WFIImpl>
 		List<Performer> actualPerformerList = this.dbStub.selectActPerformerActual(actrtGuid);
 
 		// 取得当前设置的用户组角色下的所有用户
-		List<User> userInGroupList = this.stubService.getAAS().listUserByRoleInGroup(rigGuid);
+		List<User> userInGroupList = this.stubService.getAas().listUserByRoleInGroup(rigGuid);
 
 		// 判断是否所有用户均已完成
 		if (!SetUtils.isNullList(userInGroupList))
@@ -279,7 +279,7 @@ public class PerformerStub extends AbstractServiceStub<WFIImpl>
 		List<Performer> actualPerformerList = this.dbStub.selectActPerformerActual(actrtGuid);
 
 		// 取得当前设置的用户组下的所有用户
-		List<User> userInGroupList = this.stubService.getAAS().listUserInGroup(groupGuid);
+		List<User> userInGroupList = this.stubService.getAas().listUserInGroup(groupGuid);
 
 		// 判断是否所有用户均已完成
 		if (!SetUtils.isNullList(userInGroupList))
@@ -302,7 +302,7 @@ public class PerformerStub extends AbstractServiceStub<WFIImpl>
 		List<Performer> actualPerformerList = this.dbStub.selectActPerformerActual(actrtGuid);
 
 		// 取得当前设置的用户组下的所有用户
-		List<User> userInGroupList = this.stubService.getAAS().listUserInGroup(groupGuid);
+		List<User> userInGroupList = this.stubService.getAas().listUserInGroup(groupGuid);
 
 		// 判断是否有用户完成,只要有一个完成即完成
 		if (!SetUtils.isNullList(userInGroupList))
@@ -553,7 +553,7 @@ public class PerformerStub extends AbstractServiceStub<WFIImpl>
 	{
 		if (p.getPerformerType() == PerformerTypeEnum.USER)
 		{
-			User user = this.stubService.getAAS().getUser(p.getPerformerGuid());
+			User user = this.stubService.getAas().getUser(p.getPerformerGuid());
 			if (user != null)
 			{
 				userList.add(user);
@@ -561,7 +561,7 @@ public class PerformerStub extends AbstractServiceStub<WFIImpl>
 		}
 		else if (p.getPerformerType() == PerformerTypeEnum.GROUP)
 		{
-			List<User> userList_ = this.stubService.getAAS().listUserInGroupAndSubGroup(p.getPerformerGuid());
+			List<User> userList_ = this.stubService.getAas().listUserInGroupAndSubGroup(p.getPerformerGuid());
 			if (!SetUtils.isNullList(userList_))
 			{
 				userList.addAll(userList_);
@@ -569,7 +569,7 @@ public class PerformerStub extends AbstractServiceStub<WFIImpl>
 		}
 		else if (p.getPerformerType() == PerformerTypeEnum.RIG)
 		{
-			List<User> userList_ = this.stubService.getAAS().listUserByRoleInGroup(p.getPerformerGuid());
+			List<User> userList_ = this.stubService.getAas().listUserByRoleInGroup(p.getPerformerGuid());
 			if (!SetUtils.isNullList(userList_))
 			{
 				userList.addAll(userList_);
@@ -577,12 +577,12 @@ public class PerformerStub extends AbstractServiceStub<WFIImpl>
 		}
 		else if (p.getPerformerType() == PerformerTypeEnum.ROLE)
 		{
-			List<RIG> rigList = this.stubService.getAAS().listRIGByRoleGuid(p.getPerformerGuid());
+			List<RIG> rigList = this.stubService.getAas().listRIGByRoleGuid(p.getPerformerGuid());
 			if (!SetUtils.isNullList(rigList))
 			{
 				for (RIG rig : rigList)
 				{
-					List<User> userList_ = this.stubService.getAAS().listUserByRoleInGroup(rig.getGuid());
+					List<User> userList_ = this.stubService.getAas().listUserByRoleInGroup(rig.getGuid());
 					if (!SetUtils.isNullList(userList_))
 					{
 						for (User user : userList_)
@@ -602,7 +602,7 @@ public class PerformerStub extends AbstractServiceStub<WFIImpl>
 	{
 		SystemDataService sds = this.stubService.getSystemDataService();
 		String operatorGuid = this.stubService.getOperatorGuid();
-		AAS aas = this.stubService.getAAS();
+		AAS aas = this.stubService.getAas();
 		try
 		{
 			Map<String, Object> filter = new HashMap<String, Object>();
@@ -616,7 +616,7 @@ public class PerformerStub extends AbstractServiceStub<WFIImpl>
 				{
 					if (PerformerTypeEnum.USER == performer.getPerformerType())
 					{
-						boolean isAgent = this.stubService.getAAS().isAgent(operatorGuid, performer.getPerformerGuid());
+						boolean isAgent = this.stubService.getAas().isAgent(operatorGuid, performer.getPerformerGuid());
 						if (operatorGuid.equals(performer.getPerformerGuid()) || isAgent)
 						{
 							return true;
@@ -659,7 +659,7 @@ public class PerformerStub extends AbstractServiceStub<WFIImpl>
 	{
 		SystemDataService sds = this.stubService.getSystemDataService();
 		String operatorGuid = this.stubService.getOperatorGuid();
-		AAS aas = this.stubService.getAAS();
+		AAS aas = this.stubService.getAas();
 		try
 		{
 			HashMap<String, Object> filter = new HashMap<String, Object>();
@@ -674,7 +674,7 @@ public class PerformerStub extends AbstractServiceStub<WFIImpl>
 					{
 						if (PerformerTypeEnum.USER == performer.getPerformerType())
 						{
-							boolean isAgent = this.stubService.getAAS().isAgent(operatorGuid, performer.getPerformerGuid());
+							boolean isAgent = this.stubService.getAas().isAgent(operatorGuid, performer.getPerformerGuid());
 							if (operatorGuid.equals(performer.getPerformerGuid()) || isAgent)
 							{
 								if (this.stubService.getTrackStub().isPerformed(performer.getActRuntimeGuid(), operatorGuid,
@@ -1383,17 +1383,17 @@ public class PerformerStub extends AbstractServiceStub<WFIImpl>
 					switch (performer_.getPerformerType())
 					{
 					case USER:
-						User user = this.stubService.getAAS().getUser(performer_.getPerformerGuid());
+						User user = this.stubService.getAas().getUser(performer_.getPerformerGuid());
 						if (user != null && !userList.contains(user))
 						{
 							userList.add(user);
 						}
 						break;
 					case RIG:
-						RIG rig = this.stubService.getAAS().getRIG(performer_.getPerformerGuid());
+						RIG rig = this.stubService.getAas().getRIG(performer_.getPerformerGuid());
 						if (rig != null)
 						{
-							List<User> userInRIGList = this.stubService.getAAS().listUserByRoleInGroup(rig.getGuid());
+							List<User> userInRIGList = this.stubService.getAas().listUserByRoleInGroup(rig.getGuid());
 							if (!SetUtils.isNullList(userInRIGList))
 							{
 								userList.addAll(userInRIGList);
@@ -1401,12 +1401,12 @@ public class PerformerStub extends AbstractServiceStub<WFIImpl>
 						}
 						break;
 					case ROLE:
-						List<RIG> rigList = this.stubService.getAAS().listRIGByRoleGuid(performer_.getPerformerGuid());
+						List<RIG> rigList = this.stubService.getAas().listRIGByRoleGuid(performer_.getPerformerGuid());
 						if (!SetUtils.isNullList(rigList))
 						{
 							for (RIG rig_ : rigList)
 							{
-								List<User> userInRIGList = this.stubService.getAAS().listUserByRoleInGroup(rig_.getGuid());
+								List<User> userInRIGList = this.stubService.getAas().listUserByRoleInGroup(rig_.getGuid());
 								if (!SetUtils.isNullList(userInRIGList))
 								{
 									userList.addAll(userInRIGList);
@@ -1415,7 +1415,7 @@ public class PerformerStub extends AbstractServiceStub<WFIImpl>
 						}
 						break;
 					case GROUP:
-						List<User> userInGroupList = this.stubService.getAAS().listUserInGroupAndSubGroup(performer_.getPerformerGuid());
+						List<User> userInGroupList = this.stubService.getAas().listUserInGroupAndSubGroup(performer_.getPerformerGuid());
 						if (!SetUtils.isNullList(userInGroupList))
 						{
 							userList.addAll(userInGroupList);
@@ -1753,7 +1753,6 @@ public class PerformerStub extends AbstractServiceStub<WFIImpl>
 	/**
 	 * 取得所选组或角色下的用户
 	 * 
-	 * @param perfEntry
 	 * @return
 	 * @throws ServiceRequestException
 	 */
@@ -1763,17 +1762,17 @@ public class PerformerStub extends AbstractServiceStub<WFIImpl>
 		if (performerType == PerformerTypeEnum.USER)
 		{
 			listUser = new ArrayList<User>();
-			listUser.add(this.stubService.getAAS().getUser(performerGuid));
+			listUser.add(this.stubService.getAas().getUser(performerGuid));
 		}
 		else if (performerType == PerformerTypeEnum.RIG)
 		{
-			listUser = this.stubService.getAAS().listUserByRoleInGroup(performerGuid);
+			listUser = this.stubService.getAas().listUserByRoleInGroup(performerGuid);
 
 		}
 		else if (performerType == PerformerTypeEnum.GROUP)
 		{
 
-			listUser = this.stubService.getAAS().listUserInGroupAndSubGroup(performerGuid);
+			listUser = this.stubService.getAas().listUserInGroupAndSubGroup(performerGuid);
 		}
 
 		return listUser;
@@ -1896,7 +1895,7 @@ public class PerformerStub extends AbstractServiceStub<WFIImpl>
 		{
 			for (User user : performers)
 			{
-				boolean isAgent = this.stubService.getAAS().isAgent(agentGuid, user.getGuid());
+				boolean isAgent = this.stubService.getAas().isAgent(agentGuid, user.getGuid());
 				if (isAgent)
 				{
 					principalList.add(user.getGuid());
@@ -1914,7 +1913,7 @@ public class PerformerStub extends AbstractServiceStub<WFIImpl>
 		{
 			for (User user : performers)
 			{
-				boolean isAgent = this.stubService.getAAS().isAgent(agentGuid, user.getGuid());
+				boolean isAgent = this.stubService.getAas().isAgent(agentGuid, user.getGuid());
 				if (isAgent)
 				{
 					principalList.add(user.getGuid());
@@ -1931,7 +1930,7 @@ public class PerformerStub extends AbstractServiceStub<WFIImpl>
 		{
 			for (User user : performers)
 			{
-				boolean isAgent = this.stubService.getAAS().isAgent(agentGuid, user.getGuid());
+				boolean isAgent = this.stubService.getAas().isAgent(agentGuid, user.getGuid());
 				if (isAgent)
 				{
 					return true;

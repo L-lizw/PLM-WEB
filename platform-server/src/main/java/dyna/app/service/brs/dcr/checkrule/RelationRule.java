@@ -31,8 +31,8 @@ public class RelationRule extends AbstractRule implements Serializable
 	@Override
 	public boolean check() throws ServiceRequestException
 	{
-		this.boas = this.getServiceInstance(BOAS.class);
-		this.boms = this.getServiceInstance(BOMS.class);
+		this.boas = this.stubService.getBoas();
+		this.boms = this.stubService.getBoms();
 
 		ClassCondition end1Condition = super.getEnd1Condition();
 		end1Condition.setFoundationObject(this.end1);

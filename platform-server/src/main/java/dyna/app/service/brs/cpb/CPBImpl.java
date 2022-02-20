@@ -24,6 +24,8 @@ import dyna.net.service.das.MSRM;
 import dyna.net.service.data.InstanceService;
 import dyna.net.service.data.RelationService;
 import dyna.net.service.data.SystemDataService;
+import lombok.AccessLevel;
+import lombok.Getter;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.jdom.Document;
 import org.jdom.JDOMException;
@@ -36,6 +38,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+@Getter(AccessLevel.PROTECTED)
 @Service public class CPBImpl extends BusinessRuleService implements CPB
 {
 	private DetailPositionEnum detailPosition = DetailPositionEnum.Right;
@@ -46,7 +49,12 @@ import java.util.List;
 	@DubboReference private SystemDataService systemDataService;
 
 	@Autowired private Async async;
+	@Autowired private BOAS boas;
 	@Autowired private BOMS boms;
+	@Autowired private EDAP edap;
+	@Autowired private EMM emm;
+	@Autowired private JSS jss;
+	@Autowired private MSRM msrm;
 
 	@Autowired private CPBStub            cpbStub;
 	@Autowired private OrderConfigureStub orderConfigureStub;
@@ -155,84 +163,14 @@ import java.util.List;
 		return varCalculateStub;
 	}
 
-	/**
-	 * @return the DrivenStub
-	 */
 	public DrivenStub getDrivenStub()
 	{
 		return this.drivenStub;
 	}
 
-	/**
-	 * @return the DrivenHistoryStub
-	 */
 	public DrivenHistoryStub getDrivenHistoryStub()
 	{
 		return this.drivenHistoryStub;
-	}
-
-	public synchronized BOAS getBOAS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(BOAS.class);
-		}
-		catch (ServiceNotFoundException e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	public synchronized MSRM getMSRM() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(MSRM.class);
-		}
-		catch (ServiceNotFoundException e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	public synchronized EDAP getEDAP() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(EDAP.class);
-		}
-		catch (ServiceNotFoundException e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	public synchronized EMM getEMM() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(EMM.class);
-		}
-		catch (ServiceNotFoundException e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	public synchronized JSS getJSS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(JSS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
 	}
 
 	@Override public List<DynamicColumnTitle> listColumnTitles(ObjectGuid objectGuid, ConfigParameterTableType tableTypeEnum, Date ruleTime) throws ServiceRequestException
@@ -436,7 +374,7 @@ import java.util.List;
 
 	@Override public FoundationObject saveObject(FoundationObject foundationObject) throws ServiceRequestException
 	{
-		return ((BOASImpl) this.getBOAS()).getFSaverStub().saveObject(foundationObject, true, true, false, null, true, true, false);
+		return ((BOASImpl) this.getBoas()).getFSaverStub().saveObject(foundationObject, true, true, false, null, true, true, false);
 	}
 
 	@Override public void unlink(StructureObject structureObject) throws ServiceRequestException

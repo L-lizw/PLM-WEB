@@ -20,6 +20,8 @@ import dyna.net.service.das.JSS;
 import dyna.net.service.das.MSRM;
 import dyna.net.service.data.DSCommonService;
 import dyna.net.service.data.SystemDataService;
+import lombok.AccessLevel;
+import lombok.Getter;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,8 +33,9 @@ import java.util.Map;
 /**
  * Job Serialized Service 实现
  *
- * @author Wanglei
+ * @author Lizw
  */
+@Getter(AccessLevel.PROTECTED)
 @Service public class JSSImpl extends DataAccessService implements JSS
 {
 	private static boolean initialized = false;
@@ -41,8 +44,12 @@ import java.util.Map;
 	@DubboReference private DSCommonService   dsCommonService;
 	@DubboReference private SystemDataService systemDataService;
 
+	@Autowired private AAS aas;
 	@Autowired private Async async;
+	@Autowired private BOAS boas;
+	@Autowired private EMM emm;
 	@Autowired private ERPI  erpi;
+	@Autowired private LIC lic;
 	@Autowired private MSRM  msrm;
 	@Autowired private SMS   sms;
 
@@ -97,30 +104,6 @@ import java.util.Map;
 		return this.systemDataService;
 	}
 
-	protected Async getAsync()
-	{
-		return this.async;
-	}
-
-	protected ERPI getERPI()
-	{
-		return this.erpi;
-	}
-
-	protected MSRM getMSRM()
-	{
-		return this.msrm;
-	}
-
-	protected SMS getSMS()
-	{
-		return this.sms;
-	}
-
-
-	/**
-	 * @return the jobQueryStub
-	 */
 	protected JobQueryStub getJobQueryStub() throws ServiceRequestException
 	{
 		return this.jobQueryStub;
@@ -131,64 +114,19 @@ import java.util.Map;
 		return this.jobCreationStub;
 	}
 
-	/**
-	 * @return the jobUpdaterStub
-	 */
 	protected JobUpdaterStub getJobUpdaterStub()
 	{
 		return this.jobUpdaterStub;
 	}
 
-	protected synchronized BOAS getBOAS() throws ServiceRequestException
+	public  AAS getAAS()
 	{
-		try
-		{
-			return this.getRefService(BOAS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
+		return this.aas;
 	}
 
-	public synchronized AAS getAAS() throws ServiceRequestException
+	public  LIC getLIC()
 	{
-		try
-		{
-			return this.getRefService(AAS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	public synchronized LIC getLIC() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(LIC.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized EMM getEMM() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(EMM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
+		return this.lic;
 	}
 
 	/*

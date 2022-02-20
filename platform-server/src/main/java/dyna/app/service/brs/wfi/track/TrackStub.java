@@ -27,7 +27,7 @@ import java.util.Map;
 /**
  * 流程意见操作分支
  * 
- * @author Wanglei
+ * @author Lizw
  * 
  */
 @Component
@@ -104,13 +104,13 @@ public class TrackStub extends AbstractServiceStub<WFIImpl>
 				String agentGuid = track.getAgent();
 				if (!StringUtils.isNullString(perfGuid))
 				{
-					User user = this.stubService.getAAS().getUser(perfGuid);
+					User user = this.stubService.getAas().getUser(perfGuid);
 
 					track.setPerformerName(user == null ? null : user.getName());
 				}
 				if (!StringUtils.isNullString(agentGuid))
 				{
-					User user = this.stubService.getAAS().getUser(agentGuid);
+					User user = this.stubService.getAas().getUser(agentGuid);
 					track.setAgentName(user == null ? null : user.getName());
 				}
 

@@ -56,7 +56,7 @@ public class MailSentStub extends AbstractServiceStub<SMSImpl>
 
 	/**
 	 * 工作流通知
-	 * 
+	 *
 	 * @param toUserGuidList
 	 * @param fromUseGuid
 	 * @param processGuid
@@ -66,12 +66,6 @@ public class MailSentStub extends AbstractServiceStub<SMSImpl>
 	 * @param category
 	 * @throws ServiceRequestException
 	 */
-	public void sendMail4WorkFlow(List<String> toUserGuidList, String fromUseGuid, String processGuid, String activityGuid, String contents, String title,
-			MailMessageType messageType, MailCategoryEnum category) throws ServiceRequestException
-	{
-		this.sendMailToUser(title, contents, category, processGuid, activityGuid, messageType, null, null, toUserGuidList, fromUseGuid, null);
-	}
-
 	public void sendMail4WorkFlow(List<String> toUserGuidList, String fromUseGuid, String processGuid, String activityGuid, String contents, String title,
 			MailMessageType messageType, MailCategoryEnum category, Integer startNumber) throws ServiceRequestException
 	{
@@ -178,7 +172,7 @@ public class MailSentStub extends AbstractServiceStub<SMSImpl>
 			mailReceiveUser.setMasterGuid(receiveUserMasterGuid);
 			if (!StringUtils.isGuid(toUser))
 			{
-				User user = this.stubService.getAAS().getUserById(toUser);
+				User user = this.stubService.getAas().getUserById(toUser);
 				if (user != null)
 				{
 					toUser = user.getGuid();
@@ -202,7 +196,7 @@ public class MailSentStub extends AbstractServiceStub<SMSImpl>
 		}
 		else
 		{
-			User fromUser = this.stubService.getAAS().getUserById(formUserId);
+			User fromUser = this.stubService.getAas().getUserById(formUserId);
 			fromUserGuid = fromUser.getGuid();
 		}
 
@@ -265,7 +259,7 @@ public class MailSentStub extends AbstractServiceStub<SMSImpl>
 				MailAttachment mailAttachment = new MailAttachment();
 				mailAttachment.setInstanceClass(objectGuid.getClassGuid());
 				mailAttachment.setInstanceGuid(objectGuid.getGuid());
-				FoundationObject foundationObject = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObject(objectGuid, false);
+				FoundationObject foundationObject = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObject(objectGuid, false);
 				mailAttachment.setInstanceTitle(foundationObject.getFullName());
 				mailAttachmentList.add(mailAttachment);
 			}
@@ -273,7 +267,7 @@ public class MailSentStub extends AbstractServiceStub<SMSImpl>
 		else if (isFileAtt)
 		{
 
-			DSS dss = this.stubService.getDSS();
+			DSS dss = this.stubService.getDss();
 			String filePath = null;
 			List<String> fileGuidList = new ArrayList<String>();
 			List<String> filePathList = new ArrayList<String>();

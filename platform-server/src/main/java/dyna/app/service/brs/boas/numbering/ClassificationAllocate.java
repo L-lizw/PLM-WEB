@@ -136,16 +136,7 @@ public class ClassificationAllocate extends AbstractServiceStub<BOASImpl>
 			ClassStub.decorateObjectGuid(objectGuid, dataAccessService);
 			className = objectGuid.getClassName();
 		}
-		EMM emm;
-
-		try
-		{
-			emm = dataAccessService.getRefService(EMM.class);
-		}
-		catch (ServiceNotFoundException e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
+		EMM emm = this.stubService.getEmm();
 
 		List<FoundationObject> restoreAllClassification = foundationObject.restoreAllClassification(false);
 		List<String> classificationItemGuidList = new ArrayList<>();
@@ -294,7 +285,7 @@ public class ClassificationAllocate extends AbstractServiceStub<BOASImpl>
 
 		// 5、 参与编码的字段变了之后是否影响编号
 		// 是否影响根据该编码/合成字段是否是frozen来判断：若该字段是frozen，那么不受影响，只合成一次。其他情况下，每次都重新合成
-		UIField uiField = this.stubService.getEMM().getUIFieldByName(className, item.getFieldName());
+		UIField uiField = this.stubService.getEmm().getUIFieldByName(className, item.getFieldName());
 		if (uiField != null && uiField.isFroze() && !isCreate)
 		{
 			Object object = foundationObject.get(uiField.getName());
@@ -389,12 +380,12 @@ public class ClassificationAllocate extends AbstractServiceStub<BOASImpl>
 				return;
 			}
 
-			numberclassField = this.stubService.getEMM().getFieldByName(className, field.getFieldName(), true);
+			numberclassField = this.stubService.getEmm().getFieldByName(className, field.getFieldName(), true);
 
 		}
 		else if (!field.isFormClass())
 		{
-			numberclassField = ((EMMImpl) this.stubService.getEMM()).getClassificationStub().getClassificationField(item.getClassificationItemGuid(), field.getFieldName());
+			numberclassField = ((EMMImpl) this.stubService.getEmm()).getClassificationStub().getClassificationField(item.getClassificationItemGuid(), field.getFieldName());
 			if (numberclassField != null)
 			{
 				// if (SystemClassFieldEnum.ID.getName().equals(item.getFieldName()))
@@ -427,15 +418,7 @@ public class ClassificationAllocate extends AbstractServiceStub<BOASImpl>
 
 	public void updateFieldMaxSerial(FoundationObject foundationObject, DataAccessService dataAccessService, String fieldName, int startValue) throws ServiceRequestException
 	{
-		EMM emm;
-		try
-		{
-			emm = dataAccessService.getRefService(EMM.class);
-		}
-		catch (ServiceNotFoundException e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
+		EMM emm = this.stubService.getEmm();
 
 		List<ClassficationFeatureItem> sllFeatureItemList = this.listFeatureItem(foundationObject, dataAccessService);
 		Map<String, FoundationObject> classificationMap = this.getFoundationMap(foundationObject);
@@ -469,15 +452,7 @@ public class ClassificationAllocate extends AbstractServiceStub<BOASImpl>
 	@Deprecated
 	public void updateIdSerial(FoundationObject foundationObject, DataAccessService dataAccessService, int startValue) throws ServiceRequestException
 	{
-		EMM emm;
-		try
-		{
-			emm = dataAccessService.getRefService(EMM.class);
-		}
-		catch (ServiceNotFoundException e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
+		EMM emm = this.stubService.getEmm();
 
 		List<ClassficationFeatureItem> sllFeatureItemList = this.listFeatureItem(foundationObject, dataAccessService);
 		Map<String, FoundationObject> classificationMap = this.getFoundationMap(foundationObject);

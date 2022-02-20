@@ -24,31 +24,26 @@ import dyna.common.util.StringUtils;
 import dyna.net.service.brs.AAS;
 import dyna.net.service.das.ATS;
 import dyna.net.service.data.SystemDataService;
+import lombok.AccessLevel;
+import lombok.Getter;
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Action Track Service implementation 用户操作跟踪服务(系统日志)实现
  * 
- * @author Wanglei
+ * @author Lizw
  * 
  */
+@Getter(AccessLevel.PROTECTED)
 public class ATSImpl extends DataAccessService implements ATS
 {
 
 	@DubboReference
 	private SystemDataService   systemDataService;
 
-	protected synchronized AAS getAAS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(AAS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
+	@Autowired
+	private AAS aas;
 
 	/*
 	 * (non-Javadoc)
@@ -153,7 +148,7 @@ public class ATSImpl extends DataAccessService implements ATS
 		if (!StringUtils.isNullString(sessiondId) && !StringUtils.isNullString(userId))
 		{
 			filter.put(SysTrack.SID, sessiondId);
-			User user = this.getAAS().getUserById(userId);
+			User user = this.getAas().getUserById(userId);
 			if (user == null)
 			{
 				throw new ServiceRequestException("not found user: " + userId);
@@ -169,7 +164,7 @@ public class ATSImpl extends DataAccessService implements ATS
 		}
 		else if (!StringUtils.isNullString(userId))
 		{
-			User user = this.getAAS().getUserById(userId);
+			User user = this.getAas().getUserById(userId);
 			if (user == null)
 			{
 				throw new ServiceRequestException("not found user: " + userId);

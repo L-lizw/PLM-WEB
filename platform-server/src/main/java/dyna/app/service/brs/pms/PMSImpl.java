@@ -15,6 +15,8 @@ import dyna.common.exception.AuthorizeException;
 import dyna.common.exception.ServiceRequestException;
 import dyna.net.service.brs.*;
 import dyna.net.service.data.SystemDataService;
+import lombok.AccessLevel;
+import lombok.Getter;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,13 +27,25 @@ import java.util.List;
 /**
  * Engineering Change Service Implement工程变更服务的实现类
  *
- * @author caogc
+ * @author Lizw
  */
+@Getter(AccessLevel.PROTECTED)
 @Service public class PMSImpl extends BusinessRuleService implements PMS
 {
 	private static boolean initialized = false;
 
 	@DubboReference private SystemDataService systemDataService;
+
+	@Autowired
+	private AAS aas;
+	@Autowired
+	private BOAS boas;
+	@Autowired
+	private BOMS boms;
+	@Autowired
+	private EMM emm;
+	@Autowired
+	private POS pos;
 
 	@Autowired private Async async;
 
@@ -62,76 +76,12 @@ import java.util.List;
 		this.getItemProductStub().deleteItemProduct(itemProductGuidList);
 	}
 
-	public synchronized BOAS getBOAS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(BOAS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	public synchronized BOMS getBOMS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(BOMS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	public synchronized AAS getAAS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(AAS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
-
 	/**
 	 * @return the ecItemProductStub
 	 */
 	public ItemProductStub getItemProductStub()
 	{
 		return this.itemProductStub;
-	}
-
-	protected synchronized EMM getEMM() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(EMM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized POS getPOS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(POS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
 	}
 
 	@Override public List<ItemProduct> listItemProductByItem(ObjectGuid itemObjectGuid) throws ServiceRequestException

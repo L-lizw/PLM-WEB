@@ -35,12 +35,12 @@ public class ClassficationFeatureModifyStub extends AbstractServiceStub<MMSImpl>
 
 	public void resetoMdelMasterFeature() throws ServiceRequestException
 	{
-		ClassInfo info = this.stubService.getEMM().getFirstLevelClassByInterface(ModelInterfaceEnum.IFoundation, null);
+		ClassInfo info = this.stubService.getEmm().getFirstLevelClassByInterface(ModelInterfaceEnum.IFoundation, null);
 		if (StringUtils.isNullString(info.getClassification()))
 		{
 
 		}
-		this.stubService.getEMM().listSubClass(null, info.getGuid(), false, null);
+		this.stubService.getEmm().listSubClass(null, info.getGuid(), false, null);
 	}
 
 	protected void saveNormalClassficationFeature(String classGuid, List<ClassficationFeature> classficationFeatures) throws ServiceRequestException
@@ -70,7 +70,7 @@ public class ClassficationFeatureModifyStub extends AbstractServiceStub<MMSImpl>
 				{
 					if (superClassMap.containsKey(feature.getClassGuid()) || classGuid.equals(feature.getClassGuid()))
 					{
-						ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(feature.getClassGuid());
+						ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(feature.getClassGuid());
 						LanguageEnum languageEnum = this.stubService.getUserSignature().getLanguageEnum();
 
 						throw new ServiceRequestException("ID_APP_CLASS_SUPER_MAPPING_EXIST", "super class has exist ", null, classInfo.getName(),
@@ -78,7 +78,7 @@ public class ClassficationFeatureModifyStub extends AbstractServiceStub<MMSImpl>
 					}
 					else if (subClassMap.containsKey(feature.getClassGuid()) || classGuid.equals(feature.getClassGuid()))
 					{
-						ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(feature.getClassGuid());
+						ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(feature.getClassGuid());
 						LanguageEnum languageEnum = this.stubService.getUserSignature().getLanguageEnum();
 
 						throw new ServiceRequestException("ID_APP_CLASS_SUB_MAPPING_EXIST", "sub class has exist ", null, classInfo.getName(),
@@ -299,7 +299,7 @@ public class ClassficationFeatureModifyStub extends AbstractServiceStub<MMSImpl>
 			{
 				if (classficationFeatureItem.getFieldName().equals(item.getFieldName()) && !item.getGuid().equals(classficationFeatureItem.getInfo().getGuid()))
 				{
-					CodeItemInfo classification = this.stubService.getEMM().getCodeItem(item.getClassificationItemGuid());
+					CodeItemInfo classification = this.stubService.getEmm().getCodeItem(item.getClassificationItemGuid());
 					String classificationTitle = "";
 					if (classification != null)
 					{
@@ -379,7 +379,7 @@ public class ClassficationFeatureModifyStub extends AbstractServiceStub<MMSImpl>
 	{
 		Set<String> returnSet = new HashSet<String>();
 		returnSet.add(guid);
-		List<CodeItemInfo> list = this.stubService.getEMM().listAllSubCodeItemInfoByDatail(guid);
+		List<CodeItemInfo> list = this.stubService.getEmm().listAllSubCodeItemInfoByDatail(guid);
 		if (list != null)
 		{
 			for (CodeItemInfo info : list)
@@ -387,7 +387,7 @@ public class ClassficationFeatureModifyStub extends AbstractServiceStub<MMSImpl>
 				returnSet.add(info.getGuid());
 			}
 		}
-		list = this.stubService.getEMM().listAllSuperCodeItemInfo(guid);
+		list = this.stubService.getEmm().listAllSuperCodeItemInfo(guid);
 		if (list != null)
 		{
 			for (CodeItemInfo info : list)
@@ -401,7 +401,7 @@ public class ClassficationFeatureModifyStub extends AbstractServiceStub<MMSImpl>
 	private Map<String, ClassInfo> getAllSubClassMap(String guid) throws ServiceRequestException
 	{
 		Map<String, ClassInfo> returnMap = new HashMap<>();
-		List<ClassInfo> list = this.stubService.getEMM().listSubClass(null, guid, true, null);
+		List<ClassInfo> list = this.stubService.getEmm().listSubClass(null, guid, true, null);
 		if (list != null)
 		{
 			for (ClassInfo info : list)
@@ -415,7 +415,7 @@ public class ClassficationFeatureModifyStub extends AbstractServiceStub<MMSImpl>
 	private Map<String, ClassInfo> getSuperClassMap(String guid) throws ServiceRequestException
 	{
 		Map<String, ClassInfo> returnMap = new HashMap<>();
-		List<ClassInfo> list = this.stubService.getEMM().listAllSuperClass(null, guid);
+		List<ClassInfo> list = this.stubService.getEmm().listAllSuperClass(null, guid);
 		if (list != null)
 		{
 			for (ClassInfo info : list)
@@ -429,7 +429,7 @@ public class ClassficationFeatureModifyStub extends AbstractServiceStub<MMSImpl>
 	private Map<String, ClassInfo> getCheckClassMap(String guid) throws ServiceRequestException
 	{
 		Map<String, ClassInfo> returnMap = new HashMap<>();
-		returnMap.put(guid, this.stubService.getEMM().getClassByGuid(guid));
+		returnMap.put(guid, this.stubService.getEmm().getClassByGuid(guid));
 		returnMap.putAll(this.getSuperClassMap(guid));
 		returnMap.putAll(this.getAllSubClassMap(guid));
 		return returnMap;

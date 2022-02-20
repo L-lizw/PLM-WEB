@@ -63,8 +63,8 @@ public class SystemObjectManagerModifyStub extends AbstractServiceStub<MMSImpl>
 
 		ObjectGuid objectGuid = foundationObject.getObjectGuid();
 		ClassStub.decorateObjectGuid(objectGuid, this.stubService);
-		ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(objectGuid.getClassGuid());
-		List<ClassficationFeatureItemInfo> sllFeatureItemList = this.stubService.getEMM().listClassficationFeatureItem(classInfo.getClassification(),
+		ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(objectGuid.getClassGuid());
+		List<ClassficationFeatureItemInfo> sllFeatureItemList = this.stubService.getEmm().listClassficationFeatureItem(classInfo.getClassification(),
 				foundationObject.getClassificationGuid());
 
 		// 分类管理中是否有id,name,alterid编码
@@ -91,7 +91,7 @@ public class SystemObjectManagerModifyStub extends AbstractServiceStub<MMSImpl>
 
 				if (hasClfId || hasClfAlter || hasClfName)
 				{
-					List<ClassificationNumberField> listClassificationNumberField = this.stubService.getEMM().listClassificationNumberField(item.getGuid());
+					List<ClassificationNumberField> listClassificationNumberField = this.stubService.getEmm().listClassificationNumberField(item.getGuid());
 					if (!SetUtils.isNullList(listClassificationNumberField))
 					{
 						for (ClassificationNumberField numberField : listClassificationNumberField)
@@ -116,7 +116,7 @@ public class SystemObjectManagerModifyStub extends AbstractServiceStub<MMSImpl>
 
 			if (hasClfId == false)
 			{
-				NumberingModel numberModel = this.stubService.getEMM().lookupNumberingModel(classguid, classname, SystemClassFieldEnum.ID.getName());
+				NumberingModel numberModel = this.stubService.getEmm().lookupNumberingModel(classguid, classname, SystemClassFieldEnum.ID.getName());
 				if (numberModel != null)
 				{
 					List<NumberingObject> numberingObjectList = numberModel.getNumberingObjectList();
@@ -138,7 +138,7 @@ public class SystemObjectManagerModifyStub extends AbstractServiceStub<MMSImpl>
 
 			if (hasClfAlter == false)
 			{
-				NumberingModel numberModel = this.stubService.getEMM().lookupNumberingModel(classguid, classname, SystemClassFieldEnum.ALTERID.getName());
+				NumberingModel numberModel = this.stubService.getEmm().lookupNumberingModel(classguid, classname, SystemClassFieldEnum.ALTERID.getName());
 				if (numberModel != null)
 				{
 					List<NumberingObject> numberingObjectList = numberModel.getNumberingObjectList();
@@ -160,7 +160,7 @@ public class SystemObjectManagerModifyStub extends AbstractServiceStub<MMSImpl>
 
 			if (hasClfName == false)
 			{
-				NumberingModel numberModel = this.stubService.getEMM().lookupNumberingModel(classguid, classname, SystemClassFieldEnum.NAME.getName());
+				NumberingModel numberModel = this.stubService.getEmm().lookupNumberingModel(classguid, classname, SystemClassFieldEnum.NAME.getName());
 				if (numberModel != null)
 				{
 					List<NumberingObject> numberingObjectList = numberModel.getNumberingObjectList();
@@ -607,7 +607,7 @@ public class SystemObjectManagerModifyStub extends AbstractServiceStub<MMSImpl>
 					// throw new DynaDataExceptionSQL("AllocateId error. ", null, DataExceptionEnum.FIELD_IS_NULL);
 				}
 
-				ClassField classField = this.stubService.getEMM().getFieldByName(foun.getObjectGuid().getClassName(), _fieldName, true);
+				ClassField classField = this.stubService.getEmm().getFieldByName(foun.getObjectGuid().getClassName(), _fieldName, true);
 
 				FieldTypeEnum fieldType = classField.getType();
 
@@ -637,12 +637,12 @@ public class SystemObjectManagerModifyStub extends AbstractServiceStub<MMSImpl>
 					// 字段类型为：Object等类型的处理
 					String numberValue = "";
 					String guid = StringUtils.convertNULLtoString(foun.get(_fieldName));
-					ClassInfo classInfo = this.stubService.getEMM().getClassByName(classField.getTypeValue());
+					ClassInfo classInfo = this.stubService.getEmm().getClassByName(classField.getTypeValue());
 					if (StringUtils.isGuid(guid))
 					{
 						if (classInfo.hasInterface(ModelInterfaceEnum.IUser))
 						{
-							User user = this.stubService.getAAS().getUser(guid);
+							User user = this.stubService.getAas().getUser(guid);
 							if (user != null)
 							{
 								numberValue = user.getUserId();
@@ -650,7 +650,7 @@ public class SystemObjectManagerModifyStub extends AbstractServiceStub<MMSImpl>
 						}
 						else if (classInfo.hasInterface(ModelInterfaceEnum.IGroup))
 						{
-							Group group = this.stubService.getAAS().getGroup(guid);
+							Group group = this.stubService.getAas().getGroup(guid);
 							if (group != null)
 							{
 								numberValue = group.getGroupId();
@@ -691,7 +691,7 @@ public class SystemObjectManagerModifyStub extends AbstractServiceStub<MMSImpl>
 			{
 				fieldName = numberingObjectChild.getTypevalue();
 
-				fieldType = this.stubService.getEMM().getFieldByName(className, fieldName, true).getType();
+				fieldType = this.stubService.getEmm().getFieldByName(className, fieldName, true).getType();
 			}
 		}
 
@@ -706,7 +706,7 @@ public class SystemObjectManagerModifyStub extends AbstractServiceStub<MMSImpl>
 		searchCondition.addResultField(fieldName);
 		// }
 		searchCondition.setPageSize(1);
-		List<FoundationObject> foList = this.stubService.getBOAS().listObject(searchCondition);
+		List<FoundationObject> foList = this.stubService.getBoas().listObject(searchCondition);
 		if (foList != null && foList.size() > 0)
 		{
 			if (FieldTypeEnum.OBJECT.equals(fieldType))
@@ -750,7 +750,7 @@ public class SystemObjectManagerModifyStub extends AbstractServiceStub<MMSImpl>
 		{
 			if (!StringUtils.isNullString(codeGuidList[i]))
 			{
-				CodeItemInfo codeItem = this.stubService.getEMM().getCodeItem(codeGuidList[i]);
+				CodeItemInfo codeItem = this.stubService.getEmm().getCodeItem(codeGuidList[i]);
 				if (codeItem == null)
 				{
 					return "";

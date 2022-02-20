@@ -43,7 +43,7 @@ public class FolderACLStub extends AbstractServiceStub<ACLImpl>
 			String groupGuid = this.stubService.getUserSignature().getLoginGroupGuid();
 			String roleGuid = this.stubService.getUserSignature().getLoginRoleGuid();
 
-			Group group = this.stubService.getAAS().getGroup(groupGuid);
+			Group group = this.stubService.getAas().getGroup(groupGuid);
 			if (group == null)
 			{
 				throw new ServiceRequestException("not found group: " + groupGuid);
@@ -115,13 +115,13 @@ public class FolderACLStub extends AbstractServiceStub<ACLImpl>
 //			DataServer.getTransactionManager().startTransaction(this.stubService.getFixedTransactionId());
 
 			// 更新是否是否继承的属性
-			SaAclFolderLibConf saAclFolderLibConf = this.stubService.getEDAP().getSaAclFolderLibConf(folderGuid);
+			SaAclFolderLibConf saAclFolderLibConf = this.stubService.getEdap().getSaAclFolderLibConf(folderGuid);
 			if (saAclFolderLibConf != null)
 			{
 				if (saAclFolderLibConf.isExtend() != isExtend)
 				{
 					saAclFolderLibConf.setIsExtend(isExtend);
-					this.stubService.getEDAP().saveSaAclFolderLibConf(saAclFolderLibConf);
+					this.stubService.getEdap().saveSaAclFolderLibConf(saAclFolderLibConf);
 				}
 			}
 
@@ -631,11 +631,11 @@ public class FolderACLStub extends AbstractServiceStub<ACLImpl>
 
 		try
 		{
-			Group group = this.stubService.getAAS().getGroup(groupGuid);
+			Group group = this.stubService.getAas().getGroup(groupGuid);
 
 			if (group == null || !group.isAdminGroup())
 			{
-				Folder libFolder = this.stubService.getEDAP().getFolder(folderGuid);
+				Folder libFolder = this.stubService.getEdap().getFolder(folderGuid);
 
 				if (!this.stubService.getOperatorGuid().equals(libFolder.getOwnerUserGuid()))
 				{
@@ -709,11 +709,11 @@ public class FolderACLStub extends AbstractServiceStub<ACLImpl>
 		String groupGuid = ((UserSignature) this.stubService.getSignature()).getLoginGroupGuid();
 		try
 		{
-			Group group = this.stubService.getAAS().getGroup(groupGuid);
+			Group group = this.stubService.getAas().getGroup(groupGuid);
 
 			if (group == null || !group.isAdminGroup())
 			{
-				Folder libFolder = this.stubService.getEDAP().getFolder(folderGuid);
+				Folder libFolder = this.stubService.getEdap().getFolder(folderGuid);
 
 				if (!this.stubService.getOperatorGuid().equals(libFolder.getOwnerUserGuid()))
 				{
@@ -746,7 +746,7 @@ public class FolderACLStub extends AbstractServiceStub<ACLImpl>
 		try
 		{
 
-			Group group = this.stubService.getAAS().getGroup(groupGuid);
+			Group group = this.stubService.getAas().getGroup(groupGuid);
 			if (group == null)
 			{
 				throw new ServiceRequestException("not found group: " + groupGuid);
@@ -774,7 +774,7 @@ public class FolderACLStub extends AbstractServiceStub<ACLImpl>
 				return;
 			}
 
-			Folder folder = this.stubService.getEDAP().getFolder(folderGuid);
+			Folder folder = this.stubService.getEdap().getFolder(folderGuid);
 			if (folder != null)
 			{
 				if (folder.getOwnerUserGuid().equals(this.stubService.getOperatorGuid()))
@@ -784,7 +784,7 @@ public class FolderACLStub extends AbstractServiceStub<ACLImpl>
 				if (folder.getType().equals(FolderTypeEnum.LIB_FOLDER))
 				{
 					folderGuid = folder.getLibraryUser();
-					folder = this.stubService.getEDAP().getFolder(folderGuid);
+					folder = this.stubService.getEdap().getFolder(folderGuid);
 					if (folder.getOwnerUserGuid().equals(this.stubService.getOperatorGuid()))
 					{
 						return;
@@ -811,7 +811,7 @@ public class FolderACLStub extends AbstractServiceStub<ACLImpl>
 				return true;
 			}
 
-			Folder folder = this.stubService.getEDAP().getFolder(folderGuid);
+			Folder folder = this.stubService.getEdap().getFolder(folderGuid);
 			if (folder != null)
 			{
 				if (folder.getType().equals(FolderTypeEnum.LIBRARY) && folder.getOwnerUserGuid().equals(this.stubService.getOperatorGuid()))
@@ -821,7 +821,7 @@ public class FolderACLStub extends AbstractServiceStub<ACLImpl>
 				if (folder.getType().equals(FolderTypeEnum.LIB_FOLDER))
 				{
 					folderGuid = folder.getLibraryUser();
-					folder = this.stubService.getEDAP().getFolder(folderGuid);
+					folder = this.stubService.getEdap().getFolder(folderGuid);
 					if (folder.getOwnerUserGuid().equals(this.stubService.getOperatorGuid()))
 					{
 						return true;

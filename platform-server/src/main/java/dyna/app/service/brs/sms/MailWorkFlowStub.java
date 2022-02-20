@@ -29,7 +29,7 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 /**
- * @author wangweixia
+ * @author Liizw
  * 
  */
 @Component
@@ -167,7 +167,7 @@ public class MailWorkFlowStub extends AbstractServiceStub<SMSImpl>
 			UserAgent userAgent = new UserAgent();
 			userAgent.setValid(true);
 			userAgent.setAgentGuid(receiver);
-			List<UserAgent> userAgentList = this.stubService.getAAS().listUserAgent(userAgent);
+			List<UserAgent> userAgentList = this.stubService.getAas().listUserAgent(userAgent);
 			StringBuffer userGuidBuffer = new StringBuffer();
 			if (!SetUtils.isNullList(userAgentList))
 			{
@@ -195,7 +195,7 @@ public class MailWorkFlowStub extends AbstractServiceStub<SMSImpl>
 				UserAgent userAgent = new UserAgent();
 				userAgent.setValid(true);
 				userAgent.setAgentGuid(receiver);
-				List<UserAgent> userAgentList = this.stubService.getAAS().listUserAgent(userAgent);
+				List<UserAgent> userAgentList = this.stubService.getAas().listUserAgent(userAgent);
 				StringBuffer userGuidBuffer = new StringBuffer();
 				userGuidBuffer.append("'" + receiver + "'");
 				if (!SetUtils.isNullList(userAgentList))
@@ -278,7 +278,7 @@ public class MailWorkFlowStub extends AbstractServiceStub<SMSImpl>
 				String wfTemplateGuid = (String) mailWorkFlow.get("WFTEMPLATEGUID");
 				if (StringUtils.isGuid(wfTemplateGuid))
 				{
-					WorkflowTemplateInfo workflowTemplateInfo = this.stubService.getWFI().getWorkflowTemplateInfo(wfTemplateGuid);
+					WorkflowTemplateInfo workflowTemplateInfo = this.stubService.getWfi().getWorkflowTemplateInfo(wfTemplateGuid);
 					if (workflowTemplateInfo != null)
 					{
 						mailWorkFlow.put("PROCRTTITLE", workflowTemplateInfo.getTitle());
@@ -535,7 +535,7 @@ public class MailWorkFlowStub extends AbstractServiceStub<SMSImpl>
 	{
 		if (StringUtils.isGuid(userGuid))
 		{
-			User user = this.stubService.getAAS().getUser(userGuid);
+			User user = this.stubService.getAas().getUser(userGuid);
 			return user.getName();
 		}
 		return null;

@@ -48,7 +48,7 @@ public class LockAppImpl extends AbstractServiceStub<WFIImpl> implements ProcApp
 		{
 			for (ProcAttach attach : listProcAttach)
 			{
-				FoundationObject foundationObject = this.stubService.getBOAS().getObjectByGuid(new ObjectGuid(attach.getInstanceClassGuid(), null, attach.getInstanceGuid(), null));
+				FoundationObject foundationObject = this.stubService.getBoas().getObjectByGuid(new ObjectGuid(attach.getInstanceClassGuid(), null, attach.getInstanceGuid(), null));
 				if (foundationObject != null)
 				{
 					attach.setInstanceLifcpBackup(foundationObject.getLifecyclePhaseGuid());

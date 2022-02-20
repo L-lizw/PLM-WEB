@@ -66,14 +66,14 @@ public class ActivityRuntimeStub extends AbstractServiceStub<WFIImpl>
 				{
 					List<String> tempList = new ArrayList<String>();
 					LanguageEnum languageEnum = this.stubService.getUserSignature().getLanguageEnum();
-					User operatorUser = this.stubService.getAAS().getUser(performerGuid);
+					User operatorUser = this.stubService.getAas().getUser(performerGuid);
 					for (User user : users)
 					{
 						if (!user.getGuid().equals(performerGuid))
 						{
 							DecisionEnum decide1 = DecisionEnum.REJECT;
 							String procRtGuid = activity.getProcessRuntimeGuid();
-							String content = this.stubService.getMSRM().getMSRString("ID_WF_ATTACH_ALREAD_DEAL", languageEnum.toString());
+							String content = this.stubService.getMsrm().getMSRString("ID_WF_ATTACH_ALREAD_DEAL", languageEnum.toString());
 							content = MessageFormat.format(content, operatorUser.getUserName());
 							this.doTrack(procRtGuid, actRtGuid, user.getGuid(), decide1, content, activity.getStartNumber(), tempList);
 						}
@@ -113,7 +113,7 @@ public class ActivityRuntimeStub extends AbstractServiceStub<WFIImpl>
 
 		// DCR规则检查
 		List<ProcAttach> attachList = this.stubService.getAttachStub().listProcAttach(procRtGuid);
-		this.stubService.getDCR().check(procRtGuid, processRuntime.getWFTemplateName(), activity.getName(), attachList);
+		this.stubService.getDcr().check(procRtGuid, processRuntime.getWFTemplateName(), activity.getName(), attachList);
 
 		try
 		{
@@ -133,7 +133,7 @@ public class ActivityRuntimeStub extends AbstractServiceStub<WFIImpl>
 			if (actType == WorkflowActivityType.BEGIN)
 			{
 				InputObjectWrokflowEventImpl inputObject = new InputObjectWrokflowEventImpl(procRtGuid, processRuntime.getName());
-				this.stubService.getEOSS().executeWorkflowStartBeforeEvent(inputObject);
+				this.stubService.getEoss().executeWorkflowStartBeforeEvent(inputObject);
 			}
 			// do track comment
 
@@ -154,7 +154,7 @@ public class ActivityRuntimeStub extends AbstractServiceStub<WFIImpl>
 				if (actType == WorkflowActivityType.BEGIN)
 				{
 					InputObjectWrokflowEventImpl inputObject = new InputObjectWrokflowEventImpl(procRtGuid, processRuntime.getName());
-					this.stubService.getEOSS().executeWorkflowStartAfterEvent(inputObject);
+					this.stubService.getEoss().executeWorkflowStartAfterEvent(inputObject);
 				}
 
 				// process next activities
@@ -264,7 +264,7 @@ public class ActivityRuntimeStub extends AbstractServiceStub<WFIImpl>
 
 			if (decide == DecisionEnum.ACCEPT)
 			{
-				this.stubService.getFTS().createTransformQueue4WF(activity);
+				this.stubService.getFts().createTransformQueue4WF(activity);
 			}
 		}
 		catch (DynaDataException e)
@@ -880,7 +880,7 @@ public class ActivityRuntimeStub extends AbstractServiceStub<WFIImpl>
 		else
 		{
 			ActivityRuntime actrt = this.getActivityRuntime(actRtGuid);
-			boolean isAgent = this.stubService.getAAS().isAgent(performerGuid, actrt.getCreateUserGuid());
+			boolean isAgent = this.stubService.getAas().isAgent(performerGuid, actrt.getCreateUserGuid());
 			if ("BEGIN".equals(actrt.getName()) && isAgent)
 			{
 				track.setPerformerGuid(actrt.getCreateUserGuid());
@@ -921,7 +921,7 @@ public class ActivityRuntimeStub extends AbstractServiceStub<WFIImpl>
 
 	public WorkflowActivityRuntimeData getWorkflowRuntimeData(ObjectGuid objectGuid) throws ServiceRequestException
 	{
-		FoundationObject foundationObject = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObjectByGuid(objectGuid, false);
+		FoundationObject foundationObject = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObjectByGuid(objectGuid, false);
 		if (!foundationObject.isLatestRevision() || foundationObject.getStatus() == SystemStatusEnum.RELEASE || foundationObject.isCheckOut())
 		{
 			return null;
@@ -1064,7 +1064,7 @@ public class ActivityRuntimeStub extends AbstractServiceStub<WFIImpl>
 
 	private boolean isAgent(String agentGuid, String principalGuid) throws ServiceRequestException
 	{
-		return this.stubService.getAAS().isAgent(agentGuid, principalGuid);
+		return this.stubService.getAas().isAgent(agentGuid, principalGuid);
 	}
 
 	public ActivityRuntime getActivityRuntime(String actRtGuid) throws ServiceRequestException

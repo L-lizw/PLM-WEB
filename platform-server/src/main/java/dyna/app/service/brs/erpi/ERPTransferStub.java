@@ -888,15 +888,9 @@ public abstract class ERPTransferStub<T extends Enum<?>> extends AbstractService
 		}
 		if (!crossConfigured)
 		{
-			try
-			{
-				msrm = this.stubService.getMSRM();
-			}
-			catch (ServiceRequestException e)
-			{
-				e.printStackTrace();
-				return serviceEle;
-			}
+
+			msrm = this.stubService.getMSRM();
+
 			throw new IllegalArgumentException(msrm.getMSRString("ID_APP_ERPI_CROSS_SYNCHRONIZE", lang.toString()));
 		}
 		return serviceEle;

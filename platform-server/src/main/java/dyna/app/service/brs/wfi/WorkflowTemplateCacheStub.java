@@ -144,16 +144,9 @@ public class WorkflowTemplateCacheStub extends AbstractServiceStub<WFIImpl>
 		if (!SetUtils.isNullList(actrtList))
 		{
 			List<WorkflowActivity> activityList = null;
-			try
-			{
-				activityList = ((WFMImpl) this.stubService.getWFM()).getActivitiyStub().listActivity(wfName);
-			}
-			catch (ServiceRequestException e)
-			{
-				// TODO Auto-generated catch block
-				DynaLogger.error("WorkflowTemplateCacheStub load failed...");
-				e.printStackTrace();
-			}
+
+				activityList = ((WFMImpl) this.stubService.getWfm()).getActivitiyStub().listActivity(wfName);
+
 			if (!SetUtils.isNullList(activityList))
 			{
 				// actrtWFList = activityList.stream().filter(act -> act.getType() != null &&

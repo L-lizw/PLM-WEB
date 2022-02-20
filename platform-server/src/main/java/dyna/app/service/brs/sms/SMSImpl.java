@@ -22,6 +22,8 @@ import dyna.net.service.das.MSRM;
 import dyna.net.service.data.DSCommonService;
 import dyna.net.service.data.RelationService;
 import dyna.net.service.data.SystemDataService;
+import lombok.AccessLevel;
+import lombok.Getter;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,15 +33,30 @@ import java.util.List;
 /**
  * System Mail Service implementation
  *
- * @author caogc
+ * @author Lizw
  */
+@Getter(AccessLevel.PROTECTED)
 @Service public class SMSImpl extends BusinessRuleService implements SMS
 {
 	@DubboReference private DSCommonService   dsCommonService;
 	@DubboReference private RelationService   relationService;
 	@DubboReference private SystemDataService systemDataService;
 
+	@Autowired
+	private AAS aas;
 	@Autowired private Async async;
+	@Autowired
+	private BOAS boas;
+	@Autowired
+	private DSS dss;
+	@Autowired
+	private EMM emm;
+	@Autowired
+	private MSRM msrm;
+	@Autowired
+	private POS pos;
+	@Autowired
+	private WFI wfi;
 
 	@Autowired private MailStub         mailStub         ;
 	@Autowired private MailInboxStub    mailInboxStub    ;
@@ -88,97 +105,6 @@ import java.util.List;
 	@Override public void deleteTrash(List<String> mailGuidList) throws ServiceRequestException
 	{
 		this.getMailUpdaterStub().deleteMail(mailGuidList);
-	}
-
-	protected synchronized POS getPOS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(POS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized AAS getAAS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(AAS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized WFI getWFI() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(WFI.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized BOAS getBOAS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(BOAS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized MSRM getMSRM() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(MSRM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized EMM getEMM() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(EMM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized DSS getDSS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(DSS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
 	}
 
 	@Override public Mail getMail(String mailGuid) throws ServiceRequestException
@@ -403,6 +329,24 @@ import java.util.List;
 	@Override public void clearMailByConfig() throws ServiceRequestException
 	{
 		this.getMailTrashStub().clearMailByConfig();
+	}
+
+	/**
+	 * 工作流通知
+	 *
+	 * @param toUserGuidList
+	 * @param fromUseGuid
+	 * @param processGuid
+	 * @param activityGuid
+	 * @param contents
+	 * @param title
+	 * @param category
+	 * @throws ServiceRequestException
+	 */
+	public void sendMail4WorkFlow(List<String> toUserGuidList, String fromUseGuid, String processGuid, String activityGuid, String contents, String title,
+			MailMessageType messageType, MailCategoryEnum category, Integer startNumber) throws ServiceRequestException
+	{
+		this.getMailSentStub().sendMail4WorkFlow(toUserGuidList, fromUseGuid, processGuid, activityGuid, contents, title , messageType, category, startNumber);
 	}
 
 }

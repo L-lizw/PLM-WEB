@@ -73,8 +73,8 @@ public class RuleCheckConditionImpl extends AbstractFieldCondition
 		RelationRule relationRule = DataCheckRuleFactory.getRelationRule(rule);
 
 		// 取得BOM结构
-		BOMS boms = this.stubService.getBOMS();
-		BOAS boas = this.stubService.getBOAS();
+		BOMS boms = this.stubService.getBoms();
+		BOAS boas = this.stubService.getBoas();
 		List<BOMStructure> bomList = boms.listBOM(this.getFoundationObject().getObjectGuid(), rule.getRuleName(), null, null, null);
 		if (!SetUtils.isNullList(bomList))
 		{
@@ -96,7 +96,7 @@ public class RuleCheckConditionImpl extends AbstractFieldCondition
 	{
 		RelationRule relationRule = DataCheckRuleFactory.getRelationRule(rule);
 		// 取得关联关系结构
-		BOAS boas = this.stubService.getBOAS();
+		BOAS boas = this.stubService.getBoas();
 		List<StructureObject> structureList = boas.listObjectOfRelation(this.getFoundationObject().getObjectGuid(), rule.getRuleName(), null, null, null);
 		if (!SetUtils.isNullList(structureList))
 		{
@@ -117,7 +117,7 @@ public class RuleCheckConditionImpl extends AbstractFieldCondition
 	private boolean checkWF(CheckRule rule) throws ServiceNotFoundException, ServiceRequestException
 	{
 		WFRule wfRule = DataCheckRuleFactory.getWFRule(rule);
-		WFI wfi = this.stubService.getWFI();
+		WFI wfi = this.stubService.getWfi();
 
 		List<ProcessRuntime> processList = wfi.listProcessRuntimeOfObject(this.getFoundationObject().getObjectGuid(), null);
 		if (!SetUtils.isNullList(processList))
@@ -146,7 +146,7 @@ public class RuleCheckConditionImpl extends AbstractFieldCondition
 	private boolean checkObjectField(CheckRule rule) throws ServiceRequestException, ServiceNotFoundException
 	{
 		RelationRule relationRule = DataCheckRuleFactory.getRelationRule(rule);
-		BOAS boas = this.stubService.getBOAS();
+		BOAS boas = this.stubService.getBoas();
 
 		String ruleName = rule.getRuleName();
 		String fieldName = ruleName.split("\\.")[1];

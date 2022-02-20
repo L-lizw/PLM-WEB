@@ -114,23 +114,23 @@ public class CancelCheckOutStub extends AbstractServiceStub<BOASImpl>
 
 			if (isDealBom)
 			{
-				List<BOMView> bomViewList = this.stubService.getBOMS().listBOMView(foundationObject.getObjectGuid());
+				List<BOMView> bomViewList = this.stubService.getBoms().listBOMView(foundationObject.getObjectGuid());
 				if (!SetUtils.isNullList(bomViewList))
 				{
 					for (BOMView bomView : bomViewList)
 					{
 						if (this.stubService.getOperatorGuid().equals(bomView.getCheckedOutUserGuid()))
 						{
-							this.stubService.getBOMS().cancelCheckOut(bomView);
+							this.stubService.getBoms().cancelCheckOut(bomView);
 						}
 					}
 				}
 			}
 
 			// delete file
-			((DSSImpl) this.stubService.getDSS()).getFileInfoStub().deleteIterationFile(foundationObject.getObjectGuid(), foundationObject.getIterationId());
+			((DSSImpl) this.stubService.getDss()).getFileInfoStub().deleteIterationFile(foundationObject.getObjectGuid(), foundationObject.getIterationId());
 
-			EMM emm = this.stubService.getEMM();
+			EMM emm = this.stubService.getEmm();
 
 			// 处理relation
 			// 查找所有关联的ViewObject
@@ -140,7 +140,7 @@ public class CancelCheckOutStub extends AbstractServiceStub<BOASImpl>
 			{
 				for (ViewObject viewObject : viewObjectList)
 				{
-					RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateById(viewObject.get(ViewObject.TEMPLATE_ID) == null ? "" : (String) viewObject
+					RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateById(viewObject.get(ViewObject.TEMPLATE_ID) == null ? "" : (String) viewObject
 							.get(ViewObject.TEMPLATE_ID));
 					if (relationTemplate == null)
 					{

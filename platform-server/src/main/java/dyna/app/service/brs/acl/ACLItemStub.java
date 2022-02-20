@@ -37,7 +37,7 @@ public class ACLItemStub extends AbstractServiceStub<ACLImpl>
 
 	protected ACLItem getACLItemForObjectByUser(ObjectGuid objectGuid, String userId, String groupId, String roleId) throws ServiceRequestException
 	{
-		AAS aas = this.stubService.getAAS();
+		AAS aas = this.stubService.getAas();
 
 		User user = aas.getUserById(userId);
 		if (user == null)
@@ -67,11 +67,11 @@ public class ACLItemStub extends AbstractServiceStub<ACLImpl>
 			ClassInfo classInfo = null;
 			if (objectGuid.getClassName() != null)
 			{
-				classInfo = this.stubService.getEMM().getClassByName(objectGuid.getClassName());
+				classInfo = this.stubService.getEmm().getClassByName(objectGuid.getClassName());
 			}
 			if (classInfo == null && objectGuid.getClassGuid() != null)
 			{
-				classInfo = this.stubService.getEMM().getClassByGuid(objectGuid.getClassGuid());
+				classInfo = this.stubService.getEmm().getClassByGuid(objectGuid.getClassGuid());
 			}
 			String authority = this.stubService.getAclService().getAuthority(objectGuid.getGuid(), classInfo.getName(), user.getGuid(), group.getGuid(), roleGuid);
 			return new ACLItem(authority);
@@ -163,7 +163,7 @@ public class ACLItemStub extends AbstractServiceStub<ACLImpl>
 				{
 					if (!StringUtils.isNullString(item.getValueGuid()))
 					{
-						Group group = this.stubService.getAAS().getGroup(item.getValueGuid());
+						Group group = this.stubService.getAas().getGroup(item.getValueGuid());
 						if (group != null)
 						{
 							item.setValueName(group.getGroupId() + "-" + group.getGroupName());
@@ -174,7 +174,7 @@ public class ACLItemStub extends AbstractServiceStub<ACLImpl>
 				{
 					if (!StringUtils.isNullString(item.getValueGuid()))
 					{
-						Role role = this.stubService.getAAS().getRole(item.getValueGuid());
+						Role role = this.stubService.getAas().getRole(item.getValueGuid());
 						if (role != null)
 						{
 							item.setValueName(role.getRoleId() + "-" + role.getRoleName());
@@ -185,18 +185,18 @@ public class ACLItemStub extends AbstractServiceStub<ACLImpl>
 				{
 					if (!StringUtils.isNullString(item.getValueGuid()))
 					{
-						RIG rig = this.stubService.getAAS().getRIG(item.getValueGuid());
+						RIG rig = this.stubService.getAas().getRIG(item.getValueGuid());
 						if (rig != null)
 						{
 							Group group = null;
 							Role role = null;
 							if (!StringUtils.isNullString(rig.getGroupGuid()))
 							{
-								group = this.stubService.getAAS().getGroup(rig.getGroupGuid());
+								group = this.stubService.getAas().getGroup(rig.getGroupGuid());
 							}
 							if (!StringUtils.isNullString(rig.getRoleGuid()))
 							{
-								role = this.stubService.getAAS().getRole(rig.getRoleGuid());
+								role = this.stubService.getAas().getRole(rig.getRoleGuid());
 							}
 							if (group != null && role != null)
 							{
@@ -210,7 +210,7 @@ public class ACLItemStub extends AbstractServiceStub<ACLImpl>
 				{
 					if (!StringUtils.isNullString(item.getValueGuid()))
 					{
-						User user = this.stubService.getAAS().getUser(item.getValueGuid());
+						User user = this.stubService.getAas().getUser(item.getValueGuid());
 						if (user != null)
 						{
 							item.setValueName(user.getUserId() + "-" + user.getUserName());

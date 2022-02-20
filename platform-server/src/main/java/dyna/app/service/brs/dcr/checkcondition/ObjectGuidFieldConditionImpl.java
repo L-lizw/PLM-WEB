@@ -131,11 +131,11 @@ public class ObjectGuidFieldConditionImpl extends AbstractFieldCondition
 
 	private EMM getEMM() throws ServiceRequestException
 	{
-		return this.getServiceInstance(EMM.class);
+		return this.stubService.getEmm();
 	}
 
 	private AAS getAAS() throws ServiceRequestException
 	{
-		return this.getServiceInstance(AAS.class);
+		return this.stubService.getAas();
 	}
 }

@@ -118,7 +118,7 @@ public class EMMClassificationStub extends AbstractServiceStub<EMMImpl>
 	 */
 	protected List<UIObjectInfo> listCFUIObjectByObjecGuid(ObjectGuid objectGuid, UITypeEnum uiType) throws ServiceRequestException
 	{
-		boolean hasLicence = this.stubService.getLIC().hasLicence(ApplicationTypeEnum.CLS.name());
+		boolean hasLicence = this.stubService.getLic().hasLicence(ApplicationTypeEnum.CLS.name());
 		if (!hasLicence)
 		{
 			return null;

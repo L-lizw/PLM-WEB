@@ -32,13 +32,13 @@ public class DrivenTestStub extends AbstractServiceStub<IOPImpl>
 	public DrivenResult drivenTest(ObjectGuid objectGuid, SearchCondition searchCondition, SearchCondition end2SearchCondition, DataRule dataRule, String codeValue,
 			boolean isAppend) throws ServiceRequestException
 	{
-		FoundationObject end1 = this.stubService.getBOAS().getObject(objectGuid);
+		FoundationObject end1 = this.stubService.getBoas().getObject(objectGuid);
 		if (end1 == null)	
 		{
 			throw new ServiceRequestException("ID_DS_NO_DATA", "data is not exist, guid='" + objectGuid.getGuid() + "'", null, objectGuid.getGuid());
 		}
 		// 取得材料明细
-		List<StructureObject> end2List = this.stubService.getBOAS().listObjectOfRelation(objectGuid, IOPConfigConstant.IOPMaterialDetail, searchCondition, end2SearchCondition,
+		List<StructureObject> end2List = this.stubService.getBoas().listObjectOfRelation(objectGuid, IOPConfigConstant.IOPMaterialDetail, searchCondition, end2SearchCondition,
 				dataRule);
 		if (SetUtils.isNullList(end2List))
 		{
@@ -110,7 +110,7 @@ public class DrivenTestStub extends AbstractServiceStub<IOPImpl>
 			}
 			boolean isClientProvide = false;
 			ObjectGuid end2 = structureObject.getEnd2ObjectGuid();
-			FoundationObject end2Fo = this.stubService.getBOAS().getObject(end2);
+			FoundationObject end2Fo = this.stubService.getBoas().getObject(end2);
 			if (end2Fo != null)
 			{
 				Object clientProvide = end2Fo.get(IOPConfigConstant.ISCLIENTPROVIDEITEM);
@@ -232,7 +232,7 @@ public class DrivenTestStub extends AbstractServiceStub<IOPImpl>
 
 	private String getMessage(String id, Object... agrs) throws ServiceRequestException
 	{
-		return this.stubService.getMSRM().getMSRString(id, this.stubService.getUserSignature().getLanguageEnum().getId(), agrs);
+		return this.stubService.getMsrm().getMSRString(id, this.stubService.getUserSignature().getLanguageEnum().getId(), agrs);
 	}
 	
 	/**

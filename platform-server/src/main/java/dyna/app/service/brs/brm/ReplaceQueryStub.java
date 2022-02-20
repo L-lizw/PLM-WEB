@@ -26,7 +26,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @author wangweixia
+ * @author Lizw
  *         取替代关系查询
  */
 @Component
@@ -125,7 +125,7 @@ public class ReplaceQueryStub extends AbstractServiceStub<BRMImpl>
 		searchCondition.addOrder(ReplaceSubstituteConstants.BOMViewDisplay, true);
 		searchCondition.setPageNum(pageNum);
 		searchCondition.setPageSize(pageSize);
-		value = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().listObject(searchCondition, false);
+		value = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().listObject(searchCondition, false);
 		this.recombinationToNew(value, true, true);
 		return value;
 	}
@@ -182,7 +182,7 @@ public class ReplaceQueryStub extends AbstractServiceStub<BRMImpl>
 			{
 				searchCondition.addOrder(ReplaceSubstituteConstants.RSNumber, true);
 			}
-			replaceDataList = this.stubService.getBOAS().listObject(searchCondition);
+			replaceDataList = this.stubService.getBoas().listObject(searchCondition);
 			// if (!isContainInvalidDate)
 			// {
 			// if (!SetUtils.isNullList(value))
@@ -224,7 +224,7 @@ public class ReplaceQueryStub extends AbstractServiceStub<BRMImpl>
 		ObjectGuid objectGuid = new ObjectGuid();
 		try
 		{
-			ClassInfo classInfo = this.stubService.getEMM().getFirstLevelClassByInterface(ModelInterfaceEnum.IReplaceSubstitute, null);
+			ClassInfo classInfo = this.stubService.getEmm().getFirstLevelClassByInterface(ModelInterfaceEnum.IReplaceSubstitute, null);
 			if (classInfo != null)
 			{
 				objectGuid.setClassGuid(classInfo.getGuid());
@@ -259,7 +259,7 @@ public class ReplaceQueryStub extends AbstractServiceStub<BRMImpl>
 			if (i > 1)
 			{
 				searchCondition.setPageNum(i);
-				List<FoundationObject> list = this.stubService.getBOAS().listObject(searchCondition);
+				List<FoundationObject> list = this.stubService.getBoas().listObject(searchCondition);
 				if (!SetUtils.isNullList(list))
 				{
 					value.addAll(list);
@@ -321,7 +321,7 @@ public class ReplaceQueryStub extends AbstractServiceStub<BRMImpl>
 		{
 			if (!StringUtils.isNullString(rang.getValue()))
 			{
-				CodeItemInfo scopeCode = this.stubService.getEMM().getCodeItemByName(ReplaceSubstituteConstants.Scope, rang.getValue());
+				CodeItemInfo scopeCode = this.stubService.getEmm().getCodeItemByName(ReplaceSubstituteConstants.Scope, rang.getValue());
 				searchCondition.addFilter(ReplaceSubstituteConstants.Scope, scopeCode.getGuid(), OperateSignEnum.YES);
 			}
 		}
@@ -329,7 +329,7 @@ public class ReplaceQueryStub extends AbstractServiceStub<BRMImpl>
 		{
 			if (!StringUtils.isNullString(type.getValue()))
 			{
-				CodeItemInfo typeCode = this.stubService.getEMM().getCodeItemByName(ReplaceSubstituteConstants.RSType, type.getValue());
+				CodeItemInfo typeCode = this.stubService.getEmm().getCodeItemByName(ReplaceSubstituteConstants.RSType, type.getValue());
 				searchCondition.addFilter(ReplaceSubstituteConstants.RSType, typeCode.getGuid(), OperateSignEnum.YES);
 			}
 		}
@@ -372,7 +372,7 @@ public class ReplaceQueryStub extends AbstractServiceStub<BRMImpl>
 		ObjectGuid rsItem = this.getObjectGuid(foun, keyItem);
 		if (rsItem != null)
 		{
-			FoundationObject fo = stubService.getBOAS().getObject(rsItem);
+			FoundationObject fo = stubService.getBoas().getObject(rsItem);
 			if (fo != null)
 			{
 				foun.put(keyItem, fo.getObjectGuid().getGuid());
@@ -492,7 +492,7 @@ public class ReplaceQueryStub extends AbstractServiceStub<BRMImpl>
 			ObjectGuid rsItem = this.getObjectGuid(replaceData, ReplaceSubstituteConstants.RSItem);
 			if (rsItem != null && !temp.contains(rsItem.getMasterGuid()))
 			{
-				FoundationObject fo = this.stubService.getBOAS().getObject(rsItem);
+				FoundationObject fo = this.stubService.getBoas().getObject(rsItem);
 				if (fo != null)
 				{
 					temp.add(rsItem.getMasterGuid());
@@ -519,8 +519,8 @@ public class ReplaceQueryStub extends AbstractServiceStub<BRMImpl>
 	/**
 	 * 取得ObjectGuid对象
 	 * 
-	 * @param newfo
-	 * @param componentitem
+	 * @param dynaObject
+	 * @param sid
 	 */
 	public ObjectGuid getObjectGuid(DynaObject dynaObject, String sid)
 	{
@@ -565,7 +565,7 @@ public class ReplaceQueryStub extends AbstractServiceStub<BRMImpl>
 		// }
 		// this.setResultFields(searchCondition);
 		// searchCondition.addOrder(ReplaceSubstituteConstants.RSNumber, true);
-		// value = this.stubService.getBOAS().listObject(searchCondition);
+		// value = this.stubService.getBoas().listObject(searchCondition);
 		// this.getDataBySearchNextPage(value, searchCondition);
 		// this.recombinationToNew(value, true, isAddOtherAttribute);
 		// return value;

@@ -18,7 +18,7 @@ import dyna.common.log.DynaLogger;
 import org.springframework.stereotype.Component;
 
 /**
- * @author Wanglei
+ * @author Lizw
  * 
  */
 @Component
@@ -35,7 +35,7 @@ public class ActionAppImpl extends AbstractServiceStub<WFIImpl> implements ProcA
 	{
 		String procRtGuid = activity.getProcessRuntimeGuid();
 		ProcessRuntime processRuntime = this.stubService.getProcessRuntime(procRtGuid);
-		boolean isMust = this.stubService.getEOSS().isMustExecuteWorkflowActionFromUI(processRuntime.getName(),
+		boolean isMust = this.stubService.getEoss().isMustExecuteWorkflowActionFromUI(processRuntime.getName(),
 				activity.getName());
 		if (isMust)
 		{
@@ -46,7 +46,7 @@ public class ActionAppImpl extends AbstractServiceStub<WFIImpl> implements ProcA
 				processRuntime.getName(), activity.getGuid(), activity.getName());
 		try
 		{
-			this.stubService.getEOSS().executeWorkflowAction(inputObject);
+			this.stubService.getEoss().executeWorkflowAction(inputObject);
 		}
 		// 执行此段代码时，工作流中不能存在有UI操作的脚本，不然可能引起工作流中断。
 		catch (DynaDataException e)

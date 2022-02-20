@@ -55,24 +55,24 @@ public class CheckInStub extends AbstractServiceStub<BOASImpl>
 
 			if (isDealBom)
 			{
-				List<BOMView> bomViewList = this.stubService.getBOMS().listBOMView(retFoundationObject.getObjectGuid());
+				List<BOMView> bomViewList = this.stubService.getBoms().listBOMView(retFoundationObject.getObjectGuid());
 				if (!SetUtils.isNullList(bomViewList))
 				{
 					for (BOMView bomView : bomViewList)
 					{
 						if (this.stubService.getOperatorGuid().equals(bomView.getCheckedOutUserGuid()))
 						{
-							this.stubService.getBOMS().checkIn(bomView);
+							this.stubService.getBoms().checkIn(bomView);
 						}
 					}
 				}
 			}
 
-			EMM emm = this.stubService.getEMM();
+			EMM emm = this.stubService.getEmm();
 
 			// 处理relation
 			// 查找所有关联的ViewObject
-			List<RelationTemplateInfo> relationTemplates = this.stubService.getEMM().listRelationTemplate(retFoundationObject.getObjectGuid());
+			List<RelationTemplateInfo> relationTemplates = this.stubService.getEmm().listRelationTemplate(retFoundationObject.getObjectGuid());
 			if (!SetUtils.isNullList(relationTemplates))
 			{
 				for (RelationTemplateInfo relationTemplate : relationTemplates)
@@ -180,17 +180,17 @@ public class CheckInStub extends AbstractServiceStub<BOASImpl>
 		try
 		{
 			// invoke checkin.before event script
-			this.stubService.getEOSS().executeCheckInBeforeEvent(foundationObject);
+			this.stubService.getEoss().executeCheckInBeforeEvent(foundationObject);
 
 			retFoundationObject = this.stubService.getInstanceService().checkin(foundationObject, Constants.IS_OWN_ONLY, sessionId, this.stubService.getFixedTransactionId());
 
 			ObjectGuid objectGuid = retFoundationObject.getObjectGuid();
 
-			this.stubService.getFTS().createTransformQueue4Checkin(objectGuid);
+			this.stubService.getFts().createTransformQueue4Checkin(objectGuid);
 
 
 			// invoke checkin.after event script
-			this.stubService.getEOSS().executeCheckInAfterEvent(retFoundationObject);
+			this.stubService.getEoss().executeCheckInAfterEvent(retFoundationObject);
 		}
 		catch (DynaDataException e)
 		{

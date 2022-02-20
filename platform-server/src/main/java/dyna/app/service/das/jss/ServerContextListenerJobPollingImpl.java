@@ -159,8 +159,8 @@ public class ServerContextListenerJobPollingImpl extends AbstractServiceStub<JSS
 
 		try
 		{
-			User user = this.stubService.getServiceInstance(AAS.class).getUser(job.getCreateUserGuid());
-			MSRM msr = this.stubService.getServiceInstance(MSRM.class);
+			User user = this.stubService.getAAS().getUser(job.getCreateUserGuid());
+			MSRM msr = this.stubService.getMsrm();
 			String title = "";
 			JobDefinition jobDefinition = this.stubService.getJobDefinition(job.getExecutorClass());
 			if (StringUtils.isNullString(jobDefinition.getMsrId()))
@@ -175,7 +175,7 @@ public class ServerContextListenerJobPollingImpl extends AbstractServiceStub<JSS
 			{
 				title = job.getType();
 			}
-			this.stubService.getServiceInstance(SMS.class).sendMailToUser(job.getType(), msg, category, null, user.getUserId(), MailMessageType.JOBNOTIFY);
+			this.stubService.getSms().sendMailToUser(job.getType(), msg, category, null, user.getUserId(), MailMessageType.JOBNOTIFY);
 		}
 		catch (Exception e)
 		{

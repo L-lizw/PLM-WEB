@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 /**
  * 与对象实例相关的脚本执行操作
  * 
- * @author Wanglei
+ * @author Lizw
  * 
  */
 @Component
@@ -41,7 +41,7 @@ public class WorkflowEventExecuteStub extends AbstractScriptServiceStub
 			if (scriptContext != null)
 			{
 				String scriptName = scriptContext.scriptName + "." + scriptContext.segment;
-				script = ((WFMImpl) this.stubService.getWFM()).getWfScriptStub().getScript(scriptName);
+				script = ((WFMImpl) this.stubService.getWfm()).getWfScriptStub().getScript(scriptName);
 			}
 			else
 			{

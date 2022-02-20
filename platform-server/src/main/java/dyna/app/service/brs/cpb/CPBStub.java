@@ -50,7 +50,7 @@ public class CPBStub extends AbstractServiceStub<CPBImpl>
 	protected List<TableOfGroup> saveTableOfGroup(ObjectGuid end1ObjectGuid, Date ruleTime, List<TableOfGroup> groupList, List<DynamicColumnTitle> columnTitleList,
 			List<TableOfGroup> deleteLineList, List<DynamicColumnTitle> deleteColumnTitleList) throws ServiceRequestException
 	{
-		FoundationObject instance = this.stubService.getBOAS().getObjectByGuid(end1ObjectGuid);
+		FoundationObject instance = this.stubService.getBoas().getObjectByGuid(end1ObjectGuid);
 		if (instance == null)
 		{
 			throw new ServiceRequestException("ID_DS_NO_DATA", "contract is not exist, guid='" + end1ObjectGuid.getGuid() + "'");
@@ -112,7 +112,7 @@ public class CPBStub extends AbstractServiceStub<CPBImpl>
 	protected List<TableOfList> saveTableOfList(ObjectGuid end1ObjectGuid, Date ruleTime, ConfigParameterTableType tableType, List<TableOfList> tableOfListList,
 			List<DynamicColumnTitle> columnTitleList, List<TableOfList> deleteLineList, List<DynamicColumnTitle> deleteColumnTitleList) throws ServiceRequestException
 	{
-		FoundationObject instance = this.stubService.getBOAS().getObjectByGuid(end1ObjectGuid);
+		FoundationObject instance = this.stubService.getBoas().getObjectByGuid(end1ObjectGuid);
 		if (instance == null)
 		{
 			throw new ServiceRequestException("ID_DS_NO_DATA", "contract is not exist, guid='" + end1ObjectGuid.getGuid() + "'");
@@ -176,7 +176,7 @@ public class CPBStub extends AbstractServiceStub<CPBImpl>
 	protected List<TableOfExpression> saveTableOfExpression(ObjectGuid end1ObjectGuid, Date ruleTime, List<TableOfExpression> tableOfExpressionList,
 			List<TableOfExpression> deleteLineList) throws ServiceRequestException
 	{
-		FoundationObject instance = this.stubService.getBOAS().getObjectByGuid(end1ObjectGuid);
+		FoundationObject instance = this.stubService.getBoas().getObjectByGuid(end1ObjectGuid);
 		if (instance == null)
 		{
 			throw new ServiceRequestException("ID_DS_NO_DATA", "contract is not exist, guid='" + end1ObjectGuid.getGuid() + "'");
@@ -222,7 +222,7 @@ public class CPBStub extends AbstractServiceStub<CPBImpl>
 	protected List<TableOfInputVariable> saveTableOfInputVariable(ObjectGuid end1ObjectGuid, Date ruleTime, List<TableOfInputVariable> tableOfInputVariableList,
 			List<TableOfInputVariable> deleteLineList) throws ServiceRequestException
 	{
-		FoundationObject instance = this.stubService.getBOAS().getObjectByGuid(end1ObjectGuid);
+		FoundationObject instance = this.stubService.getBoas().getObjectByGuid(end1ObjectGuid);
 		if (instance == null)
 		{
 			throw new ServiceRequestException("ID_DS_NO_DATA", "contract is not exist, guid='" + end1ObjectGuid.getGuid() + "'");
@@ -271,7 +271,7 @@ public class CPBStub extends AbstractServiceStub<CPBImpl>
 	protected List<TableOfMark> saveTableOfMark(ObjectGuid end1ObjectGuid, Date ruleTime, List<TableOfMark> tableOfMarkList, List<TableOfMark> deleteLineList)
 			throws ServiceRequestException
 	{
-		FoundationObject instance = this.stubService.getBOAS().getObjectByGuid(end1ObjectGuid);
+		FoundationObject instance = this.stubService.getBoas().getObjectByGuid(end1ObjectGuid);
 		if (instance == null)
 		{
 			throw new ServiceRequestException("ID_DS_NO_DATA", "contract is not exist, guid='" + end1ObjectGuid.getGuid() + "'");
@@ -318,7 +318,7 @@ public class CPBStub extends AbstractServiceStub<CPBImpl>
 	protected List<TableOfParameter> saveTableOfParameter(ObjectGuid end1ObjectGuid, Date ruleTime, List<TableOfParameter> tableOfParameterList,
 			List<DynamicColumnTitle> columnTitleList, List<TableOfParameter> deleteLineList, List<DynamicColumnTitle> deleteColumnTitleList) throws ServiceRequestException
 	{
-		FoundationObject instance = this.stubService.getBOAS().getObjectByGuid(end1ObjectGuid);
+		FoundationObject instance = this.stubService.getBoas().getObjectByGuid(end1ObjectGuid);
 		if (instance == null)
 		{
 			throw new ServiceRequestException("ID_DS_NO_DATA", "contract is not exist, guid='" + end1ObjectGuid.getGuid() + "'");
@@ -379,7 +379,7 @@ public class CPBStub extends AbstractServiceStub<CPBImpl>
 	protected List<TableOfRegion> saveTableOfRegion(ObjectGuid end1ObjectGuid, Date ruleTime, ConfigParameterTableType tableType, List<TableOfRegion> tableOfRegionList,
 			List<DynamicColumnTitle> columnTitleList, List<TableOfRegion> deleteLineList, List<DynamicColumnTitle> deleteColumnTitleList) throws ServiceRequestException
 	{
-		FoundationObject instance = this.stubService.getBOAS().getObjectByGuid(end1ObjectGuid);
+		FoundationObject instance = this.stubService.getBoas().getObjectByGuid(end1ObjectGuid);
 		if (instance == null)
 		{
 			throw new ServiceRequestException("ID_DS_NO_DATA", "contract is not exist, guid='" + end1ObjectGuid.getGuid() + "'");
@@ -566,7 +566,7 @@ public class CPBStub extends AbstractServiceStub<CPBImpl>
 	private List saveTableData(ObjectGuid end1ObjectGuid, Date ruleTime, List dataList, List<String> exceptColumnTitleList, ConfigParameterTableType tableType)
 			throws ServiceRequestException
 	{
-		FoundationObject instance = this.stubService.getBOAS().getObjectByGuid(end1ObjectGuid);
+		FoundationObject instance = this.stubService.getBoas().getObjectByGuid(end1ObjectGuid);
 		if (instance == null)
 		{
 			throw new ServiceRequestException("ID_DS_NO_DATA", "contract is not exist, guid='" + end1ObjectGuid.getGuid() + "'");
@@ -1172,8 +1172,8 @@ public class CPBStub extends AbstractServiceStub<CPBImpl>
 
 	private ClassField getGField(ObjectGuid end1ObjectGuid, String fieldName) throws ServiceRequestException
 	{
-		RelationTemplateInfo template = this.stubService.getEMM().getRelationTemplateByName(end1ObjectGuid, ConfigParameterConstants.CONFIG_PARAMETER_RELATION_TEMPLATE_NAME);
-		return this.stubService.getEMM().getFieldByName(template.getStructureClassName(), fieldName, true);
+		RelationTemplateInfo template = this.stubService.getEmm().getRelationTemplateByName(end1ObjectGuid, ConfigParameterConstants.CONFIG_PARAMETER_RELATION_TEMPLATE_NAME);
+		return this.stubService.getEmm().getFieldByName(template.getStructureClassName(), fieldName, true);
 	}
 
 	/**
@@ -1263,10 +1263,10 @@ public class CPBStub extends AbstractServiceStub<CPBImpl>
 		try
 		{
 //			DataServer.getTransactionManager().startTransaction(this.stubService.getFixedTransactionId());
-			ViewObject view = this.stubService.getBOAS().getRelation(viewObjectGuid);
+			ViewObject view = this.stubService.getBoas().getRelation(viewObjectGuid);
 			if (view != null)
 			{
-				RelationTemplateInfo template = this.stubService.getEMM().getRelationTemplateById(view.getTemplateID());
+				RelationTemplateInfo template = this.stubService.getEmm().getRelationTemplateById(view.getTemplateID());
 				if (template != null)
 				{
 					this.stubService.getRelationService().deleteAllStruc(template.getStructureClassName(), null, view.getObjectGuid(), Constants.isSupervisor(true, this.stubService),
@@ -1564,7 +1564,7 @@ public class CPBStub extends AbstractServiceStub<CPBImpl>
 
 	private String getMessage(String id, Object... agrs) throws ServiceRequestException
 	{
-		return this.stubService.getMSRM().getMSRString(id, this.stubService.getUserSignature().getLanguageEnum().getId(), agrs);
+		return this.stubService.getMsrm().getMSRString(id, this.stubService.getUserSignature().getLanguageEnum().getId(), agrs);
 	}
 
 	private void rebuildExceptionMsg(ConfigParameterTableType tableType, DynaDataException e) throws ServiceRequestException
@@ -1610,7 +1610,7 @@ public class CPBStub extends AbstractServiceStub<CPBImpl>
 			return;
 		}
 
-		FoundationObject instance = this.stubService.getBOAS().getObjectByGuid(origObjectGuid);
+		FoundationObject instance = this.stubService.getBoas().getObjectByGuid(origObjectGuid);
 		if (instance == null)
 		{
 			throw new ServiceRequestException("ID_DS_NO_DATA", "contract is not exist, guid='" + origObjectGuid.getGuid() + "'");
@@ -1928,7 +1928,7 @@ public class CPBStub extends AbstractServiceStub<CPBImpl>
 				}
 				else if (tableType == ConfigParameterTableType.DETAIL)
 				{
-					RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateByName(destObjectGuid,
+					RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateByName(destObjectGuid,
 							ConfigParameterConstants.CONFIG_PARAMETER_RELATION_TEMPLATE_NAME);
 					if (relationTemplate == null)
 					{
@@ -1937,18 +1937,18 @@ public class CPBStub extends AbstractServiceStub<CPBImpl>
 					}
 
 					// 目标对象已有明细结构，删除原有明细结构
-					ViewObject destViewObject = this.stubService.getBOAS().getRelationByEND1(destObjectGuid, ConfigParameterConstants.CONFIG_PARAMETER_RELATION_TEMPLATE_NAME);
+					ViewObject destViewObject = this.stubService.getBoas().getRelationByEND1(destObjectGuid, ConfigParameterConstants.CONFIG_PARAMETER_RELATION_TEMPLATE_NAME);
 					if (destViewObject != null)
 					{
 						this.stubService.deleteRelation(destViewObject.getObjectGuid());
 					}
 
 					// 源对象没有明细结构，退出
-					ViewObject origViewObject = this.stubService.getBOAS().getRelationByEND1(origObjectGuid, ConfigParameterConstants.CONFIG_PARAMETER_RELATION_TEMPLATE_NAME);
+					ViewObject origViewObject = this.stubService.getBoas().getRelationByEND1(origObjectGuid, ConfigParameterConstants.CONFIG_PARAMETER_RELATION_TEMPLATE_NAME);
 					if (origViewObject != null)
 					{
 
-						destViewObject = this.stubService.getBOAS().saveRelationByTemplate(relationTemplate.getGuid(), destObjectGuid);
+						destViewObject = this.stubService.getBoas().saveRelationByTemplate(relationTemplate.getGuid(), destObjectGuid);
 
 						// 复制
 						Map<String, Object> specialField = new HashMap<String, Object>();
@@ -2053,116 +2053,116 @@ public class CPBStub extends AbstractServiceStub<CPBImpl>
 		{
 			if (TableOfRegion.LOWERLIMIT1.equals(columnName))
 			{
-				return ">=" + this.stubService.getMSRM().getMSRString("ID_CLIENT_INSTANCE_CONFIG_AE_LOWERLIMIT1", locale);
+				return ">=" + this.stubService.getMsrm().getMSRString("ID_CLIENT_INSTANCE_CONFIG_AE_LOWERLIMIT1", locale);
 			}
 			else if (TableOfRegion.UPPERLIMIT1.equals(columnName))
 			{
-				return "<" + this.stubService.getMSRM().getMSRString("ID_CLIENT_INSTANCE_CONFIG_AE_UPPERLIMIT1", locale);
+				return "<" + this.stubService.getMsrm().getMSRString("ID_CLIENT_INSTANCE_CONFIG_AE_UPPERLIMIT1", locale);
 			}
 			else if (TableOfRegion.VARIABLE1.equals(columnName))
 			{
-				return this.stubService.getMSRM().getMSRString("ID_CLIENT_INSTANCE_CONFIG_AERQ_VARIABLE", locale);
+				return this.stubService.getMsrm().getMSRString("ID_CLIENT_INSTANCE_CONFIG_AERQ_VARIABLE", locale);
 			}
 		}
 		else if (ConfigParameterTableType.R == tableType || ConfigParameterTableType.Q == tableType)
 		{
 			if (TableOfRegion.LOWERLIMIT1.equals(columnName))
 			{
-				return ">=" + this.stubService.getMSRM().getMSRString("ID_CLIENT_INSTANCE_CONFIG_AE_LOWERLIMIT1", locale) + "1";
+				return ">=" + this.stubService.getMsrm().getMSRString("ID_CLIENT_INSTANCE_CONFIG_AE_LOWERLIMIT1", locale) + "1";
 			}
 			else if (TableOfRegion.UPPERLIMIT1.equals(columnName))
 			{
-				return "<" + this.stubService.getMSRM().getMSRString("ID_CLIENT_INSTANCE_CONFIG_AE_UPPERLIMIT1", locale) + "1";
+				return "<" + this.stubService.getMsrm().getMSRString("ID_CLIENT_INSTANCE_CONFIG_AE_UPPERLIMIT1", locale) + "1";
 			}
 			else if (TableOfRegion.VARIABLE1.equals(columnName))
 			{
-				return this.stubService.getMSRM().getMSRString("ID_CLIENT_INSTANCE_CONFIG_AERQ_VARIABLE", locale) + "1";
+				return this.stubService.getMsrm().getMSRString("ID_CLIENT_INSTANCE_CONFIG_AERQ_VARIABLE", locale) + "1";
 			}
 			else if (TableOfRegion.LOWERLIMIT2.equals(columnName))
 			{
-				return ">=" + this.stubService.getMSRM().getMSRString("ID_CLIENT_INSTANCE_CONFIG_AE_LOWERLIMIT1", locale) + "2";
+				return ">=" + this.stubService.getMsrm().getMSRString("ID_CLIENT_INSTANCE_CONFIG_AE_LOWERLIMIT1", locale) + "2";
 			}
 			else if (TableOfRegion.UPPERLIMIT2.equals(columnName))
 			{
-				return "<" + this.stubService.getMSRM().getMSRString("ID_CLIENT_INSTANCE_CONFIG_AE_UPPERLIMIT1", locale) + "2";
+				return "<" + this.stubService.getMsrm().getMSRString("ID_CLIENT_INSTANCE_CONFIG_AE_UPPERLIMIT1", locale) + "2";
 			}
 			else if (TableOfRegion.VARIABLE2.equals(columnName))
 			{
-				return this.stubService.getMSRM().getMSRString("ID_CLIENT_INSTANCE_CONFIG_AERQ_VARIABLE", locale) + "2";
+				return this.stubService.getMsrm().getMSRString("ID_CLIENT_INSTANCE_CONFIG_AERQ_VARIABLE", locale) + "2";
 			}
 		}
 		else if (ConfigParameterTableType.G == tableType)
 		{
 			if (TableOfGroup.GNUMBER.equals(columnName))
 			{
-				return this.stubService.getMSRM().getMSRString("ID_CLIENT_INSTANCE_CONFIG_G_GNUMBER", locale);
+				return this.stubService.getMsrm().getMSRString("ID_CLIENT_INSTANCE_CONFIG_G_GNUMBER", locale);
 			}
 		}
 		else if (ConfigParameterTableType.La == tableType || ConfigParameterTableType.Lb == tableType)
 		{
 			if (TableOfList.GROUPNAME.equals(columnName))
 			{
-				return this.stubService.getMSRM().getMSRString("ID_CLIENT_INSTANCE_CONFIG_L_GROUPVALUE", locale);
+				return this.stubService.getMsrm().getMSRString("ID_CLIENT_INSTANCE_CONFIG_L_GROUPVALUE", locale);
 			}
 			else if (TableOfList.DESCRIPTION.equals(columnName))
 			{
-				return this.stubService.getMSRM().getMSRString("ID_CLIENT_INSTANCE_CONFIG_L_DESCRIPTION", locale);
+				return this.stubService.getMsrm().getMSRString("ID_CLIENT_INSTANCE_CONFIG_L_DESCRIPTION", locale);
 			}
 			else if (TableOfList.LNUMBER.equals(columnName))
 			{
-				return this.stubService.getMSRM().getMSRString("ID_CLIENT_INSTANCE_CONFIG_L_LNUMBER", locale);
+				return this.stubService.getMsrm().getMSRString("ID_CLIENT_INSTANCE_CONFIG_L_LNUMBER", locale);
 			}
 		}
 		else if (ConfigParameterTableType.F == tableType)
 		{
 			if (TableOfExpression.DRAWVARIABLE.equals(columnName))
 			{
-				return this.stubService.getMSRM().getMSRString("ID_CLIENT_INSTANCE_CONFIG_F_DRAWVARIABLE", locale);
+				return this.stubService.getMsrm().getMSRString("ID_CLIENT_INSTANCE_CONFIG_F_DRAWVARIABLE", locale);
 			}
 			else if (TableOfExpression.FORMULA.equals(columnName))
 			{
-				return this.stubService.getMSRM().getMSRString("ID_CLIENT_INSTANCE_CONFIG_F_FORMULA", locale);
+				return this.stubService.getMsrm().getMSRString("ID_CLIENT_INSTANCE_CONFIG_F_FORMULA", locale);
 			}
 			else if (TableOfExpression.VARIABLEINFORMULA.equals(columnName))
 			{
-				return this.stubService.getMSRM().getMSRString("ID_CLIENT_INSTANCE_CONFIG_AERQ_VARIABLE", locale);
+				return this.stubService.getMsrm().getMSRString("ID_CLIENT_INSTANCE_CONFIG_AERQ_VARIABLE", locale);
 			}
 		}
 		else if (ConfigParameterTableType.P == tableType)
 		{
 			if (TableOfParameter.GNUMBER.equals(columnName))
 			{
-				return this.stubService.getMSRM().getMSRString("ID_CLIENT_INSTANCE_CONFIG_G_GNUMBER", locale);
+				return this.stubService.getMsrm().getMSRString("ID_CLIENT_INSTANCE_CONFIG_G_GNUMBER", locale);
 			}
 		}
 		else if (ConfigParameterTableType.MAK == tableType)
 		{
 			if (TableOfMark.MAK.equals(columnName))
 			{
-				return this.stubService.getMSRM().getMSRString("ID_CLIENT_INSTANCE_CONFIG_MAK_NAME", locale);
+				return this.stubService.getMsrm().getMSRString("ID_CLIENT_INSTANCE_CONFIG_MAK_NAME", locale);
 			}
 			else if (TableOfMark.VALUE.equals(columnName))
 			{
-				return this.stubService.getMSRM().getMSRString("ID_CLIENT_INSTANCE_CONFIG_MAK_DESCRIPTION", locale);
+				return this.stubService.getMsrm().getMSRString("ID_CLIENT_INSTANCE_CONFIG_MAK_DESCRIPTION", locale);
 			}
 		}
 		else if (ConfigParameterTableType.INPT == tableType)
 		{
 			if (TableOfInputVariable.NAME.equals(columnName))
 			{
-				return this.stubService.getMSRM().getMSRString("ID_CLIENT_INSTANCE_CONFIG_INPT_NAME", locale);
+				return this.stubService.getMsrm().getMSRString("ID_CLIENT_INSTANCE_CONFIG_INPT_NAME", locale);
 			}
 			else if (TableOfInputVariable.DESCRIPTION.equals(columnName))
 			{
-				return this.stubService.getMSRM().getMSRString("ID_CLIENT_INSTANCE_CONFIG_INPT_DESCRIPTION", locale);
+				return this.stubService.getMsrm().getMSRString("ID_CLIENT_INSTANCE_CONFIG_INPT_DESCRIPTION", locale);
 			}
 			else if (TableOfInputVariable.VALUETYPE.equals(columnName))
 			{
-				return this.stubService.getMSRM().getMSRString("ID_CLIENT_INSTANCE_CONFIG_INPT_VALUETYPE", locale);
+				return this.stubService.getMsrm().getMSRString("ID_CLIENT_INSTANCE_CONFIG_INPT_VALUETYPE", locale);
 			}
 			else if (TableOfInputVariable.RANGE.equals(columnName))
 			{
-				return this.stubService.getMSRM().getMSRString("ID_CLIENT_INSTANCE_CONFIG_INPT_RANGE", locale);
+				return this.stubService.getMsrm().getMSRString("ID_CLIENT_INSTANCE_CONFIG_INPT_RANGE", locale);
 			}
 		}
 		return columnName;
@@ -2219,7 +2219,7 @@ public class CPBStub extends AbstractServiceStub<CPBImpl>
 			// 根据ObjectGuid中的className或者classGuid一个的值，获取另外一个的值并赋给ObjectGuid
 			ClassStub.decorateObjectGuid(item.getObjectGuid(), this.stubService);
 
-			RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateByName(item.getObjectGuid(),
+			RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateByName(item.getObjectGuid(),
 					ConfigParameterConstants.CONFIG_PARAMETER_RESULTRELATION_TEMPLATE_NAME);
 			if (relationTemplate == null)
 			{
@@ -2228,7 +2228,7 @@ public class CPBStub extends AbstractServiceStub<CPBImpl>
 
 			if (searchCondition == null)
 			{
-				List<UIObjectInfo> uiObjectList = this.stubService.getEMM().listALLFormListUIObjectInBizModel(relationTemplate.getStructureClassName());
+				List<UIObjectInfo> uiObjectList = this.stubService.getEmm().listALLFormListUIObjectInBizModel(relationTemplate.getStructureClassName());
 				searchCondition = SearchConditionFactory.createSearchConditionForBOMStructure(relationTemplate.getStructureClassName(), uiObjectList);
 			}
 
@@ -2393,7 +2393,7 @@ public class CPBStub extends AbstractServiceStub<CPBImpl>
 			tableOfExpression.setMasterGuid(objectGuid.getMasterGuid());
 			sds.delete(TableOfExpression.class, tableOfExpression, "deleteByMaster");
 
-			RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateByName(objectGuid,
+			RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateByName(objectGuid,
 					ConfigParameterConstants.CONFIG_PARAMETER_RELATION_TEMPLATE_NAME);
 			if (relationTemplate == null)
 			{
@@ -2402,7 +2402,7 @@ public class CPBStub extends AbstractServiceStub<CPBImpl>
 			}
 
 			// 目标对象已有明细结构，删除原有明细结构
-			ViewObject destViewObject = this.stubService.getBOAS().getRelationByEND1(objectGuid, ConfigParameterConstants.CONFIG_PARAMETER_RELATION_TEMPLATE_NAME);
+			ViewObject destViewObject = this.stubService.getBoas().getRelationByEND1(objectGuid, ConfigParameterConstants.CONFIG_PARAMETER_RELATION_TEMPLATE_NAME);
 			if (destViewObject != null)
 			{
 				this.stubService.deleteRelation(destViewObject.getObjectGuid());
@@ -2492,7 +2492,7 @@ public class CPBStub extends AbstractServiceStub<CPBImpl>
 			structureObject.setViewObjectGuid(viewObject.getObjectGuid());
 			structureObject.setEnd2ObjectGuid(end2FoundationObjectGuid);
 
-			RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateById(viewObject.getTemplateID());
+			RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateById(viewObject.getTemplateID());
 			if (relationTemplate != null)
 			{
 				if (!relationTemplate.isIncorporatedMaster())
@@ -2512,7 +2512,7 @@ public class CPBStub extends AbstractServiceStub<CPBImpl>
 							}
 							if (end2MasterGuidList.contains(structureObject.getEnd2ObjectGuid().getGuid()))
 							{
-								FoundationObject objectByGuid = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObjectByGuid(structureObject.getEnd2ObjectGuid(),
+								FoundationObject objectByGuid = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObjectByGuid(structureObject.getEnd2ObjectGuid(),
 										false);
 
 								throw new ServiceRequestException("ID_APP_BOMEDIT_CANT_CONECT_BOMVIEW", "end2 is not relation", null, objectByGuid.getFullName());
@@ -2531,7 +2531,7 @@ public class CPBStub extends AbstractServiceStub<CPBImpl>
 				}
 			}
 
-			return ((BOASImpl) this.stubService.getBOAS()).getRelationLinkStub().linkInner(viewObject, end1FoundationObject, end2FoundationObjectGuid, structureObject, true, null);
+			return ((BOASImpl) this.stubService.getBoas()).getRelationLinkStub().linkInner(viewObject, end1FoundationObject, end2FoundationObjectGuid, structureObject, true, null);
 
 		}
 		catch (DynaDataException e)
@@ -2554,7 +2554,7 @@ public class CPBStub extends AbstractServiceStub<CPBImpl>
 	protected ViewObject getViewObject(ObjectGuid end1ObjectGuid, String viewName, boolean isAutoCreate) throws ServiceRequestException
 	{
 		ViewObject viewObject = null;
-		RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateByName(end1ObjectGuid, viewName);
+		RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateByName(end1ObjectGuid, viewName);
 
 		if (relationTemplate == null)
 		{
@@ -2562,7 +2562,7 @@ public class CPBStub extends AbstractServiceStub<CPBImpl>
 		}
 		else if (isAutoCreate)
 		{
-			viewObject = ((BOASImpl) this.stubService.getBOAS()).getRelationStub().saveRelationByTemplate(relationTemplate.getGuid(), end1ObjectGuid, true, null);
+			viewObject = ((BOASImpl) this.stubService.getBoas()).getRelationStub().saveRelationByTemplate(relationTemplate.getGuid(), end1ObjectGuid, true, null);
 		}
 		return viewObject;
 	}
@@ -2582,7 +2582,7 @@ public class CPBStub extends AbstractServiceStub<CPBImpl>
 	public List<TableOfMultiCondition> saveTableOfMultiVariable(ObjectGuid end1ObjectGuid, Date ruleTime, List<TableOfMultiCondition> tableOfMultiConditionList,
 			List<TableOfMultiCondition> deleteLineList) throws ServiceRequestException
 	{
-		FoundationObject instance = this.stubService.getBOAS().getObjectByGuid(end1ObjectGuid);
+		FoundationObject instance = this.stubService.getBoas().getObjectByGuid(end1ObjectGuid);
 		if (instance == null)
 		{
 			throw new ServiceRequestException("ID_DS_NO_DATA", "contract is not exist, guid='" + end1ObjectGuid.getGuid() + "'");
@@ -2845,7 +2845,7 @@ public class CPBStub extends AbstractServiceStub<CPBImpl>
 					}
 					else if (ConfigParameterTableType.DETAIL.equals(tableType))
 					{
-						RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateByName(objectGuid,
+						RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateByName(objectGuid,
 								ConfigParameterConstants.CONFIG_PARAMETER_RELATION_TEMPLATE_NAME);
 						if (relationTemplate == null)
 						{
@@ -2854,7 +2854,7 @@ public class CPBStub extends AbstractServiceStub<CPBImpl>
 									ConfigParameterConstants.CONFIG_PARAMETER_RELATION_TEMPLATE_NAME);
 						}
 						// 目标对象已有明细结构，删除原有明细结构
-						ViewObject destViewObject = this.stubService.getBOAS().getRelationByEND1(objectGuid, ConfigParameterConstants.CONFIG_PARAMETER_RELATION_TEMPLATE_NAME);
+						ViewObject destViewObject = this.stubService.getBoas().getRelationByEND1(objectGuid, ConfigParameterConstants.CONFIG_PARAMETER_RELATION_TEMPLATE_NAME);
 						if (destViewObject != null)
 						{
 							this.stubService.deleteRelation(destViewObject.getObjectGuid());

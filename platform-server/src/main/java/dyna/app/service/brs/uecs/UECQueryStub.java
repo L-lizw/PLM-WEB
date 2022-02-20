@@ -60,7 +60,7 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 
 	public FoundationObject getBatchECPorECOFoundation(ObjectGuid ObjectGuid) throws ServiceRequestException
 	{
-		FoundationObject foObject = this.stubService.getBOAS().getObject(ObjectGuid);
+		FoundationObject foObject = this.stubService.getBoas().getObject(ObjectGuid);
 		if (foObject == null)
 		{
 			return null;
@@ -89,7 +89,7 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 
 	public List<FoundationObject> getECPByECRTree(ObjectGuid end1ObjectGuid) throws ServiceRequestException
 	{
-		List<ClassInfo> listEcpClassInfo = this.stubService.getEMM().listClassByInterface(ModelInterfaceEnum.IECPM);
+		List<ClassInfo> listEcpClassInfo = this.stubService.getEmm().listClassByInterface(ModelInterfaceEnum.IECPM);
 		ClassInfo ecpAbstractClassInfo = null;
 		if (!SetUtils.isNullList(listEcpClassInfo))
 		{
@@ -119,7 +119,7 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 
 	public List<FoundationObject> getECPByECRTreeInECNPage(ObjectGuid ecrObjectGuid, ObjectGuid ecnObjectGuid) throws ServiceRequestException
 	{
-		List<ClassInfo> listEcpClassInfo = this.stubService.getEMM().listClassByInterface(ModelInterfaceEnum.IECPM);
+		List<ClassInfo> listEcpClassInfo = this.stubService.getEmm().listClassByInterface(ModelInterfaceEnum.IECPM);
 		ClassInfo ecpAbstractClassInfo = null;
 		if (!SetUtils.isNullList(listEcpClassInfo))
 		{
@@ -133,7 +133,7 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 		}
 		List<FoundationObject> ecpList = this.getEND2ByECTypeEND1ByTemp(ecrObjectGuid, ecpAbstractClassInfo, UpdatedECSConstants.ECR_ECP$, true);
 
-		List<ClassInfo> listEcoClassInfo = this.stubService.getEMM().listClassByInterface(ModelInterfaceEnum.IECOM);
+		List<ClassInfo> listEcoClassInfo = this.stubService.getEmm().listClassByInterface(ModelInterfaceEnum.IECOM);
 		ClassInfo ecoAbstractClassInfo = null;
 		if (!SetUtils.isNullList(listEcoClassInfo))
 		{
@@ -186,7 +186,7 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 	{
 		List<FoundationObject> ecpList = this.listChildbyParentObjectGuid(ecpObjectGuid, UpdatedECSConstants.ParentECP);
 
-		List<ClassInfo> listEcoClassInfo = this.stubService.getEMM().listClassByInterface(ModelInterfaceEnum.IECOM);
+		List<ClassInfo> listEcoClassInfo = this.stubService.getEmm().listClassByInterface(ModelInterfaceEnum.IECOM);
 		ClassInfo ecoAbstractClassInfo = null;
 		if (!SetUtils.isNullList(listEcoClassInfo))
 		{
@@ -230,7 +230,7 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 
 	public List<FoundationObject> getECPByECRAllInECNPage(ObjectGuid ecrObjectGuid, ObjectGuid ecnObjectGuid) throws ServiceRequestException
 	{
-		List<ClassInfo> listEcpClassInfo = this.stubService.getEMM().listClassByInterface(ModelInterfaceEnum.IECPM);
+		List<ClassInfo> listEcpClassInfo = this.stubService.getEmm().listClassByInterface(ModelInterfaceEnum.IECPM);
 		ClassInfo ecpAbstractClassInfo = null;
 		if (!SetUtils.isNullList(listEcpClassInfo))
 		{
@@ -244,7 +244,7 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 		}
 		List<FoundationObject> ecpList = this.getEND2ByECTypeEND1ByTemp(ecrObjectGuid, ecpAbstractClassInfo, UpdatedECSConstants.ECR_ECP$, true);
 
-		List<ClassInfo> listEcoClassInfo = this.stubService.getEMM().listClassByInterface(ModelInterfaceEnum.IECOM);
+		List<ClassInfo> listEcoClassInfo = this.stubService.getEmm().listClassByInterface(ModelInterfaceEnum.IECOM);
 		ClassInfo ecoAbstractClassInfo = null;
 		if (!SetUtils.isNullList(listEcoClassInfo))
 		{
@@ -288,7 +288,7 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 
 	public List<FoundationObject> getECOByECNAll(ObjectGuid end1ObjectGuid) throws ServiceRequestException
 	{
-		List<ClassInfo> listEcoClassInfo = this.stubService.getEMM().listClassByInterface(ModelInterfaceEnum.IECOM);
+		List<ClassInfo> listEcoClassInfo = this.stubService.getEmm().listClassByInterface(ModelInterfaceEnum.IECOM);
 		ClassInfo ecoAbstractClassInfo = null;
 		if (!SetUtils.isNullList(listEcoClassInfo))
 		{
@@ -305,7 +305,7 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 
 	public List<FoundationObject> getECRByECN(ObjectGuid end1ObjectGuid) throws ServiceRequestException
 	{
-		List<ClassInfo> listEcrClassInfo = this.stubService.getEMM().listClassByInterface(ModelInterfaceEnum.IUpdatedECR);
+		List<ClassInfo> listEcrClassInfo = this.stubService.getEmm().listClassByInterface(ModelInterfaceEnum.IUpdatedECR);
 		ClassInfo ecrClassInfo = null;
 		if (!SetUtils.isNullList(listEcrClassInfo))
 		{
@@ -316,7 +316,7 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 
 	public List<FoundationObject> getECOByECP(ObjectGuid end1ObjectGuid) throws ServiceRequestException
 	{
-		List<ClassInfo> listEcoClassInfo = this.stubService.getEMM().listClassByInterface(ModelInterfaceEnum.IECOM);
+		List<ClassInfo> listEcoClassInfo = this.stubService.getEmm().listClassByInterface(ModelInterfaceEnum.IECOM);
 		ClassInfo ecoAbstractClassInfo = null;
 		if (!SetUtils.isNullList(listEcoClassInfo))
 		{
@@ -333,7 +333,7 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 
 	public List<FoundationObject> getECPCONTENTByECP(ObjectGuid end1ObjectGuid) throws ServiceRequestException
 	{
-		List<ClassInfo> listEccontentClassInfo = this.stubService.getEMM().listClassByInterface(ModelInterfaceEnum.INormalECPContent);
+		List<ClassInfo> listEccontentClassInfo = this.stubService.getEmm().listClassByInterface(ModelInterfaceEnum.INormalECPContent);
 		ClassInfo eccontentClassInfo = null;
 		if (!SetUtils.isNullList(listEccontentClassInfo))
 		{
@@ -344,7 +344,7 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 
 	public List<FoundationObject> getECPCONTENTByECO(ObjectGuid end1ObjectGuid) throws ServiceRequestException
 	{
-		List<ClassInfo> listEccontentClassInfo = this.stubService.getEMM().listClassByInterface(ModelInterfaceEnum.INormalECPContent);
+		List<ClassInfo> listEccontentClassInfo = this.stubService.getEmm().listClassByInterface(ModelInterfaceEnum.INormalECPContent);
 		ClassInfo eccontentClassInfo = null;
 		if (!SetUtils.isNullList(listEccontentClassInfo))
 		{
@@ -361,7 +361,7 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 		{
 			for (FoundationObject foundationObject : tempList)
 			{
-				foundationObject = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObject(foundationObject.getObjectGuid(), false);
+				foundationObject = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObject(foundationObject.getObjectGuid(), false);
 				resultList.add(foundationObject);
 			}
 		}
@@ -376,7 +376,7 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 		{
 			for (FoundationObject foundationObject : tempList)
 			{
-				foundationObject = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObject(foundationObject.getObjectGuid(), false);
+				foundationObject = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObject(foundationObject.getObjectGuid(), false);
 				resultList.add(foundationObject);
 			}
 		}
@@ -385,7 +385,7 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 
 	public List<FoundationObject> getECPByECRAll(ObjectGuid end1ObjectGuid) throws ServiceRequestException
 	{
-		List<ClassInfo> listEcpClassInfo = this.stubService.getEMM().listClassByInterface(ModelInterfaceEnum.IECPM);
+		List<ClassInfo> listEcpClassInfo = this.stubService.getEmm().listClassByInterface(ModelInterfaceEnum.IECPM);
 		ClassInfo ecpAbstractClassInfo = null;
 		if (!SetUtils.isNullList(listEcpClassInfo))
 		{
@@ -402,7 +402,7 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 
 	public List<FoundationObject> getECOByECNTree(ObjectGuid end1ObjectGuid) throws ServiceRequestException
 	{
-		List<ClassInfo> listEcoClassInfo = this.stubService.getEMM().listClassByInterface(ModelInterfaceEnum.IECOM);
+		List<ClassInfo> listEcoClassInfo = this.stubService.getEmm().listClassByInterface(ModelInterfaceEnum.IECOM);
 		ClassInfo ecoAbstractClassInfo = null;
 		if (!SetUtils.isNullList(listEcoClassInfo))
 		{
@@ -444,7 +444,7 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 	{
 		try
 		{
-			FoundationObject foObject = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObject(end1ObjectGuid, false);
+			FoundationObject foObject = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObject(end1ObjectGuid, false);
 			if (foObject == null)
 			{
 				return null;
@@ -458,21 +458,21 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 			{
 				return null;
 			}
-			List<BOMTemplateInfo> bomTemplateList = this.stubService.getEMM().listBOMTemplateByName(bomTemplateName, false);
+			List<BOMTemplateInfo> bomTemplateList = this.stubService.getEmm().listBOMTemplateByName(bomTemplateName, false);
 			if (SetUtils.isNullList(bomTemplateList))
 			{
 				return null;
 			}
 			BOMTemplateInfo bomTemplate = bomTemplateList.get(0);
 
-			RelationTemplateInfo relationChangeItemBefore = this.stubService.getEMM().getRelationTemplateById(templateId);
+			RelationTemplateInfo relationChangeItemBefore = this.stubService.getEmm().getRelationTemplateById(templateId);
 			SearchCondition createSearchConditionForStructure = SearchConditionFactory.createSearchConditionForStructure(relationChangeItemBefore.getStructureClassName());
-			List<ClassField> classFieldList = this.stubService.getEMM().listFieldOfClass(relationChangeItemBefore.getStructureClassName());
+			List<ClassField> classFieldList = this.stubService.getEmm().listFieldOfClass(relationChangeItemBefore.getStructureClassName());
 			for (ClassField classField : classFieldList)
 			{
 				createSearchConditionForStructure.addResultField(classField.getName());
 			}
-			List<StructureObject> structureObjectList = ((BOASImpl) this.stubService.getBOAS()).getRelationStub().listObjectOfRelation(end1ObjectGuid, templateId,
+			List<StructureObject> structureObjectList = ((BOASImpl) this.stubService.getBoas()).getRelationStub().listObjectOfRelation(end1ObjectGuid, templateId,
 					createSearchConditionForStructure, null, null, false);
 			if (SetUtils.isNullList(structureObjectList))
 			{
@@ -500,11 +500,11 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 					structureMap = JsonUtils.getObjectByJsonStr(value.toString(), StructureObjectImpl.class);
 				}
 				Set<String> codeFieldName = new HashSet<String>();
-				UIObjectInfo uiObjectOldStructure = this.stubService.getEMM().getUIObjectInCurrentBizModel(bomTemplate.getStructureClassName(),UITypeEnum.LIST);
+				UIObjectInfo uiObjectOldStructure = this.stubService.getEmm().getUIObjectInCurrentBizModel(bomTemplate.getStructureClassName(),UITypeEnum.LIST);
 				List<UIField> uiFields = new ArrayList<UIField>();
 				if (uiObjectOldStructure != null)
 				{
-					uiFields = this.stubService.getEMM().listUIFieldByUIObject(bomTemplate.getStructureClassName(), uiObjectOldStructure.getName());
+					uiFields = this.stubService.getEmm().listUIFieldByUIObject(bomTemplate.getStructureClassName(), uiObjectOldStructure.getName());
 				}
 				if (!SetUtils.isNullList(uiFields))
 				{
@@ -520,10 +520,10 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 						}
 					}
 				}
-				decoratorFactory.decorateCodeRule(null, codeFieldName, structureMap, this.stubService.getEMM());
+				decoratorFactory.decorateCodeRule(null, codeFieldName, structureMap, this.stubService.getEmm());
 				// ////////////////////////////////////////////////////////////////////////////////////////
 
-				CodeItemInfo modifyTypeCode = this.stubService.getEMM().getCodeItem(foObject.get("MODIFYTYPE").toString());
+				CodeItemInfo modifyTypeCode = this.stubService.getEmm().getCodeItem(foObject.get("MODIFYTYPE").toString());
 				if (modifyTypeCode.getName().equals(UECModifyTypeEnum.BatchDel.toString()) || modifyTypeCode.getName().equals(UECModifyTypeEnum.BatchMod.toString())
 						|| modifyTypeCode.getName().equals(UECModifyTypeEnum.BatchReplace.toString()))
 				{
@@ -533,7 +533,7 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 						oldStructureGuid = structureMap.get(UpdatedECSConstants.guid$).toString();
 
 						SearchCondition searchCondition = SearchConditionFactory.createSearchConditionForStructure(bomTemplate.getStructureClassName());
-						UIObjectInfo uiObject = this.stubService.getEMM().getUIObjectInCurrentBizModel(bomTemplate.getStructureClassName(), UITypeEnum.LIST);
+						UIObjectInfo uiObject = this.stubService.getEmm().getUIObjectInCurrentBizModel(bomTemplate.getStructureClassName(), UITypeEnum.LIST);
 						if (uiObject != null)
 						{
 							searchCondition.addResultUIObjectName(uiObject.getName());
@@ -541,7 +541,7 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 						ObjectGuid oldBom = new ObjectGuid();
 						oldBom.setGuid(oldStructureGuid);
 						oldBom.setClassName(bomTemplate.getStructureClassName());
-						BOMStructure oldBomStructure = ((BOMSImpl) this.stubService.getBOMS()).getBomStub().getBOM(oldBom, searchCondition, false, null);
+						BOMStructure oldBomStructure = ((BOMSImpl) this.stubService.getBoms()).getBomStub().getBOM(oldBom, searchCondition, false, null);
 						if (oldBomStructure != null && !SetUtils.isNullSet(oldBomStructure.entrySet()))
 						{
 							for (Entry<String, Object> entry : oldBomStructure.entrySet())
@@ -569,7 +569,7 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 			throws ServiceRequestException
 	{
 		List<FoundationObject> result = new ArrayList<FoundationObject>();
-		List<FoundationObject> end1FoundationList = ((BOASImpl) this.stubService.getBOAS()).getRelationStub().listWhereReferenced(end2ObjectGuid, templateId, null, null, false);
+		List<FoundationObject> end1FoundationList = ((BOASImpl) this.stubService.getBoas()).getRelationStub().listWhereReferenced(end2ObjectGuid, templateId, null, null, false);
 		if (SetUtils.isNullList(end1FoundationList))
 		{
 			return null;
@@ -577,7 +577,7 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 
 		for (FoundationObject fo : end1FoundationList)
 		{
-			List<ModelInterfaceEnum> modelInterfaceEnumList = this.stubService.getEMM().getClassByGuid(fo.getObjectGuid().getClassGuid()).getInterfaceList();
+			List<ModelInterfaceEnum> modelInterfaceEnumList = this.stubService.getEmm().getClassByGuid(fo.getObjectGuid().getClassGuid()).getInterfaceList();
 			for (ModelInterfaceEnum modelInterfaceEnum : modelInterfaceEnumList)
 			{
 				if (end1ModelInterfaceEnum == modelInterfaceEnum)
@@ -597,12 +597,12 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 			return null;
 		}
 		List<FoundationObject> resultList = new ArrayList<FoundationObject>();
-		RelationTemplateInfo relationTemplateByName = this.stubService.getEMM().getRelationTemplateByName(end1ObjectGuid, templateId);
+		RelationTemplateInfo relationTemplateByName = this.stubService.getEmm().getRelationTemplateByName(end1ObjectGuid, templateId);
 		if (null == relationTemplateByName)
 		{
 			return resultList;
 		}
-		ViewObject viewObject = ((BOASImpl) this.stubService.getBOAS()).getRelationStub().getRelationByEND1(end1ObjectGuid, relationTemplateByName.getName(), false);
+		ViewObject viewObject = ((BOASImpl) this.stubService.getBoas()).getRelationStub().getRelationByEND1(end1ObjectGuid, relationTemplateByName.getName(), false);
 		if (null == viewObject)
 		{
 			return resultList;
@@ -612,17 +612,17 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 		ObjectGuid objectGuid = new ObjectGuid();
 		objectGuid.setClassName(end2ClassInfo.getName());
 		SearchCondition end2SearchCondition = SearchConditionFactory.createSearchCondition(objectGuid, null, false);
-		UIObjectInfo uiObject = this.stubService.getEMM().getUIObjectInCurrentBizModel(objectGuid.getClassName(), UITypeEnum.LIST);
+		UIObjectInfo uiObject = this.stubService.getEmm().getUIObjectInCurrentBizModel(objectGuid.getClassName(), UITypeEnum.LIST);
 		if (uiObject != null)
 		{
 			end2SearchCondition.addResultUIObjectName(uiObject.getName());
 		}
-		ClassInfo classInfo = this.stubService.getEMM().getClassByName(objectGuid.getClassName());
+		ClassInfo classInfo = this.stubService.getEmm().getClassByName(objectGuid.getClassName());
 		if (classInfo != null && classInfo.getInterfaceList() != null)
 		{
 			for (ModelInterfaceEnum ienum : classInfo.getInterfaceList())
 			{
-				List<ClassField> fieldlist = this.stubService.getEMM().listClassFieldByInterface(ienum);
+				List<ClassField> fieldlist = this.stubService.getEmm().listClassFieldByInterface(ienum);
 				if (fieldlist != null)
 				{
 					for (ClassField field : fieldlist)
@@ -634,12 +634,12 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 		}
 		SearchCondition createSearchConditionForStructure = SearchConditionFactory.createSearchConditionForStructure(relationTemplateByName.getStructureClassName());
 		createSearchConditionForStructure.setPageSize(SearchCondition.MAX_PAGE_SIZE);
-		UIObjectInfo uiObjectForStructure = this.stubService.getEMM().getUIObjectInCurrentBizModel(relationTemplateByName.getStructureClassName(), UITypeEnum.LIST);
+		UIObjectInfo uiObjectForStructure = this.stubService.getEmm().getUIObjectInCurrentBizModel(relationTemplateByName.getStructureClassName(), UITypeEnum.LIST);
 		if (uiObjectForStructure != null)
 		{
 			createSearchConditionForStructure.addResultUIObjectName(uiObjectForStructure.getName());
 		}
-		List<FoundationObject> tmpFoList = ((BOASImpl) this.stubService.getBOAS()).getRelationStub().listFoundationObjectOfRelation(viewObject.getObjectGuid(),
+		List<FoundationObject> tmpFoList = ((BOASImpl) this.stubService.getBoas()).getRelationStub().listFoundationObjectOfRelation(viewObject.getObjectGuid(),
 				createSearchConditionForStructure, end2SearchCondition, null, false);
 		if (!SetUtils.isNullList(tmpFoList))
 		{
@@ -650,7 +650,7 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 
 	public List<FoundationObject> getFormECIByECO(ObjectGuid ChangeItemObjectGuid, ObjectGuid SolveObjectGuid, ObjectGuid ecoObjectGuid) throws ServiceRequestException
 	{
-		FoundationObject ecoFoundation = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObject(ecoObjectGuid, false);
+		FoundationObject ecoFoundation = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObject(ecoObjectGuid, false);
 		if (null == ecoFoundation)
 		{
 			return null;
@@ -659,11 +659,11 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 		{
 			return null;
 		}
-		LifecyclePhaseInfo ecoLifecyclePhaseInfo = this.stubService.getEMM().getLifecyclePhaseInfo(ecoFoundation.getLifecyclePhaseGuid());
+		LifecyclePhaseInfo ecoLifecyclePhaseInfo = this.stubService.getEmm().getLifecyclePhaseInfo(ecoFoundation.getLifecyclePhaseGuid());
 		if (ECOLifecyclePhaseEnum.Canceled.toString().equals(ecoLifecyclePhaseInfo.getName()) || "Y".equals((String) ecoFoundation.get("ISCOMPLETED")))
 		{
 			List<FoundationObject> tempList = new ArrayList<FoundationObject>();
-			List<ClassInfo> listEciClassInfo = this.stubService.getEMM().listClassByInterface(ModelInterfaceEnum.IECI);
+			List<ClassInfo> listEciClassInfo = this.stubService.getEmm().listClassByInterface(ModelInterfaceEnum.IECI);
 			ClassInfo eciClassInfo = null;
 			if (!SetUtils.isNullList(listEciClassInfo))
 			{
@@ -674,10 +674,10 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 			{
 				return null;
 			}
-			CodeItemInfo changeTypeCode_attribute = this.stubService.getEMM().getCodeItemByName(UpdatedECSConstants.ChangeType, UECChangeTypeEnum.Attribute.toString());
-			CodeItemInfo changeTypeCode_classificationAttribute = this.stubService.getEMM().getCodeItemByName(UpdatedECSConstants.ChangeType,
+			CodeItemInfo changeTypeCode_attribute = this.stubService.getEmm().getCodeItemByName(UpdatedECSConstants.ChangeType, UECChangeTypeEnum.Attribute.toString());
+			CodeItemInfo changeTypeCode_classificationAttribute = this.stubService.getEmm().getCodeItemByName(UpdatedECSConstants.ChangeType,
 					UECChangeTypeEnum.ClassificationAttribute.toString());
-			CodeItemInfo changeTypeCode_classification = this.stubService.getEMM().getCodeItemByName(UpdatedECSConstants.ChangeType, UECChangeTypeEnum.Classification.toString());
+			CodeItemInfo changeTypeCode_classification = this.stubService.getEmm().getCodeItemByName(UpdatedECSConstants.ChangeType, UECChangeTypeEnum.Classification.toString());
 			for (FoundationObject foundationObject : eciList)
 			{
 				if (null != foundationObject.get(UpdatedECSConstants.ChangeType) && (changeTypeCode_attribute.getGuid().equals(foundationObject.get(UpdatedECSConstants.ChangeType))
@@ -705,7 +705,7 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 	public List<FoundationObject> getRelationECIByECO(ObjectGuid changeItemObjectGuid, ObjectGuid solveObjectGuid, String relationTemplateName, ObjectGuid ecoObjectGuid)
 			throws ServiceRequestException
 	{
-		FoundationObject ecoFoundation = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObject(ecoObjectGuid, false);
+		FoundationObject ecoFoundation = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObject(ecoObjectGuid, false);
 		if (null == ecoFoundation)
 		{
 			return null;
@@ -714,11 +714,11 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 		{
 			return null;
 		}
-		LifecyclePhaseInfo ecoLifecyclePhaseInfo = this.stubService.getEMM().getLifecyclePhaseInfo(ecoFoundation.getLifecyclePhaseGuid());
+		LifecyclePhaseInfo ecoLifecyclePhaseInfo = this.stubService.getEmm().getLifecyclePhaseInfo(ecoFoundation.getLifecyclePhaseGuid());
 		if (ECOLifecyclePhaseEnum.Canceled.toString().equals(ecoLifecyclePhaseInfo.getName()) || "Y".equals((String) ecoFoundation.get("ISCOMPLETED")))
 		{
 			List<FoundationObject> tempList = new ArrayList<FoundationObject>();
-			List<ClassInfo> listEciClassInfo = this.stubService.getEMM().listClassByInterface(ModelInterfaceEnum.IECI);
+			List<ClassInfo> listEciClassInfo = this.stubService.getEmm().listClassByInterface(ModelInterfaceEnum.IECI);
 			ClassInfo eciClassInfo = null;
 			if (!SetUtils.isNullList(listEciClassInfo))
 			{
@@ -731,7 +731,7 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 			}
 			for (FoundationObject foundationObject : eciList)
 			{
-				CodeItemInfo changeTypeCode = this.stubService.getEMM().getCodeItemByName(UpdatedECSConstants.ChangeType, UECChangeTypeEnum.Relation.toString());
+				CodeItemInfo changeTypeCode = this.stubService.getEmm().getCodeItemByName(UpdatedECSConstants.ChangeType, UECChangeTypeEnum.Relation.toString());
 				if (null != foundationObject.get(UpdatedECSConstants.ChangeType) && changeTypeCode.getGuid().equals(foundationObject.get(UpdatedECSConstants.ChangeType))
 						&& relationTemplateName != null && relationTemplateName.equals(foundationObject.get(UpdatedECSConstants.Template)))
 				{
@@ -776,16 +776,16 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 	public List<FoundationObject> getBomECIByECO(ObjectGuid changeItemObjectGuid, ObjectGuid solveObjectGuid, String relationTemplateName, ObjectGuid ecoObjectGuid)
 			throws ServiceRequestException
 	{
-		FoundationObject ecoFoundation = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObject(ecoObjectGuid, false);
+		FoundationObject ecoFoundation = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObject(ecoObjectGuid, false);
 		if (null == ecoFoundation)
 		{
 			return null;
 		}
-		LifecyclePhaseInfo ecoLifecyclePhaseInfo = this.stubService.getEMM().getLifecyclePhaseInfo(ecoFoundation.getLifecyclePhaseGuid());
+		LifecyclePhaseInfo ecoLifecyclePhaseInfo = this.stubService.getEmm().getLifecyclePhaseInfo(ecoFoundation.getLifecyclePhaseGuid());
 		if (ECOLifecyclePhaseEnum.Canceled.toString().equals(ecoLifecyclePhaseInfo.getName()) || "Y".equals((String) ecoFoundation.get("ISCOMPLETED")))
 		{
 			List<FoundationObject> tempList = new ArrayList<FoundationObject>();
-			List<ClassInfo> listEciClassInfo = this.stubService.getEMM().listClassByInterface(ModelInterfaceEnum.IECI);
+			List<ClassInfo> listEciClassInfo = this.stubService.getEmm().listClassByInterface(ModelInterfaceEnum.IECI);
 			ClassInfo eciClassInfo = null;
 			if (!SetUtils.isNullList(listEciClassInfo))
 			{
@@ -798,7 +798,7 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 			}
 			for (FoundationObject foundationObject : eciList)
 			{
-				CodeItemInfo changeTypeCode = this.stubService.getEMM().getCodeItemByName(UpdatedECSConstants.ChangeType, UECChangeTypeEnum.BOM.toString());
+				CodeItemInfo changeTypeCode = this.stubService.getEmm().getCodeItemByName(UpdatedECSConstants.ChangeType, UECChangeTypeEnum.BOM.toString());
 				if (foundationObject.get(UpdatedECSConstants.ChangeType) != null && changeTypeCode.getGuid().equals(foundationObject.get(UpdatedECSConstants.ChangeType))
 						&& relationTemplateName != null && relationTemplateName.equals(foundationObject.get(UpdatedECSConstants.Template)))
 				{
@@ -843,7 +843,7 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 	public List<FoundationObject> getOtherECIByECO(ObjectGuid end1ObjectGuid) throws ServiceRequestException
 	{
 		List<FoundationObject> tempList = new ArrayList<FoundationObject>();
-		List<ClassInfo> listEciClassInfo = this.stubService.getEMM().listClassByInterface(ModelInterfaceEnum.IECI);
+		List<ClassInfo> listEciClassInfo = this.stubService.getEmm().listClassByInterface(ModelInterfaceEnum.IECI);
 		ClassInfo eciClassInfo = null;
 		if (!SetUtils.isNullList(listEciClassInfo))
 		{
@@ -856,7 +856,7 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 		}
 		for (FoundationObject foundationObject : eciList)
 		{
-			CodeItemInfo codeItemInfo = this.stubService.getEMM().getCodeItem((String) foundationObject.get("CHANGETYPE"));
+			CodeItemInfo codeItemInfo = this.stubService.getEmm().getCodeItem((String) foundationObject.get("CHANGETYPE"));
 			if (codeItemInfo != null && UECChangeTypeEnum.Others.name().equals(codeItemInfo.getName()))
 			{
 				tempList.add(foundationObject);
@@ -876,12 +876,12 @@ public class UECQueryStub extends AbstractServiceStub<UECSImpl>
 		searchCondition.setPageNum(1);
 		searchCondition.setPageSize(50000);
 		searchCondition.addFilter(parentKey, parentObjectGuid, OperateSignEnum.EQUALS);
-		List<UIObjectInfo> uiList = this.stubService.getEMM().listUIObjectInCurrentBizModel(objectGuid.getClassName(), UITypeEnum.FORM, true);
+		List<UIObjectInfo> uiList = this.stubService.getEmm().listUIObjectInCurrentBizModel(objectGuid.getClassName(), UITypeEnum.FORM, true);
 		if (!SetUtils.isNullList(uiList) && uiList.size() > 0)
 		{
 			searchCondition.addResultUIObjectName(uiList.get(0).getName());
 		}
-		return this.stubService.getBOAS().listObject(searchCondition);
+		return this.stubService.getBoas().listObject(searchCondition);
 	}
 
 	public List<FoundationObject> listALLChildbyParentObjectGuid(ObjectGuid parentObjectGuid, String parentKey) throws ServiceRequestException

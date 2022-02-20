@@ -15,6 +15,8 @@ import dyna.net.service.brs.IOP;
 import dyna.net.service.das.MSRM;
 import dyna.net.service.data.ConfigManagerService;
 import dyna.net.service.data.SystemDataService;
+import lombok.AccessLevel;
+import lombok.Getter;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,10 +25,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+@Getter(AccessLevel.PROTECTED)
 @Service public class IOPImpl extends BusinessRuleService implements IOP
 {
 	@DubboReference private ConfigManagerService configManagerService;
 	@DubboReference private SystemDataService    systemDataService;
+
+	@Autowired
+	private BOAS boas;
+	@Autowired
+	private MSRM msrm;
 
 	@Autowired private IOPConfigParameterStub iopConfigParameterStub  ;
 	@Autowired private DrivenTestStub         drivenTestStub          ;
@@ -55,30 +63,6 @@ import java.util.Map;
 	public PassiveUpdateConfig getPassiveUpdateConfigStub()
 	{
 		return this.passiveUpdateConfigStub;
-	}
-
-	public synchronized BOAS getBOAS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(BOAS.class);
-		}
-		catch (ServiceNotFoundException e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
-
-	public synchronized MSRM getMSRM() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(MSRM.class);
-		}
-		catch (ServiceNotFoundException e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
 	}
 
 	@Override public void release(String masterGuid, String foundationId) throws ServiceRequestException

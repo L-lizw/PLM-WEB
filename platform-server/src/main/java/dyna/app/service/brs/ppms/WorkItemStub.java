@@ -682,7 +682,7 @@ public class WorkItemStub extends AbstractServiceStub<PPMSImpl>
 
 		try
 		{
-			Group group = this.stubService.getServiceInstance(AAS.class, this.stubService.getUserSignature().getCredential())
+			Group group = this.stubService.getAAS()
 					.getGroup(this.stubService.getUserSignature().getLoginGroupGuid());
 			if (group != null && group.isAdminGroup())
 			{

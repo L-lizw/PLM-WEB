@@ -53,7 +53,7 @@ public class BOMTemplateMailStub extends AbstractServiceStub<SMSImpl>
 	{
 		try
 		{
-			BOMTemplate bomTemplate = this.stubService.getEMM().getBOMTemplate(bomTemplateGuid);
+			BOMTemplate bomTemplate = this.stubService.getEmm().getBOMTemplate(bomTemplateGuid);
 			if (bomTemplate != null)
 			{
 				bomTemplate.setValid(false);
@@ -69,7 +69,7 @@ public class BOMTemplateMailStub extends AbstractServiceStub<SMSImpl>
 
 	protected void obsoleteBOMTemplateByName(String bomTemplateName) throws ServiceRequestException
 	{
-		List<BOMTemplateInfo> templateList = this.stubService.getEMM().listBOMTemplateByName(bomTemplateName, false);
+		List<BOMTemplateInfo> templateList = this.stubService.getEmm().listBOMTemplateByName(bomTemplateName, false);
 		if (!SetUtils.isNullList(templateList))
 		{
 			for (BOMTemplateInfo template : templateList)
@@ -83,7 +83,7 @@ public class BOMTemplateMailStub extends AbstractServiceStub<SMSImpl>
 	{
 		try
 		{
-			BOMTemplate bomTemplate = this.stubService.getEMM().getBOMTemplate(bomTemplateGuid);
+			BOMTemplate bomTemplate = this.stubService.getEmm().getBOMTemplate(bomTemplateGuid);
 			if (bomTemplate != null)
 			{
 				if (bomTemplate.isValid())
@@ -103,7 +103,7 @@ public class BOMTemplateMailStub extends AbstractServiceStub<SMSImpl>
 
 	protected void reUseBOMTemplateByName(String bomTemplateName) throws ServiceRequestException
 	{
-		List<BOMTemplateInfo> templateList = this.stubService.getEMM().listBOMTemplateByName(bomTemplateName, false);
+		List<BOMTemplateInfo> templateList = this.stubService.getEmm().listBOMTemplateByName(bomTemplateName, false);
 		if (!SetUtils.isNullList(templateList))
 		{
 			for (BOMTemplateInfo template : templateList)
@@ -135,7 +135,7 @@ public class BOMTemplateMailStub extends AbstractServiceStub<SMSImpl>
 			String groupGuid = this.stubService.getUserSignature().getLoginGroupGuid();
 			try
 			{
-				Group group = this.stubService.getAAS().getGroup(groupGuid);
+				Group group = this.stubService.getAas().getGroup(groupGuid);
 
 				if (group == null || !group.isAdminGroup())
 				{
@@ -186,16 +186,16 @@ public class BOMTemplateMailStub extends AbstractServiceStub<SMSImpl>
 			BOInfo end1BoInfo;
 			if (!BOMTemplateInfo.ALL.equals(bomTemplate.getBmGuid()))
 			{
-				end1BoInfo = this.stubService.getEMM().getBoInfoByNameAndBM(bomTemplate.getBmGuid(), bomTemplate.getEnd1BoName());
+				end1BoInfo = this.stubService.getEmm().getBoInfoByNameAndBM(bomTemplate.getBmGuid(), bomTemplate.getEnd1BoName());
 			}
 			else
 			{
-				BMInfo sharedBizModel = this.stubService.getEMM().getSharedBizModel();
-				end1BoInfo = this.stubService.getEMM().getBoInfoByNameAndBM(sharedBizModel.getGuid(), bomTemplate.getEnd1BoName());
+				BMInfo sharedBizModel = this.stubService.getEmm().getSharedBizModel();
+				end1BoInfo = this.stubService.getEmm().getBoInfoByNameAndBM(sharedBizModel.getGuid(), bomTemplate.getEnd1BoName());
 			}
 			bomTemplate.setEnd1BoTitle(end1BoInfo.getTitle());
-			bomTemplate.setViewClassName(this.stubService.getEMM().getClassByGuid(bomTemplate.getViewClassGuid()).getName());
-			bomTemplate.setStructureClassName(this.stubService.getEMM().getClassByGuid(bomTemplate.getStructureClassGuid()).getName());
+			bomTemplate.setViewClassName(this.stubService.getEmm().getClassByGuid(bomTemplate.getViewClassGuid()).getName());
+			bomTemplate.setStructureClassName(this.stubService.getEmm().getClassByGuid(bomTemplate.getStructureClassGuid()).getName());
 			// 保存BOMTemplateEnd2明细
 			if (bomTemplateEnd2List != null)
 			{
@@ -210,17 +210,17 @@ public class BOMTemplateMailStub extends AbstractServiceStub<SMSImpl>
 					BOInfo boInfo;
 					if (!BOMTemplateInfo.ALL.equals(bomTemplate.getBmGuid()))
 					{
-						boInfo = this.stubService.getEMM().getBoInfoByNameAndBM(bomTemplate.getBmGuid(), bomTemplateEnd2.getEnd2BoName());
+						boInfo = this.stubService.getEmm().getBoInfoByNameAndBM(bomTemplate.getBmGuid(), bomTemplateEnd2.getEnd2BoName());
 					}
 					else
 					{
-						BMInfo sharedBizModel = this.stubService.getEMM().getSharedBizModel();
-						boInfo = this.stubService.getEMM().getBoInfoByNameAndBM(sharedBizModel.getGuid(), bomTemplateEnd2.getEnd2BoName());
+						BMInfo sharedBizModel = this.stubService.getEmm().getSharedBizModel();
+						boInfo = this.stubService.getEmm().getBoInfoByNameAndBM(sharedBizModel.getGuid(), bomTemplateEnd2.getEnd2BoName());
 					}
 
 					if (boInfo != null)
 					{
-						ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(boInfo.getClassGuid());
+						ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(boInfo.getClassGuid());
 						if (classInfo != null)
 						{
 							if (!classInfo.hasInterface(ModelInterfaceEnum.IItem))

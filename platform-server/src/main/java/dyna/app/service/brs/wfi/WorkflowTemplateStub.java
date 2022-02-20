@@ -40,7 +40,7 @@ import java.util.stream.Collectors;
 /**
  * 工作流模板
  * 
- * @author WangLHB
+ * @author Lizw
  * 
  */
 @Component
@@ -548,13 +548,13 @@ public class WorkflowTemplateStub extends AbstractServiceStub<WFIImpl>
 					String bmGuid = workflowTemplateVo.getTemplate().getWorkflowTemplateInfo().getBMGuid();
 					if (BOMTemplateInfo.ALL.equalsIgnoreCase(bmGuid))
 					{
-						bmGuid = this.stubService.getEMM().getSharedBizModel().getGuid();
+						bmGuid = this.stubService.getEmm().getSharedBizModel().getGuid();
 					}
 					if (StringUtils.isNullString(classSet.getWorkflowTemplateActClassInfo().getBOGuid()))
 					{
 						continue;
 					}
-					BOInfo bizObject = this.stubService.getEMM().getBizObject(bmGuid, classSet.getWorkflowTemplateActClassInfo().getBOGuid());
+					BOInfo bizObject = this.stubService.getEmm().getBizObject(bmGuid, classSet.getWorkflowTemplateActClassInfo().getBOGuid());
 					if (bizObject != null)
 					{
 						this.fillWorkflowTemplateActClass(classSet, bizObject);
@@ -987,7 +987,7 @@ public class WorkflowTemplateStub extends AbstractServiceStub<WFIImpl>
 			boolean isCurrentBM, String templateBMGuid) throws ServiceRequestException
 	{
 
-		ClassInfo classInfo = ((EMMImpl) this.stubService.getEMM()).getClassStub().getClassInfo(className, classGuid);
+		ClassInfo classInfo = ((EMMImpl) this.stubService.getEmm()).getClassStub().getClassInfo(className, classGuid);
 		if (classInfo == null)
 		{
 			return null;
@@ -1008,20 +1008,20 @@ public class WorkflowTemplateStub extends AbstractServiceStub<WFIImpl>
 		BOInfo bizObject = null;
 		if (isCurrentBM)
 		{
-			bizObject = this.stubService.getEMM().getCurrentBizObject(classInfo.getGuid());
+			bizObject = this.stubService.getEmm().getCurrentBizObject(classInfo.getGuid());
 			if (template.getWorkflowTemplateInfo().getBMGuid().equals(BOMTemplateInfo.ALL))
 			{
-				templateBMGuid = this.stubService.getEMM().getSharedBizModel().getGuid();
-				bizObject = this.stubService.getEMM().getBizObject(templateBMGuid, classInfo.getGuid(), null);
+				templateBMGuid = this.stubService.getEmm().getSharedBizModel().getGuid();
+				bizObject = this.stubService.getEmm().getBizObject(templateBMGuid, classInfo.getGuid(), null);
 			}
 		}
 		else
 		{
 			if (BOMTemplateInfo.ALL.equalsIgnoreCase(templateBMGuid))
 			{
-				templateBMGuid = this.stubService.getEMM().getSharedBizModel().getGuid();
+				templateBMGuid = this.stubService.getEmm().getSharedBizModel().getGuid();
 			}
-			bizObject = this.stubService.getEMM().getBizObject(templateBMGuid, classInfo.getGuid(), null);
+			bizObject = this.stubService.getEmm().getBizObject(templateBMGuid, classInfo.getGuid(), null);
 		}
 		return this.getWorkflowTemplateActClassSetInfo(workflowTemplateAct, bizObject);
 
@@ -1041,7 +1041,7 @@ public class WorkflowTemplateStub extends AbstractServiceStub<WFIImpl>
 	public WorkflowTemplateActClassRelationInfo getWorkflowTemplateActClassSetRelationInfo(String workflowTemplateGuid, String workflowActrtName, String classGuid,
 			String className, String relationTemplateName) throws ServiceRequestException
 	{
-		ClassInfo classInfo = ((EMMImpl) this.stubService.getEMM()).getClassStub().getClassInfo(className, classGuid);
+		ClassInfo classInfo = ((EMMImpl) this.stubService.getEmm()).getClassStub().getClassInfo(className, classGuid);
 		if (classInfo == null)
 		{
 			return null;
@@ -1054,7 +1054,7 @@ public class WorkflowTemplateStub extends AbstractServiceStub<WFIImpl>
 			return null;
 		}
 
-		BOInfo bizObject = this.stubService.getEMM().getCurrentBizObject(classInfo.getGuid());
+		BOInfo bizObject = this.stubService.getEmm().getCurrentBizObject(classInfo.getGuid());
 
 		WorkflowTemplateActClass actClass = this.getWorkflowTemplateActClassSetInfo(workflowTemplateAct, bizObject);
 
@@ -1083,17 +1083,17 @@ public class WorkflowTemplateStub extends AbstractServiceStub<WFIImpl>
 			String dtobmGuid = WorkflowTemplateDto == null ? "" : WorkflowTemplateDto.getBMGuid();
 			for (WorkflowTemplateScopeRTInfo rt : info.getListScopeRT())
 			{
-				RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateById(rt.getTemplateID());
+				RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateById(rt.getTemplateID());
 				String bmGuid = null;
 				if ("ALL".equalsIgnoreCase(dtobmGuid))
 				{
-					bmGuid = this.stubService.getEMM().getSharedBizModel().getGuid();
+					bmGuid = this.stubService.getEmm().getSharedBizModel().getGuid();
 				}
 				else
 				{
 					bmGuid = dtobmGuid;
 				}
-				List<BOInfo> listAllSubBOInfoContain = this.stubService.getEMM().listAllSubBOInfoContain(relationTemplate.getEnd1BoName(), bmGuid);
+				List<BOInfo> listAllSubBOInfoContain = this.stubService.getEmm().listAllSubBOInfoContain(relationTemplate.getEnd1BoName(), bmGuid);
 				boolean isExist = false;
 				if (!SetUtils.isNullList(listAllSubBOInfoContain))
 				{
@@ -1123,11 +1123,11 @@ public class WorkflowTemplateStub extends AbstractServiceStub<WFIImpl>
 		{
 			if (bmGuid.equals("ALL"))
 			{
-				bmGuid = this.stubService.getEMM().getSharedBizModel().getGuid();
+				bmGuid = this.stubService.getEmm().getSharedBizModel().getGuid();
 			}
 			for (WorkflowTemplateScopeBoInfo bo : scopeBOList)
 			{
-				BOInfo boInfo = this.stubService.getEMM().getBizObject(bmGuid, bo.getBOGuid());
+				BOInfo boInfo = this.stubService.getEmm().getBizObject(bmGuid, bo.getBOGuid());
 				if (boInfo != null)
 				{
 					bo.setBOName(boInfo.getName());
@@ -1145,7 +1145,7 @@ public class WorkflowTemplateStub extends AbstractServiceStub<WFIImpl>
 		{
 			for (WorkflowTemplateScopeRTInfo scopeRT : scopeRTList)
 			{
-				RelationTemplateInfo template = this.stubService.getEMM().getRelationTemplateById(scopeRT.getTemplateID());
+				RelationTemplateInfo template = this.stubService.getEmm().getRelationTemplateById(scopeRT.getTemplateID());
 				if (template != null)
 				{
 					scopeRT.setTemplateTitle(template.getTitle());

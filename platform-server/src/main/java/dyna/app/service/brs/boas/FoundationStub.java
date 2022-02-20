@@ -86,7 +86,7 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 		objectGuid.setMasterGuid(foundationObject.getObjectGuid().getMasterGuid());
 
 		String sessionId = this.stubService.getSignature().getCredential();
-		ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(foundationObject.getObjectGuid().getClassGuid());
+		ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(foundationObject.getObjectGuid().getClassGuid());
 
 		List<FoundationObject> end1List = new ArrayList<>();
 
@@ -101,13 +101,13 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 			if (!foundationObject.isShortcut())
 			{
 				// important! invoke add.before event.
-				this.stubService.getEOSS().executeDeleteBeforeEvent(foundationObject);
+				this.stubService.getEoss().executeDeleteBeforeEvent(foundationObject);
 			}
 
 			List<String> bomTemplateNameList = new ArrayList<>();
 			if (classInfo.hasInterface(ModelInterfaceEnum.IItem))
 			{
-				List<BOMTemplateInfo> bomTemplateList = this.stubService.getEMM().listBOMTemplateByEND2(foundationObject.getObjectGuid());
+				List<BOMTemplateInfo> bomTemplateList = this.stubService.getEmm().listBOMTemplateByEND2(foundationObject.getObjectGuid());
 				if (!SetUtils.isNullList(bomTemplateList))
 				{
 					for (BOMTemplateInfo bomTemplate : bomTemplateList)
@@ -122,7 +122,7 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 						if (bomTemplate.getPrecise() == BomPreciseType.PRECISE
 								|| ((Number) foundationObject.get(SystemClassFieldEnum.REVISIONIDSEQUENCE.getName())).intValue() == 1)
 						{
-							List<FoundationObject> tmpList = this.stubService.getBOMS().listWhereUsed(objectGuid, bomTemplate.getName(), null, null, null, true);
+							List<FoundationObject> tmpList = this.stubService.getBoms().listWhereUsed(objectGuid, bomTemplate.getName(), null, null, null, true);
 							if (!SetUtils.isNullList(tmpList))
 							{
 								end1List.addAll(tmpList);
@@ -134,7 +134,7 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 			else if (classInfo.hasInterface(ModelInterfaceEnum.IBOMView))
 			{
 				BOMView bomView = new BOMView(foundationObject);
-				List<BOMTemplateInfo> bomTemplateList = this.stubService.getEMM().listBOMTemplateByEND1(bomView.getEnd1ObjectGuid());
+				List<BOMTemplateInfo> bomTemplateList = this.stubService.getEmm().listBOMTemplateByEND1(bomView.getEnd1ObjectGuid());
 				if (!SetUtils.isNullList(bomTemplateList))
 				{
 					FoundationObject end1 = this.getObject(bomView.getEnd1ObjectGuid());
@@ -147,7 +147,7 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 
 			if (!foundationObject.isShortcut())
 			{
-				EMM emm = this.stubService.getEMM();
+				EMM emm = this.stubService.getEmm();
 
 				// 处理relation
 				// 查找所有关联的ViewObject
@@ -157,7 +157,7 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 				{
 					for (ViewObject viewObject : viewObjectList)
 					{
-						RelationTemplateInfo relationTemplate = this.stubService.getEMM()
+						RelationTemplateInfo relationTemplate = this.stubService.getEmm()
 								.getRelationTemplateById(viewObject.get(ViewObject.TEMPLATE_ID) == null ? "" : (String) viewObject.get(ViewObject.TEMPLATE_ID));
 						if (relationTemplate == null)
 						{
@@ -220,7 +220,7 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 			if (isShortCut)
 			{
 				String folderGuid = (String) foundationObject.get("SHORTCUTFOLDERGUID");
-				boolean hasUserAuthorize4Lib = ((ACLImpl) this.stubService.getACL()).getFolderACLStub().hasUserAuthorize4Lib(folderGuid, isCheckAuth);
+				boolean hasUserAuthorize4Lib = ((ACLImpl) this.stubService.getAcl()).getFolderACLStub().hasUserAuthorize4Lib(folderGuid, isCheckAuth);
 				this.stubService.getInstanceService().delete(foundationObject, !hasUserAuthorize4Lib, sessionId, this.stubService.getFixedTransactionId());
 			}
 			else
@@ -240,12 +240,12 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 				exceptionParameter = foundationObject.getName();
 			}
 
-			String bmGuid = this.stubService.getEMM().getCurrentBizModel().getGuid();
+			String bmGuid = this.stubService.getEmm().getCurrentBizModel().getGuid();
 			ClassStub.decorateObjectGuid(objectGuid, this.stubService);
 			this.stubService.getAsync().deleteReplaceData(objectGuid, exceptionParameter, end1List, bmGuid, deleteReplace);
 
 			// invoke delete.after event.
-			this.stubService.getEOSS().executeDeleteAfterEvent(foundationObject);
+			this.stubService.getEoss().executeDeleteAfterEvent(foundationObject);
 		}
 		catch (DynaDataException e)
 		{
@@ -275,7 +275,7 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 			return null;
 		}
 
-		EMM emm = this.stubService.getEMM();
+		EMM emm = this.stubService.getEmm();
 		ClassInfo classInfo = null;
 		if (objectGuid.getClassGuid() != null)
 		{
@@ -295,20 +295,20 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 
 		if (classInfo.hasInterface(ModelInterfaceEnum.IUser))
 		{
-			objectMap = this.stubService.getAAS().getUser(objectGuid.getGuid());
+			objectMap = this.stubService.getAas().getUser(objectGuid.getGuid());
 		}
 		else if (classInfo.hasInterface(ModelInterfaceEnum.IGroup))
 		{
-			objectMap = this.stubService.getAAS().getGroup(objectGuid.getGuid());
+			objectMap = this.stubService.getAas().getGroup(objectGuid.getGuid());
 		}
 		// 2012-10-29项目管理变更，增加接口IPMRole，IPMCalendar
 		else if (classInfo.hasInterface(ModelInterfaceEnum.IPMCalendar))
 		{
-			objectMap = this.stubService.getPPMS().getWorkCalendar(objectGuid.getGuid());
+			objectMap = this.stubService.getPpms().getWorkCalendar(objectGuid.getGuid());
 		}
 		else if (classInfo.hasInterface(ModelInterfaceEnum.IPMRole))
 		{
-			objectMap = this.stubService.getPPMS().getProjectRole(objectGuid.getGuid());
+			objectMap = this.stubService.getPpms().getProjectRole(objectGuid.getGuid());
 		}
 		else
 		{
@@ -360,7 +360,7 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 				}
 				else
 				{
-					ClassField classField = this.stubService.getEMM().getFieldByName(classInfo.getName(), str, true);
+					ClassField classField = this.stubService.getEmm().getFieldByName(classInfo.getName(), str, true);
 					if (classField == null)
 					{
 						continue;
@@ -383,7 +383,7 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 					}
 					else if (FieldTypeEnum.STATUS == classField.getType())
 					{
-						titleValue = this.stubService.getMSRM().getMSRString(SystemStatusEnum.getStatusEnum((String) title).getMsrId(),
+						titleValue = this.stubService.getMsrm().getMSRString(SystemStatusEnum.getStatusEnum((String) title).getMsrId(),
 								this.stubService.getUserSignature().getLanguageEnum().toString());
 					}
 					else if (FieldTypeEnum.CLASSIFICATION == classField.getType())
@@ -429,7 +429,7 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 		String bmGuid = this.stubService.getUserSignature().getLoginGroupBMGuid();
 
 		ClassStub.decorateObjectGuid(objectGuid, this.stubService);
-		List<UIObjectInfo> uiObjectList = ((EMMImpl) this.stubService.getEMM()).getUIStub().listUIObjectByBizModel(objectGuid.getClassName(), bmGuid, UITypeEnum.FORM, true);
+		List<UIObjectInfo> uiObjectList = ((EMMImpl) this.stubService.getEmm()).getUIStub().listUIObjectByBizModel(objectGuid.getClassName(), bmGuid, UITypeEnum.FORM, true);
 		UIObjectInfo[] uiObjects = null;
 		if (!SetUtils.isNullList(uiObjectList))
 		{
@@ -465,7 +465,7 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 	public FoundationObject getObject(ObjectGuid objectGuid, String uiName, boolean isNeedAuthority) throws ServiceRequestException
 	{
 		ClassStub.decorateObjectGuid(objectGuid, this.stubService);
-		UIObjectInfo uiObject = ((EMMImpl) this.stubService.getEMM()).getUIObjectByName(objectGuid.getClassName(), uiName);
+		UIObjectInfo uiObject = ((EMMImpl) this.stubService.getEmm()).getUIObjectByName(objectGuid.getClassName(), uiName);
 		String bmGuid = this.stubService.getUserSignature().getLoginGroupBMGuid();
 		return this.getObject(objectGuid, bmGuid, isNeedAuthority, false, uiObject);
 	}
@@ -474,7 +474,7 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 	{
 		ClassStub.decorateObjectGuid(objectGuid, this.stubService);
 
-		List<UIObjectInfo> uiObjectList = ((EMMImpl) this.stubService.getEMM()).getUIStub().listUIObjectByBizModel(objectGuid.getClassName(), bmGuid, uiType, true);
+		List<UIObjectInfo> uiObjectList = ((EMMImpl) this.stubService.getEmm()).getUIStub().listUIObjectByBizModel(objectGuid.getClassName(), bmGuid, uiType, true);
 
 		UIObjectInfo[] uiObjects = null;
 		if (!SetUtils.isNullList(uiObjectList))
@@ -524,7 +524,7 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 				searchCondition.setSearchRevisionTypeEnum(SearchRevisionTypeEnum.ISHISTORYREVISION);
 			}
 
-			ClassInfo classInfo = this.stubService.getEMM().getClassByName(objectGuid.getClassName());
+			ClassInfo classInfo = this.stubService.getEmm().getClassByName(objectGuid.getClassName());
 			if (classInfo != null)
 			{
 				List<ModelInterfaceEnum> interfaceList = classInfo.getInterfaceList();
@@ -569,7 +569,7 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 
 			this.stubService.getClassificationStub().makeClassificationFoundation(retObject, searchCondition, bmGuid, null);
 
-			EMM emm = this.stubService.getEMM();
+			EMM emm = this.stubService.getEmm();
 
 			if (!isWithoutDecorate)
 			{
@@ -597,7 +597,7 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 	public FoundationObject getObject4ObjectField(ObjectGuid objectGuid) throws ServiceRequestException
 	{
 		String bmGuid = this.stubService.getUserSignature().getLoginGroupBMGuid();
-		UIObjectInfo uiObject = ((EMMImpl) this.stubService.getEMM()).getUIStub().getUIObjectByBizModel(objectGuid.getClassName(), bmGuid, UITypeEnum.SECTION);
+		UIObjectInfo uiObject = ((EMMImpl) this.stubService.getEmm()).getUIStub().getUIObjectByBizModel(objectGuid.getClassName(), bmGuid, UITypeEnum.SECTION);
 
 		if (uiObject != null)
 		{
@@ -611,14 +611,14 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 	{
 		String bmGuid = this.stubService.getUserSignature().getLoginGroupBMGuid();
 		ObjectGuid objectGuid = objectGuidList.get(0);
-		UIObjectInfo uiObject = ((EMMImpl) this.stubService.getEMM()).getUIStub().getUIObjectByBizModel(objectGuid.getClassName(), bmGuid, UITypeEnum.SECTION);
+		UIObjectInfo uiObject = ((EMMImpl) this.stubService.getEmm()).getUIStub().getUIObjectByBizModel(objectGuid.getClassName(), bmGuid, UITypeEnum.SECTION);
 		if (uiObject != null)
 		{
 			return null;
 		}
 
 		ClassStub.decorateObjectGuid(objectGuid, this.stubService);
-		List<UIObjectInfo> uiObjectList = ((EMMImpl) this.stubService.getEMM()).getUIStub().listUIObjectByBizModel(objectGuid.getClassName(), bmGuid, UITypeEnum.SECTION, true);
+		List<UIObjectInfo> uiObjectList = ((EMMImpl) this.stubService.getEmm()).getUIStub().listUIObjectByBizModel(objectGuid.getClassName(), bmGuid, UITypeEnum.SECTION, true);
 		UIObjectInfo[] uiObjects = null;
 		if (!SetUtils.isNullList(uiObjectList))
 		{
@@ -688,7 +688,7 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 				searchCondition.addFilterWithOR(SystemClassFieldEnum.GUID.getName(), objectGuid_.getGuid(), OperateSignEnum.EQUALS);
 			}
 
-			ClassInfo classInfo = this.stubService.getEMM().getClassByName(objectGuid.getClassName());
+			ClassInfo classInfo = this.stubService.getEmm().getClassByName(objectGuid.getClassName());
 			if (classInfo != null)
 			{
 				List<ModelInterfaceEnum> interfaceList = classInfo.getInterfaceList();
@@ -719,7 +719,7 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 			{
 				this.stubService.getClassificationStub().makeClassificationFoundation(foundationObject, searchCondition, bmGuid, null);
 
-				EMM emm = this.stubService.getEMM();
+				EMM emm = this.stubService.getEmm();
 
 				decoratorFactory.decorateFoundationObject(emm.getObjectFieldNamesInSC(searchCondition), foundationObject, emm, bmGuid, null);
 				decoratorFactory.decorateFoundationObjectCode(emm.getCodeFieldNamesInSC(searchCondition), foundationObject, emm, bmGuid);
@@ -727,7 +727,7 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 				foundationObject.resetObjectGuid();
 			}
 
-			EMM emm = this.stubService.getEMM();
+			EMM emm = this.stubService.getEmm();
 			decoratorFactory.decorateFoundationObject(emm.getObjectFieldNamesInSC(searchCondition), results, emm, sessionId);
 
 			return results;
@@ -762,8 +762,8 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 			foundationObject = this.stubService.getInstanceService().getSystemFieldInfo(objectGuid.getGuid(), classGuidOrClassName, Constants.isSupervisor(isCheckAuth, this.stubService),
 					this.stubService.getSignature().getCredential());
 
-			decoratorFactory.decorateFoundationObject(null, foundationObject, this.stubService.getEMM(), this.stubService.getUserSignature().getLoginGroupBMGuid(), null);
-			decoratorFactory.ofd.decorateWithField(null, foundationObject, this.stubService.getEMM(), this.stubService.getSignature().getCredential(), false);
+			decoratorFactory.decorateFoundationObject(null, foundationObject, this.stubService.getEmm(), this.stubService.getUserSignature().getLoginGroupBMGuid(), null);
+			decoratorFactory.ofd.decorateWithField(null, foundationObject, this.stubService.getEmm(), this.stubService.getSignature().getCredential(), false);
 
 			return foundationObject;
 		}
@@ -789,10 +789,10 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 			{
 				for (FoundationObject foundationObject : list)
 				{
-					decoratorFactory.decorateFoundationObject(null, foundationObject, this.stubService.getEMM(), this.stubService.getEMM().getCurrentBizModel().getGuid(), null);
+					decoratorFactory.decorateFoundationObject(null, foundationObject, this.stubService.getEmm(), this.stubService.getEmm().getCurrentBizModel().getGuid(), null);
 				}
 			}
-			decoratorFactory.decorateFoundationObject(null, list, this.stubService.getEMM(), this.stubService.getSignature().getCredential());
+			decoratorFactory.decorateFoundationObject(null, list, this.stubService.getEmm(), this.stubService.getSignature().getCredential());
 			return list;
 		}
 		catch (DynaDataException e)
@@ -827,7 +827,7 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 				return results;
 			}
 
-			EMM emm = this.stubService.getEMM();
+			EMM emm = this.stubService.getEmm();
 
 			Set<String> fieldNames = emm.getObjectFieldNamesInSC(condition);
 			Set<String> fieldCodeNames = emm.getCodeFieldNamesInSC(condition);
@@ -1074,7 +1074,7 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 		// String masterClassification = this.getMasterClassification(classGuid, className);
 		if (!StringUtils.isNullString(classGuid))
 		{
-			ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(classGuid);
+			ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(classGuid);
 			if (classInfo != null)
 			{
 				classGuid = classInfo.getGuid();
@@ -1124,14 +1124,14 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 			String bmGuid = this.stubService.getUserSignature().getLoginGroupBMGuid();
 
 			// get ui model object for this object.
-			UIObjectInfo uiObject = ((EMMImpl) this.stubService.getEMM()).getUIStub().getUIObjectByBizModel(renFoundationObject.getObjectGuid().getClassName(), bmGuid,
+			UIObjectInfo uiObject = ((EMMImpl) this.stubService.getEmm()).getUIStub().getUIObjectByBizModel(renFoundationObject.getObjectGuid().getClassName(), bmGuid,
 					UITypeEnum.FORM);
 
 			List<UIField> uiFieldList = null;
 
 			if (uiObject != null)
 			{
-				uiFieldList = this.stubService.getEMM().listUIFieldByUIGuid(uiObject.getGuid());
+				uiFieldList = this.stubService.getEmm().listUIFieldByUIGuid(uiObject.getGuid());
 			}
 
 			String fieldName = null;
@@ -1185,7 +1185,7 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 					}
 				}
 			}
-			ClassField fieldinfo = this.stubService.getEMM().getFieldByName(templateObjectGuid.getClassName(), SystemClassFieldEnum.CUSTSTARTREVIDSEQUENCE.getName(), false);
+			ClassField fieldinfo = this.stubService.getEmm().getFieldByName(templateObjectGuid.getClassName(), SystemClassFieldEnum.CUSTSTARTREVIDSEQUENCE.getName(), false);
 			if (StringUtils.isNullString(fieldinfo.getDefaultValue()))
 			{
 				renFoundationObject.put(SystemClassFieldEnum.CUSTSTARTREVIDSEQUENCE.getName(), new BigDecimal(0));
@@ -1220,8 +1220,8 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 			// String classificationfk = //(String) templateFoundationObject.get(fieldName);
 			// 取得类的主分类
 			// String masterClassification = this.getMasterClassification(classGuid, className);
-			ClassInfo newClassInfo = this.stubService.getEMM().getClassByGuid(classGuid);
-			ClassInfo oldClassInfo = this.stubService.getEMM().getClassByGuid(templateObjectGuid.getClassGuid());
+			ClassInfo newClassInfo = this.stubService.getEmm().getClassByGuid(classGuid);
+			ClassInfo oldClassInfo = this.stubService.getEmm().getClassByGuid(templateObjectGuid.getClassGuid());
 			boolean isCopyMaster = false;
 			if (!StringUtils.isNullString(newClassInfo.getClassification()) && newClassInfo.getClassification().equalsIgnoreCase(oldClassInfo.getClassification()))
 			{
@@ -1248,7 +1248,7 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 				}
 			}
 
-			List<ClassficationFeature> listClassficationFeature = this.stubService.getEMM().listClassficationFeature(classGuid);
+			List<ClassficationFeature> listClassficationFeature = this.stubService.getEmm().listClassficationFeature(classGuid);
 
 			if (!SetUtils.isNullList(listClassficationFeature))
 			{
@@ -1286,7 +1286,7 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 		FoundationObject newFoundationObject = this.newFoundationObject(FoundationObject.class, classGuid, className, false, null);
 		if (StringUtils.isGuid(classificationGuid))
 		{
-			CodeItemInfo codeItemInfo = this.stubService.getEMM().getCodeItem(classificationGuid);
+			CodeItemInfo codeItemInfo = this.stubService.getEmm().getCodeItem(classificationGuid);
 			if (codeItemInfo != null)
 			{
 				newFoundationObject.setClassificationGuid(classificationGuid);
@@ -1311,7 +1311,7 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 			return null;
 		}
 
-		EMM emm = this.stubService.getEMM();
+		EMM emm = this.stubService.getEmm();
 		List<ClassField> classFieldList = null;
 		T retObject = null;
 		if (!isClassification)
@@ -1350,7 +1350,7 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 			{
 				retObject = (T) ((FoundationObjectImpl) oriClassificationFoundation);
 			}
-			CodeItemInfo classification = this.stubService.getEMM().getCodeItem(classGuid);
+			CodeItemInfo classification = this.stubService.getEmm().getCodeItem(classGuid);
 			if (classification == null)
 			{
 				return null;
@@ -1358,7 +1358,7 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 
 			if (classification != null)
 			{
-				CodeObjectInfo code = this.stubService.getEMM().getCode(classification.getCodeGuid());
+				CodeObjectInfo code = this.stubService.getEmm().getCode(classification.getCodeGuid());
 				((FoundationObjectImpl) retObject).setClassificationGroup(classification.getCodeGuid());
 				((FoundationObjectImpl) retObject).setClassificationGroupName(code.getName());
 				// ((FoundationObjectImpl) retObject).setClassificationGroupTitle(classification.getCodeTitle());
@@ -1504,7 +1504,7 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 			String classification = null;
 			if (!isClassification)
 			{
-				ClassField classificationClassField = this.stubService.getEMM().getFieldByName(retObject.getObjectGuid().getClassName(),
+				ClassField classificationClassField = this.stubService.getEmm().getFieldByName(retObject.getObjectGuid().getClassName(),
 						SystemClassFieldEnum.CLASSIFICATION.getName(), false);
 				if (classificationClassField != null)
 				{
@@ -1590,7 +1590,7 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 			this.stubService.getInstanceService().cancelObsolete(objectGuid.getGuid(), objectGuid.getClassGuid(), isCheckAcl, sessionId);
 
 			// 取消废弃视图 此处不判断权限
-			List<BOMView> bomViewList = ((BOMSImpl) this.stubService.getBOMS()).getBomViewStub().listBOMView(objectGuid, false);
+			List<BOMView> bomViewList = ((BOMSImpl) this.stubService.getBoms()).getBomViewStub().listBOMView(objectGuid, false);
 			if (!SetUtils.isNullList(bomViewList))
 			{
 				for (BOMView bomView : bomViewList)
@@ -1663,8 +1663,8 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 		}
 		else
 		{
-			List<RelationTemplateInfo> listRelationTemplate = this.stubService.getEMM().listRelationTemplate(objectGuid);
-			RelationTemplateInfo relationTemplateByName = this.stubService.getEMM().getRelationTemplateByName(objectGuid, BuiltinRelationNameEnum.CAD3DCAD2D.toString());
+			List<RelationTemplateInfo> listRelationTemplate = this.stubService.getEmm().listRelationTemplate(objectGuid);
+			RelationTemplateInfo relationTemplateByName = this.stubService.getEmm().getRelationTemplateByName(objectGuid, BuiltinRelationNameEnum.CAD3DCAD2D.toString());
 			if (relationTemplateByName != null)
 			{
 				listRelationTemplate.add(relationTemplateByName);
@@ -1674,11 +1674,11 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 			if (StringUtils.isNullString(processRuntimeGuid))
 			{
 				// 获取该（end1）对象的上的所有BOM视图
-				instanceModel.setBomViewList(this.stubService.getBOMS().listBOMView(objectGuid));
+				instanceModel.setBomViewList(this.stubService.getBoms().listBOMView(objectGuid));
 			}
 			else
 			{
-				instanceModel.setBomViewList(this.stubService.getWFI().listBOMView(objectGuid));
+				instanceModel.setBomViewList(this.stubService.getWfi().listBOMView(objectGuid));
 			}
 
 			if (StringUtils.isNullString(processRuntimeGuid))
@@ -1687,7 +1687,7 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 			}
 			else
 			{
-				instanceModel.setRelationList(this.stubService.getWFI().listRelationWithOutBuiltIn(objectGuid));
+				instanceModel.setRelationList(this.stubService.getWfi().listRelationWithOutBuiltIn(objectGuid));
 			}
 		}
 
@@ -1856,7 +1856,7 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 		}
 
 		String credential = this.stubService.getSignature().getCredential();
-		List<BOMTemplateInfo> bomTemplateList = this.stubService.getEMM().listBOMTemplateByEND2(foundationObject.getObjectGuid());
+		List<BOMTemplateInfo> bomTemplateList = this.stubService.getEmm().listBOMTemplateByEND2(foundationObject.getObjectGuid());
 		if (!SetUtils.isNullList(bomTemplateList))
 		{
 			for (BOMTemplateInfo bomTemplate : bomTemplateList)
@@ -1867,17 +1867,17 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 					BMInfo bizModel = null;
 					if ("ALL".equalsIgnoreCase(bomTemplate.getBmGuid()))
 					{
-						bizModel = this.stubService.getEMM().getCurrentBizModel();
+						bizModel = this.stubService.getEmm().getCurrentBizModel();
 					}
 					else
 					{
-						bizModel = this.stubService.getEMM().getBizModel(bomTemplate.getBmGuid());
+						bizModel = this.stubService.getEmm().getBizModel(bomTemplate.getBmGuid());
 					}
 					if (bizModel == null)
 					{
 						continue;
 					}
-					BOInfo end1ClassInfo = this.stubService.getEMM().getBoInfoByNameAndBM(bizModel.getGuid(), bomTemplate.getEnd1BoName());
+					BOInfo end1ClassInfo = this.stubService.getEmm().getBoInfoByNameAndBM(bizModel.getGuid(), bomTemplate.getEnd1BoName());
 					if (end1ClassInfo == null)
 					{
 						continue;
@@ -1906,7 +1906,7 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 			}
 		}
 
-		List<RelationTemplateInfo> relationTemplateList = this.stubService.getEMM().listRelationTemplateByEND2(foundationObject.getObjectGuid());
+		List<RelationTemplateInfo> relationTemplateList = this.stubService.getEmm().listRelationTemplateByEND2(foundationObject.getObjectGuid());
 		if (!SetUtils.isNullList(relationTemplateList))
 		{
 			for (RelationTemplateInfo relationTemplate : relationTemplateList)
@@ -1917,18 +1917,18 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 					BMInfo bizModel = null;
 					if ("ALL".equalsIgnoreCase(relationTemplate.getBmGuid()))
 					{
-						bizModel = this.stubService.getEMM().getCurrentBizModel();
+						bizModel = this.stubService.getEmm().getCurrentBizModel();
 					}
 					else
 					{
-						bizModel = this.stubService.getEMM().getBizModel(relationTemplate.getBmGuid());
+						bizModel = this.stubService.getEmm().getBizModel(relationTemplate.getBmGuid());
 					}
 
 					if (bizModel == null)
 					{
 						continue;
 					}
-					BOInfo end1ClassInfo = this.stubService.getEMM().getBoInfoByNameAndBM(bizModel.getGuid(), relationTemplate.getEnd1BoName());
+					BOInfo end1ClassInfo = this.stubService.getEmm().getBoInfoByNameAndBM(bizModel.getGuid(), relationTemplate.getEnd1BoName());
 					if (end1ClassInfo == null)
 					{
 						continue;
@@ -1953,7 +1953,7 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 							if (foundation.getObjectGuid() != null)
 							{
 								ClassStub.decorateObjectGuid(foundation.getObjectGuid(), this.stubService);
-								classInfo = this.stubService.getEMM().getClassByName(foundation.getObjectGuid().getClassName());
+								classInfo = this.stubService.getEmm().getClassByName(foundation.getObjectGuid().getClassName());
 							}
 							/**
 							 * 关联关系中若end1为以下两种情况end2可停用
@@ -1988,7 +1988,7 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 		}
 		// throw new ServiceRequestException("ID_APP_IN_PROCESS", "in process");
 		// 判断此料是否作为有效的（无失效时间）全局/局部的替代件；如果是，则不允许停用；反之，则可停用
-		List<FoundationObject> listRepalcedByRsItem = ((BRMImpl) this.stubService.getBRM()).getReplaceQueryStub().listRepalcedByRsItem(foundationObject.getObjectGuid(), null, null,
+		List<FoundationObject> listRepalcedByRsItem = ((BRMImpl) this.stubService.getBrm()).getReplaceQueryStub().listRepalcedByRsItem(foundationObject.getObjectGuid(), null, null,
 				false);
 		if (!SetUtils.isNullList(listRepalcedByRsItem))
 		{
@@ -2040,7 +2040,7 @@ public class FoundationStub extends AbstractServiceStub<BOASImpl>
 					{
 						LanguageEnum languageEnum = this.stubService.getUserSignature().getLanguageEnum();
 
-						String msrString = this.stubService.getMSRM().getMSRString("ID_APP_OBJECT_REPEAT", languageEnum.toString());
+						String msrString = this.stubService.getMsrm().getMSRString("ID_APP_OBJECT_REPEAT", languageEnum.toString());
 						if (msrString == null)
 						{
 							msrString = "ID_APP_OBJECT_REPEAT";

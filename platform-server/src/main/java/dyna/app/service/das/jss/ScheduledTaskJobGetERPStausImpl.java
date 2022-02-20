@@ -54,7 +54,7 @@ public class ScheduledTaskJobGetERPStausImpl  extends AbstractQuartzJobStub<JSSI
 			condition.put(Queue.SERVER_ID, this.serverContext.getServerConfig().getId());
 			condition.put(Queue.JOB_STATUS, JobStatus.ERPEXECUTING.getValue());
 			List<Queue> erpExecutingJobList = this.stubService.listJob(condition);
-			MSRM msr = this.stubService.getRefService(MSRM.class);
+			MSRM msr = this.stubService.getMsrm();
 			Calendar xCalendar = Calendar.getInstance();
 			for (Queue queuejob : erpExecutingJobList)
 			{
@@ -63,7 +63,7 @@ public class ScheduledTaskJobGetERPStausImpl  extends AbstractQuartzJobStub<JSSI
 				{
 					serviceGuid = queuejob.getFieldb();
 				}
-				ERPI erpi = this.stubService.getRefService(ERPI.class);
+				ERPI erpi = this.stubService.getErpi();
 				ERPServiceConfig serviceConfig = erpi.getERPServiceConfigbyServiceGuid(serviceGuid);
 				String jobLiveTimeStr = this.getParamVal(ERPServerType.valueOf(serviceConfig.getERPServerSelected()), "jobLiveTime");
 				String jobPollingTimeStr = this.getParamVal(ERPServerType.valueOf(serviceConfig.getERPServerSelected()), "jobPollingTime");
@@ -111,7 +111,7 @@ public class ScheduledTaskJobGetERPStausImpl  extends AbstractQuartzJobStub<JSSI
 	private Queue getJobStatus(Queue queuejob) throws Exception
 	{
 		StringBuffer buffer = new StringBuffer();
-		BooleanResult result = this.stubService.getERPI().getJobStatusBySeqkeyFromERP(queuejob.getGuid());
+		BooleanResult result = this.stubService.getErpi().getJobStatusBySeqkeyFromERP(queuejob.getGuid());
 		if (result != null)
 		{
 			String[] splita = queuejob.getFielda().split(";");
@@ -121,7 +121,7 @@ public class ScheduledTaskJobGetERPStausImpl  extends AbstractQuartzJobStub<JSSI
 			try
 			{
 				ObjectGuid objectGuid = new ObjectGuid(splitb[0], null, splita[0], null);
-				FoundationObject fo = this.stubService.getBOAS().getObjectByGuid(objectGuid);
+				FoundationObject fo = this.stubService.getBoas().getObjectByGuid(objectGuid);
 				foNames = foNames + fo.getFullName();
 				if (splita.length > 1)
 				{
@@ -171,7 +171,7 @@ public class ScheduledTaskJobGetERPStausImpl  extends AbstractQuartzJobStub<JSSI
 		queuejob = this.stubService.saveJob(queuejob);
 
 		ObjectGuid objectGuid = new ObjectGuid(queuejob.getFieldb(), null, queuejob.getFielda(), null);
-		FoundationObject fo = this.stubService.getBOAS().getObjectByGuid(objectGuid);
+		FoundationObject fo = this.stubService.getBoas().getObjectByGuid(objectGuid);
 		String str = "";
 		if (fo != null)
 		{
@@ -278,8 +278,8 @@ public class ScheduledTaskJobGetERPStausImpl  extends AbstractQuartzJobStub<JSSI
 
 		try
 		{
-			User user = jss.getServiceInstance(AAS.class).getUser(job.getCreateUserGuid());
-			jss.getServiceInstance(SMS.class).sendMailToUser(job.getType(), msg, category, null, user.getUserId(), MailMessageType.ERPNOTIFY);
+			User user = jss.getAAS().getUser(job.getCreateUserGuid());
+			jss.getSms().sendMailToUser(job.getType(), msg, category, null, user.getUserId(), MailMessageType.ERPNOTIFY);
 		}
 		catch (Exception e)
 		{

@@ -35,7 +35,7 @@ public class NumberAllocate extends AbstractServiceStub<BOASImpl>
 		if (isIdModelerNumbering)
 		{
 			isIdModelerNumbering = false;
-			NumberingModel numberingModel = this.stubService.getEMM().lookupNumberingModel(classGuid, className, SystemClassFieldEnum.ID.getName());
+			NumberingModel numberingModel = this.stubService.getEmm().lookupNumberingModel(classGuid, className, SystemClassFieldEnum.ID.getName());
 			if (numberingModel != null)
 			{
 				if (!SetUtils.isNullList(numberingModel.getNumberingObjectList()))
@@ -48,7 +48,7 @@ public class NumberAllocate extends AbstractServiceStub<BOASImpl>
 		if (isNameModelerNumbering)
 		{
 			isNameModelerNumbering = false;
-			NumberingModel numberingModel = this.stubService.getEMM().lookupNumberingModel(classGuid, className, SystemClassFieldEnum.NAME.getName());
+			NumberingModel numberingModel = this.stubService.getEmm().lookupNumberingModel(classGuid, className, SystemClassFieldEnum.NAME.getName());
 			if (numberingModel != null)
 			{
 				List<NumberingObjectInfo> numberingObjectInfoList = this.stubService.getClassModelService().listChildNumberingObjectInfo(numberingModel.getGuid(), null);
@@ -61,7 +61,7 @@ public class NumberAllocate extends AbstractServiceStub<BOASImpl>
 		if (isAlterIdMoldelerNumbering)
 		{
 			isAlterIdMoldelerNumbering = false;
-			NumberingModel numberingModel = this.stubService.getEMM().lookupNumberingModel(classGuid, className, SystemClassFieldEnum.ALTERID.getName());
+			NumberingModel numberingModel = this.stubService.getEmm().lookupNumberingModel(classGuid, className, SystemClassFieldEnum.ALTERID.getName());
 			if (numberingModel != null)
 			{
 				List<NumberingObjectInfo> numberingObjectInfoList = this.stubService.getClassModelService().listChildNumberingObjectInfo(numberingModel.getGuid(), null);
@@ -175,7 +175,7 @@ public class NumberAllocate extends AbstractServiceStub<BOASImpl>
 		else
 		{
 			// CFM cfm = null;
-			EMM emm = this.stubService.getEMM();
+			EMM emm = this.stubService.getEmm();
 
 			// String classGuid = foundationObject.getObjectGuid().getClassGuid();
 			// String className = foundationObject.getObjectGuid().getClassName();

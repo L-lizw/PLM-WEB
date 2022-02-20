@@ -22,18 +22,6 @@ public abstract class AbstractCondition extends AbstractServiceStub<DCRImpl> imp
 
 	private DataAccessService				service				= null;
 
-	public <T extends ApplicationService> T getServiceInstance(Class<T> serviceClass) throws ServiceRequestException
-	{
-		try
-		{
-			return this.service.getRefService(serviceClass);
-		}
-		catch (ServiceNotFoundException e)
-		{
-			throw new ServiceRequestException(null, null, e);
-		}
-	}
-
 	@Override
 	public abstract boolean check() throws ServiceRequestException;
 

@@ -956,7 +956,7 @@ public class DrawingStub extends AbstractServiceStub<ERPIImpl>
 		ACLItem item = null;
 		if (object != null)
 		{
-			item = this.stubService.getACL().getACLItemForObject(object.getObjectGuid());
+			item = this.stubService.getAcl().getACLItemForObject(object.getObjectGuid());
 		}
 		return item;
 	}

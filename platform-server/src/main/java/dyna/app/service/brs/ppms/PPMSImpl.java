@@ -30,6 +30,8 @@ import dyna.net.service.das.MSRM;
 import dyna.net.service.data.DSCommonService;
 import dyna.net.service.data.InstanceService;
 import dyna.net.service.data.SystemDataService;
+import lombok.AccessLevel;
+import lombok.Getter;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,13 +45,22 @@ import java.util.Map;
  *
  * @author Lizw
  */
+@Getter(AccessLevel.PROTECTED)
 @Service public class PPMSImpl extends BusinessRuleService implements PPMS
 {
 	@DubboReference private DSCommonService   dsCommonService;
 	@DubboReference private InstanceService   instanceService;
 	@DubboReference private SystemDataService systemDataService;
 
+	@Autowired private AAS aas;
 	@Autowired private Async async;
+	@Autowired private BOAS boas;
+	@Autowired private BOMS boms;
+	@Autowired private DSS dss;
+	@Autowired private EMM emm;
+	@Autowired private MSRM msrm;
+	@Autowired private SMS sms;
+	@Autowired private WFI wfi;
 
 	@Autowired private BaseConfigStub      baseConfigStub;
 	@Autowired private DeliveryStub        deliveryStub;
@@ -99,43 +110,19 @@ import java.util.Map;
 		return this.async;
 	}
 
-	public synchronized MSRM getMSRM() throws ServiceRequestException
+	public MSRM getMSRM()
 	{
-		try
-		{
-			return this.getRefService(MSRM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
+		return this.msrm;
 	}
 
-	public synchronized SMS getSMS() throws ServiceRequestException
+	public  SMS getSMS()
 	{
-		try
-		{
-			return this.getRefService(SMS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
+		return this.sms;
 	}
 
-	public synchronized DSS getDSS() throws ServiceRequestException
+	public  DSS getDSS()
 	{
-		try
-		{
-			return this.getRefService(DSS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
+		return this.dss;
 	}
 
 	public WarningNoticeStub getWarningNoticeStub()
@@ -219,68 +206,29 @@ import java.util.Map;
 		return this.indicatorConfigStub;
 	}
 
-	public synchronized EMM getEMM() throws ServiceRequestException
+	public  EMM getEMM()
 	{
-		try
-		{
-			return this.getRefService(EMM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
+		return this.emm;
 	}
 
-	public synchronized BOAS getBOAS() throws ServiceRequestException
+	public BOAS getBOAS()
 	{
-		try
-		{
-			return this.getRefService(BOAS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
+		return this.boas;
 	}
 
-	public synchronized BOMS getBOMS() throws ServiceRequestException
+	public  BOMS getBOMS()
 	{
-		try
-		{
-			return this.getRefService(BOMS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
+		return this.boms;
 	}
 
-	public synchronized WFI getWFI() throws ServiceRequestException
+	public  WFI getWFI()
 	{
-		try
-		{
-			return this.getRefService(WFI.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
+		return this.wfi;
 	}
 
-	public synchronized AAS getAAS() throws ServiceRequestException
+	public  AAS getAAS()
 	{
-		try
-		{
-			return this.getRefService(AAS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
+		return this.aas;
 	}
 
 	public EventAppFactory getEventAppFactory()

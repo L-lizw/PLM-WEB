@@ -18,6 +18,8 @@ import dyna.common.systemenum.ReplaceTypeEnum;
 import dyna.net.service.brs.*;
 import dyna.net.service.das.MSRM;
 import dyna.net.service.data.SystemDataService;
+import lombok.AccessLevel;
+import lombok.Getter;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,10 +32,17 @@ import java.util.List;
  *
  * @author Lizw
  */
+@Getter(AccessLevel.PROTECTED)
 @Service public class BRMImpl extends BusinessRuleService implements BRM
 {
 
 	@DubboReference private SystemDataService systemDataService;
+
+	@Autowired private BOAS boas;
+	@Autowired private BOMS boms;
+	@Autowired private EMM emm;
+	@Autowired private WFI wfi;
+	@Autowired private MSRM msrm;
 
 	@Autowired private ReplaceQueryStub  replaceQueryStub;
 	@Autowired private ReplaceObjectStub replaceObjectStub;
@@ -64,69 +73,6 @@ import java.util.List;
 	public ReplaceObjectStub getReplaceObjectStub()
 	{
 		return replaceObjectStub;
-	}
-
-	protected synchronized BOAS getBOAS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(BOAS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized BOMS getBOMS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(BOMS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized EMM getEMM() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(EMM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	public synchronized WFI getWFI() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(WFI.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
-
-	public synchronized MSRM getMSRM() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(MSRM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
 	}
 
 	@Override public void deleteReplaceDataByItem(ObjectGuid objectGuid) throws ServiceRequestException

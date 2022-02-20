@@ -21,6 +21,8 @@ import dyna.net.security.signature.ModuleSignature;
 import dyna.net.security.signature.UserSignature;
 import dyna.net.service.brs.*;
 import dyna.net.service.data.SystemDataService;
+import lombok.AccessLevel;
+import lombok.Getter;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +36,7 @@ import java.util.List;
  *
  * @author lizw
  */
+@Getter(AccessLevel.PROTECTED)
 @Service public class AASImpl extends BusinessRuleService implements AAS
 {
 	/**
@@ -55,6 +58,12 @@ import java.util.List;
 
 	@Autowired
 	private Async  async;
+	@Autowired
+	private EDAP edap;
+	@Autowired
+	private EMM emm;
+	@Autowired
+	private LIC lic;
 
 	@Autowired private GroupStub    groupStub;
 	@Autowired private OrgStub   orgStub;
@@ -209,45 +218,6 @@ import java.util.List;
 		{
 			throw new AuthorizeException("accessible for administrative group or user itself");
 		}
-	}
-
-	protected synchronized EMM getEMM() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(EMM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized EDAP getEDAP() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(EDAP.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized LIC getLIC() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(LIC.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
 	}
 
 	/*

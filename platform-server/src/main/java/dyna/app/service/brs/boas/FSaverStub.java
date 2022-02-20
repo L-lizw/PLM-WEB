@@ -178,7 +178,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 		FoundationObject createObject = this.createObject(foundationObject, originalFoundationGuid, ownerGroupGuid, ownerUserGuid, isCheckAuth, isNeededEffective, true, true, null,
 				true);
 
-		ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(createObject.getObjectGuid().getClassGuid());
+		ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(createObject.getObjectGuid().getClassGuid());
 		// 打开取替代对象时，不记录历史
 		if (classInfo != null && !classInfo.hasInterface(ModelInterfaceEnum.IReplaceSubstitute))
 		{
@@ -188,7 +188,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 			biViewHis.setInstanceBOGuid(createObject.getObjectGuid().getBizObjectGuid());
 			biViewHis.put(BIViewHis.CREATE_USER, this.stubService.getOperatorGuid());
 
-			this.stubService.getPOS().saveBIViewHis(biViewHis);
+			this.stubService.getPos().saveBIViewHis(biViewHis);
 		}
 		// 检出
 
@@ -243,7 +243,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 		{
 //			DataServer.getTransactionManager().startTransaction(this.stubService.getFixedTransactionId());
 
-			BOMS boms = this.stubService.getBOMS();
+			BOMS boms = this.stubService.getBoms();
 
 			ObjectGuid objectGuid = foundationObject.getObjectGuid();
 
@@ -254,7 +254,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 			// 注：不能移动
 			List<ViewObject> viewObjectList = this.stubService.listRelation(foundationObject.getObjectGuid());
 
-			boInfo = this.stubService.getEMM().getCurrentBizObject(objectGuid.getClassGuid());
+			boInfo = this.stubService.getEmm().getCurrentBizObject(objectGuid.getClassGuid());
 
 			if (isRevisionIdAddOne)
 			{
@@ -276,7 +276,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 				}
 				if (boInfo != null)
 				{
-					configRuleBOLM = ((SLCImpl) this.stubService.getSLC()).getConfigRuleBOLMStub()
+					configRuleBOLM = ((SLCImpl) this.stubService.getSlc()).getConfigRuleBOLMStub()
 							.getConfigRuleBOLMContainParent(this.stubService.getUserSignature().getLoginGroupBMGuid(), boInfo.getGuid(), false);
 				}
 			}
@@ -285,7 +285,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 			{
 				if (isContainGlobalReplce)
 				{
-					globalReplace = this.stubService.getBRM().listReplaceDataByRang(null, objectGuid, null, ReplaceRangeEnum.GLOBAL, ReplaceTypeEnum.TIDAI, null, null, false, true);
+					globalReplace = this.stubService.getBrm().listReplaceDataByRang(null, objectGuid, null, ReplaceRangeEnum.GLOBAL, ReplaceTypeEnum.TIDAI, null, null, false, true);
 				}
 				saveAsoriginalFoundationGuid = objectGuid.getGuid();
 				// 清除masterGuid
@@ -323,7 +323,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 			foundationObject.setOwnerUserGuid(ownerUserGuid);
 			foundationObject.setOwnerGroupGuid(ownerGroupGuid);
 
-			EMM emm = this.stubService.getEMM();
+			EMM emm = this.stubService.getEmm();
 			// 新修订
 			if (!isClearId)
 			{
@@ -354,7 +354,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 			if (!isClearId)
 			{
 				// important! invoke wip.before event.
-				this.stubService.getEOSS().executeReviseBeforeEvent(foundationObject);
+				this.stubService.getEoss().executeReviseBeforeEvent(foundationObject);
 			}
 
 			if (foundationObject.get(SystemClassFieldEnum.ECFLAG.getName()) != null)
@@ -392,7 +392,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 						{
 							continue;
 						}
-						BOMTemplateInfo bomTemplate = this.stubService.getEMM().getBOMTemplateById(bomView.getTemplateID());
+						BOMTemplateInfo bomTemplate = this.stubService.getEmm().getBOMTemplateById(bomView.getTemplateID());
 
 						// 无效模板不创建bomview
 						if (bomTemplate != null && !bomTemplate.isValid())
@@ -416,7 +416,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 						bomView.clear(SystemClassFieldEnum.STATUS.getName());
 						bomView = ((BOMSImpl) boms).getBomViewStub().saveBOMView(bomView, false, null);
 
-						bomView = ((BOMSImpl) this.stubService.getBOMS()).getBOMViewCheckOutStub().checkOut(bomView, this.stubService.getOperatorGuid(), false);
+						bomView = ((BOMSImpl) this.stubService.getBoms()).getBOMViewCheckOutStub().checkOut(bomView, this.stubService.getOperatorGuid(), false);
 						if (isClearId)
 						{
 							// 另存
@@ -431,7 +431,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 						this.stubService.getRelationService().copyBomOrRelation(bomView.getObjectGuid().getClassGuid(), viewGuid, bomView.getObjectGuid().getGuid(),
 								bomTemplate.getStructureClassGuid(), "3", specialField, sessionId, this.stubService.getFixedTransactionId());
 
-						bomView = ((BOMSImpl) this.stubService.getBOMS()).getBOMViewCheckInStub().checkIn(bomView, false);
+						bomView = ((BOMSImpl) this.stubService.getBoms()).getBOMViewCheckInStub().checkIn(bomView, false);
 
 						// 取替代数据处理
 						if (isContainPartReplace && isClearId) // 另存
@@ -454,7 +454,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 				for (ViewObject viewObject : viewObjectList)
 				{
 					String viewGuid = viewObject.getObjectGuid().getGuid();
-					RelationTemplateInfo relationTemplate = this.stubService.getEMM()
+					RelationTemplateInfo relationTemplate = this.stubService.getEmm()
 							.getRelationTemplateById(viewObject.get(ViewObject.TEMPLATE_ID) == null ? "" : (String) viewObject.get(ViewObject.TEMPLATE_ID));
 					if (relationTemplate == null)
 					{
@@ -583,7 +583,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 			if (!isClearId)
 			{
 				// important! invoke wip.after event.
-				this.stubService.getEOSS().executeReviseAfterEvent(retFoundationObject);
+				this.stubService.getEoss().executeReviseAfterEvent(retFoundationObject);
 			}
 
 //			DataServer.getTransactionManager().commitTransaction();
@@ -627,7 +627,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 	{
 
 		ObjectGuid origObjectGuid = new ObjectGuid(retFoundationObject.getObjectGuid().getClassGuid(), null, originalFoundationGuid, null);
-		List<FoundationObject> copyReplaceDataList = ((BRMImpl) this.stubService.getBRM()).getReplaceQueryStub().listReplaceDataInner(origObjectGuid, null, null,
+		List<FoundationObject> copyReplaceDataList = ((BRMImpl) this.stubService.getBrm()).getReplaceQueryStub().listReplaceDataInner(origObjectGuid, null, null,
 				ReplaceRangeEnum.PART, null, bomView.getName(), null, true);
 		List<String> bomUpdate = new ArrayList<String>(); // 记录取替代在修订的时候是否变更了
 		if (!SetUtils.isNullList(copyReplaceDataList))
@@ -655,7 +655,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 			return;
 		}
 
-		List<BOMStructure> bomStructureList = this.stubService.getBOMS().listBOM(bomView.getObjectGuid(), null, null, null);
+		List<BOMStructure> bomStructureList = this.stubService.getBoms().listBOM(bomView.getObjectGuid(), null, null, null);
 		if (SetUtils.isNullList(bomStructureList))
 		{
 			return;
@@ -666,12 +666,12 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 		{
 			if (bomUpdate.contains(bomStructure.getBOMKey()))
 			{
-				List<FoundationObject> hasReplace = this.stubService.getBRM().listReplaceDataByRang(bomStructure.getEnd1ObjectGuid(), bomStructure.getEnd2ObjectGuid(), null,
+				List<FoundationObject> hasReplace = this.stubService.getBrm().listReplaceDataByRang(bomStructure.getEnd1ObjectGuid(), bomStructure.getEnd2ObjectGuid(), null,
 						ReplaceRangeEnum.PART, null, bomView.getName(), bomStructure.getBOMKey(), true, true);
 				if (SetUtils.isNullList(hasReplace))
 				{
 					bomStructure.setRsFlag(false);
-					this.stubService.getBOMS().saveBOM(bomStructure);
+					this.stubService.getBoms().saveBOM(bomStructure);
 				}
 			}
 		}
@@ -732,7 +732,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 			for (FoundationObject fo : listFoundation)
 			{
 				ObjectGuid rsItemObjectGuid = this.getItemObjectGuid(fo, ReplaceSubstituteConstants.RSItem);
-				((BRMImpl) this.stubService.getBRM()).getReplaceObjectStub().createReplaceData(masterItemObjectGuid, componentItemObjectGuid, rsItemObjectGuid, null, fo, copy);
+				((BRMImpl) this.stubService.getBrm()).getReplaceObjectStub().createReplaceData(masterItemObjectGuid, componentItemObjectGuid, rsItemObjectGuid, null, fo, copy);
 			}
 		}
 	}
@@ -768,7 +768,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 	{
 		String structureClassName = bomView.getStructureClassName();
 		SearchCondition searchCondition = null;
-		List<UIObjectInfo> uiObjectList = this.stubService.getEMM().listALLFormListUIObjectInBizModel(structureClassName);
+		List<UIObjectInfo> uiObjectList = this.stubService.getEmm().listALLFormListUIObjectInBizModel(structureClassName);
 		searchCondition = SearchConditionFactory.createSearchConditionForBOMStructure(structureClassName, uiObjectList);
 		return boms.listBOM(bomView.getObjectGuid(), searchCondition, null, dataRule);
 	}
@@ -787,7 +787,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 		for (BOMStructure bomStructure : bomStructureList)
 		{
 			List<FoundationObject> replaceDataList;
-			replaceDataList = this.stubService.getBRM().listReplaceDataByRang(bomStructure.getEnd1ObjectGuid(), bomStructure.getEnd2ObjectGuid(), null, ReplaceRangeEnum.PART, null,
+			replaceDataList = this.stubService.getBrm().listReplaceDataByRang(bomStructure.getEnd1ObjectGuid(), bomStructure.getEnd2ObjectGuid(), null, ReplaceRangeEnum.PART, null,
 					bomView.getName(), bomStructure.getBOMKey(), false, true);
 			if (SetUtils.isNullList(replaceDataList))
 			{
@@ -841,7 +841,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 
 		List<ObjectGuid> objectGuidList = null;
 
-		BOMS boms = this.stubService.getBOMS();
+		BOMS boms = this.stubService.getBoms();
 
 		if (isContainBom)
 		{
@@ -863,7 +863,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 		else
 		{
 			// 变更0724 4. 当复制另存物料时,如时不选择复制BOM, UHasBOM字段的值置为”false”;
-			CodeItemInfo info = this.stubService.getEMM().getCodeItemByName("UHasBOM", "N");
+			CodeItemInfo info = this.stubService.getEmm().getCodeItemByName("UHasBOM", "N");
 			if (info != null)
 			{
 				foundationObject.put(Constants.FIELD_UHASBOM, info.getGuid());
@@ -931,7 +931,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 		// 补上主classification foundation
 		if (!StringUtils.isNullString(foundationObject.getClassificationGuid()))
 		{
-			CodeItemInfo classification = this.stubService.getEMM().getCodeItem(foundationObject.getClassificationGuid());
+			CodeItemInfo classification = this.stubService.getEmm().getCodeItem(foundationObject.getClassificationGuid());
 
 			FoundationObject masterFou = null;
 			boolean hasMasterClassificaiton = false;
@@ -972,7 +972,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 		else
 		{
 
-			ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(objectGuid.getClassGuid());
+			ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(objectGuid.getClassGuid());
 
 			// 去除不存在的主分类foundation
 			FoundationObject removeFoundation = null;
@@ -1000,7 +1000,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 		List<String> mappingExistClassification = new ArrayList<String>();
 		if (!SetUtils.isNullList(restoreAllClassification))
 		{
-			List<ClassficationFeature> listClassficationFeature = this.stubService.getEMM().listClassficationFeature(objectGuid.getClassGuid());
+			List<ClassficationFeature> listClassficationFeature = this.stubService.getEmm().listClassficationFeature(objectGuid.getClassGuid());
 			if (!SetUtils.isNullList(listClassficationFeature))
 			{
 				for (ClassficationFeature feature : listClassficationFeature)
@@ -1020,7 +1020,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 
 				if (!StringUtils.isNullString(foundation.getClassificationGuid()))
 				{
-					CodeItemInfo classification = this.stubService.getEMM().getCodeItem(foundation.getClassificationGuid());
+					CodeItemInfo classification = this.stubService.getEmm().getCodeItem(foundation.getClassificationGuid());
 					if (classification == null)
 					{
 						remove.add(foundation.getClassificationGroupName());
@@ -1036,11 +1036,11 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 
 		// // 2. 检查主分类字段中值是否与类中设置的分类一致
 		// ClassInfo classInfo =
-		// this.stubService.getEMM().getClassByGuid(foundationObject.getObjectGuid().getClassGuid());
+		// this.stubService.getEmm().getClassByGuid(foundationObject.getObjectGuid().getClassGuid());
 		// if (!StringUtils.isNullString(foundationObject.getClassificationGuid()))
 		// {
 		// boolean isNeedRemove = false;
-		// CodeItemInfo classification = this.stubService.getEMM().getClassification(
+		// CodeItemInfo classification = this.stubService.getEmm().getClassification(
 		// foundationObject.getClassificationGuid());
 		// if (classification == null)
 		// {
@@ -1049,7 +1049,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 		// }
 		// else
 		// {
-		// CodeObjectInfo code = this.stubService.getEMM().getCode(classification.getCodeGuid());
+		// CodeObjectInfo code = this.stubService.getEmm().getCode(classification.getCodeGuid());
 		// if (code != null && code.getName() != null
 		// && code.getName().equalsIgnoreCase(classInfo.getClassification()))
 		// {
@@ -1075,7 +1075,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 		// // 存在错误的主分类foundation时，删除且补上，不存在时，直接补上
 		// if (!StringUtils.isNullString(foundationObject.getClassificationGuid()))
 		// {
-		// CodeItemInfo classification = this.stubService.getEMM().getClassification(
+		// CodeItemInfo classification = this.stubService.getEmm().getClassification(
 		// foundationObject.getClassificationGuid());
 		// FoundationObject masterFou = null;
 		// boolean hasMasterClassificaiton = false;
@@ -1190,11 +1190,11 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 			if (isRunScript)
 			{
 				// invoke update.before event
-				this.stubService.getEOSS().executeUpdateBeforeEvent(foundationObject);
+				this.stubService.getEoss().executeUpdateBeforeEvent(foundationObject);
 			}
 
 			// DCR规则检查
-			this.stubService.getDCR().check(foundationObject);
+			this.stubService.getDcr().check(foundationObject);
 
 			if (isUpdateTime)
 			{
@@ -1212,7 +1212,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 			if (isRunScript)
 			{
 				// invoke update.after event
-				this.stubService.getEOSS().executeUpdateAfterEvent(retObject);
+				this.stubService.getEoss().executeUpdateAfterEvent(retObject);
 			}
 
 //			DataServer.getTransactionManager().commitTransaction();
@@ -1243,9 +1243,9 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 		String className = foundationObject.getObjectGuid().getClassName();
 		if (StringUtils.isNullString(className))
 		{
-			className = this.stubService.getEMM().getClassByGuid(foundationObject.getObjectGuid().getClassGuid()).getName();
+			className = this.stubService.getEmm().getClassByGuid(foundationObject.getObjectGuid().getClassGuid()).getName();
 		}
-		List<UIObjectInfo> uiList = ((EMMImpl) this.stubService.getEMM()).listUIObjectInCurrentBizModel(className, UITypeEnum.FORM, true);
+		List<UIObjectInfo> uiList = ((EMMImpl) this.stubService.getEmm()).listUIObjectInCurrentBizModel(className, UITypeEnum.FORM, true);
 		if (SetUtils.isNullList(uiList))
 		{
 			return;
@@ -1256,7 +1256,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 		Set<String> fieldFolderNames = new HashSet<String>();
 
 		UIObjectInfo uiObject = uiList.get(0);
-		List<UIField> uiFieldList = this.stubService.getEMM().listUIFieldByUIGuid(uiObject.getGuid());
+		List<UIField> uiFieldList = this.stubService.getEmm().listUIFieldByUIGuid(uiObject.getGuid());
 		if (!SetUtils.isNullList(uiFieldList))
 		{
 			for (UIField uiField : uiFieldList)
@@ -1279,7 +1279,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 			}
 		}
 
-		EMM emm = this.stubService.getEMM();
+		EMM emm = this.stubService.getEmm();
 
 		String bmGuid = this.stubService.getUserSignature().getLoginGroupBMGuid();
 
@@ -1300,7 +1300,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 
 		String sessionId = this.stubService.getSignature().getCredential();
 		fieldNames.addAll(fieldFolderNames);
-		decoratorFactory.ofd.decorateWithField(fieldNames, foundationObject, this.stubService.getEMM(), sessionId, false);
+		decoratorFactory.ofd.decorateWithField(fieldNames, foundationObject, this.stubService.getEmm(), sessionId, false);
 	}
 
 	protected FoundationObject createDocumentByTemplate(FoundationObject docFoundationObject, ObjectGuid tmpObjectGuid, boolean isCheckOut) throws ServiceRequestException
@@ -1326,7 +1326,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 			biViewHis.put(BIViewHis.CREATE_USER, this.stubService.getOperatorGuid());
 
 			// bug fixed by wanglei 将复制文件操作提到事务之外, 修复文件未上传异常
-			((DSSImpl) this.stubService.getDSS()).getFileInfoStub().copyFile(retFoundationObject.getObjectGuid(), tmpFoundationObject.getObjectGuid(), false);
+			((DSSImpl) this.stubService.getDss()).getFileInfoStub().copyFile(retFoundationObject.getObjectGuid(), tmpFoundationObject.getObjectGuid(), false);
 
 			// 检出
 			if (isCheckOut)
@@ -1395,7 +1395,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 			if (!SetUtils.isNullList(fileInfoList))
 			{
 				ObjectGuid objectGuid = newObject.getObjectGuid();
-				DSSImpl dss = (DSSImpl) this.stubService.getDSS();
+				DSSImpl dss = (DSSImpl) this.stubService.getDss();
 				InstFileStub fileStub = dss.getInstFileStub();
 				DSSFileInfo newFileInfo = null;
 				String filePath = null;
@@ -1511,7 +1511,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 			foundationObject.clear(SystemClassFieldEnum.CHECKOUTTIME.getName());
 			foundationObject.clear(SystemClassFieldEnum.CHECKOUTUSER.getName());
 			foundationObject.clear(SystemClassFieldEnum.RELEASETIME.getName());
-			EMM emm = this.stubService.getEMM();
+			EMM emm = this.stubService.getEmm();
 
 			// 根据ObjectGuid中的className或者classGuid一个的值，获取另外一个的值并赋给ObjectGuid
 			ClassStub.decorateObjectGuid(foundationObject.getObjectGuid(), this.stubService);
@@ -1567,11 +1567,11 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 			if (execCreateScript)
 			{
 				// important! invoke add.before event.
-				this.stubService.getEOSS().executeAddBeforeEvent(foundationObject);
+				this.stubService.getEoss().executeAddBeforeEvent(foundationObject);
 			}
 
 			// DCR规则检查
-			this.stubService.getDCR().check(foundationObject);
+			this.stubService.getDcr().check(foundationObject);
 
 			retObject = this.stubService.getInstanceService().create(foundationObject, originalFoundationGuid, Constants.isSupervisor(isCheckAuth, this.stubService), sessionId,
 					this.stubService.getFixedTransactionId());
@@ -1585,7 +1585,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 				{
 					try
 					{
-						((DSSImpl) this.stubService.getDSS()).getFileInfoStub().copyFile(retObject, originalObject, false, true);
+						((DSSImpl) this.stubService.getDss()).getFileInfoStub().copyFile(retObject, originalObject, false, true);
 					}
 					catch (Throwable e)
 					{
@@ -1598,10 +1598,10 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 			if (execCreateScript)
 			{
 				// invoke add.after event.
-				this.stubService.getEOSS().executeAddAfterEvent(retObject);
+				this.stubService.getEoss().executeAddAfterEvent(retObject);
 			}
 
-			List<ClassField> classFieldList = this.stubService.getEMM().listFieldOfClass(classInfo.getName());
+			List<ClassField> classFieldList = this.stubService.getEmm().listFieldOfClass(classInfo.getName());
 			Set<String> codeFieldSet = new HashSet<String>();
 			Set<String> objectFieldSet = new HashSet<String>();
 			Set<String> folderFieldSet = new HashSet<String>();
@@ -1632,7 +1632,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 			decoratorFactory.decorateFoundationObjectCode(codeFieldSet, retObject, emm, bmGuid);
 
 			objectFieldSet.addAll(folderFieldSet);
-			decoratorFactory.ofd.decorateWithField(objectFieldSet, retObject, this.stubService.getEMM(), sessionId, false);
+			decoratorFactory.ofd.decorateWithField(objectFieldSet, retObject, this.stubService.getEmm(), sessionId, false);
 
 //			DataServer.getTransactionManager().commitTransaction();
 		}
@@ -1667,7 +1667,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 		List<String> mandatoryFieldList = new ArrayList<String>();
 		ClassStub.decorateObjectGuid(dynaObject.getObjectGuid(), this.stubService);
 
-		List<ClassField> listFieldOfClass = this.stubService.getEMM().listFieldOfClass(dynaObject.getObjectGuid().getClassName());
+		List<ClassField> listFieldOfClass = this.stubService.getEmm().listFieldOfClass(dynaObject.getObjectGuid().getClassName());
 		Map<String, String> fieldTitleMap = this.getFieldTitleMap(dynaObject.getObjectGuid().getClassName(), languageEnum);
 		if (!SetUtils.isNullList(listFieldOfClass))
 		{
@@ -1693,7 +1693,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 		List<String> hasCheckFieldList = new ArrayList<String>();
 		if (!SetUtils.isNullList(mandatoryFieldList))
 		{
-			String messageMandatoryText = this.stubService.getMSRM().getMSRString("ID_APP_FOUNDATIONFIELD_MANDATORY_CHECK", languageEnum.toString());
+			String messageMandatoryText = this.stubService.getMsrm().getMSRString("ID_APP_FOUNDATIONFIELD_MANDATORY_CHECK", languageEnum.toString());
 			if (dynaObject instanceof StructureObject)
 			{
 				if (StringUtils.isNullString(messageMandatoryText))
@@ -1701,7 +1701,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 					messageMandatoryText = "ID_APP_FOUNDATIONFIELD_MANDATORY_CHECK";
 				}
 			}
-			String messageLengthText = this.stubService.getMSRM().getMSRString("ID_APP_FOUNDATIONFIELD_LENGTH_CHECK", languageEnum.toString());
+			String messageLengthText = this.stubService.getMsrm().getMSRString("ID_APP_FOUNDATIONFIELD_LENGTH_CHECK", languageEnum.toString());
 			if (StringUtils.isNullString(messageLengthText))
 			{
 				messageLengthText = "ID_APP_FOUNDATIONFIELD_LENGTH_CHECK";
@@ -1728,7 +1728,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 				}
 			}
 		}
-		if (this.stubService.getLIC().hasLicence(ApplicationTypeEnum.CLS.name()))
+		if (this.stubService.getLic().hasLicence(ApplicationTypeEnum.CLS.name()))
 		{
 			if (dynaObject instanceof StructureObject)
 			{
@@ -1739,7 +1739,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 
 			if (!SetUtils.isNullList(restoreAllClassification))
 			{
-				String messageMandatoryText = this.stubService.getMSRM().getMSRString("ID_APP_FOUNDATION_MANDATORY_CHECK", languageEnum.toString());
+				String messageMandatoryText = this.stubService.getMsrm().getMSRString("ID_APP_FOUNDATION_MANDATORY_CHECK", languageEnum.toString());
 				if (dynaObject instanceof StructureObject)
 				{
 					if (StringUtils.isNullString(messageMandatoryText))
@@ -1747,7 +1747,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 						messageMandatoryText = "ID_APP_FOUNDATION_MANDATORY_CHECK";
 					}
 				}
-				String messageLengthText = this.stubService.getMSRM().getMSRString("ID_APP_FOUNDATION_LENGTH_CHECK", languageEnum.toString());
+				String messageLengthText = this.stubService.getMsrm().getMSRString("ID_APP_FOUNDATION_LENGTH_CHECK", languageEnum.toString());
 				if (StringUtils.isNullString(messageLengthText))
 				{
 					messageLengthText = "ID_APP_FOUNDATION_LENGTH_CHECK";
@@ -1762,7 +1762,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 					mandatoryFieldList.clear();
 					classFieldMap.clear();
 
-					List<ClassField> listClassificationField = this.stubService.getEMM().listClassificationField(foundationObject.getClassificationGuid());
+					List<ClassField> listClassificationField = this.stubService.getEmm().listClassificationField(foundationObject.getClassificationGuid());
 					if (!SetUtils.isNullList(listClassificationField))
 					{
 						for (ClassField classField : listClassificationField)
@@ -1781,7 +1781,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 					}
 					else
 					{
-						CodeObjectInfo code = this.stubService.getEMM().getCode(foundationObject.getClassificationGroup());
+						CodeObjectInfo code = this.stubService.getEmm().getCode(foundationObject.getClassificationGroup());
 						if (code != null)
 						{
 							classificationGroupTitle = code.getTitle(languageEnum);
@@ -1815,10 +1815,10 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 	private Map<String, String> getFieldTitleMap(String className, LanguageEnum languageEnum) throws ServiceRequestException
 	{
 		Map<String, String> fieldMap = new HashMap<String, String>();
-		UIObjectInfo uiObject = this.stubService.getEMM().getUIObjectInCurrentBizModel(className, UITypeEnum.FORM);
+		UIObjectInfo uiObject = this.stubService.getEmm().getUIObjectInCurrentBizModel(className, UITypeEnum.FORM);
 		if (uiObject != null)
 		{
-			List<UIField> uiFieldList = this.stubService.getEMM().listUIFieldByUIGuid(uiObject.getGuid());
+			List<UIField> uiFieldList = this.stubService.getEmm().listUIFieldByUIGuid(uiObject.getGuid());
 			if (!SetUtils.isNullList(uiFieldList))
 			{
 				for (UIField field : uiFieldList)
@@ -1848,7 +1848,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 						fullName = ((FoundationObject) master).getFullName();
 						if (StringUtils.isNullString(fullName))
 						{
-							decoratorFactory.fnd.decorate(master, this.stubService.getEMM());
+							decoratorFactory.fnd.decorate(master, this.stubService.getEmm());
 							fullName = ((FoundationObject) master).getFullName();
 						}
 
@@ -1857,7 +1857,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 							fullName = "";
 						}
 
-						decoratorFactory.ofd.decorateWithField(null, (FoundationObject) master, this.stubService.getEMM(), this.stubService.getSignature().getCredential(), false);
+						decoratorFactory.ofd.decorateWithField(null, (FoundationObject) master, this.stubService.getEmm(), this.stubService.getSignature().getCredential(), false);
 					}
 				}
 				catch (DecorateException e)
@@ -1961,7 +1961,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 					String codeItemGuid = (String) foundation.get(classField.getName());
 					if (!StringUtils.isNullString(codeItemGuid))
 					{
-						CodeItemInfo codeItem = this.stubService.getEMM().getCodeItem(codeItemGuid);
+						CodeItemInfo codeItem = this.stubService.getEmm().getCodeItem(codeItemGuid);
 						if (codeItem == null)
 						{
 							foundation.put(classField.getName(), null);
@@ -1972,7 +1972,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 						String codeGuid = codeItem.getCodeGuid();
 						if (!StringUtils.isNullString(codeGuid))
 						{
-							CodeObjectInfo code = this.stubService.getEMM().getCode(codeGuid);
+							CodeObjectInfo code = this.stubService.getEmm().getCode(codeGuid);
 							if (code == null || !code.getName().equalsIgnoreCase(classField.getTypeValue()))
 							{
 								foundation.put(classField.getName(), null);
@@ -1986,7 +1986,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 					codeItemGuid = (String) foundation.get(classField.getName());
 					if (!StringUtils.isNullString(codeItemGuid))
 					{
-						CodeItemInfo codeItem = this.stubService.getEMM().getCodeItem(codeItemGuid);
+						CodeItemInfo codeItem = this.stubService.getEmm().getCodeItem(codeItemGuid);
 						if (codeItem == null)
 						{
 							foundation.put(classField.getName(), null);
@@ -1997,7 +1997,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 						String codeGuid = codeItem.getCodeGuid();
 						if (!StringUtils.isNullString(codeGuid))
 						{
-							CodeObjectInfo code = this.stubService.getEMM().getCode(codeGuid);
+							CodeObjectInfo code = this.stubService.getEmm().getCode(codeGuid);
 							if (code == null || !(code.getName().equalsIgnoreCase(classField.getTypeValue()) || code.getName().equalsIgnoreCase(classification)))
 							{
 								foundation.put(classField.getName(), null);
@@ -2009,7 +2009,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 					break;
 				case OBJECT:
 
-					ClassInfo typeValueObject = this.stubService.getEMM().getClassByName(classField.getTypeValue());
+					ClassInfo typeValueObject = this.stubService.getEmm().getClassByName(classField.getTypeValue());
 					if (typeValueObject == null)
 					{
 						foundation.put(classField.getName(), null);
@@ -2027,7 +2027,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 					String fieldClassGuid = (String) foundation.get(classField.getName() + "$CLASS");
 					if (!StringUtils.isNullString(fieldClassGuid))
 					{
-						ClassInfo classByGuid = this.stubService.getEMM().getClassByGuid(fieldClassGuid);
+						ClassInfo classByGuid = this.stubService.getEmm().getClassByGuid(fieldClassGuid);
 						if (classByGuid == null)
 						{
 							foundation.put(classField.getName(), null);
@@ -2041,7 +2041,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 						boolean isClear = true;
 						if (!classByGuid.getName().equalsIgnoreCase(typeValueObject.getName()))
 						{
-							List<ClassInfo> listAllSuperClass = this.stubService.getEMM().listAllSuperClass(classByGuid.getName(), classByGuid.getGuid());
+							List<ClassInfo> listAllSuperClass = this.stubService.getEmm().listAllSuperClass(classByGuid.getName(), classByGuid.getGuid());
 
 							if (!SetUtils.isNullList(listAllSuperClass))
 							{
@@ -2079,9 +2079,9 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 	protected void checkFoundationFieldExist(FoundationObject foundation) throws ServiceRequestException
 	{
 		String classGuid = foundation.getObjectGuid().getClassGuid();
-		ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(classGuid);
+		ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(classGuid);
 
-		List<ClassField> listFieldOfClass = this.stubService.getEMM().listFieldOfClass(classInfo.getName());
+		List<ClassField> listFieldOfClass = this.stubService.getEmm().listFieldOfClass(classInfo.getName());
 
 		this.checkFieldValueExist(foundation, listFieldOfClass, classInfo.getClassification());
 
@@ -2100,7 +2100,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 					return;
 				}
 
-				List<ClassField> listClassificationField = this.stubService.getEMM().listClassificationField(classificationFoundaiton.getClassificationGuid());
+				List<ClassField> listClassificationField = this.stubService.getEmm().listClassificationField(classificationFoundaiton.getClassificationGuid());
 				this.checkFieldValueExist(classificationFoundaiton, listClassificationField, null);
 			}
 		}
@@ -2109,9 +2109,9 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 	protected void checkFoundationFieldRegex(FoundationObject foundation) throws ServiceRequestException
 	{
 		String classGuid = foundation.getObjectGuid().getClassGuid();
-		ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(classGuid);
+		ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(classGuid);
 
-		List<ClassField> listFieldOfClass = this.stubService.getEMM().listFieldOfClass(classInfo.getName());
+		List<ClassField> listFieldOfClass = this.stubService.getEmm().listFieldOfClass(classInfo.getName());
 		if (!SetUtils.isNullList(listFieldOfClass))
 		{
 			for (ClassField field : listFieldOfClass)
@@ -2122,7 +2122,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 					boolean matches = pattern.matcher(StringUtils.convertNULLtoString(foundation.get(field.getName()))).matches();
 					if (matches)
 					{
-						UIField uiField = this.stubService.getEMM().getUIFieldByName(classInfo.getName(), field.getName());
+						UIField uiField = this.stubService.getEmm().getUIFieldByName(classInfo.getName(), field.getName());
 						String title = uiField == null ? field.getName() : uiField.getTitle(this.stubService.getUserSignature().getLanguageEnum());
 						throw new ServiceRequestException("ID_CLIENT_VALIDATOR_REGEXLEGAL", "field value ilegal.", null, title);
 					}
@@ -2164,7 +2164,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 			if (toStatusEnum == SystemStatusEnum.RELEASE || toStatusEnum == SystemStatusEnum.PRE || toStatusEnum == SystemStatusEnum.ECP
 					|| (fromStatusEnum == SystemStatusEnum.PRE && toStatusEnum == SystemStatusEnum.WIP))
 			{
-				ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(objectGuid.getClassGuid());
+				ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(objectGuid.getClassGuid());
 				if (classInfo != null && !(classInfo.hasInterface(ModelInterfaceEnum.IViewObject) || classInfo.hasInterface(ModelInterfaceEnum.IBOMView)))
 				{
 					List<ViewObject> listRelation = this.stubService.getRelationStub().listRelation(objectGuid, false, true);
@@ -2181,7 +2181,7 @@ public class FSaverStub extends AbstractServiceStub<BOASImpl>
 						}
 					}
 
-					List<BOMView> bomviewList = ((BOMSImpl) this.stubService.getBOMS()).getBomViewStub().listBOMView(objectGuid, false);
+					List<BOMView> bomviewList = ((BOMSImpl) this.stubService.getBoms()).getBomViewStub().listBOMView(objectGuid, false);
 					if (!SetUtils.isNullList(bomviewList))
 					{
 						for (BOMView obj : bomviewList)

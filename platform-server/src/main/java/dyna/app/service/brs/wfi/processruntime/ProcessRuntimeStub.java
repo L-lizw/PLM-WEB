@@ -45,7 +45,7 @@ import java.util.stream.Collectors;
 /**
  * 流程对象操作分支
  *
- * @author Wanglei
+ * @author Lizw
  */
 @Component
 public class ProcessRuntimeStub extends AbstractServiceStub<WFIImpl>
@@ -70,7 +70,7 @@ public class ProcessRuntimeStub extends AbstractServiceStub<WFIImpl>
 		String wfModelName = workflowTemplate.getWorkflowTemplateInfo().getWFName();
 
 		// create process.......
-		WorkflowProcess processModelInfo = ((WFMImpl) this.stubService.getWFM()).getProcessStub().getProcess(wfModelName);
+		WorkflowProcess processModelInfo = ((WFMImpl) this.stubService.getWfm()).getProcessStub().getProcess(wfModelName);
 
 		SystemDataService sds = this.stubService.getSystemDataService();
 
@@ -120,7 +120,7 @@ public class ProcessRuntimeStub extends AbstractServiceStub<WFIImpl>
 			this.stubService.getAttachStub().addAttachment(procRtGuid, isCheckAcl, attachSettings);
 
 			InputObjectWrokflowEventImpl inputObject = new InputObjectWrokflowEventImpl(procRtGuid, wfModelName);
-			this.stubService.getEOSS().executeWorkflowAddAfterEvent(inputObject);
+			this.stubService.getEoss().executeWorkflowAddAfterEvent(inputObject);
 
 //			this.stubService.getTransactionManager().commitTransaction();
 
@@ -140,7 +140,7 @@ public class ProcessRuntimeStub extends AbstractServiceStub<WFIImpl>
 			String contents = actTitle + "("
 					+ (StringUtils.isNullString(procRt.getWFTemplateTitle(languageEnum)) ? actTitle : procRt.getWFTemplateTitle(languageEnum)) + ")";
 			
-			this.stubService.getSMS().getMailSentStub().sendMail4WorkFlow(Arrays.asList(procRt.getCreateUserGuid()), procRt.getCreateUserGuid(), procRtGuid, beginActivityRuntime.getGuid(), contents,
+			this.stubService.getSms().sendMail4WorkFlow(Arrays.asList(procRt.getCreateUserGuid()), procRt.getCreateUserGuid(), procRtGuid, beginActivityRuntime.getGuid(), contents,
 					title, MailMessageType.WORKFLOWAPPROVED, MailCategoryEnum.INFO, beginActivityRuntime.getStartNumber());
 			
 			return procRt;
@@ -251,7 +251,7 @@ public class ProcessRuntimeStub extends AbstractServiceStub<WFIImpl>
 		inputObject.setParentActGuid(procRt.getActrtGuid());
 		inputObject.setParentProcGuid(procRt.getParentGuid());
 		inputObject.setWorkflowTemplateInfo(workflowTemplate);
-		this.stubService.getEOSS().executeWorkflowAddBeforeEvent(inputObject);
+		this.stubService.getEoss().executeWorkflowAddBeforeEvent(inputObject);
 	}
 
 	/**
@@ -598,8 +598,8 @@ public class ProcessRuntimeStub extends AbstractServiceStub<WFIImpl>
 		{
 			for (WorkflowTransitionInfo tran : listTrans)
 			{
-				WorkflowActivityInfo fromActivityInfo = this.stubService.getWFM().getWorkflowActivityInfo(tran.getWorkflowGuid(), tran.getActFromGuid());
-				WorkflowActivityInfo toActivityInfo = this.stubService.getWFM().getWorkflowActivityInfo(tran.getWorkflowGuid(), tran.getActToGuid());
+				WorkflowActivityInfo fromActivityInfo = this.stubService.getWfm().getWorkflowActivityInfo(tran.getWorkflowGuid(), tran.getActFromGuid());
+				WorkflowActivityInfo toActivityInfo = this.stubService.getWfm().getWorkflowActivityInfo(tran.getWorkflowGuid(), tran.getActToGuid());
 
 				if (fromActivityInfo != null && fromActivityInfo.getName().equalsIgnoreCase(beginActivity.getName()))
 				{
@@ -660,12 +660,12 @@ public class ProcessRuntimeStub extends AbstractServiceStub<WFIImpl>
 					WorkflowActivityInfo toActivityInfo = null;
 					if (StringUtils.isGuid(fromActivityGuid))
 					{
-						fromActivityInfo = this.stubService.getWFM().getWorkflowActivityInfo(tran.getWorkflowGuid(), fromActivityGuid);
+						fromActivityInfo = this.stubService.getWfm().getWorkflowActivityInfo(tran.getWorkflowGuid(), fromActivityGuid);
 					}
 
 					if (StringUtils.isGuid(toActivityGuid))
 					{
-						toActivityInfo = this.stubService.getWFM().getWorkflowActivityInfo(tran.getWorkflowGuid(), toActivityGuid);
+						toActivityInfo = this.stubService.getWfm().getWorkflowActivityInfo(tran.getWorkflowGuid(), toActivityGuid);
 					}
 					if (fromActivityInfo != null && toActivityInfo != null && fromActivityInfo.getName().equalsIgnoreCase(name))
 					{
@@ -804,7 +804,7 @@ public class ProcessRuntimeStub extends AbstractServiceStub<WFIImpl>
 		}
 
 		String operatorGuid = this.stubService.getOperatorGuid();
-		boolean isAgent = this.stubService.getAAS().isAgent(operatorGuid, beginAct.getCreateUserGuid());
+		boolean isAgent = this.stubService.getAas().isAgent(operatorGuid, beginAct.getCreateUserGuid());
 		if (!operatorGuid.equals(beginAct.getCreateUserGuid()) && !isAgent)
 		{
 			throw new ServiceRequestException("ID_WEB_WFRESUME_DENIED", "resumeProcess failed, need creator: " + beginAct.getCreateUserGuid());
@@ -821,7 +821,7 @@ public class ProcessRuntimeStub extends AbstractServiceStub<WFIImpl>
 		}
 
 		// DCR规则检查
-		this.stubService.getDCR().check(procRtGuid, processRuntime2.getWFTemplateName(), beginAct.getName(), attachList);
+		this.stubService.getDcr().check(procRtGuid, processRuntime2.getWFTemplateName(), beginAct.getName(), attachList);
 
 		// set process environment
 		if (settings == null)
@@ -973,7 +973,7 @@ public class ProcessRuntimeStub extends AbstractServiceStub<WFIImpl>
 				String contents = actTitle + "("
 						+ (StringUtils.isNullString(processRuntime.getWFTemplateTitle(languageEnum)) ? actTitle : processRuntime.getWFTemplateTitle(languageEnum)) + ")";
 
-				this.stubService.getSMS().getMailSentStub().sendMail4WorkFlow(Arrays.asList(receiverGuid), receiverGuid, procRtGuid, beginActivityRuntime.getGuid(), contents,
+				this.stubService.getSms().sendMail4WorkFlow(Arrays.asList(receiverGuid), receiverGuid, procRtGuid, beginActivityRuntime.getGuid(), contents,
 						title, MailMessageType.WORKFLOWAPPROVED, MailCategoryEnum.INFO, beginActivityRuntime.getStartNumber());
 
 			}
@@ -1333,7 +1333,7 @@ public class ProcessRuntimeStub extends AbstractServiceStub<WFIImpl>
 			// 组角色不能在未结束的流程中
 			guidList.add(guid);
 			// 组角色的所有用户都不能在未结束的流程中
-			List<User> userList = this.stubService.getAAS().listUserByRoleInGroup(guid);
+			List<User> userList = this.stubService.getAas().listUserByRoleInGroup(guid);
 			if (!SetUtils.isNullList(userList))
 			{
 				tempList = userList.stream().map(User::getGuid).collect(Collectors.toList());
@@ -1351,7 +1351,7 @@ public class ProcessRuntimeStub extends AbstractServiceStub<WFIImpl>
 			break;
 		case ROLE:
 			// 角色所属的所有组角色
-			List<RIG> rigList = this.stubService.getAAS().listRIGByRoleGuid(guid);
+			List<RIG> rigList = this.stubService.getAas().listRIGByRoleGuid(guid);
 			if (!SetUtils.isNullList(rigList))
 			{
 				rigList.forEach(rig -> {
@@ -1360,7 +1360,7 @@ public class ProcessRuntimeStub extends AbstractServiceStub<WFIImpl>
 						// 组角色不能在未结束的流程中
 						guidList.add(rig.getGuid());
 						// 组角色的所有用户都不能在未结束的流程中
-						List<User> userList_ = this.stubService.getAAS().listUserByRoleInGroup(rig.getGuid());
+						List<User> userList_ = this.stubService.getAas().listUserByRoleInGroup(rig.getGuid());
 						if (!SetUtils.isNullList(userList_))
 						{
 							List<String> tempList_ = userList_.stream().map(User::getGuid).collect(Collectors.toList());
@@ -1420,7 +1420,7 @@ public class ProcessRuntimeStub extends AbstractServiceStub<WFIImpl>
 		while (StringUtils.isGuid(groupGuid))
 		{
 			groupGuidList.add(groupGuid);
-			Group group = this.stubService.getAAS().getGroup(groupGuid);
+			Group group = this.stubService.getAas().getGroup(groupGuid);
 			groupGuid = group.getParentGuid();
 		}
 		return groupGuidList;
@@ -1428,14 +1428,14 @@ public class ProcessRuntimeStub extends AbstractServiceStub<WFIImpl>
 
 	private List<String> listAllSuperGroupByRIG(String rigGuid) throws ServiceRequestException
 	{
-		RIG rig = this.stubService.getAAS().getRIG(rigGuid);
+		RIG rig = this.stubService.getAas().getRIG(rigGuid);
 		String groupGuid = rig.getGroupGuid();
 		return this.listAllSuperGroup(groupGuid);
 	}
 
 	private List<String> listAllSubGroup(String groupGuid) throws ServiceRequestException
 	{
-		List<Group> groupList = this.stubService.getAAS().listSubGroup(groupGuid, null, true);
+		List<Group> groupList = this.stubService.getAas().listSubGroup(groupGuid, null, true);
 		if (!SetUtils.isNullList(groupList))
 		{
 			return groupList.stream().map(Group::getGuid).collect(Collectors.toList());
@@ -1445,7 +1445,7 @@ public class ProcessRuntimeStub extends AbstractServiceStub<WFIImpl>
 
 	private List<String> listAllUserInGroup(String groupGuid) throws ServiceRequestException
 	{
-		List<User> userList = this.stubService.getAAS().listUserInGroupAndSubGroup(groupGuid);
+		List<User> userList = this.stubService.getAas().listUserInGroupAndSubGroup(groupGuid);
 		if (!SetUtils.isNullList(userList))
 		{
 			return userList.stream().map(User::getGuid).collect(Collectors.toList());
@@ -1474,13 +1474,13 @@ public class ProcessRuntimeStub extends AbstractServiceStub<WFIImpl>
 				// 所有角色
 				try
 				{
-					List<Role> roleList = this.stubService.getAAS().listRoleByGroup(groupGuid);
+					List<Role> roleList = this.stubService.getAas().listRoleByGroup(groupGuid);
 					if (!SetUtils.isNullList(roleList))
 					{
 						roleList.forEach(role -> {
 							try
 							{
-								RIG rig = this.stubService.getAAS().getRIGByGroupAndRole(groupGuid, role.getGuid());
+								RIG rig = this.stubService.getAas().getRIGByGroupAndRole(groupGuid, role.getGuid());
 								rigGuidList.add(rig.getGuid());
 							}
 							catch (ServiceRequestException e)
@@ -1501,8 +1501,8 @@ public class ProcessRuntimeStub extends AbstractServiceStub<WFIImpl>
 
 	private List<String> listAllRIGOfUser(String userGuid) throws ServiceRequestException
 	{
-		User user = this.stubService.getAAS().getUser(userGuid);
-		List<RIG> rigList = this.stubService.getAAS().listRIGOfUser(user.getUserId());
+		User user = this.stubService.getAas().getUser(userGuid);
+		List<RIG> rigList = this.stubService.getAas().listRIGOfUser(user.getUserId());
 		if (!SetUtils.isNullList(rigList))
 		{
 			return rigList.stream().map(RIG::getGuid).distinct().collect(Collectors.toList());
@@ -1513,8 +1513,8 @@ public class ProcessRuntimeStub extends AbstractServiceStub<WFIImpl>
 	private List<String> listAllGroupOfUser(String userGuid) throws ServiceRequestException
 	{
 		List<String> guidList = new ArrayList<String>();
-		User user = this.stubService.getAAS().getUser(userGuid);
-		List<RIG> rigList = this.stubService.getAAS().listRIGOfUser(user.getUserId());
+		User user = this.stubService.getAas().getUser(userGuid);
+		List<RIG> rigList = this.stubService.getAas().listRIGOfUser(user.getUserId());
 		if (!SetUtils.isNullList(rigList))
 		{
 			List<String> groupGuidList = rigList.stream().map(RIG::getGroupGuid).distinct().collect(Collectors.toList());
@@ -1529,7 +1529,7 @@ public class ProcessRuntimeStub extends AbstractServiceStub<WFIImpl>
 						}
 						try
 						{
-							Group group = this.stubService.getAAS().getGroup(groupGuid);
+							Group group = this.stubService.getAas().getGroup(groupGuid);
 							if (group != null)
 							{
 								groupGuid = group.getParentGuid();
@@ -1615,8 +1615,8 @@ public class ProcessRuntimeStub extends AbstractServiceStub<WFIImpl>
 		String updateUserGuid = process.getUpdateUserGuid();
 		String wftemplateguid = process.getWFTemplateGuid();
 		WorkflowTemplateInfo wfTemplateInfo = this.stubService.getWorkflowTemplateInfo(wftemplateguid);
-		User createUser = this.stubService.getAAS().getUser(createUserGuid);
-		User updateUser = this.stubService.getAAS().getUser(updateUserGuid);
+		User createUser = this.stubService.getAas().getUser(createUserGuid);
+		User updateUser = this.stubService.getAas().getUser(updateUserGuid);
 		process.put("CREATEUSERNAME", createUser != null ? createUser.getUserName() : null);
 		process.put("UPDATEUSERNAME", updateUser != null ? updateUser.getUserName() : null);
 		process.put("TEMPLATENAME", wfTemplateInfo != null ? wfTemplateInfo.getName() : null);
@@ -1895,7 +1895,7 @@ public class ProcessRuntimeStub extends AbstractServiceStub<WFIImpl>
 				{
 					for (User user : listNotFinishPerformer)
 					{
-						boolean isAgent = this.stubService.getAAS().isAgent(operatorGuid, user.getGuid());
+						boolean isAgent = this.stubService.getAas().isAgent(operatorGuid, user.getGuid());
 						if (operatorGuid.equalsIgnoreCase(user.getGuid()) || isAgent)
 						{
 							return true;
@@ -1911,7 +1911,7 @@ public class ProcessRuntimeStub extends AbstractServiceStub<WFIImpl>
 			if (processRuntime != null && processRuntime.getStatus() == ProcessStatusEnum.ONHOLD)
 			{
 				ActivityRuntime beginActivityRuntime = this.stubService.getBeginActivityRuntime(procRtGuid);
-				boolean isAgent = this.stubService.getAAS().isAgent(operatorGuid, beginActivityRuntime.getCreateUserGuid());
+				boolean isAgent = this.stubService.getAas().isAgent(operatorGuid, beginActivityRuntime.getCreateUserGuid());
 				if (operatorGuid.equals(beginActivityRuntime.getCreateUserGuid()) || isAgent)
 				{
 					return true;

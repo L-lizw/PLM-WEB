@@ -763,7 +763,7 @@ public class VarCalculateStub extends AbstractServiceStub<CPBImpl>
 
 	private String getMessage(String id, Object... agrs) throws ServiceRequestException
 	{
-		return this.stubService.getMSRM().getMSRString(id, this.stubService.getUserSignature().getLanguageEnum().getId(), agrs);
+		return this.stubService.getMsrm().getMSRString(id, this.stubService.getUserSignature().getLanguageEnum().getId(), agrs);
 	}
 
 }

@@ -59,11 +59,11 @@ public class ProcFileStub extends AbstractServiceStub<DSSImpl>
 		ActivityRuntime actRt = null;
 		if (!StringUtils.isNullString(actGuid))
 		{
-			actRt = this.stubService.getWFE().getActivityRuntime(actGuid);
+			actRt = this.stubService.getWfi().getActivityRuntime(actGuid);
 			procGuid = actRt.getProcessRuntimeGuid();
 		}
 
-		ProcessRuntime procRt = this.stubService.getWFE().getProcessRuntime(procGuid);
+		ProcessRuntime procRt = this.stubService.getWfi().getProcessRuntime(procGuid);
 
 		file.setProcessGuid(procGuid);
 		file.setActivityGuid(actGuid);

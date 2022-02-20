@@ -71,7 +71,7 @@ public class ModelManageModifyStub extends AbstractServiceStub<MMSImpl>
 			IconEntry classIcon = uiIcon.getClassIcon();
 			if (classIcon != null)
 			{
-				ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(classIcon.getClassGuid());
+				ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(classIcon.getClassGuid());
 				classInfo.setIcon(classIcon.getImagePath());
 				classInfo.setIcon32(classIcon.getImagePath32());
 				classInfo.setUpdateUserGuid(currentUserGuid);
@@ -82,7 +82,7 @@ public class ModelManageModifyStub extends AbstractServiceStub<MMSImpl>
 			{
 				Map<String, Object> param = new HashMap<String, Object>();
 				param.put(SystemObject.UPDATE_USER_GUID, currentUserGuid);
-				List<ClassAction> actionList = this.stubService.getEMM().listClassAction(classActionIcon.get(0).getClassGuid());
+				List<ClassAction> actionList = this.stubService.getEmm().listClassAction(classActionIcon.get(0).getClassGuid());
 				for (IconEntry iconEntry : classActionIcon)
 				{
 					param.put(iconEntry.getActionGuid(), iconEntry.getActionGuid());

@@ -43,11 +43,11 @@ public class StorageStub extends AbstractServiceStub<DSSImpl>
 		Group group = null;
 		if (!StringUtils.isNullString(groupGuid))
 		{
-			group = this.stubService.getAAS().getGroup(groupGuid);
+			group = this.stubService.getAas().getGroup(groupGuid);
 		}
 		else if (!StringUtils.isNullString(groupId))
 		{
-			group = this.stubService.getAAS().getGroupById(groupId);
+			group = this.stubService.getAas().getGroupById(groupId);
 		}
 		else
 		{
@@ -63,7 +63,7 @@ public class StorageStub extends AbstractServiceStub<DSSImpl>
 			throw new ServiceRequestException("Not found library for group: " + groupGuid + " " + groupId);
 		}
 
-		Folder library = this.stubService.getEDAP().getFolder(group.getLibraryGuid());
+		Folder library = this.stubService.getEdap().getFolder(group.getLibraryGuid());
 		String storageId = library.getStorage();
 
 		DSStorage storage = this.getStorage(storageId);

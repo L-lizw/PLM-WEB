@@ -38,6 +38,8 @@ import dyna.net.service.data.SystemDataService;
 import dyna.net.service.data.model.BusinessModelService;
 import dyna.net.service.data.model.ClassificationFeatureService;
 import dyna.net.service.data.model.LifecycleModelService;
+import lombok.AccessLevel;
+import lombok.Getter;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,6 +48,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 
+@Getter(AccessLevel.PACKAGE)
 @Service public class MMSImpl extends BusinessRuleService implements MMS
 {
 	@DubboReference private BusinessModelService         businessModelService;
@@ -54,6 +57,15 @@ import java.util.Map;
 	@DubboReference private RelationService              relationService;
 	@DubboReference private SyncModelService             syncModelService;
 	@DubboReference private SystemDataService            systemDataService;
+
+	@Autowired
+	private AAS aas;
+	@Autowired
+	private BOAS boas;
+	@Autowired
+	private EMM emm;
+	@Autowired
+	private WFM wfm;
 
 	@Autowired private ModelManageModifyStub          modelManageStub          ;
 	@Autowired private CodeManageModifyStub           codeManageStub           ;
@@ -160,54 +172,6 @@ import java.util.Map;
 			return;
 		}
 		super.authorize(method, args);
-	}
-
-	protected synchronized AAS getAAS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(AAS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
-
-	protected synchronized BOAS getBOAS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(BOAS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
-
-	protected synchronized EMM getEMM() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(EMM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
-
-	protected synchronized WFM getWFM() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(WFM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
 	}
 
 	@Override public void createCodeItem(CodeItemInfo codeItemInfo) throws ServiceRequestException

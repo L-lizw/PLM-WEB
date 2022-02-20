@@ -101,7 +101,7 @@ public class RouteStub extends AbstractServiceStub<BOASImpl>
 	private FoundationObject createProcessFlow(FoundationObject end1, FoundationObject processFlowTemplate) throws ServiceRequestException
 	{
 		String templateName = ProcessFlowConstants.ITEM_PROCESS_FLOW_RELATION_TEMPLATE_NAME;
-		RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateByName(end1.getObjectGuid(), templateName);
+		RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateByName(end1.getObjectGuid(), templateName);
 
 		// 复制生成工艺流程
 		String processClassName = this.getClassName(ModelInterfaceEnum.IProcessFlow);
@@ -147,7 +147,7 @@ public class RouteStub extends AbstractServiceStub<BOASImpl>
 	{
 		String templateName = ProcessFlowConstants.PROCESS_FLOW_PROCESS_RELATION_TEMPLATE_NAME;
 
-		RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateByName(processFlow.getObjectGuid(), templateName);
+		RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateByName(processFlow.getObjectGuid(), templateName);
 
 		// 创建工序
 		String processClassName = this.getClassName(ModelInterfaceEnum.IProcess);
@@ -168,7 +168,7 @@ public class RouteStub extends AbstractServiceStub<BOASImpl>
 		{
 			for (ViewObject viewObject : viewList)
 			{
-				RelationTemplateInfo relationTemplate_ = this.stubService.getEMM().getRelationTemplateByName(processTemplate.getObjectGuid(), viewObject.getName());
+				RelationTemplateInfo relationTemplate_ = this.stubService.getEmm().getRelationTemplateByName(processTemplate.getObjectGuid(), viewObject.getName());
 				SearchCondition searchCondition = this.getStructureCondition(relationTemplate_);
 				SearchCondition end2SearchCondition = this.getEnd2Condition(relationTemplate_);
 				List<FoundationObject> end2List = this.stubService.listFoundationObjectOfRelation(viewObject.getObjectGuid(), searchCondition, end2SearchCondition, null, false);
@@ -232,7 +232,7 @@ public class RouteStub extends AbstractServiceStub<BOASImpl>
 			StructureObject structureObject = stubService.newStructureObject(relationTemplate.getStructureClassGuid(), relationTemplate.getStructureClassName());
 			stubService.link(end1.getObjectGuid(), newObject.getObjectGuid(), structureObject, relationTemplate.getName());
 
-			RelationTemplateInfo template = stubService.getEMM().getRelationTemplateByName(foundationObject.getObjectGuid(),
+			RelationTemplateInfo template = stubService.getEmm().getRelationTemplateByName(foundationObject.getObjectGuid(),
 					ProcessFlowConstants.PROCESS_FLOW_PROCESS_RELATION_TEMPLATE_NAME);
 
 			List<FoundationObject> newProcessList = new ArrayList<FoundationObject>();
@@ -301,7 +301,7 @@ public class RouteStub extends AbstractServiceStub<BOASImpl>
 	 */
 	private void copyFile(ObjectGuid objectGuid, ObjectGuid origObjectGuid) throws ServiceRequestException
 	{
-		((DSSImpl) this.stubService.getDSS()).getFileInfoStub().copyFile(objectGuid, origObjectGuid, false);
+		((DSSImpl) this.stubService.getDss()).getFileInfoStub().copyFile(objectGuid, origObjectGuid, false);
 	}
 
 	/**
@@ -365,7 +365,7 @@ public class RouteStub extends AbstractServiceStub<BOASImpl>
 	private SearchCondition getStructureCondition(RelationTemplateInfo relationTemplate) throws ServiceRequestException
 	{
 		SearchCondition sc = SearchConditionFactory.createSearchConditionForStructure(relationTemplate.getStructureClassName());
-		List<UIObjectInfo> uiObjectList = this.stubService.getEMM().listALLFormListUIObjectInBizModel(relationTemplate.getStructureClassName());
+		List<UIObjectInfo> uiObjectList = this.stubService.getEmm().listALLFormListUIObjectInBizModel(relationTemplate.getStructureClassName());
 		if (!SetUtils.isNullList(uiObjectList))
 		{
 			for (UIObjectInfo uiObject : uiObjectList)
@@ -378,21 +378,21 @@ public class RouteStub extends AbstractServiceStub<BOASImpl>
 
 	private SearchCondition getEnd2Condition(RelationTemplateInfo info) throws ServiceRequestException
 	{
-		RelationTemplate relationTemplate = this.stubService.getEMM().getRelationTemplate(info.getGuid());
+		RelationTemplate relationTemplate = this.stubService.getEmm().getRelationTemplate(info.getGuid());
 		String end2BoName = SetUtils.isNullList(relationTemplate.getRelationTemplateEnd2List()) ? null : relationTemplate.getRelationTemplateEnd2List().get(0).getEnd2BoName();
 		if (StringUtils.isNullString(end2BoName))
 		{
 			return null;
 		}
 
-		BOInfo end2BOInfo = this.stubService.getEMM().getCurrentBoInfoByName(end2BoName, false);
+		BOInfo end2BOInfo = this.stubService.getEmm().getCurrentBoInfoByName(end2BoName, false);
 		if (end2BOInfo == null || StringUtils.isNullString(end2BOInfo.getClassName()))
 		{
 			return null;
 		}
 
 		SearchCondition sc = SearchConditionFactory.createSearchCondition4Class(end2BOInfo.getClassName(), null, false);
-		List<UIObjectInfo> uiObjectList = this.stubService.getEMM().listALLFormListUIObjectInBizModel(end2BOInfo.getClassName());
+		List<UIObjectInfo> uiObjectList = this.stubService.getEmm().listALLFormListUIObjectInBizModel(end2BOInfo.getClassName());
 		if (!SetUtils.isNullList(uiObjectList))
 		{
 			for (UIObjectInfo uiObject : uiObjectList)
@@ -405,7 +405,7 @@ public class RouteStub extends AbstractServiceStub<BOASImpl>
 
 	private String getClassName(ModelInterfaceEnum modelInterface) throws ServiceRequestException
 	{
-		ClassInfo classInfo = this.stubService.getEMM().getFirstLevelClassByInterface(modelInterface, null);
+		ClassInfo classInfo = this.stubService.getEmm().getFirstLevelClassByInterface(modelInterface, null);
 		return classInfo.getName();
 	}
 

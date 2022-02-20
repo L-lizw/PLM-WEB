@@ -58,13 +58,13 @@ public class CheckOutStub extends AbstractServiceStub<BOASImpl>
 			// 执行检出操作
 			retFoundationObject = this.checkOutNoCascade(foundationObject, checkOutUserGuid, isCheckAuth);
 
-			decoratorFactory.decorateFoundationObject(null, retFoundationObject, this.stubService.getEMM(), this.stubService.getEMM().getCurrentBizModel().getGuid(), null);
+			decoratorFactory.decorateFoundationObject(null, retFoundationObject, this.stubService.getEmm(), this.stubService.getEmm().getCurrentBizModel().getGuid(), null);
 			List<FoundationObject> list = new ArrayList<FoundationObject>();
 			list.add(retFoundationObject);
 			String sessionId = this.stubService.getSignature().getCredential();
-			decoratorFactory.decorateFoundationObject(null, list, this.stubService.getEMM(), sessionId);
+			decoratorFactory.decorateFoundationObject(null, list, this.stubService.getEmm(), sessionId);
 
-			EMM emm = this.stubService.getEMM();
+			EMM emm = this.stubService.getEmm();
 
 			// 处理relation
 			// 查找所有关联的ViewObject
@@ -74,7 +74,7 @@ public class CheckOutStub extends AbstractServiceStub<BOASImpl>
 			{
 				for (ViewObject viewObject : viewObjectList)
 				{
-					RelationTemplateInfo relationTemplate = this.stubService.getEMM()
+					RelationTemplateInfo relationTemplate = this.stubService.getEmm()
 							.getRelationTemplateById(viewObject.get(ViewObject.TEMPLATE_ID) == null ? "" : (String) viewObject.get(ViewObject.TEMPLATE_ID));
 					if (relationTemplate == null)
 					{
@@ -172,7 +172,7 @@ public class CheckOutStub extends AbstractServiceStub<BOASImpl>
 		{
 
 			// invoke checkout.before event script
-			this.stubService.getEOSS().executeCheckOutBeforeEvent(foundationObject);
+			this.stubService.getEoss().executeCheckOutBeforeEvent(foundationObject);
 			// 执行检出操作
 			foundationObject = this.stubService.getInstanceService().checkout(foundationObject, checkOutUserGuid, Constants.isSupervisor(isCheckAuth, this.stubService), sessionId,
 					this.stubService.getFixedTransactionId());
@@ -180,14 +180,14 @@ public class CheckOutStub extends AbstractServiceStub<BOASImpl>
 			ObjectGuid objectGuid = foundationObject.getObjectGuid();
 			String bmGuid = this.stubService.getUserSignature().getLoginGroupBMGuid();
 
-			EMM emm = this.stubService.getEMM();
+			EMM emm = this.stubService.getEmm();
 			Set<String> fieldSet = this.getObjectFieldSet(objectGuid);
 
 			decoratorFactory.decorateFoundationObject(fieldSet, foundationObject, emm, bmGuid, null);
 			decoratorFactory.ofd.decorateWithField(fieldSet, foundationObject, emm, sessionId, false);
 
 			// invoke checkout.after event script
-			this.stubService.getEOSS().executeCheckOutAfterEvent(foundationObject);
+			this.stubService.getEoss().executeCheckOutAfterEvent(foundationObject);
 		}
 		catch (DynaDataException e)
 		{
@@ -205,7 +205,7 @@ public class CheckOutStub extends AbstractServiceStub<BOASImpl>
 	{
 		ClassStub.decorateObjectGuid(objectGuid, this.stubService);
 		String bmGuid = this.stubService.getUserSignature().getLoginGroupBMGuid();
-		List<UIObjectInfo> uiObjectList = ((EMMImpl) this.stubService.getEMM()).getUIStub().listUIObjectByBizModel(objectGuid.getClassName(), bmGuid, UITypeEnum.FORM, true);
+		List<UIObjectInfo> uiObjectList = ((EMMImpl) this.stubService.getEmm()).getUIStub().listUIObjectByBizModel(objectGuid.getClassName(), bmGuid, UITypeEnum.FORM, true);
 		UIObjectInfo[] uiObjects = null;
 		if (!SetUtils.isNullList(uiObjectList))
 		{
@@ -231,7 +231,7 @@ public class CheckOutStub extends AbstractServiceStub<BOASImpl>
 			}
 		}
 
-		ClassInfo classInfo = this.stubService.getEMM().getClassByName(objectGuid.getClassName());
+		ClassInfo classInfo = this.stubService.getEmm().getClassByName(objectGuid.getClassName());
 		if (classInfo != null)
 		{
 			List<ModelInterfaceEnum> interfaceList = classInfo.getInterfaceList();
@@ -252,6 +252,6 @@ public class CheckOutStub extends AbstractServiceStub<BOASImpl>
 			}
 		}
 
-		return this.stubService.getEMM().getObjectFieldNamesInSC(searchCondition);
+		return this.stubService.getEmm().getObjectFieldNamesInSC(searchCondition);
 	}
 }

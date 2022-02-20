@@ -19,6 +19,8 @@ import dyna.net.security.signature.SignatureFactory;
 import dyna.net.service.brs.AAS;
 import dyna.net.service.brs.LIC;
 import dyna.net.service.data.SystemDataService;
+import lombok.AccessLevel;
+import lombok.Getter;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,11 +33,15 @@ import java.util.List;
  *
  * @author Lizw
  */
+@Getter(AccessLevel.PROTECTED)
 @Service public class LICImpl extends BusinessRuleService implements LIC
 {
 	private static boolean initialized = false;
 
 	@DubboReference private SystemDataService systemDataService;
+
+	@Autowired
+	private AAS aas;
 
 	@Autowired private SessionStub sessionStub ;
 	@Autowired private LicenseStub licenseStub ;
@@ -77,19 +83,6 @@ import java.util.List;
 		{
 			super.authorize(method, args);
 		}
-	}
-
-	protected synchronized AAS getAAS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(AAS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
 	}
 
 	/*

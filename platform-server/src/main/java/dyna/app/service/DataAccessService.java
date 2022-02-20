@@ -54,17 +54,6 @@ public abstract class DataAccessService extends SignableAdapter implements Trans
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see dyna.app.core.pool.Poolable#activateObject()
-	 */
-	//	@Override
-	//	public void activateObject() throws Exception
-	//	{
-	//		isActive = true;
-	//	}
-
-	/*
-	 * (non-Javadoc)
-	 *
 	 * @see dyna.app.core.Signable#clearSignature()
 	 */
 	@Override public void clearSignature()
@@ -73,18 +62,6 @@ public abstract class DataAccessService extends SignableAdapter implements Trans
 		super.clearSignature();
 		this.cleartTransactionId();
 	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see dyna.app.core.pool.Poolable#destroyObject()
-	 */
-	//	@Override
-	//	public void destroyObject() throws Exception
-	//	{
-	//		this.isActive = false;
-	//		this.clearSignature();
-	//	}
 
 	public String getOperatorGuid() throws ServiceRequestException
 	{
@@ -120,83 +97,6 @@ public abstract class DataAccessService extends SignableAdapter implements Trans
 			}
 		}
 
-	}
-
-	/**
-	 * get other available service from current service
-	 *
-	 * @param <T>
-	 * @param serviceClass
-	 * @return
-	 * @throws ServiceNotFoundException
-	 */
-	@SuppressWarnings("unchecked") public <T extends ApplicationService> T getRefService(Class<T> serviceClass) throws ServiceNotFoundException
-	{
-		ApplicationService service = null;
-		synchronized (this.syncObject)
-		{
-			if (this.referenceServiceMap == null)
-			{
-				this.referenceServiceMap = Collections.synchronizedMap(new HashMap<Class<? extends ApplicationService>, ApplicationService>());
-				Class<? extends DataAccessService> selfClass = this.getClass();
-				Class<?>[] interfaces = selfClass.getInterfaces();
-				if (interfaces != null && interfaces.length != 0)
-				{
-					for (Class<?> interfaceClass : interfaces)
-					{
-						if (Service.class.isAssignableFrom(interfaceClass))
-						{
-							this.referenceServiceMap.put((Class<? extends ApplicationService>) interfaceClass, this);
-							break;
-						}
-					}
-				}
-			}
-
-			service = this.referenceServiceMap.get(serviceClass);
-			if (service == null)
-			{
-				//todo
-				//				service = this.serviceContext.allocatService(serviceClass);
-
-				this.referenceServiceMap.put(serviceClass, service);
-
-				((DataAccessService) service).isRefered = true;
-				((DataAccessService) service).referenceServiceMap = this.referenceServiceMap;
-			}
-			if (service instanceof Signable)
-			{
-				((Signable) service).setSignature(this.signature);
-				((Transactional) service).setFixedTransactionId(this.getFixedTransactionId());
-			}
-		}
-		return (T) service;
-	}
-
-	/**
-	 * simple call <code>getRefService(Class)</code>
-	 *
-	 * @param <T>
-	 * @param serviceClass
-	 * @param sessionId    useless, just match form parameter
-	 * @return
-	 * @throws ServiceNotFoundException
-	 */
-	public <T extends ApplicationService> T getServiceInstance(Class<T> serviceClass, String sessionId) throws ServiceNotFoundException
-	{
-		return this.getRefService(serviceClass);
-	}
-
-	/**
-	 * 获取服务
-	 *
-	 * @param serviceClass
-	 * @return
-	 * @throws ServiceNotFoundException
-	 */
-	public <T extends ApplicationService> T getServiceInstance(Class<T> serviceClass) throws ServiceNotFoundException
-	{
-		return this.getServiceInstance(serviceClass, null);
 	}
 
 	public String getServiceCredential()

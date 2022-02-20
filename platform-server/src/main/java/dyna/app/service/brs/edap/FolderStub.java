@@ -35,7 +35,7 @@ import java.util.List;
 /**
  * 与Folder相关的操作分支
  *
- * @author Caogc
+ * @author Lizw
  */
 @Component
 public class FolderStub extends AbstractServiceStub<EDAPImpl>
@@ -110,11 +110,11 @@ public class FolderStub extends AbstractServiceStub<EDAPImpl>
 
 			// 0.无权限拿到所有class 该文件夹以及一下文件夹中有无数据 如若有数据 则不允许删除
 			// 拿到当前用户登陆的模型
-			BMInfo currentBizModel = this.stubService.getEMM().getCurrentBizModel();
+			BMInfo currentBizModel = this.stubService.getEmm().getCurrentBizModel();
 			List<BOInfo> boInfoList = null;
 			if (currentBizModel != null)
 			{
-				boInfoList = this.stubService.getEMM().listBizObjectOfModelNonContainOthers(currentBizModel.getName());
+				boInfoList = this.stubService.getEmm().listBizObjectOfModelNonContainOthers(currentBizModel.getName());
 			}
 			if (!SetUtils.isNullList(boInfoList) && folder != null)
 			{
@@ -122,9 +122,9 @@ public class FolderStub extends AbstractServiceStub<EDAPImpl>
 				{
 					if (!StringUtils.isNullString(boInfo.getClassGuid()) && boInfo.isCreateTable())
 					{
-						ClassInfo classByBizGuid = this.stubService.getEMM().getClassByGuid(boInfo.getClassGuid());
+						ClassInfo classByBizGuid = this.stubService.getEmm().getClassByGuid(boInfo.getClassGuid());
 						SearchCondition createSearchCondition4GlobalSearch = SearchConditionFactory.createSearchCondition4Class(classByBizGuid.getName(), folder, true);
-						List<FoundationObject> listObject = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().listObject(createSearchCondition4GlobalSearch, false);
+						List<FoundationObject> listObject = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().listObject(createSearchCondition4GlobalSearch, false);
 						if (!SetUtils.isNullList(listObject))
 						{
 							throw new ServiceRequestException("ID_APP_LIB_CANNT_DELETE_THIS_HASDATA", "this lib has data,it can't be deleted");
@@ -488,7 +488,7 @@ public class FolderStub extends AbstractServiceStub<EDAPImpl>
 	{
 		if (!StringUtils.isGuid(userGuid))
 		{
-			User user = this.stubService.getAAS().getUserById(userId);
+			User user = this.stubService.getAas().getUserById(userId);
 			if (user == null)
 			{
 				return null;
@@ -507,7 +507,7 @@ public class FolderStub extends AbstractServiceStub<EDAPImpl>
 		Folder retFolder = null;
 		try
 		{
-			Group group = this.stubService.getAAS().getGroup(groupGuid);
+			Group group = this.stubService.getAas().getGroup(groupGuid);
 			if (group == null || group.getLibraryGuid() == null)
 			{
 				return null;

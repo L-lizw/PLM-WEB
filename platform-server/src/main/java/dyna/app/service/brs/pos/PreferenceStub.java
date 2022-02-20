@@ -633,7 +633,7 @@ public class PreferenceStub extends AbstractServiceStub<POSImpl>
 				{
 					String guidStr[] = preferenceDetail.getValue().split("\\|");
 
-					BOInfo boInfo = this.stubService.getEMM().getCurrentBizObjectByGuid(guidStr[0]);
+					BOInfo boInfo = this.stubService.getEmm().getCurrentBizObjectByGuid(guidStr[0]);
 					if (boInfo != null)
 					{
 						if (guidStr.length > 1)
@@ -665,7 +665,7 @@ public class PreferenceStub extends AbstractServiceStub<POSImpl>
 					SystemObject systemObject = null;
 					try
 					{
-						systemObject = ((EDAPImpl) this.stubService.getEDAP()).getFolderStub().getFolder(preferenceDetail.getValue(), false);
+						systemObject = ((EDAPImpl) this.stubService.getEdap()).getFolderStub().getFolder(preferenceDetail.getValue(), false);
 					}
 					catch (ServiceRequestException e)
 					{

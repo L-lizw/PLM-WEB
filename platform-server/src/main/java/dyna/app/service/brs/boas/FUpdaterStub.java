@@ -53,7 +53,7 @@ public class FUpdaterStub extends AbstractServiceStub<BOASImpl>
 				ClassStub.decorateObjectGuid(objectGuid, this.stubService);
 			}
 
-			ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(objectGuid.getClassGuid());
+			ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(objectGuid.getClassGuid());
 			boolean isView = false;
 			if (classInfo != null && (classInfo.hasInterface(ModelInterfaceEnum.IBOMView) || classInfo.hasInterface(ModelInterfaceEnum.IViewObject)))
 			{
@@ -82,7 +82,7 @@ public class FUpdaterStub extends AbstractServiceStub<BOASImpl>
 				}
 
 				// invoke update.before event
-				this.stubService.getEOSS().executeUpdateBeforeEvent(foundationObject);
+				this.stubService.getEoss().executeUpdateBeforeEvent(foundationObject);
 			}
 			String sessionId = this.stubService.getSignature().getCredential();
 
@@ -92,7 +92,7 @@ public class FUpdaterStub extends AbstractServiceStub<BOASImpl>
 			{
 				foundationObject = this.stubService.getFoundationStub().getObject(objectGuid, false);
 				// invoke add.after event.
-				this.stubService.getEOSS().executeUpdateAfterEvent(foundationObject);
+				this.stubService.getEoss().executeUpdateAfterEvent(foundationObject);
 
 				return this.stubService.getFoundationStub().getObject(objectGuid, isCheckAcl);
 			}
@@ -126,7 +126,7 @@ public class FUpdaterStub extends AbstractServiceStub<BOASImpl>
 	public FoundationObject updateLifeCyclePhase(ObjectGuid objectGuid, String lifeCyclePhaseOriginal, String lifeCyclePhaseDest, Date updateTime) throws ServiceRequestException
 	{
 
-		EMM emm = this.stubService.getEMM();
+		EMM emm = this.stubService.getEmm();
 
 		LifecyclePhaseInfo srcPhase = emm.getLifecyclePhaseInfo(lifeCyclePhaseOriginal);
 		LifecyclePhaseInfo destPhase = emm.getLifecyclePhaseInfo(lifeCyclePhaseDest);
@@ -171,12 +171,12 @@ public class FUpdaterStub extends AbstractServiceStub<BOASImpl>
 
 			if (containBomView)
 			{
-				List<BOMView> listBOMView = this.stubService.getBOMS().listBOMView(objectGuid);
+				List<BOMView> listBOMView = this.stubService.getBoms().listBOMView(objectGuid);
 				if (!SetUtils.isNullList(listBOMView))
 				{
 					for (BOMView bomView : listBOMView)
 					{
-						this.stubService.getBOMS().updateBomViewOwner(bomView.getObjectGuid(), ownerUserGuid, ownerGroupGuid, bomView.getUpdateTime());
+						this.stubService.getBoms().updateBomViewOwner(bomView.getObjectGuid(), ownerUserGuid, ownerGroupGuid, bomView.getUpdateTime());
 					}
 
 				}
@@ -203,28 +203,28 @@ public class FUpdaterStub extends AbstractServiceStub<BOASImpl>
 			this.stubService.getAsync().systemTrack(this.getTrackerBuilder(), this.stubService.getSignature(), null, args, returnObj);
 		}
 
-		Group group = this.stubService.getAAS().getGroup(ownerGroupGuid);
-		User user = this.stubService.getAAS().getUser(ownerUserGuid);
+		Group group = this.stubService.getAas().getGroup(ownerGroupGuid);
+		User user = this.stubService.getAas().getUser(ownerUserGuid);
 
 		LanguageEnum languageEnum = this.stubService.getUserSignature().getLanguageEnum();
 
-		String subject = this.stubService.getMSRM().getMSRString("ID_APP_UPDATE_OWNERUSER_SUBJECT", languageEnum.toString());
+		String subject = this.stubService.getMsrm().getMSRString("ID_APP_UPDATE_OWNERUSER_SUBJECT", languageEnum.toString());
 
 		// from user
-		String content = this.stubService.getMSRM().getMSRString("ID_APP_UPDATE_OWNERUSER_FROMUSER_CONTENT", languageEnum.toString());
+		String content = this.stubService.getMsrm().getMSRString("ID_APP_UPDATE_OWNERUSER_FROMUSER_CONTENT", languageEnum.toString());
 		if (content != null)
 		{
 			content = MessageFormat.format(content, newFoundation.getFullName(), foundation.getOwnerGroup(), foundation.getOwnerUser(), group.getGroupName(), user.getUserName());
 		}
-		this.stubService.getSMS().sendMailToUser(subject, content, MailCategoryEnum.INFO, null, foundation.getOwnerUserGuid(), MailMessageType.OWNERUPDATE);
+		this.stubService.getSms().sendMailToUser(subject, content, MailCategoryEnum.INFO, null, foundation.getOwnerUserGuid(), MailMessageType.OWNERUPDATE);
 
 		// to user
-		content = this.stubService.getMSRM().getMSRString("ID_APP_UPDATE_OWNERUSER_TOUSER_CONTENT", languageEnum.toString());
+		content = this.stubService.getMsrm().getMSRString("ID_APP_UPDATE_OWNERUSER_TOUSER_CONTENT", languageEnum.toString());
 		if (content != null)
 		{
 			content = MessageFormat.format(content, newFoundation.getFullName(), foundation.getOwnerGroup(), foundation.getOwnerUser(), group.getGroupName(), user.getUserName());
 		}
-		this.stubService.getSMS().sendMailToUser(subject, content, MailCategoryEnum.INFO, null, user.getGuid(), MailMessageType.OWNERUPDATE);
+		this.stubService.getSms().sendMailToUser(subject, content, MailCategoryEnum.INFO, null, user.getGuid(), MailMessageType.OWNERUPDATE);
 
 		return newFoundation;
 	}
@@ -235,7 +235,7 @@ public class FUpdaterStub extends AbstractServiceStub<BOASImpl>
 		FoundationObject oriFoundationObject = this.stubService.getFoundationStub().getObject(objectGuid, false);
 
 		// invoke update.before event
-		this.stubService.getEOSS().executeUpdateBeforeEvent(oriFoundationObject);
+		this.stubService.getEoss().executeUpdateBeforeEvent(oriFoundationObject);
 
 		String sessionId = this.stubService.getSignature().getCredential();
 
@@ -267,34 +267,34 @@ public class FUpdaterStub extends AbstractServiceStub<BOASImpl>
 			this.stubService.getAsync().systemTrack(this.getTrackerBuilder(), this.stubService.getSignature(), null, args, returnObj);
 		}
 
-		Group group = this.stubService.getAAS().getGroup(ownerGroupGuid);
-		User user = this.stubService.getAAS().getUser(ownerUserGuid);
+		Group group = this.stubService.getAas().getGroup(ownerGroupGuid);
+		User user = this.stubService.getAas().getUser(ownerUserGuid);
 
 		LanguageEnum languageEnum = this.stubService.getUserSignature().getLanguageEnum();
 
-		String subject = this.stubService.getMSRM().getMSRString("ID_APP_UPDATE_OWNERUSER_SUBJECT", languageEnum.toString());
+		String subject = this.stubService.getMsrm().getMSRString("ID_APP_UPDATE_OWNERUSER_SUBJECT", languageEnum.toString());
 
 		// from user
-		String content = this.stubService.getMSRM().getMSRString("ID_APP_UPDATE_OWNERUSER_FROMUSER_CONTENT", languageEnum.toString());
+		String content = this.stubService.getMsrm().getMSRString("ID_APP_UPDATE_OWNERUSER_FROMUSER_CONTENT", languageEnum.toString());
 		if (content != null)
 		{
 			// 实例fullname，原所有者组，原所有者，现所有者组，现所有者
 			content = MessageFormat.format(content, foundationObject.getFullName(), oriFoundationObject.getOwnerGroup(), oriFoundationObject.getOwnerUser(), group.getGroupName(),
 					user.getUserName());
 		}
-		this.stubService.getSMS().sendMailToUser(subject, content, MailCategoryEnum.INFO, null, oriFoundationObject.getOwnerUserGuid(), MailMessageType.OWNERUPDATE);
+		this.stubService.getSms().sendMailToUser(subject, content, MailCategoryEnum.INFO, null, oriFoundationObject.getOwnerUserGuid(), MailMessageType.OWNERUPDATE);
 
 		// to user
-		content = this.stubService.getMSRM().getMSRString("ID_APP_UPDATE_OWNERUSER_TOUSER_CONTENT", languageEnum.toString());
+		content = this.stubService.getMsrm().getMSRString("ID_APP_UPDATE_OWNERUSER_TOUSER_CONTENT", languageEnum.toString());
 		if (content != null)
 		{
 			content = MessageFormat.format(content, foundationObject.getFullName(), oriFoundationObject.getOwnerGroup(), oriFoundationObject.getOwnerUser(), group.getGroupName(),
 					user.getUserName());
 		}
-		this.stubService.getSMS().sendMailToUser(subject, content, MailCategoryEnum.INFO, null, user.getGuid(), MailMessageType.OWNERUPDATE);
+		this.stubService.getSms().sendMailToUser(subject, content, MailCategoryEnum.INFO, null, user.getGuid(), MailMessageType.OWNERUPDATE);
 
 		// invoke add.after event.
-		this.stubService.getEOSS().executeUpdateAfterEvent(foundationObject);
+		this.stubService.getEoss().executeUpdateAfterEvent(foundationObject);
 
 		return this.stubService.getFoundationStub().getObject(objectGuid, false);
 

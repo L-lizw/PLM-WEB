@@ -218,7 +218,7 @@ public class ProcessStub extends AbstractServiceStub<WFMImpl>
 
 		if (BMInfo.SHARE_MODEL.equalsIgnoreCase(bmGuid))
 		{
-			BMInfo businessModel = this.stubService.getEMM().getSharedBizModel();
+			BMInfo businessModel = this.stubService.getEmm().getSharedBizModel();
 			if (businessModel != null)
 			{
 				bmGuid = businessModel.getGuid();
@@ -237,7 +237,7 @@ public class ProcessStub extends AbstractServiceStub<WFMImpl>
 						&& !classObject.hasInterface(ModelInterfaceEnum.IPMCalendar)//
 				)
 				{
-					BOInfo bizObject = ((EMMImpl) this.stubService.getEMM()).getBMStub().getBizObject(bmGuid, classObject.getGuid(), null);
+					BOInfo bizObject = ((EMMImpl) this.stubService.getEmm()).getBMStub().getBizObject(bmGuid, classObject.getGuid(), null);
 					if (bizObject != null)
 					{
 						boInfoList.add(bizObject);
@@ -365,7 +365,7 @@ public class ProcessStub extends AbstractServiceStub<WFMImpl>
 	 */
 	private boolean userInRole(String userGuid, String roleGuid) throws ServiceRequestException
 	{
-		List<User> userList = ((AASImpl) this.stubService.getAAS()).getUserStub().listUserInRole(roleGuid);
+		List<User> userList = ((AASImpl) this.stubService.getAas()).getUserStub().listUserInRole(roleGuid);
 		if (!SetUtils.isNullList(userList))
 		{
 			for (User user_ : userList)
@@ -389,7 +389,7 @@ public class ProcessStub extends AbstractServiceStub<WFMImpl>
 	 */
 	private boolean userInRIG(String userGuid, String rigGuid) throws ServiceRequestException
 	{
-		List<User> userList = this.stubService.getAAS().listUserByRoleInGroup(rigGuid);
+		List<User> userList = this.stubService.getAas().listUserByRoleInGroup(rigGuid);
 		if (!SetUtils.isNullList(userList))
 		{
 			for (User user_ : userList)
@@ -413,7 +413,7 @@ public class ProcessStub extends AbstractServiceStub<WFMImpl>
 	 */
 	private boolean userInGroup(String userGuid, String groupGuid) throws ServiceRequestException
 	{
-		List<User> userList = this.stubService.getAAS().listUserInGroup(groupGuid);
+		List<User> userList = this.stubService.getAas().listUserInGroup(groupGuid);
 		if (!SetUtils.isNullList(userList))
 		{
 			for (User user_ : userList)
@@ -457,7 +457,7 @@ public class ProcessStub extends AbstractServiceStub<WFMImpl>
 		String boGuid = null;
 		if (objectGuid.getClassGuid() != null)
 		{
-			BOInfo bizObject = this.stubService.getEMM().getCurrentBizObject(objectGuid.getClassGuid());
+			BOInfo bizObject = this.stubService.getEmm().getCurrentBizObject(objectGuid.getClassGuid());
 			boGuid = bizObject.getGuid();
 		}
 		else if (StringUtils.isGuid(objectGuid.getBizObjectGuid()))
@@ -497,7 +497,7 @@ public class ProcessStub extends AbstractServiceStub<WFMImpl>
 				}
 				else if (BOMTemplateInfo.ALL.equals(info.getBMGuid()))
 				{
-					BMInfo bmInfo = this.stubService.getEMM().getSharedBizModel();
+					BMInfo bmInfo = this.stubService.getEmm().getSharedBizModel();
 					if (SetUtils.isNullList(template.getListScopeBO()))
 					{
 						continue;
@@ -506,7 +506,7 @@ public class ProcessStub extends AbstractServiceStub<WFMImpl>
 					{
 						for (WorkflowTemplateScopeBoInfo scopeBO : template.getListScopeBO())
 						{
-							BOInfo boInfo = this.stubService.getEMM().getBizObject(bmInfo.getGuid(), scopeBO.getBOGuid());
+							BOInfo boInfo = this.stubService.getEmm().getBizObject(bmInfo.getGuid(), scopeBO.getBOGuid());
 							if ((scopeBO.getBOGuid().equals(boGuid) || boInfo != null && boInfo.getClassGuid().equals(objectGuid.getClassGuid())) && scopeBO.canLaunch())
 							{
 								hasBO = true;

@@ -32,7 +32,7 @@ public class FoundationACLStub extends AbstractServiceStub<ACLImpl>
 			return true;
 		}
 
-		BOInfo boInfo = this.stubService.getEMM().getCurrentBoInfoByName(boName, true);
+		BOInfo boInfo = this.stubService.getEmm().getCurrentBoInfoByName(boName, true);
 		if (boInfo == null)
 		{
 			return false;

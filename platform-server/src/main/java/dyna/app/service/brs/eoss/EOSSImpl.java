@@ -19,6 +19,8 @@ import dyna.common.util.StringUtils;
 import dyna.net.service.brs.EOSS;
 import dyna.net.service.brs.WFI;
 import dyna.net.service.brs.WFM;
+import lombok.AccessLevel;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,8 +34,14 @@ import java.math.BigDecimal;
  *
  * @author Lizw
  */
+@Getter(AccessLevel.PROTECTED)
 @Service public class EOSSImpl extends BusinessRuleService implements EOSS
 {
+	@Autowired
+	private WFM wfm;
+	@Autowired
+	private WFI wfi;
+
 	@Autowired private ClassScriptStub          classScriptStub;
 	@Autowired private ActionExecuteStub        actionExecuteStub;
 	@Autowired private InstEventExecuteStub     instEventExecuteStub;
@@ -64,32 +72,6 @@ import java.math.BigDecimal;
 	protected WorkflowEventExecuteStub getWorkflowEventExecuteStub()
 	{
 		return this.workflowEventExecuteStub;
-	}
-
-	protected synchronized WFM getWFM() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(WFM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized WFI getWFI() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(WFI.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
 	}
 
 	/*

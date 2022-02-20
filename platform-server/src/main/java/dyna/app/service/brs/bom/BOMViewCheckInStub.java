@@ -23,7 +23,7 @@ public class BOMViewCheckInStub extends AbstractServiceStub<BOMSImpl>
 
 	public BOMView checkIn(BOMView bomView, boolean isCheckAuth) throws ServiceRequestException
 	{
-		BOMView retBOMView = (BOMView) ((BOASImpl) this.stubService.getBOAS()).getCheckInStub().checkInNoCascade(bomView, isCheckAuth);
+		BOMView retBOMView = (BOMView) ((BOASImpl) this.stubService.getBoas()).getCheckInStub().checkInNoCascade(bomView, isCheckAuth);
 		return retBOMView;
 	}
 }

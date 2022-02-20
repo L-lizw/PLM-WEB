@@ -488,7 +488,7 @@ public class UserStub extends AbstractServiceStub<AASImpl>
 				{
 					try
 					{
-						((LICImpl) this.stubService.getLIC()).getSessionStub().deleteSessionInside(session.getGuid());
+						((LICImpl) this.stubService.getLic()).getSessionStub().deleteSessionInside(session.getGuid());
 					}
 					catch (Exception e)
 					{

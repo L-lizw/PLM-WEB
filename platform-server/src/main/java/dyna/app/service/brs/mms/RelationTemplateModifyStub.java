@@ -130,7 +130,7 @@ public class RelationTemplateModifyStub extends AbstractServiceStub<MMSImpl>
 
 		try
 		{
-			RelationTemplate template = this.stubService.getEMM().getRelationTemplate(relationTemplateGuid);
+			RelationTemplate template = this.stubService.getEmm().getRelationTemplate(relationTemplateGuid);
 			if ("0".equals(template.getTemplateType()))
 			{
 				throw new ServiceRequestException("ID_APP_TEMPLATE_BUILTIN_NOT_DELETE", "can't delete builtin tempalte");
@@ -246,19 +246,19 @@ public class RelationTemplateModifyStub extends AbstractServiceStub<MMSImpl>
 					BOInfo boInfo = null;
 					if (!BOMTemplateInfo.ALL.equals(relationTemplate.getBmGuid()))
 					{
-						boInfo = this.stubService.getEMM().getBoInfoByNameAndBM(relationTemplate.getBmGuid(), relationTemplateEnd2.getEnd2BoName());
+						boInfo = this.stubService.getEmm().getBoInfoByNameAndBM(relationTemplate.getBmGuid(), relationTemplateEnd2.getEnd2BoName());
 					}
 					else
 					{
-						BMInfo sharedBizModel = this.stubService.getEMM().getSharedBizModel();
-						boInfo = this.stubService.getEMM().getBoInfoByNameAndBM(sharedBizModel.getGuid(), relationTemplateEnd2.getEnd2BoName());
+						BMInfo sharedBizModel = this.stubService.getEmm().getSharedBizModel();
+						boInfo = this.stubService.getEmm().getBoInfoByNameAndBM(sharedBizModel.getGuid(), relationTemplateEnd2.getEnd2BoName());
 					}
 					if (relationTemplate.getEnd2Interface() != null)
 					{
 
 						if (boInfo != null)
 						{
-							ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(boInfo.getClassGuid());
+							ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(boInfo.getClassGuid());
 							if (classInfo != null)
 							{
 								if (!classInfo.hasInterface(relationTemplate.getEnd2Interface()))
@@ -306,13 +306,13 @@ public class RelationTemplateModifyStub extends AbstractServiceStub<MMSImpl>
 		finally
 		{
 		}
-		return this.stubService.getEMM().getRelationTemplate(relationTemplate.getGuid());
+		return this.stubService.getEmm().getRelationTemplate(relationTemplate.getGuid());
 	}
 
 	private void deleteRelationTemplateEnd2(String relationTemplateGuid) throws ServiceRequestException
 	{
 		SystemDataService sds = this.stubService.getSystemDataService();
-		RelationTemplate template = this.stubService.getEMM().getRelationTemplate(relationTemplateGuid);
+		RelationTemplate template = this.stubService.getEmm().getRelationTemplate(relationTemplateGuid);
 		if (template.getRelationTemplateEnd2List() != null)
 		{
 			for (RelationTemplateEnd2 end2 : template.getRelationTemplateEnd2List())

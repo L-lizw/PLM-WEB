@@ -42,13 +42,13 @@ public class WorkflowProcessManagerStub extends AbstractServiceStub<MMSImpl>
 				}
 			}
 //			this.stubService.getTransactionManager().commitTransaction();
-			((WFMImpl) (this.stubService.getWFM())).getWfModelCacheStub().getWorkflowModelCacheInfo().executeToDoItem();
+			((WFMImpl) (this.stubService.getWfm())).getWfModelCacheStub().getWorkflowModelCacheInfo().executeToDoItem();
 			return resultList;
 		}
 		catch (Exception e)
 		{
 //			this.stubService.getTransactionManager().rollbackTransaction();
-			((WFMImpl) (this.stubService.getWFM())).getWfModelCacheStub().getWorkflowModelCacheInfo().rollBack();
+			((WFMImpl) (this.stubService.getWfm())).getWfModelCacheStub().getWorkflowModelCacheInfo().rollBack();
 			;
 			if (e instanceof ServiceRequestException)
 			{
@@ -73,11 +73,11 @@ public class WorkflowProcessManagerStub extends AbstractServiceStub<MMSImpl>
 			newProcessInfo.setCreateUserGuid(currentUserGuid);
 			newProcessInfo.setUpdateUserGuid(currentUserGuid);
 			sds.save(newProcessInfo);
-			((WFMImpl) (this.stubService.getWFM())).getWfModelCacheStub().getWorkflowModelCacheInfo()
+			((WFMImpl) (this.stubService.getWfm())).getWfModelCacheStub().getWorkflowModelCacheInfo()
 					.registerToDoItem(sds.getObjectDirectly(WorkflowProcessInfo.class, newProcessInfo.getGuid(), null), CacheConstants.CHANGE_TYPE.INSERT);
 
 			Map<String, String> old_new_guidMap = new HashMap<String, String>();
-			List<WorkflowActivityInfo> activityInfoList = this.stubService.getWFM().listAllActivityInfo(sourceWfProcess.getGuid(), null);
+			List<WorkflowActivityInfo> activityInfoList = this.stubService.getWfm().listAllActivityInfo(sourceWfProcess.getGuid(), null);
 			if (!SetUtils.isNullList(activityInfoList))
 			{
 				for (WorkflowActivityInfo activityInfo : activityInfoList)
@@ -86,7 +86,7 @@ public class WorkflowProcessManagerStub extends AbstractServiceStub<MMSImpl>
 				}
 			}
 
-			List<WorkflowLifecyclePhaseInfo> phaseInfoList = this.stubService.getWFM().listLifecyclePhaseInfo(sourceWfProcess.getGuid(), sourceWfProcess.getName());
+			List<WorkflowLifecyclePhaseInfo> phaseInfoList = this.stubService.getWfm().listLifecyclePhaseInfo(sourceWfProcess.getGuid(), sourceWfProcess.getName());
 			if (!SetUtils.isNullList(phaseInfoList))
 			{
 				for (WorkflowLifecyclePhaseInfo phaseInfo : phaseInfoList)
@@ -97,12 +97,12 @@ public class WorkflowProcessManagerStub extends AbstractServiceStub<MMSImpl>
 					newPhaseInfo.setCreateUserGuid(currentUserGuid);
 					newPhaseInfo.setUpdateUserGuid(currentUserGuid);
 					sds.save(newPhaseInfo);
-					((WFMImpl) (this.stubService.getWFM())).getWfModelCacheStub().getWorkflowModelCacheInfo()
+					((WFMImpl) (this.stubService.getWfm())).getWfModelCacheStub().getWorkflowModelCacheInfo()
 							.registerToDoItem(sds.getObjectDirectly(WorkflowLifecyclePhaseInfo.class, newPhaseInfo.getGuid(), null), CacheConstants.CHANGE_TYPE.INSERT);
 				}
 			}
 
-			List<WorkflowTransitionInfo> transitionInfoList = this.stubService.getWFM().listTransitionInfo(sourceWfProcess.getGuid(), null);
+			List<WorkflowTransitionInfo> transitionInfoList = this.stubService.getWfm().listTransitionInfo(sourceWfProcess.getGuid(), null);
 			if (!SetUtils.isNullList(transitionInfoList))
 			{
 				for (WorkflowTransitionInfo transitionInfo : transitionInfoList)
@@ -115,12 +115,12 @@ public class WorkflowProcessManagerStub extends AbstractServiceStub<MMSImpl>
 					newTransitionInfo.setCreateUserGuid(currentUserGuid);
 					newTransitionInfo.setUpdateUserGuid(currentUserGuid);
 					sds.save(newTransitionInfo);
-					((WFMImpl) (this.stubService.getWFM())).getWfModelCacheStub().getWorkflowModelCacheInfo()
+					((WFMImpl) (this.stubService.getWfm())).getWfModelCacheStub().getWorkflowModelCacheInfo()
 							.registerToDoItem(sds.getObjectDirectly(WorkflowTransitionInfo.class, newTransitionInfo.getGuid(), null), CacheConstants.CHANGE_TYPE.INSERT);
 				}
 			}
 
-			List<WorkflowEventInfo> eventList = this.stubService.getWFM().listEventInfo(sourceWfProcess.getGuid(), sourceWfProcess.getName());
+			List<WorkflowEventInfo> eventList = this.stubService.getWfm().listEventInfo(sourceWfProcess.getGuid(), sourceWfProcess.getName());
 			if (!SetUtils.isNullList(eventList))
 			{
 				for (WorkflowEventInfo eventInfo : eventList)
@@ -131,7 +131,7 @@ public class WorkflowProcessManagerStub extends AbstractServiceStub<MMSImpl>
 					newEventInfo.setCreateUserGuid(currentUserGuid);
 					newEventInfo.setUpdateUserGuid(currentUserGuid);
 					sds.save(newEventInfo);
-					((WFMImpl) (this.stubService.getWFM())).getWfModelCacheStub().getWorkflowModelCacheInfo()
+					((WFMImpl) (this.stubService.getWfm())).getWfModelCacheStub().getWorkflowModelCacheInfo()
 							.registerToDoItem(sds.getObjectDirectly(WorkflowEventInfo.class, newEventInfo.getGuid(), null), CacheConstants.CHANGE_TYPE.INSERT);
 				}
 			}
@@ -174,7 +174,7 @@ public class WorkflowProcessManagerStub extends AbstractServiceStub<MMSImpl>
 			newActivityInfo.setUpdateUserGuid(currentUserGuid);
 
 			sds.save(newActivityInfo);
-			((WFMImpl) (this.stubService.getWFM())).getWfModelCacheStub().getWorkflowModelCacheInfo()
+			((WFMImpl) (this.stubService.getWfm())).getWfModelCacheStub().getWorkflowModelCacheInfo()
 					.registerToDoItem(sds.getObjectDirectly(WorkflowActivityInfo.class, newActivityInfo.getGuid(), null), CacheConstants.CHANGE_TYPE.INSERT);
 
 			old_new_guidMap.put(activityInfo.getGuid(), newActivityInfo.getGuid());
@@ -251,7 +251,7 @@ public class WorkflowProcessManagerStub extends AbstractServiceStub<MMSImpl>
 					newActionInfo.setCreateUserGuid(currentUserGuid);
 					newActionInfo.setUpdateUserGuid(currentUserGuid);
 					sds.save(newActionInfo);
-					((WFMImpl) (this.stubService.getWFM())).getWfModelCacheStub().getWorkflowModelCacheInfo()
+					((WFMImpl) (this.stubService.getWfm())).getWfModelCacheStub().getWorkflowModelCacheInfo()
 							.registerToDoItem(sds.getObjectDirectly(WorkflowActrtActionInfo.class, newActionInfo.getGuid(), null), CacheConstants.CHANGE_TYPE.INSERT);
 				}
 			}
@@ -288,7 +288,7 @@ public class WorkflowProcessManagerStub extends AbstractServiceStub<MMSImpl>
 					newPhaseInfo.setCreateUserGuid(currentUserGuid);
 					newPhaseInfo.setUpdateUserGuid(currentUserGuid);
 					sds.save(newPhaseInfo);
-					((WFMImpl) (this.stubService.getWFM())).getWfModelCacheStub().getWorkflowModelCacheInfo()
+					((WFMImpl) (this.stubService.getWfm())).getWfModelCacheStub().getWorkflowModelCacheInfo()
 							.registerToDoItem(sds.getObjectDirectly(WorkflowActrtLifecyclePhaseInfo.class, newPhaseInfo.getGuid(), null), CacheConstants.CHANGE_TYPE.INSERT);
 
 				}
@@ -327,7 +327,7 @@ public class WorkflowProcessManagerStub extends AbstractServiceStub<MMSImpl>
 					newstatusInfo.setCreateUserGuid(currentUserGuid);
 					newstatusInfo.setUpdateUserGuid(currentUserGuid);
 					sds.save(newstatusInfo);
-					((WFMImpl) (this.stubService.getWFM())).getWfModelCacheStub().getWorkflowModelCacheInfo()
+					((WFMImpl) (this.stubService.getWfm())).getWfModelCacheStub().getWorkflowModelCacheInfo()
 							.registerToDoItem(sds.getObjectDirectly(WorkflowActrtStatusInfo.class, newstatusInfo.getGuid(), null), CacheConstants.CHANGE_TYPE.INSERT);
 				}
 			}
@@ -356,14 +356,14 @@ public class WorkflowProcessManagerStub extends AbstractServiceStub<MMSImpl>
 			List<WorkflowLifecyclePhaseInfo> needDelWfLifecyclePhaseInfoList = sds.listFromCache(WorkflowLifecyclePhaseInfo.class,
 					new FieldValueEqualsFilter<WorkflowLifecyclePhaseInfo>(WorkflowLifecyclePhaseInfo.MAWFFK, wfProcessGuid));
 			sds.deleteFromCache(WorkflowLifecyclePhaseInfo.class, new FieldValueEqualsFilter<WorkflowLifecyclePhaseInfo>(WorkflowLifecyclePhaseInfo.MAWFFK, wfProcessGuid));
-			((WFMImpl) (this.stubService.getWFM())).getWfModelCacheStub().getWorkflowModelCacheInfo().registerToDoItemList(needDelWfLifecyclePhaseInfoList,
+			((WFMImpl) (this.stubService.getWfm())).getWfModelCacheStub().getWorkflowModelCacheInfo().registerToDoItemList(needDelWfLifecyclePhaseInfoList,
 					CacheConstants.CHANGE_TYPE.DELETE);
 
 			// 删除工作流事件
 			List<WorkflowEventInfo> needDelWorkflowEventInfoList = sds.listFromCache(WorkflowEventInfo.class,
 					new FieldValueEqualsFilter<WorkflowEventInfo>(WorkflowEventInfo.WFFK, wfProcessGuid));
 			sds.deleteFromCache(WorkflowEventInfo.class, new FieldValueEqualsFilter<WorkflowEventInfo>(WorkflowEventInfo.WFFK, wfProcessGuid));
-			((WFMImpl) (this.stubService.getWFM())).getWfModelCacheStub().getWorkflowModelCacheInfo().registerToDoItemList(needDelWorkflowEventInfoList,
+			((WFMImpl) (this.stubService.getWfm())).getWfModelCacheStub().getWorkflowModelCacheInfo().registerToDoItemList(needDelWorkflowEventInfoList,
 					CacheConstants.CHANGE_TYPE.DELETE);
 
 			List<WorkflowActivityInfo> activityList = sds.listFromCache(WorkflowActivityInfo.class,
@@ -380,20 +380,20 @@ public class WorkflowProcessManagerStub extends AbstractServiceStub<MMSImpl>
 			List<WorkflowTransitionInfo> needDelWorkflowTransitionInfoList = sds.listFromCache(WorkflowTransitionInfo.class,
 					new FieldValueEqualsFilter<>(WorkflowTransitionInfo.WFFK, wfProcessGuid));
 			sds.deleteFromCache(WorkflowTransitionInfo.class, new FieldValueEqualsFilter<>(WorkflowTransitionInfo.WFFK, wfProcessGuid));
-			((WFMImpl) (this.stubService.getWFM())).getWfModelCacheStub().getWorkflowModelCacheInfo().registerToDoItemList(needDelWorkflowTransitionInfoList,
+			((WFMImpl) (this.stubService.getWfm())).getWfModelCacheStub().getWorkflowModelCacheInfo().registerToDoItemList(needDelWorkflowTransitionInfoList,
 					CacheConstants.CHANGE_TYPE.DELETE);
 			// 删除本身
-			((WFMImpl) (this.stubService.getWFM())).getWfModelCacheStub().getWorkflowModelCacheInfo().registerToDoItem(sds.get(WorkflowProcessInfo.class, wfProcessGuid),
+			((WFMImpl) (this.stubService.getWfm())).getWfModelCacheStub().getWorkflowModelCacheInfo().registerToDoItem(sds.get(WorkflowProcessInfo.class, wfProcessGuid),
 					CacheConstants.CHANGE_TYPE.DELETE);
 			sds.delete(WorkflowProcessInfo.class, wfProcessGuid);
 
 //			this.stubService.getTransactionManager().commitTransaction();
-			((WFMImpl) (this.stubService.getWFM())).getWfModelCacheStub().getWorkflowModelCacheInfo().executeToDoItem();
+			((WFMImpl) (this.stubService.getWfm())).getWfModelCacheStub().getWorkflowModelCacheInfo().executeToDoItem();
 		}
 		catch (Exception e)
 		{
 //			this.stubService.getTransactionManager().rollbackTransaction();
-			((WFMImpl) (this.stubService.getWFM())).getWfModelCacheStub().getWorkflowModelCacheInfo().rollBack();
+			((WFMImpl) (this.stubService.getWfm())).getWfModelCacheStub().getWorkflowModelCacheInfo().rollBack();
 			if (e instanceof ServiceRequestException)
 			{
 				throw (ServiceRequestException) e;
@@ -433,21 +433,21 @@ public class WorkflowProcessManagerStub extends AbstractServiceStub<MMSImpl>
 				List<WorkflowActrtActionInfo> needDelWfActrtActionList = sds.listFromCache(WorkflowActrtActionInfo.class,
 						new FieldValueEqualsFilter<>(WorkflowActrtActionInfo.WFACTIVITYGUID, activity.getGuid()));
 				sds.deleteFromCache(WorkflowActrtActionInfo.class, new FieldValueEqualsFilter<>(WorkflowActrtActionInfo.WFACTIVITYGUID, activity.getGuid()));
-				((WFMImpl) (this.stubService.getWFM())).getWfModelCacheStub().getWorkflowModelCacheInfo().registerToDoItemList(needDelWfActrtActionList,
+				((WFMImpl) (this.stubService.getWfm())).getWfModelCacheStub().getWorkflowModelCacheInfo().registerToDoItemList(needDelWfActrtActionList,
 						CacheConstants.CHANGE_TYPE.DELETE);
 				break;
 			case CHANGE_PHASE:
 				List<WorkflowActrtLifecyclePhaseInfo> needDelWfActrtLifecyclePhaseInfoList = sds.listFromCache(WorkflowActrtLifecyclePhaseInfo.class,
 						new FieldValueEqualsFilter<>(WorkflowActrtLifecyclePhaseInfo.MAWFACTFK, activity.getGuid()));
 				sds.deleteFromCache(WorkflowActrtLifecyclePhaseInfo.class, new FieldValueEqualsFilter<>(WorkflowActrtLifecyclePhaseInfo.MAWFACTFK, activity.getGuid()));
-				((WFMImpl) (this.stubService.getWFM())).getWfModelCacheStub().getWorkflowModelCacheInfo().registerToDoItemList(needDelWfActrtLifecyclePhaseInfoList,
+				((WFMImpl) (this.stubService.getWfm())).getWfModelCacheStub().getWorkflowModelCacheInfo().registerToDoItemList(needDelWfActrtLifecyclePhaseInfoList,
 						CacheConstants.CHANGE_TYPE.DELETE);
 				break;
 			case CHANGE_STATUS:
 				List<WorkflowActrtStatusInfo> needDelWfActrtStatusInfoList = sds.listFromCache(WorkflowActrtStatusInfo.class,
 						new FieldValueEqualsFilter<>(WorkflowActrtStatusInfo.MAWFACTFK, activity.getGuid()));
 				sds.deleteFromCache(WorkflowActrtStatusInfo.class, new FieldValueEqualsFilter<>(WorkflowActrtStatusInfo.MAWFACTFK, activity.getGuid()));
-				((WFMImpl) (this.stubService.getWFM())).getWfModelCacheStub().getWorkflowModelCacheInfo().registerToDoItemList(needDelWfActrtStatusInfoList,
+				((WFMImpl) (this.stubService.getWfm())).getWfModelCacheStub().getWorkflowModelCacheInfo().registerToDoItemList(needDelWfActrtStatusInfoList,
 						CacheConstants.CHANGE_TYPE.DELETE);
 				break;
 			default:
@@ -459,7 +459,7 @@ public class WorkflowProcessManagerStub extends AbstractServiceStub<MMSImpl>
 			break;
 		}
 
-		((WFMImpl) (this.stubService.getWFM())).getWfModelCacheStub().getWorkflowModelCacheInfo().registerToDoItem(activity, CacheConstants.CHANGE_TYPE.DELETE);
+		((WFMImpl) (this.stubService.getWfm())).getWfModelCacheStub().getWorkflowModelCacheInfo().registerToDoItem(activity, CacheConstants.CHANGE_TYPE.DELETE);
 		sds.delete(activity);
 
 	}
@@ -492,21 +492,21 @@ public class WorkflowProcessManagerStub extends AbstractServiceStub<MMSImpl>
 				List<WorkflowLifecyclePhaseInfo> needDelWfLifecyclePhaseInfoList = sds.listFromCache(WorkflowLifecyclePhaseInfo.class,
 						new FieldValueEqualsFilter<WorkflowLifecyclePhaseInfo>(WorkflowLifecyclePhaseInfo.MAWFFK, processGuid));
 				sds.deleteFromCache(WorkflowLifecyclePhaseInfo.class, new FieldValueEqualsFilter<WorkflowLifecyclePhaseInfo>(WorkflowLifecyclePhaseInfo.MAWFFK, processGuid));
-				((WFMImpl) (this.stubService.getWFM())).getWfModelCacheStub().getWorkflowModelCacheInfo().registerToDoItemList(needDelWfLifecyclePhaseInfoList,
+				((WFMImpl) (this.stubService.getWfm())).getWfModelCacheStub().getWorkflowModelCacheInfo().registerToDoItemList(needDelWfLifecyclePhaseInfoList,
 						CacheConstants.CHANGE_TYPE.DELETE);
 
 				// 删除活动跃迁信息
 				List<WorkflowTransitionInfo> needDelWfTransitionInfoList = sds.listFromCache(WorkflowTransitionInfo.class,
 						new FieldValueEqualsFilter<WorkflowTransitionInfo>(WorkflowTransitionInfo.WFFK, processGuid));
 				sds.deleteFromCache(WorkflowTransitionInfo.class, new FieldValueEqualsFilter<WorkflowTransitionInfo>(WorkflowTransitionInfo.WFFK, processGuid));
-				((WFMImpl) (this.stubService.getWFM())).getWfModelCacheStub().getWorkflowModelCacheInfo().registerToDoItemList(needDelWfTransitionInfoList,
+				((WFMImpl) (this.stubService.getWfm())).getWfModelCacheStub().getWorkflowModelCacheInfo().registerToDoItemList(needDelWfTransitionInfoList,
 						CacheConstants.CHANGE_TYPE.DELETE);
 
 				// 删除工作流事件
 				List<WorkflowEventInfo> needDelWfEventInfoList = sds.listFromCache(WorkflowEventInfo.class,
 						new FieldValueEqualsFilter<WorkflowEventInfo>(WorkflowEventInfo.WFFK, processGuid));
 				sds.deleteFromCache(WorkflowEventInfo.class, new FieldValueEqualsFilter<WorkflowEventInfo>(WorkflowEventInfo.WFFK, processGuid));
-				((WFMImpl) (this.stubService.getWFM())).getWfModelCacheStub().getWorkflowModelCacheInfo().registerToDoItemList(needDelWfEventInfoList,
+				((WFMImpl) (this.stubService.getWfm())).getWfModelCacheStub().getWorkflowModelCacheInfo().registerToDoItemList(needDelWfEventInfoList,
 						CacheConstants.CHANGE_TYPE.DELETE);
 			}
 			else
@@ -522,7 +522,7 @@ public class WorkflowProcessManagerStub extends AbstractServiceStub<MMSImpl>
 			}
 
 			sds.save(newProcess);
-			((WFMImpl) (this.stubService.getWFM())).getWfModelCacheStub().getWorkflowModelCacheInfo()
+			((WFMImpl) (this.stubService.getWfm())).getWfModelCacheStub().getWorkflowModelCacheInfo()
 					.registerToDoItem(sds.getObjectDirectly(WorkflowProcessInfo.class, newProcess.getGuid(), null), operation);
 
 			Map<String, String> activityNameGuidMap = new HashMap<String, String>();
@@ -544,13 +544,13 @@ public class WorkflowProcessManagerStub extends AbstractServiceStub<MMSImpl>
 					newPhaseInfo.setGuid(null);
 					newPhaseInfo.setMAWFfk(newProcess.getGuid());
 
-					LifecycleInfo lifecycleInfo = ((EMMImpl) this.stubService.getEMM()).getLCStub().getLifecycleInfoByName(phaseInfo.getLifecycleName());
+					LifecycleInfo lifecycleInfo = ((EMMImpl) this.stubService.getEmm()).getLCStub().getLifecycleInfoByName(phaseInfo.getLifecycleName());
 					if (lifecycleInfo == null)
 					{
 						throw new ServiceRequestException("not found lifecycle;name:" + phaseInfo.getLifecycleName());
 					}
 					newPhaseInfo.setLCMasterGuid(lifecycleInfo.getGuid());
-					List<LifecyclePhaseInfo> allPhaseList = this.stubService.getEMM().listLifeCyclePhase(phaseInfo.getLifecycleName());
+					List<LifecyclePhaseInfo> allPhaseList = this.stubService.getEmm().listLifeCyclePhase(phaseInfo.getLifecycleName());
 					if (!SetUtils.isNullList(allPhaseList))
 					{
 						for (LifecyclePhaseInfo lifecyclePhaseInfo : allPhaseList)
@@ -566,7 +566,7 @@ public class WorkflowProcessManagerStub extends AbstractServiceStub<MMSImpl>
 					newPhaseInfo.setCreateUserGuid(currentUserGuid);
 					newPhaseInfo.setUpdateUserGuid(currentUserGuid);
 					sds.save(newPhaseInfo);
-					((WFMImpl) (this.stubService.getWFM())).getWfModelCacheStub().getWorkflowModelCacheInfo()
+					((WFMImpl) (this.stubService.getWfm())).getWfModelCacheStub().getWorkflowModelCacheInfo()
 							.registerToDoItem(sds.getObjectDirectly(WorkflowLifecyclePhaseInfo.class, newPhaseInfo.getGuid(), null), CacheConstants.CHANGE_TYPE.INSERT);
 
 				}
@@ -585,7 +585,7 @@ public class WorkflowProcessManagerStub extends AbstractServiceStub<MMSImpl>
 					newTransitionInfo.setCreateUserGuid(currentUserGuid);
 					newTransitionInfo.setUpdateUserGuid(currentUserGuid);
 					sds.save(newTransitionInfo);
-					((WFMImpl) (this.stubService.getWFM())).getWfModelCacheStub().getWorkflowModelCacheInfo()
+					((WFMImpl) (this.stubService.getWfm())).getWfModelCacheStub().getWorkflowModelCacheInfo()
 							.registerToDoItem(sds.getObjectDirectly(WorkflowTransitionInfo.class, newTransitionInfo.getGuid(), null), CacheConstants.CHANGE_TYPE.INSERT);
 				}
 			}
@@ -603,26 +603,26 @@ public class WorkflowProcessManagerStub extends AbstractServiceStub<MMSImpl>
 					newEventInfo.setCreateUserGuid(currentUserGuid);
 					newEventInfo.setUpdateUserGuid(currentUserGuid);
 					sds.save(newEventInfo);
-					((WFMImpl) (this.stubService.getWFM())).getWfModelCacheStub().getWorkflowModelCacheInfo()
+					((WFMImpl) (this.stubService.getWfm())).getWfModelCacheStub().getWorkflowModelCacheInfo()
 							.registerToDoItem(sds.getObjectDirectly(WorkflowEventInfo.class, newEventInfo.getGuid(), null), CacheConstants.CHANGE_TYPE.INSERT);
 
 					this.createChildWorkflowEvent(newProcess.getGuid(), eventInfo.getChildren(), newEventInfo.getGuid());
 				}
 			}
 //			this.stubService.getTransactionManager().commitTransaction();
-			((WFMImpl) (this.stubService.getWFM())).getWfModelCacheStub().getWorkflowModelCacheInfo().executeToDoItem();
+			((WFMImpl) (this.stubService.getWfm())).getWfModelCacheStub().getWorkflowModelCacheInfo().executeToDoItem();
 
-			return ((WFMImpl) (this.stubService.getWFM())).getProcessStub().getProcess(newProcess.getWFName());
+			return ((WFMImpl) (this.stubService.getWfm())).getProcessStub().getProcess(newProcess.getWFName());
 		}
 		catch (ServiceRequestException e)
 		{
-			((WFMImpl) (this.stubService.getWFM())).getWfModelCacheStub().getWorkflowModelCacheInfo().rollBack();
+			((WFMImpl) (this.stubService.getWfm())).getWfModelCacheStub().getWorkflowModelCacheInfo().rollBack();
 //			this.stubService.getTransactionManager().rollbackTransaction();
 			throw e;
 		}
 		catch (Exception e)
 		{
-			((WFMImpl) (this.stubService.getWFM())).getWfModelCacheStub().getWorkflowModelCacheInfo().rollBack();
+			((WFMImpl) (this.stubService.getWfm())).getWfModelCacheStub().getWorkflowModelCacheInfo().rollBack();
 //			this.stubService.getTransactionManager().rollbackTransaction();
 			if (e instanceof ServiceRequestException)
 			{
@@ -659,7 +659,7 @@ public class WorkflowProcessManagerStub extends AbstractServiceStub<MMSImpl>
 					newChild.setUpdateUserGuid(currentUserGuid);
 
 					sds.save(newChild);
-					((WFMImpl) (this.stubService.getWFM())).getWfModelCacheStub().getWorkflowModelCacheInfo()
+					((WFMImpl) (this.stubService.getWfm())).getWfModelCacheStub().getWorkflowModelCacheInfo()
 							.registerToDoItem(sds.getObjectDirectly(WorkflowEventInfo.class, newChild.getGuid(), null), CacheConstants.CHANGE_TYPE.INSERT);
 
 					this.createChildWorkflowEvent(processGuid, script.getChildren(), newChild.getGuid());
@@ -773,7 +773,7 @@ public class WorkflowProcessManagerStub extends AbstractServiceStub<MMSImpl>
 					actionInfo.setCreateUserGuid(currentUserGuid);
 					actionInfo.setUpdateUserGuid(currentUserGuid);
 					sds.save(actionInfo);
-					((WFMImpl) (this.stubService.getWFM())).getWfModelCacheStub().getWorkflowModelCacheInfo()
+					((WFMImpl) (this.stubService.getWfm())).getWfModelCacheStub().getWorkflowModelCacheInfo()
 							.registerToDoItem(sds.getObjectDirectly(WorkflowActrtActionInfo.class, actionInfo.getGuid(), null), CacheConstants.CHANGE_TYPE.INSERT);
 
 					this.createChildActrtAction(newActivityGuid, actionInfo.getChildren(), actionInfo.getGuid());
@@ -817,7 +817,7 @@ public class WorkflowProcessManagerStub extends AbstractServiceStub<MMSImpl>
 					newChild.setUpdateUserGuid(currentUserGuid);
 
 					sds.save(newChild);
-					((WFMImpl) (this.stubService.getWFM())).getWfModelCacheStub().getWorkflowModelCacheInfo()
+					((WFMImpl) (this.stubService.getWfm())).getWfModelCacheStub().getWorkflowModelCacheInfo()
 							.registerToDoItem(sds.getObjectDirectly(WorkflowActrtActionInfo.class, newChild.getGuid(), null), CacheConstants.CHANGE_TYPE.INSERT);
 
 					this.createChildWorkflowEvent(wfActrtGuid, script.getChildren(), newChild.getGuid());
@@ -855,13 +855,13 @@ public class WorkflowProcessManagerStub extends AbstractServiceStub<MMSImpl>
 					newPhaseInfo.setGuid(null);
 					newPhaseInfo.setMAWFActfk(newActivityGuid);
 
-					LifecycleInfo lifecycleInfo = ((EMMImpl) this.stubService.getEMM()).getLCStub().getLifecycleInfoByName(phaseInfo.getLifecycle());
+					LifecycleInfo lifecycleInfo = ((EMMImpl) this.stubService.getEmm()).getLCStub().getLifecycleInfoByName(phaseInfo.getLifecycle());
 					if (lifecycleInfo == null)
 					{
 						throw new ServiceRequestException("not found lifecycle;name:" + phaseInfo.getLifecycle());
 					}
 					newPhaseInfo.setLCMasterGuid(lifecycleInfo.getGuid());
-					List<LifecyclePhaseInfo> allPhaseList = this.stubService.getEMM().listLifeCyclePhase(phaseInfo.getLifecycle());
+					List<LifecyclePhaseInfo> allPhaseList = this.stubService.getEmm().listLifeCyclePhase(phaseInfo.getLifecycle());
 					if (!SetUtils.isNullList(allPhaseList))
 					{
 						for (LifecyclePhaseInfo lifecyclePhaseInfo : allPhaseList)
@@ -879,7 +879,7 @@ public class WorkflowProcessManagerStub extends AbstractServiceStub<MMSImpl>
 					newPhaseInfo.setCreateUserGuid(currentUserGuid);
 					newPhaseInfo.setUpdateUserGuid(currentUserGuid);
 					sds.save(newPhaseInfo);
-					((WFMImpl) (this.stubService.getWFM())).getWfModelCacheStub().getWorkflowModelCacheInfo()
+					((WFMImpl) (this.stubService.getWfm())).getWfModelCacheStub().getWorkflowModelCacheInfo()
 							.registerToDoItem(sds.getObjectDirectly(WorkflowActrtLifecyclePhaseInfo.class, newPhaseInfo.getGuid(), null), CacheConstants.CHANGE_TYPE.INSERT);
 				}
 			}
@@ -914,7 +914,7 @@ public class WorkflowProcessManagerStub extends AbstractServiceStub<MMSImpl>
 					actionInfo.setCreateUserGuid(currentUserGuid);
 					actionInfo.setUpdateUserGuid(currentUserGuid);
 					sds.save(actionInfo);
-					((WFMImpl) (this.stubService.getWFM())).getWfModelCacheStub().getWorkflowModelCacheInfo()
+					((WFMImpl) (this.stubService.getWfm())).getWfModelCacheStub().getWorkflowModelCacheInfo()
 							.registerToDoItem(sds.getObjectDirectly(WorkflowActrtStatusInfo.class, actionInfo.getGuid(), null), CacheConstants.CHANGE_TYPE.INSERT);
 				}
 			}
@@ -954,7 +954,7 @@ public class WorkflowProcessManagerStub extends AbstractServiceStub<MMSImpl>
 
 			sds.save(newActivityInfo);
 			newActivityInfo = sds.getObjectDirectly(WorkflowActivityInfo.class, newActivityInfo.getGuid(), null);
-			((WFMImpl) (this.stubService.getWFM())).getWfModelCacheStub().getWorkflowModelCacheInfo().registerToDoItem(newActivityInfo, CacheConstants.CHANGE_TYPE.INSERT);
+			((WFMImpl) (this.stubService.getWfm())).getWfModelCacheStub().getWorkflowModelCacheInfo().registerToDoItem(newActivityInfo, CacheConstants.CHANGE_TYPE.INSERT);
 
 			return newActivityInfo;
 		}

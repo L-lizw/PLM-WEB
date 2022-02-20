@@ -35,6 +35,8 @@ import dyna.net.service.das.JSS;
 import dyna.net.service.das.MSRM;
 import dyna.net.service.data.SystemDataService;
 import dyna.net.service.data.model.ClassModelService;
+import lombok.AccessLevel;
+import lombok.Getter;
 import net.sf.jasperreports.engine.JRField;
 import net.sf.jasperreports.engine.JRPropertiesMap;
 import net.sf.jasperreports.engine.util.JRFontNotFoundException;
@@ -55,12 +57,42 @@ import java.util.*;
  *
  * @author Lizw
  */
+@Getter(AccessLevel.PROTECTED)
 @Service public class SRSImpl extends DataAccessService implements SRS
 {
 	private final String reportConfigFile = EnvUtils.getConfRootPath() + "conf/comment/report/report_template.xml";
 
 	@DubboReference private ClassModelService classModelService;
 	@DubboReference private SystemDataService systemDataService;
+
+	@Autowired
+	private AAS aas;
+	@Autowired
+	private BOAS boas;
+	@Autowired
+	private BOMS boms;
+	@Autowired
+	private BRM brm;
+	@Autowired
+	private CPB cpb;
+	@Autowired
+	private DSS dss;
+	@Autowired
+	private EDAP edap;
+	@Autowired
+	private EMM emm;
+	@Autowired
+	private JSS jss;
+	@Autowired
+	private MSRM msrm;
+	@Autowired
+	private PMS pms;
+	@Autowired
+	private PPMS ppms;
+	@Autowired
+	private SMS sms;
+	@Autowired
+	private UECS uecs;
 
 	@Autowired private CommonReportStub commonReportStub ;
 	@Autowired private BOMReportStub    bomReportStub    ;
@@ -91,156 +123,64 @@ import java.util.*;
 		return this.commonReportStub;
 	}
 
-	public synchronized EMM getEMM() throws ServiceRequestException
+	public  EMM getEMM()
 	{
-		try
-		{
-			return this.getRefService(EMM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
+		return this.emm;
 	}
 
-	public synchronized UECS getUECS() throws ServiceRequestException
+	public  UECS getUECS()
 	{
-		try
-		{
-			return this.getRefService(UECS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
+		return this.uecs;
 	}
 
-	public synchronized BOAS getBOAS() throws ServiceRequestException
+	public  BOAS getBOAS()
 	{
-		try
-		{
-			return this.getRefService(BOAS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
+		return this.boas;
 	}
 
-	public synchronized AAS getAAS() throws ServiceRequestException
+	public  AAS getAAS()
 	{
-		try
-		{
-			return this.getRefService(AAS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
+		return this.aas;
 	}
 
-	public synchronized DSS getDSS() throws ServiceRequestException
+	public  DSS getDSS()
 	{
-		try
-		{
-			return this.getRefService(DSS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
+		return this.dss;
 	}
 
-	public synchronized SMS getSMS() throws ServiceRequestException
+	public  SMS getSMS()
 	{
-		try
-		{
-			return this.getRefService(SMS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
+		return this.sms;
 	}
 
-	public synchronized BOMS getBOMS() throws ServiceRequestException
+	public  BOMS getBOMS()
 	{
-		try
-		{
-			return this.getRefService(BOMS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
+		return this.boms;
 	}
 
-	public synchronized MSRM getMSRM() throws ServiceRequestException
+	public  MSRM getMSRM()
 	{
-		try
-		{
-			return this.getRefService(MSRM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
+		return this.msrm;
 	}
 
-	public synchronized PMS getPMS() throws ServiceRequestException
+	public  PMS getPMS()
 	{
-		try
-		{
-			return this.getRefService(PMS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
+		return this.pms;
 	}
 
-	public synchronized BRM getBRM() throws ServiceRequestException
+	public  BRM getBRM()
 	{
-		try
-		{
-			return this.getRefService(BRM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
+		return this.brm;
 	}
 
-	public synchronized CPB getCPB() throws ServiceRequestException
+	public  CPB getCPB()
 	{
-		try
-		{
-			return this.getRefService(CPB.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
+		return  this.cpb;
 	}
 
-	public synchronized PPMS getPPMS() throws ServiceRequestException
+	public  PPMS getPPMS()
 	{
-		try
-		{
-			return this.getRefService(PPMS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
+		return this.ppms;
 	}
 
 	@Override public ObjectGuid getObjectGuidByStr(String str)
@@ -1212,15 +1152,7 @@ import java.util.*;
 
 				@Override public Object getFieldValue(JRField field, DetailColumnInfo column, DynaObject object)
 				{
-					try
-					{
-						return SRSImpl.this.getMSRM().getMSRString(((FoundationObject) object).getStatus().getMsrId(), lang.toString());
-					}
-					catch (ServiceRequestException e)
-					{
-						e.printStackTrace();
-					}
-					return null;
+					return SRSImpl.this.getMSRM().getMSRString(((FoundationObject) object).getStatus().getMsrId(), lang.toString());
 				}
 			});
 		}
@@ -1232,8 +1164,7 @@ import java.util.*;
 
 				@Override public Object getFieldValue(JRField field, DetailColumnInfo column, DynaObject object)
 				{
-					try
-					{
+
 						String yes = SRSImpl.this.getMSRM().getMSRString("ID_CLIENT_DIALOG_YES", lang.toString());
 						String no = SRSImpl.this.getMSRM().getMSRString("ID_CLIENT_DIALOG_NO", lang.toString());
 
@@ -1244,13 +1175,7 @@ import java.util.*;
 							return name;
 						}
 						return (name.equals("N") ? no : yes);
-					}
-					catch (ServiceRequestException e)
-					{
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					return null;
+
 				}
 			});
 		}
@@ -1662,16 +1587,9 @@ import java.util.*;
 			summaryFiledName, pagesize, reportpath,  classGuids,  isContainRepf);
 	}
 
-	public synchronized JSS getJSS() throws ServiceRequestException
+	public  JSS getJSS()
 	{
-		try
-		{
-			return this.getRefService(JSS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
+		return this.jss;
 	}
 
 	/*
@@ -2005,7 +1923,7 @@ import java.util.*;
 		LanguageEnum lang = this.getUserSignature().getLanguageEnum();
 		List<String> resultUIObject = searchCondition.listResultUINameList();
 		Folder folder = new Folder(searchCondition.getFolder().getGuid());
-		folder = ((EDAPImpl) this.getEDAP()).getFolderStub().getFolder(folder.getGuid(), false);
+		folder = ((EDAPImpl) this.getEdap()).getFolderStub().getFolder(folder.getGuid(), false);
 		searchCondition.setFolder(folder);
 
 		if (searchCondition.getObjectGuid().getClassName() == null)
@@ -2526,18 +2444,6 @@ import java.util.*;
 		return columnList;
 	}
 
-	protected synchronized EDAP getEDAP() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(EDAP.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
-
 	public void reportECScript(ReportTypeEnum exportFileType, Map<String, List<String>> guidListMap, SearchCondition reportcondition, String jobGuid, boolean isMail,
 			boolean isScript) throws ServiceRequestException
 	{
@@ -2783,7 +2689,7 @@ import java.util.*;
 		params.setBOAS(this.getBOAS());
 		params.setEMM(this.getEMM());
 		params.setMSRM(this.getMSRM());
-		params.setEDAP(this.getEDAP());
+		params.setEDAP(this.getEdap());
 		params.setAAS(this.getAAS());
 		params.setPPMS(this.getPPMS());
 		params.setBOMS(this.getBOMS());

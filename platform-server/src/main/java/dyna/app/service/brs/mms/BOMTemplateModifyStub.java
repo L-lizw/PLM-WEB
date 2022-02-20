@@ -112,7 +112,7 @@ public class BOMTemplateModifyStub extends AbstractServiceStub<MMSImpl>
 
 		try
 		{
-			BOMTemplate template = this.stubService.getEMM().getBOMTemplate(bomTemplateGuid);
+			BOMTemplate template = this.stubService.getEmm().getBOMTemplate(bomTemplateGuid);
 			if (template != null)
 			{
 				deleteTemplateSub(template);
@@ -194,7 +194,7 @@ public class BOMTemplateModifyStub extends AbstractServiceStub<MMSImpl>
 			}
 			if (!isCreate)
 			{
-				deleteTemplateSub(this.stubService.getEMM().getBOMTemplate(bomTemplate.getGuid()));
+				deleteTemplateSub(this.stubService.getEmm().getBOMTemplate(bomTemplate.getGuid()));
 			}
 
 			String ret = sds.save(bomTemplate.getInfo());
@@ -218,18 +218,18 @@ public class BOMTemplateModifyStub extends AbstractServiceStub<MMSImpl>
 					BOInfo boInfo = null;
 					if (!BOMTemplateInfo.ALL.equals(bomTemplate.getBmGuid()))
 					{
-						boInfo = this.stubService.getEMM().getBoInfoByNameAndBM(bomTemplate.getBmGuid(), bomTemplateEnd2.getEnd2BoName());
+						boInfo = this.stubService.getEmm().getBoInfoByNameAndBM(bomTemplate.getBmGuid(), bomTemplateEnd2.getEnd2BoName());
 					}
 					else
 					{
-						// boInfo = this.stubService.getEMM().getCurrentBoInfoByName(bomTemplateEnd2.getEnd2BoName());
-						BMInfo sharedBizModel = this.stubService.getEMM().getSharedBizModel();
-						boInfo = this.stubService.getEMM().getBoInfoByNameAndBM(sharedBizModel.getGuid(), bomTemplateEnd2.getEnd2BoName());
+						// boInfo = this.stubService.getEmm().getCurrentBoInfoByName(bomTemplateEnd2.getEnd2BoName());
+						BMInfo sharedBizModel = this.stubService.getEmm().getSharedBizModel();
+						boInfo = this.stubService.getEmm().getBoInfoByNameAndBM(sharedBizModel.getGuid(), bomTemplateEnd2.getEnd2BoName());
 					}
 
 					if (boInfo != null)
 					{
-						ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(boInfo.getClassGuid());
+						ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(boInfo.getClassGuid());
 						if (classInfo != null)
 						{
 							if (!classInfo.hasInterface(ModelInterfaceEnum.IItem))
@@ -295,7 +295,7 @@ public class BOMTemplateModifyStub extends AbstractServiceStub<MMSImpl>
 		finally
 		{
 		}
-		return this.stubService.getEMM().getBOMTemplate(bomTemplate.getGuid());
+		return this.stubService.getEmm().getBOMTemplate(bomTemplate.getGuid());
 	}
 
 }

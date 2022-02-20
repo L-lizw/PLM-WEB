@@ -324,7 +324,7 @@ public class FbtStub extends AbstractServiceStub<FBTSImpl>
 	{
 		boolean isHas = false;
 		String detailClassficationGuid = fileSubject.getValueGuid();
-		List<CodeItemInfo> classficationList = this.stubService.getEMM().listLeafCodeItemInfoByDatail(detailClassficationGuid);
+		List<CodeItemInfo> classficationList = this.stubService.getEmm().listLeafCodeItemInfoByDatail(detailClassficationGuid);
 		if (!StringUtils.isNullString(foundationObject.getClassificationGuid()) && !SetUtils.isNullList(classficationList))
 		{
 			for (CodeItemInfo itemInfo : classficationList)
@@ -350,10 +350,10 @@ public class FbtStub extends AbstractServiceStub<FBTSImpl>
 	private boolean isHasOwningGroup(FoundationObject foundationObject, FileOpenSubject fileSubject) throws ServiceRequestException
 	{
 		boolean isHas = false;
-		Group currentGroup = this.stubService.getAAS().getGroup(fileSubject.getValueGuid());
+		Group currentGroup = this.stubService.getAas().getGroup(fileSubject.getValueGuid());
 		List<Group> groupList = new ArrayList<Group>();
 		groupList.add(currentGroup);
-		List<Group> childGroupList = this.stubService.getAAS().listAllSubGroup(fileSubject.getValueGuid(), null, true);
+		List<Group> childGroupList = this.stubService.getAas().listAllSubGroup(fileSubject.getValueGuid(), null, true);
 		if (!SetUtils.isNullList(childGroupList))
 		{
 			groupList.addAll(childGroupList);
@@ -396,8 +396,8 @@ public class FbtStub extends AbstractServiceStub<FBTSImpl>
 	{
 		List<ClassInfo> classInfoList = new ArrayList<>();
 		boolean isHas = false;
-		classInfoList = this.stubService.getEMM().listSubClass(null, fileSubject.getValueGuid(), true, null);
-		ClassInfo classSelf = this.stubService.getEMM().getClassByGuid(fileSubject.getValueGuid());
+		classInfoList = this.stubService.getEmm().listSubClass(null, fileSubject.getValueGuid(), true, null);
+		ClassInfo classSelf = this.stubService.getEmm().getClassByGuid(fileSubject.getValueGuid());
 		classInfoList.add(classSelf);
 		if (!SetUtils.isNullList(classInfoList))
 		{
@@ -509,12 +509,12 @@ public class FbtStub extends AbstractServiceStub<FBTSImpl>
 		{
 			return null;
 		}
-		ClassInfo classinfo = this.stubService.getEMM().getClassByName(objectGuid.getClassName());
+		ClassInfo classinfo = this.stubService.getEmm().getClassByName(objectGuid.getClassName());
 		// 通过guid取得相关的FileOpenConfig
 		List<DSSFileTrans> dssFileTransList = new ArrayList<DSSFileTrans>();
 		if (StringUtils.isNullString(guid))
 		{
-			DSSFileTrans dssFileTrans = ((DSSImpl) this.stubService.getDSS()).getTransFileStub().downloadFile(file.getGuid(), AuthorityEnum.VIEWFILE);
+			DSSFileTrans dssFileTrans = ((DSSImpl) this.stubService.getDss()).getTransFileStub().downloadFile(file.getGuid(), AuthorityEnum.VIEWFILE);
 			dssFileTransList.add(dssFileTrans);
 			return dssFileTransList;
 		}
@@ -522,7 +522,7 @@ public class FbtStub extends AbstractServiceStub<FBTSImpl>
 		String relationTemID = fileconfig.getRelationname();
 		if (StringUtils.isNullString(relationTemID) || StringUtils.isNullString(fileconfig.getSyndownloadtype()))
 		{
-			DSSFileTrans dssFileTrans = ((DSSImpl) this.stubService.getDSS()).getTransFileStub().downloadFile(file.getGuid(), AuthorityEnum.VIEWFILE);
+			DSSFileTrans dssFileTrans = ((DSSImpl) this.stubService.getDss()).getTransFileStub().downloadFile(file.getGuid(), AuthorityEnum.VIEWFILE);
 			dssFileTransList.add(dssFileTrans);
 			return dssFileTransList;
 		}
@@ -541,7 +541,7 @@ public class FbtStub extends AbstractServiceStub<FBTSImpl>
 			List<DSSFileInfo> end1FileList = getEnd1FileList(templates, objectGuid, synDownloadType);
 			if (SetUtils.isNullList(structureList))
 			{
-				DSSFileTrans dssFileTrans = ((DSSImpl) this.stubService.getDSS()).getTransFileStub().downloadFile(file.getGuid(), AuthorityEnum.VIEWFILE);
+				DSSFileTrans dssFileTrans = ((DSSImpl) this.stubService.getDss()).getTransFileStub().downloadFile(file.getGuid(), AuthorityEnum.VIEWFILE);
 				dssFileTransList.add(dssFileTrans);
 				if (!SetUtils.isNullList(end1FileList))
 				{
@@ -577,7 +577,7 @@ public class FbtStub extends AbstractServiceStub<FBTSImpl>
 	protected List<DSSFileTrans> listBIFileByFileGuid(String guid) throws ServiceRequestException
 	{
 		List<DSSFileTrans> dssFileTransList = new ArrayList<DSSFileTrans>();
-		List<DSSFileInfo> list = this.stubService.getDSS().listFile("BI_FILE", guid);
+		List<DSSFileInfo> list = this.stubService.getDss().listFile("BI_FILE", guid);
 		if (list != null)
 		{
 			dssFileTransList.addAll(this.downLoadFileList(list));
@@ -596,7 +596,7 @@ public class FbtStub extends AbstractServiceStub<FBTSImpl>
 		List<DSSFileTrans> dssFileTransList = new ArrayList<DSSFileTrans>();
 		for (String guid : fileList)
 		{
-			DSSFileTrans dssFile = ((DSSImpl) this.stubService.getDSS()).getTransFileStub().downloadFile(guid, AuthorityEnum.VIEWFILE);
+			DSSFileTrans dssFile = ((DSSImpl) this.stubService.getDss()).getTransFileStub().downloadFile(guid, AuthorityEnum.VIEWFILE);
 			dssFileTransList.add(dssFile);
 		}
 		return dssFileTransList;
@@ -613,7 +613,7 @@ public class FbtStub extends AbstractServiceStub<FBTSImpl>
 		List<DSSFileTrans> dssFileTransList = new ArrayList<DSSFileTrans>();
 		for (DSSFileInfo fileInfo : fileList)
 		{
-			DSSFileTrans dssFile = ((DSSImpl) this.stubService.getDSS()).getTransFileStub().downloadFile(fileInfo.getGuid(), AuthorityEnum.VIEWFILE);
+			DSSFileTrans dssFile = ((DSSImpl) this.stubService.getDss()).getTransFileStub().downloadFile(fileInfo.getGuid(), AuthorityEnum.VIEWFILE);
 			dssFileTransList.add(dssFile);
 		}
 		return dssFileTransList;
@@ -631,7 +631,7 @@ public class FbtStub extends AbstractServiceStub<FBTSImpl>
 
 		for (StructureObject structure : structureList)
 		{
-			List<DSSFileInfo> dssFileList = this.stubService.getDSS().listFile(structure.getEnd2ObjectGuid(), null);
+			List<DSSFileInfo> dssFileList = this.stubService.getDss().listFile(structure.getEnd2ObjectGuid(), null);
 			if (!SetUtils.isNullList(dssFileList))
 			{
 				for (String suffix : synDownloadType)
@@ -656,7 +656,7 @@ public class FbtStub extends AbstractServiceStub<FBTSImpl>
 		List<StructureObject> result = new ArrayList<StructureObject>();
 		for (RelationTemplateInfo template : templates)
 		{
-			List<StructureObject> structureObjects = this.stubService.getBOAS().listObjectOfRelation(objectGuid, template.getName(), null, null, null);
+			List<StructureObject> structureObjects = this.stubService.getBoas().listObjectOfRelation(objectGuid, template.getName(), null, null, null);
 			if (!SetUtils.isNullList(structureObjects))
 			{
 				result.addAll(structureObjects);
@@ -672,7 +672,7 @@ public class FbtStub extends AbstractServiceStub<FBTSImpl>
 		String[] idArray = relationTemID.split(",");
 		for (String id : idArray)
 		{
-			RelationTemplateInfo template = this.stubService.getEMM().getRelationTemplateById(id);
+			RelationTemplateInfo template = this.stubService.getEmm().getRelationTemplateById(id);
 			if (template != null && !nameSet.contains(template.getName()))
 			{
 				relationTemplates.add(template);
@@ -692,7 +692,7 @@ public class FbtStub extends AbstractServiceStub<FBTSImpl>
 		{
 			nameSet.add(template.getName());
 		}
-		info = this.stubService.getEMM().getClassByGuid(objectGuid.getClassGuid());
+		info = this.stubService.getEmm().getClassByGuid(objectGuid.getClassGuid());
 		if (info != null)
 		{
 			if (info.hasInterface(ModelInterfaceEnum.ICAD2D) && nameSet.contains(BuiltinRelationNameEnum.CAD3DCAD2D.toString()))
@@ -724,12 +724,12 @@ public class FbtStub extends AbstractServiceStub<FBTSImpl>
 	private List<DSSFileInfo> getEnd1FileListByInterface(ObjectGuid objectGuid, String relationName) throws ServiceRequestException
 	{
 		List<DSSFileInfo> result = new ArrayList<DSSFileInfo>();
-		List<FoundationObject> foundationObjects = this.stubService.getBOAS().listWhereReferenced(objectGuid, relationName, null, null);
+		List<FoundationObject> foundationObjects = this.stubService.getBoas().listWhereReferenced(objectGuid, relationName, null, null);
 		if (!SetUtils.isNullList(foundationObjects))
 		{
 			for (FoundationObject object : foundationObjects)
 			{
-				List<DSSFileInfo> fileList = this.stubService.getDSS().listFile(object.getObjectGuid(), object.getIterationId(), null);
+				List<DSSFileInfo> fileList = this.stubService.getDss().listFile(object.getObjectGuid(), object.getIterationId(), null);
 				if (!SetUtils.isNullList(fileList))
 				{
 					result.addAll(fileList);

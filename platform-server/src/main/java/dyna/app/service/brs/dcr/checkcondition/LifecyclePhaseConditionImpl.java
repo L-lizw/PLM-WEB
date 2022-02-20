@@ -74,7 +74,7 @@ public class LifecyclePhaseConditionImpl extends AbstractFieldCondition
 
 	private EMM getEMM() throws ServiceRequestException
 	{
-		return this.getServiceInstance(EMM.class);
+		return this.stubService.getEmm();
 	}
 
 	public String getValue() throws ServiceRequestException

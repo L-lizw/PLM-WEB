@@ -35,7 +35,7 @@ public class OrderConfigureStub extends AbstractServiceStub<CPBImpl>
 
 	public List<BOInfo> listOrderBoinfo() throws ServiceRequestException
 	{
-		BMInfo bmInfo = this.stubService.getEMM().getCurrentBizModel();
+		BMInfo bmInfo = this.stubService.getEmm().getCurrentBizModel();
 		if (bmInfo != null && bmInfo.getGuid() != null)
 		{
 			SystemDataService sds = this.stubService.getSystemDataService();
@@ -47,7 +47,7 @@ public class OrderConfigureStub extends AbstractServiceStub<CPBImpl>
 				List<BOInfo> listBoInfo = new ArrayList<BOInfo>();
 				for (OrderSearchClass orb : list)
 				{
-					BOInfo boinfo = this.stubService.getEMM().getBoInfoByNameAndBM(bmInfo.getGuid(), orb.getBoInfoName());
+					BOInfo boinfo = this.stubService.getEmm().getBoInfoByNameAndBM(bmInfo.getGuid(), orb.getBoInfoName());
 					if (boinfo != null)
 					{
 						listBoInfo.add(boinfo);
@@ -64,7 +64,7 @@ public class OrderConfigureStub extends AbstractServiceStub<CPBImpl>
 		SystemDataService sds = this.stubService.getSystemDataService();
 		try
 		{
-			BMInfo bmInfo = this.stubService.getEMM().getCurrentBizModel();
+			BMInfo bmInfo = this.stubService.getEmm().getCurrentBizModel();
 //			DataServer.getTransactionManager().startTransaction(this.stubService.getFixedTransactionId());
 
 			if (bmInfo != null && bmInfo.getGuid() != null)
@@ -117,13 +117,13 @@ public class OrderConfigureStub extends AbstractServiceStub<CPBImpl>
 	// 批量保存订单物料
 	protected void saveDriveResult4Order(ObjectGuid objectGuid, DataRule dataRule, int level) throws ServiceRequestException
 	{
-		FoundationObject contract = this.stubService.getBOAS().getObject(objectGuid);
+		FoundationObject contract = this.stubService.getBoas().getObject(objectGuid);
 		if (contract == null)
 		{
 			throw new ServiceRequestException("ID_DS_NO_DATA", "contract is not exist, guid='" + objectGuid.getGuid() + "'");
 		}
 
-		ViewObject viewObject = this.stubService.getBOAS().getRelationByEND1(objectGuid, ConfigParameterConstants.CONFIG_PARAMETER_ORDELDETAIL_TEMPLATE_NAME);
+		ViewObject viewObject = this.stubService.getBoas().getRelationByEND1(objectGuid, ConfigParameterConstants.CONFIG_PARAMETER_ORDELDETAIL_TEMPLATE_NAME);
 		if (viewObject == null)
 		{
 			return;
@@ -137,7 +137,7 @@ public class OrderConfigureStub extends AbstractServiceStub<CPBImpl>
 		}
 
 		String templateName = ConfigParameterConstants.CONFIG_PARAMETER_RESULTRELATION_TEMPLATE_NAME;
-		RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateByName(objectGuid, templateName);
+		RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateByName(objectGuid, templateName);
 		if (relationTemplate == null)
 		{
 			throw new ServiceRequestException("ID_APP_NO_RELATION_TEMPLATE", "no relation template:" + templateName, null, templateName);
@@ -202,19 +202,19 @@ public class OrderConfigureStub extends AbstractServiceStub<CPBImpl>
 	protected List<List<String>> check4Order(ObjectGuid contractObjectGuid, DataRule dataRule, boolean allCheck) throws ServiceRequestException
 	{
 		String templateName = ConfigParameterConstants.CONFIG_PARAMETER_RESULTRELATION_TEMPLATE_NAME;
-		RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateByName(contractObjectGuid, templateName);
+		RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateByName(contractObjectGuid, templateName);
 		if (relationTemplate == null)
 		{
 			throw new ServiceRequestException("ID_APP_NO_RELATION_TEMPLATE", "no relation template:" + templateName, null, templateName);
 		}
 
-		FoundationObject contract = this.stubService.getBOAS().getObject(contractObjectGuid);
+		FoundationObject contract = this.stubService.getBoas().getObject(contractObjectGuid);
 		if (contract == null)
 		{
 			throw new ServiceRequestException("ID_DS_NO_DATA", "contract is not exist, guid='" + contractObjectGuid.getGuid() + "'");
 		}
 
-		ViewObject viewObject = this.stubService.getBOAS().getRelationByEND1(contractObjectGuid, ConfigParameterConstants.CONFIG_PARAMETER_ORDELDETAIL_TEMPLATE_NAME);
+		ViewObject viewObject = this.stubService.getBoas().getRelationByEND1(contractObjectGuid, ConfigParameterConstants.CONFIG_PARAMETER_ORDELDETAIL_TEMPLATE_NAME);
 		if (viewObject == null)
 		{
 			return null;
@@ -343,7 +343,7 @@ public class OrderConfigureStub extends AbstractServiceStub<CPBImpl>
 				List<String> logs = new ArrayList<String>();
 				logs.add(" ");
 				logs.add(e.getMessage());
-				logs.add(this.stubService.getMSRM().getMSRString(((ParameterizedException) e).getMsrId(), this.stubService.getUserSignature().getLanguageEnum().toString(),
+				logs.add(this.stubService.getMsrm().getMSRString(((ParameterizedException) e).getMsrId(), this.stubService.getUserSignature().getLanguageEnum().toString(),
 						((ServiceRequestException) e).getArgs()));
 				logList.add(logs);
 				throw (ServiceRequestException) e;
@@ -360,11 +360,11 @@ public class OrderConfigureStub extends AbstractServiceStub<CPBImpl>
 	private List<StructureObject> listOrderBom(ObjectGuid objectGuid) throws ServiceRequestException
 	{
 		String templateName = ConfigParameterConstants.CONFIG_PARAMETER_RESULTRELATION_TEMPLATE_NAME;
-		RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateByName(objectGuid, templateName);
+		RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateByName(objectGuid, templateName);
 		SearchCondition sc = SearchConditionFactory.createSearchConditionForStructure(relationTemplate.getStructureClassName());
 		sc.addResultField("DATASEQ");
 
-		List<StructureObject> list = this.stubService.getBOAS().listObjectOfRelation(objectGuid, templateName, sc, null, null);
+		List<StructureObject> list = this.stubService.getBoas().listObjectOfRelation(objectGuid, templateName, sc, null, null);
 		if (list == null)
 		{
 			list = new ArrayList<StructureObject>();
@@ -399,8 +399,8 @@ public class OrderConfigureStub extends AbstractServiceStub<CPBImpl>
 		int maxSequence = this.getMaxSequenceOfBOM(orderBomList);
 
 		String templateName = ConfigParameterConstants.CONFIG_PARAMETER_RESULTRELATION_TEMPLATE_NAME;
-		RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateByName(contract.getObjectGuid(), templateName);
-		StructureObject structureObject = this.stubService.getBOAS().newStructureObject(relationTemplate.getStructureClassGuid(), relationTemplate.getStructureClassName());
+		RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateByName(contract.getObjectGuid(), templateName);
+		StructureObject structureObject = this.stubService.getBoas().newStructureObject(relationTemplate.getStructureClassGuid(), relationTemplate.getStructureClassName());
 		structureObject.put("Quantity", order.get("Quantity"));// 订单明细的订购数量添加到订单合同-订单物料结构上
 		structureObject.setSequence(String.valueOf(++maxSequence));
 		structureObject.put(ConfigParameterConstants.STRUC_ORDER_DETAIL, order.getObjectGuid().getGuid());
@@ -551,12 +551,12 @@ public class OrderConfigureStub extends AbstractServiceStub<CPBImpl>
 		if (isNewItem)
 		{
 			String templateName_ = this.stubService.getDrivenStub().getCADTemplate(draw.getObjectGuid().getClassName());
-			RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateByName(item.getObjectGuid(), templateName_);
+			RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateByName(item.getObjectGuid(), templateName_);
 			if (relationTemplate == null)
 			{
 				throw new ServiceRequestException("ID_APP_NO_RELATION_TEMPLATE", "no relation template:" + templateName_, null, templateName_);
 			}
-			StructureObject structureObject = this.stubService.getBOAS().newStructureObject(relationTemplate.getStructureClassGuid(), relationTemplate.getStructureClassName());
+			StructureObject structureObject = this.stubService.getBoas().newStructureObject(relationTemplate.getStructureClassGuid(), relationTemplate.getStructureClassName());
 
 			ViewObject viewObject = this.stubService.getCPBStub().getViewObject(item.getObjectGuid(), templateName_, true);
 			this.stubService.linkNoCheckCycle(viewObject, item, draw.getObjectGuid(), structureObject);
@@ -585,7 +585,7 @@ public class OrderConfigureStub extends AbstractServiceStub<CPBImpl>
 	// 删除订单合同
 	protected void deleteContract(ObjectGuid contractObjectGuid) throws ServiceRequestException
 	{
-		FoundationObject contract = this.stubService.getBOAS().getObject(contractObjectGuid);
+		FoundationObject contract = this.stubService.getBoas().getObject(contractObjectGuid);
 		if (contract == null)
 		{
 			return;
@@ -595,7 +595,7 @@ public class OrderConfigureStub extends AbstractServiceStub<CPBImpl>
 		{
 //			DataServer.getTransactionManager().startTransaction(this.stubService.getFixedTransactionId());
 			// 订单明细
-			ViewObject viewObject = this.stubService.getBOAS().getRelationByEND1(contractObjectGuid, ConfigParameterConstants.CONFIG_PARAMETER_ORDELDETAIL_TEMPLATE_NAME);
+			ViewObject viewObject = this.stubService.getBoas().getRelationByEND1(contractObjectGuid, ConfigParameterConstants.CONFIG_PARAMETER_ORDELDETAIL_TEMPLATE_NAME);
 			if (viewObject != null)
 			{
 				// 取得订单合同的所有订单明细
@@ -605,17 +605,17 @@ public class OrderConfigureStub extends AbstractServiceStub<CPBImpl>
 					// 删除订单明细
 					for (FoundationObject detail : end2List)
 					{
-						this.stubService.getBOAS().deleteObject(detail);
+						this.stubService.getBoas().deleteObject(detail);
 					}
 				}
-				this.stubService.getBOAS().deleteObject(viewObject);
+				this.stubService.getBoas().deleteObject(viewObject);
 			}
 
 			// 订单BOM
-			viewObject = this.stubService.getBOAS().getRelationByEND1(contractObjectGuid, ConfigParameterConstants.CONFIG_PARAMETER_RESULTRELATION_TEMPLATE_NAME);
+			viewObject = this.stubService.getBoas().getRelationByEND1(contractObjectGuid, ConfigParameterConstants.CONFIG_PARAMETER_RESULTRELATION_TEMPLATE_NAME);
 			if (viewObject != null)
 			{
-				this.stubService.getBOAS().deleteObject(viewObject);
+				this.stubService.getBoas().deleteObject(viewObject);
 			}
 //			DataServer.getTransactionManager().commitTransaction();
 		}
@@ -657,7 +657,7 @@ public class OrderConfigureStub extends AbstractServiceStub<CPBImpl>
 	private List<FoundationObject> listOrderDetail(ObjectGuid contractObjectGuid, ObjectGuid viewObjectGuid) throws ServiceRequestException
 	{
 		String templateName = ConfigParameterConstants.CONFIG_PARAMETER_ORDELDETAIL_TEMPLATE_NAME;
-		RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateByName(contractObjectGuid, templateName);
+		RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateByName(contractObjectGuid, templateName);
 		if (relationTemplate == null)
 		{
 			throw new ServiceRequestException("ID_APP_NO_RELATION_TEMPLATE", "no relation template:" + templateName, null, templateName);
@@ -681,7 +681,7 @@ public class OrderConfigureStub extends AbstractServiceStub<CPBImpl>
 			for (RelationTemplateEnd2 templateEnd2 : relationTemplateEnd2List)
 			{
 				String end2BOName = templateEnd2.getEnd2BoName();
-				BOInfo end2BOInfo = this.stubService.getEMM().getCurrentBoInfoByName(end2BOName, true);
+				BOInfo end2BOInfo = this.stubService.getEmm().getCurrentBoInfoByName(end2BOName, true);
 				if (end2BOInfo != null)
 				{
 					end2ClassName = end2BOInfo.getClassName();
@@ -690,7 +690,7 @@ public class OrderConfigureStub extends AbstractServiceStub<CPBImpl>
 			}
 		}
 		SearchCondition end2SearchCondition = SearchConditionFactory.createSearchCondition4Class(end2ClassName, null, false);
-		List<UIObjectInfo> uiObjectList = this.stubService.getEMM().listUIObjectInCurrentBizModel(end2ClassName, UITypeEnum.FORM, true);
+		List<UIObjectInfo> uiObjectList = this.stubService.getEmm().listUIObjectInCurrentBizModel(end2ClassName, UITypeEnum.FORM, true);
 		if (!SetUtils.isNullList(uiObjectList))
 		{
 			List<String> uiNameList = new ArrayList<String>();
@@ -714,8 +714,8 @@ public class OrderConfigureStub extends AbstractServiceStub<CPBImpl>
 	protected List<StructureObject> driveResult4Order(FoundationObject item, FoundationObject draw, DataRule dataRule, SearchCondition itemSearchCondition)
 			throws ServiceRequestException
 	{
-		item = this.stubService.getBOAS().getObject(item.getObjectGuid());
-		RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateByName(item.getObjectGuid(),
+		item = this.stubService.getBoas().getObject(item.getObjectGuid());
+		RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateByName(item.getObjectGuid(),
 				ConfigParameterConstants.CONFIG_PARAMETER_RESULTRELATION_TEMPLATE_NAME);
 
 		ClassStub.decorateObjectGuid(item.getObjectGuid(), this.stubService);
@@ -779,7 +779,7 @@ public class OrderConfigureStub extends AbstractServiceStub<CPBImpl>
 							String itemClassification = (String) draw.get(ConfigParameterConstants.ITEM_CLASSIFICATION);
 							if (!StringUtils.isNullString(itemClassification))
 							{
-								CodeItemInfo codeItemInfo = this.stubService.getEMM().getCodeItem(itemClassification);
+								CodeItemInfo codeItemInfo = this.stubService.getEmm().getCodeItem(itemClassification);
 								if (codeItemInfo != null)
 								{
 									end2.put(ConfigParameterConstants.ITEM_CLASSIFICATION + "$NAME", codeItemInfo.getName());
@@ -788,7 +788,7 @@ public class OrderConfigureStub extends AbstractServiceStub<CPBImpl>
 							}
 						}
 
-						ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(end2.getObjectGuid().getClassGuid());
+						ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(end2.getObjectGuid().getClassGuid());
 						if (classInfo.hasInterface(ModelInterfaceEnum.IManufacturingRule))
 						{
 							FoundationObject item_ = this.stubService.getDrivenStub().saveFoundationObject(end2, itemSearchCondition, gNumber_, lNumbers_, inptVarriables_);
@@ -833,14 +833,14 @@ public class OrderConfigureStub extends AbstractServiceStub<CPBImpl>
 
 	private SearchCondition buildStrucSearchCondition(ObjectGuid objectGuid) throws ServiceRequestException
 	{
-		RelationTemplateInfo template = this.stubService.getEMM().getRelationTemplateByName(objectGuid, ConfigParameterConstants.CONFIG_PARAMETER_RELATION_TEMPLATE_NAME);
+		RelationTemplateInfo template = this.stubService.getEmm().getRelationTemplateByName(objectGuid, ConfigParameterConstants.CONFIG_PARAMETER_RELATION_TEMPLATE_NAME);
 		SearchCondition condition = SearchConditionFactory.createSearchConditionForStructure(template.getStructureClassName());
-		List<UIObjectInfo> uiObjectList = this.stubService.getEMM().listUIObjectInCurrentBizModel(template.getStructureClassName(), UITypeEnum.LIST, true);
+		List<UIObjectInfo> uiObjectList = this.stubService.getEmm().listUIObjectInCurrentBizModel(template.getStructureClassName(), UITypeEnum.LIST, true);
 		if (!SetUtils.isNullList(uiObjectList))
 		{
 			for (UIObjectInfo uiInfo : uiObjectList)
 			{
-				List<UIField> uiFeldList = this.stubService.getEMM().listUIFieldByUIGuid(uiInfo.getGuid());
+				List<UIField> uiFeldList = this.stubService.getEmm().listUIFieldByUIGuid(uiInfo.getGuid());
 				if (!SetUtils.isNullList(uiFeldList))
 				{
 					for (UIField uiField : uiFeldList)
@@ -855,7 +855,7 @@ public class OrderConfigureStub extends AbstractServiceStub<CPBImpl>
 
 	private SearchCondition buildEnd2SearchCondition(ObjectGuid objectGuid) throws ServiceRequestException
 	{
-		RelationTemplateInfo template = this.stubService.getEMM().getRelationTemplateByName(objectGuid, ConfigParameterConstants.CONFIG_PARAMETER_RELATION_TEMPLATE_NAME);
+		RelationTemplateInfo template = this.stubService.getEmm().getRelationTemplateByName(objectGuid, ConfigParameterConstants.CONFIG_PARAMETER_RELATION_TEMPLATE_NAME);
 
 		List<String> end2ClassNameList = new ArrayList<String>();
 		List<RelationTemplateEnd2> relationTemplateEnd2List = this.stubService.getRelationService().listRelationTemplateEnd2(template.getGuid());
@@ -863,7 +863,7 @@ public class OrderConfigureStub extends AbstractServiceStub<CPBImpl>
 		{
 			for (RelationTemplateEnd2 templateEnd2 : relationTemplateEnd2List)
 			{
-				String end2ClassName = this.stubService.getEMM().getCurrentBoInfoByName(templateEnd2.getEnd2BoName(), true).getClassName();
+				String end2ClassName = this.stubService.getEmm().getCurrentBoInfoByName(templateEnd2.getEnd2BoName(), true).getClassName();
 				end2ClassNameList.add(end2ClassName);
 			}
 		}
@@ -876,12 +876,12 @@ public class OrderConfigureStub extends AbstractServiceStub<CPBImpl>
 		SearchCondition end2SearchCondition = SearchConditionFactory.createSearchCondition4MulitClassSearch(end2ClassNameList);
 		for (String className : end2ClassNameList)
 		{
-			List<UIObjectInfo> uiObjectList = this.stubService.getEMM().listUIObjectInCurrentBizModel(className, UITypeEnum.LIST, true);
+			List<UIObjectInfo> uiObjectList = this.stubService.getEmm().listUIObjectInCurrentBizModel(className, UITypeEnum.LIST, true);
 			if (!SetUtils.isNullList(uiObjectList))
 			{
 				for (UIObjectInfo uiInfo : uiObjectList)
 				{
-					List<UIField> uiFeldList = this.stubService.getEMM().listUIFieldByUIGuid(uiInfo.getGuid());
+					List<UIField> uiFeldList = this.stubService.getEmm().listUIFieldByUIGuid(uiInfo.getGuid());
 					if (!SetUtils.isNullList(uiFeldList))
 					{
 						for (UIField uiField : uiFeldList)
@@ -904,7 +904,7 @@ public class OrderConfigureStub extends AbstractServiceStub<CPBImpl>
 	 */
 	protected FoundationObject getDrawInstanceByOrderDetail(String drawNo, Date ruleTime) throws ServiceRequestException
 	{
-		ClassInfo classInfo = this.stubService.getEMM().getFirstLevelClassByInterface(ModelInterfaceEnum.IManufacturingRule, null);
+		ClassInfo classInfo = this.stubService.getEmm().getFirstLevelClassByInterface(ModelInterfaceEnum.IManufacturingRule, null);
 		if (classInfo == null)
 		{
 			return null;
@@ -915,7 +915,7 @@ public class OrderConfigureStub extends AbstractServiceStub<CPBImpl>
 		sc.addResultField(ConfigParameterConstants.MATCHEDCLASS);
 		sc.setCaseSensitive(true);
 		sc.setSearchRevisionTypeEnum(SearchRevisionTypeEnum.ISHISTORYREVISION);
-		List<UIObjectInfo> uiObjectList = this.stubService.getEMM().listUIObjectInCurrentBizModel(classInfo.getName(), UITypeEnum.LIST, true);
+		List<UIObjectInfo> uiObjectList = this.stubService.getEmm().listUIObjectInCurrentBizModel(classInfo.getName(), UITypeEnum.LIST, true);
 		if (!SetUtils.isNullList(uiObjectList))
 		{
 			List<String> uiNameList = new ArrayList<String>();
@@ -925,7 +925,7 @@ public class OrderConfigureStub extends AbstractServiceStub<CPBImpl>
 			}
 			sc.setResultUINameList(uiNameList);
 		}
-		List<FoundationObject> list = this.stubService.getBOAS().listObject(sc);
+		List<FoundationObject> list = this.stubService.getBoas().listObject(sc);
 		if (!SetUtils.isNullList(list))
 		{
 			for (FoundationObject fo : list)
@@ -984,7 +984,7 @@ public class OrderConfigureStub extends AbstractServiceStub<CPBImpl>
 				this.stubService.saveObject(order);
 			}
 
-			this.stubService.getBOAS().unlink(structureObject);
+			this.stubService.getBoas().unlink(structureObject);
 
 //			DataServer.getTransactionManager().commitTransaction();
 		}
@@ -1012,12 +1012,12 @@ public class OrderConfigureStub extends AbstractServiceStub<CPBImpl>
 		ClassStub.decorateObjectGuid(structureObject.getObjectGuid(), this.stubService);
 		SearchCondition sc = SearchConditionFactory.createSearchConditionForStructure(structureObject.getObjectGuid().getClassName());
 		sc.addResultField(ConfigParameterConstants.STRUC_ORDER_DETAIL);
-		structureObject = this.stubService.getBOAS().getStructureObject(structureObject.getObjectGuid(), sc);
+		structureObject = this.stubService.getBoas().getStructureObject(structureObject.getObjectGuid(), sc);
 		String orderDetailGuid = (String) structureObject.get(ConfigParameterConstants.STRUC_ORDER_DETAIL);
 		if (StringUtils.isGuid(orderDetailGuid))
 		{
 			ObjectGuid orderObjectGuid = new ObjectGuid((String) structureObject.get(ConfigParameterConstants.STRUC_ORDER_DETAIL + "$CLASS"), null, orderDetailGuid, null);
-			return this.stubService.getBOAS().getObject(orderObjectGuid);
+			return this.stubService.getBoas().getObject(orderObjectGuid);
 		}
 		return null;
 	}
@@ -1048,24 +1048,24 @@ public class OrderConfigureStub extends AbstractServiceStub<CPBImpl>
 		{
 			return null;
 		}
-		return this.stubService.getBOAS().getObject(drawing.getObjectGuid());
+		return this.stubService.getBoas().getObject(drawing.getObjectGuid());
 	}
 
 	private String getMessage(String id, Object... agrs) throws ServiceRequestException
 	{
-		return this.stubService.getMSRM().getMSRString(id, this.stubService.getUserSignature().getLanguageEnum().getId(), agrs);
+		return this.stubService.getMsrm().getMSRString(id, this.stubService.getUserSignature().getLanguageEnum().getId(), agrs);
 	}
 
 	protected void saveOrderParameter(FoundationObject contract, ObjectGuid orderObjectGuid, String gNumber, String lNumbers, String inputVariables) throws ServiceRequestException
 	{
-		FoundationObject order = this.stubService.getBOAS().getObject(orderObjectGuid);
+		FoundationObject order = this.stubService.getBoas().getObject(orderObjectGuid);
 		if (order == null)
 		{
 			throw new ServiceRequestException("ID_DS_NO_DATA", "order is not exist, guid='" + orderObjectGuid.getGuid() + "'");
 		}
 
 		String templateName = ConfigParameterConstants.CONFIG_PARAMETER_RESULTRELATION_TEMPLATE_NAME;
-		RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateByName(contract.getObjectGuid(), templateName);
+		RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateByName(contract.getObjectGuid(), templateName);
 		if (relationTemplate == null)
 		{
 			throw new ServiceRequestException("ID_APP_NO_RELATION_TEMPLATE", "no relation template:" + templateName, null, templateName);
@@ -1088,14 +1088,14 @@ public class OrderConfigureStub extends AbstractServiceStub<CPBImpl>
 
 			if (!StringUtils.isNullString(itemMaster) && viewObject != null)
 			{
-				List<StructureObject> list = this.stubService.getBOAS().listObjectOfRelation(viewObject.getObjectGuid(), null, null, null);
+				List<StructureObject> list = this.stubService.getBoas().listObjectOfRelation(viewObject.getObjectGuid(), null, null, null);
 				if (list != null)
 				{
 					for (StructureObject stru : list)
 					{
 						if (itemMaster.equalsIgnoreCase(stru.getEnd2ObjectGuid().getMasterGuid()))
 						{
-							this.stubService.getBOAS().unlink(stru);
+							this.stubService.getBoas().unlink(stru);
 						}
 					}
 				}

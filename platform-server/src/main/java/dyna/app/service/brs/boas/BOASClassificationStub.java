@@ -36,12 +36,12 @@ public class BOASClassificationStub extends AbstractServiceStub<BOASImpl>
 		{
 			filter.put("ITERATIONID", iterationId);
 		}
-		List<ClassficationFeature> listClassficationFeature = this.stubService.getEMM().listClassficationFeature(foundationObject.getObjectGuid().getClassGuid());
+		List<ClassficationFeature> listClassficationFeature = this.stubService.getEmm().listClassficationFeature(foundationObject.getObjectGuid().getClassGuid());
 		if (!SetUtils.isNullList(listClassficationFeature))
 		{
 			for (ClassficationFeature feature : listClassficationFeature)
 			{
-				CodeObjectInfo codeObject = this.stubService.getEMM().getCode(feature.getClassificationfk());
+				CodeObjectInfo codeObject = this.stubService.getEmm().getCode(feature.getClassificationfk());
 				if (codeObject != null && codeObject.isHasFields() && !StringUtils.isNullString(codeObject.getBaseTableName()))
 				{
 					if (StringUtils.isNullString(iterationId))
@@ -91,7 +91,7 @@ public class BOASClassificationStub extends AbstractServiceStub<BOASImpl>
 	{
 		if (classification != null)
 		{
-			EMM emm = this.stubService.getEMM();
+			EMM emm = this.stubService.getEmm();
 			try
 			{
 				List<ClassField> listClassificationField = emm.listClassificationField(classificationItemGuid);

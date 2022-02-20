@@ -31,7 +31,7 @@ public class FileConditionImpl extends AbstractFieldCondition
 			return true;
 		}
 
-		DSS dss = this.getServiceInstance(DSS.class);
+		DSS dss = this.stubService.getDss();
 		List<DSSFileInfo> fileList = dss.listFile(this.getFoundationObject().getObjectGuid(), null);
 		if (!SetUtils.isNullList(fileList))
 		{

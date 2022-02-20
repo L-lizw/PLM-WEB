@@ -36,14 +36,14 @@ public class DrawTransferBOMStub extends AbstractServiceStub<BOMSImpl>
 
 	protected void transferBOM(ObjectGuid objectGuid, String bomTemplateName, String procRtGuid) throws ServiceRequestException
 	{
-		ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(objectGuid.getClassGuid());
+		ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(objectGuid.getClassGuid());
 		if (!classInfo.hasInterface(ModelInterfaceEnum.IDWTransfer))
 		{
 			// 模型错误
 			throw new ServiceRequestException("ID_APP_SWTTOBOM_MODEL_ERROR", "model is wrong.");
 		}
 
-		FoundationObject end1 = this.stubService.getBOAS().getObject(objectGuid);
+		FoundationObject end1 = this.stubService.getBoas().getObject(objectGuid);
 		if (end1 == null)
 		{
 			// 对象不存在
@@ -56,7 +56,7 @@ public class DrawTransferBOMStub extends AbstractServiceStub<BOMSImpl>
 			throw new ServiceRequestException("ID_APP_SWTTOBOM_STATUS_WRONG", "draw cannot be transfered to bom with status ='" + end1.getStatus() + "'");
 		}
 
-		RelationTemplateInfo template = this.stubService.getEMM().getRelationTemplateByName(objectGuid, BuiltinRelationNameEnum.MODEL_STRUCTURE.toString());
+		RelationTemplateInfo template = this.stubService.getEmm().getRelationTemplateByName(objectGuid, BuiltinRelationNameEnum.MODEL_STRUCTURE.toString());
 		if (template == null)
 		{
 			// 模版{0}不存在
@@ -64,7 +64,7 @@ public class DrawTransferBOMStub extends AbstractServiceStub<BOMSImpl>
 					BuiltinRelationNameEnum.MODEL_STRUCTURE.toString());
 		}
 
-		ViewObject viewObject = this.stubService.getBOAS().getRelationByEND1(objectGuid, BuiltinRelationNameEnum.MODEL_STRUCTURE.toString());
+		ViewObject viewObject = this.stubService.getBoas().getRelationByEND1(objectGuid, BuiltinRelationNameEnum.MODEL_STRUCTURE.toString());
 		if (viewObject == null)
 		{
 			// 模型结构数据不存在
@@ -72,7 +72,7 @@ public class DrawTransferBOMStub extends AbstractServiceStub<BOMSImpl>
 		}
 
 		SearchCondition end2SearchCondition = this.buildEnd2SearchCondition(template);
-		List<StructureObject> structureList = this.stubService.getBOAS().listObjectOfRelation(objectGuid, BuiltinRelationNameEnum.MODEL_STRUCTURE.toString(), null,
+		List<StructureObject> structureList = this.stubService.getBoas().listObjectOfRelation(objectGuid, BuiltinRelationNameEnum.MODEL_STRUCTURE.toString(), null,
 				end2SearchCondition, null);
 		if (SetUtils.isNullList(structureList))
 		{
@@ -117,7 +117,7 @@ public class DrawTransferBOMStub extends AbstractServiceStub<BOMSImpl>
 	{
 		if (!foundationObject.isCheckOut())
 		{
-			foundationObject = this.stubService.getBOAS().checkOut(foundationObject);
+			foundationObject = this.stubService.getBoas().checkOut(foundationObject);
 			checkoutFoundationObjectList.add(foundationObject);
 		}
 		return foundationObject;
@@ -138,7 +138,7 @@ public class DrawTransferBOMStub extends AbstractServiceStub<BOMSImpl>
 			{
 				if (foundationObject.isCheckOut())
 				{
-					this.stubService.getBOAS().checkIn(foundationObject, false);
+					this.stubService.getBoas().checkIn(foundationObject, false);
 				}
 			}
 		}
@@ -155,7 +155,7 @@ public class DrawTransferBOMStub extends AbstractServiceStub<BOMSImpl>
 	{
 		if (!SetUtils.isNullList(structureObjectList))
 		{
-			ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(end1.getObjectGuid().getClassGuid());
+			ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(end1.getObjectGuid().getClassGuid());
 			if (!classInfo.hasInterface(ModelInterfaceEnum.IDWTransfer))
 			{
 				return;
@@ -164,19 +164,19 @@ public class DrawTransferBOMStub extends AbstractServiceStub<BOMSImpl>
 			// 如果对象是发布状态，则修订新版本
 			if (end1.getStatus() == SystemStatusEnum.RELEASE)
 			{
-				end1 = this.stubService.getBOAS().prepareRevision(end1.getObjectGuid());
-				end1 = this.stubService.getBOAS().createRevision(end1, true);
+				end1 = this.stubService.getBoas().prepareRevision(end1.getObjectGuid());
+				end1 = this.stubService.getBoas().createRevision(end1, true);
 			}
 
 			if (end1.getAlterId() == null)
 			{
 				// 检出
 				end1 = getCheckoutFoundationObject(end1, checkoutFoundationObjectList);
-				String message = this.stubService.getBOAS().allocateUniqueAlterId(end1);
+				String message = this.stubService.getBoas().allocateUniqueAlterId(end1);
 
 				if (StringUtils.isNullString(message) && end1.isChanged(SystemClassFieldEnum.ALTERID.getName()))
 				{
-					end1 = this.stubService.getBOAS().saveObject(end1);
+					end1 = this.stubService.getBoas().saveObject(end1);
 				}
 			}
 
@@ -205,11 +205,11 @@ public class DrawTransferBOMStub extends AbstractServiceStub<BOMSImpl>
 			for (StructureObject structureObject : structureObjectList)
 			{
 				ObjectGuid end2ObjectGuid = structureObject.getEnd2ObjectGuid();
-				FoundationObject end2 = this.stubService.getBOAS().getObject(end2ObjectGuid);
+				FoundationObject end2 = this.stubService.getBoas().getObject(end2ObjectGuid);
 
-				RelationTemplateInfo template = this.stubService.getEMM().getRelationTemplateByName(end2.getObjectGuid(), BuiltinRelationNameEnum.MODEL_STRUCTURE.toString());
+				RelationTemplateInfo template = this.stubService.getEmm().getRelationTemplateByName(end2.getObjectGuid(), BuiltinRelationNameEnum.MODEL_STRUCTURE.toString());
 				SearchCondition end2SearchCondition = this.buildEnd2SearchCondition(template);
-				List<StructureObject> structureObjectList_ = this.stubService.getBOAS().listObjectOfRelation(end2.getObjectGuid(),
+				List<StructureObject> structureObjectList_ = this.stubService.getBoas().listObjectOfRelation(end2.getObjectGuid(),
 						BuiltinRelationNameEnum.MODEL_STRUCTURE.toString(), null, end2SearchCondition, null);
 				this.transferBOM(end2, structureObjectList_, bomTemplateName, procRtGuid, checkoutFoundationObjectList);
 			}
@@ -232,10 +232,10 @@ public class DrawTransferBOMStub extends AbstractServiceStub<BOMSImpl>
 				{
 					// bom结构中的对象在模型结构中不存在，并且该对象是图纸转物料对象，则把该对象从BOM结构中移除
 					ObjectGuid bomhasModelNone = bomStructure.getEnd2ObjectGuid();
-					FoundationObject end2 = this.stubService.getBOAS().getObject(bomhasModelNone);
+					FoundationObject end2 = this.stubService.getBoas().getObject(bomhasModelNone);
 					if (end2 != null)
 					{
-						ClassInfo end2ClassInfo = this.stubService.getEMM().getClassByGuid(end2.getObjectGuid().getClassGuid());
+						ClassInfo end2ClassInfo = this.stubService.getEmm().getClassByGuid(end2.getObjectGuid().getClassGuid());
 						if (end2ClassInfo.hasInterface(ModelInterfaceEnum.IDWTransfer))
 						{
 							this.stubService.unlinkBOM(bomStructure);
@@ -259,7 +259,7 @@ public class DrawTransferBOMStub extends AbstractServiceStub<BOMSImpl>
 	private BOMView addNotExistInBOMFromModel(FoundationObject end1, List<StructureObject> structureObjectList, BOMView bomView, String bomTemplateName,
 			List<BOMStructure> bomStructureList, String procRtGuid, List<FoundationObject> checkoutFoundationObjectList) throws ServiceRequestException
 	{
-		BOMTemplateInfo bomTemplate = this.stubService.getEMM().getBOMTemplateByName(end1.getObjectGuid(), bomTemplateName);
+		BOMTemplateInfo bomTemplate = this.stubService.getEmm().getBOMTemplateByName(end1.getObjectGuid(), bomTemplateName);
 		if (bomTemplate == null)
 		{
 			throw new ServiceRequestException("ID_APP_NO_BOMTEMPLATE_EXIST", "bomTemplate is not exist.", null, bomTemplateName);
@@ -281,7 +281,7 @@ public class DrawTransferBOMStub extends AbstractServiceStub<BOMSImpl>
 			{
 				ObjectGuid end2ObjectGuid = structureObject.getEnd2ObjectGuid();
 				ClassStub.decorateObjectGuid(end2ObjectGuid, this.stubService);
-				ClassInfo end2ClassInfo = this.stubService.getEMM().getClassByGuid(end2ObjectGuid.getClassGuid());
+				ClassInfo end2ClassInfo = this.stubService.getEmm().getClassByGuid(end2ObjectGuid.getClassGuid());
 				BOMStructure bomStructure = this.getBOMStructureByStuctureObject(structureObject, bomStructureList);
 				boolean bomRelated = true;
 				if (!StringUtils.isNullString((String) structureObject.get("BOMRelated")))
@@ -472,11 +472,11 @@ public class DrawTransferBOMStub extends AbstractServiceStub<BOMSImpl>
 	 */
 	private SearchCondition buildEnd2SearchCondition(RelationTemplateInfo template) throws ServiceRequestException
 	{
-		List<RelationTemplateEnd2> templateEnd2List = this.stubService.getEMM().getRelationTemplate(template.getGuid()).getRelationTemplateEnd2List();
+		List<RelationTemplateEnd2> templateEnd2List = this.stubService.getEmm().getRelationTemplate(template.getGuid()).getRelationTemplateEnd2List();
 		RelationTemplateEnd2 templateEnd2 = templateEnd2List.get(0);
-		BOInfo end2BOInfo = this.stubService.getEMM().getCurrentBoInfoByName(templateEnd2.getEnd2BoName(), false);
+		BOInfo end2BOInfo = this.stubService.getEmm().getCurrentBoInfoByName(templateEnd2.getEnd2BoName(), false);
 
-		List<UIObjectInfo> uiObjectList = this.stubService.getEMM().listALLFormListUIObjectInBizModel(end2BOInfo.getClassName());
+		List<UIObjectInfo> uiObjectList = this.stubService.getEmm().listALLFormListUIObjectInBizModel(end2BOInfo.getClassName());
 
 		SearchCondition condition = SearchConditionFactory.createSearchCondition4Class(end2BOInfo.getClassName(), null, false);
 		if (!SetUtils.isNullList(uiObjectList))
