@@ -35,7 +35,7 @@ import java.util.*;
 /**
  * 与转换相关的操作分支
  * 
- * @author Wanglh
+ * @author Lizw
  * 
  */
 @Component
@@ -86,7 +86,7 @@ public class TransformConfigStub extends AbstractServiceStub<FTSImpl>
 				return query;
 			}
 
-			CodeItemInfo codeItem = this.stubService.getEMM().getCodeItem(query.getTransformType());
+			CodeItemInfo codeItem = this.stubService.getEmm().getCodeItem(query.getTransformType());
 			if (codeItem != null)
 			{
 				query.put(TransformConfig.TRANSFORM_TYPE + "NAME", codeItem.getName());
@@ -155,7 +155,7 @@ public class TransformConfigStub extends AbstractServiceStub<FTSImpl>
 						continue;
 					}
 
-					CodeItemInfo codeItem = this.stubService.getEMM().getCodeItem(config.getTransformType());
+					CodeItemInfo codeItem = this.stubService.getEmm().getCodeItem(config.getTransformType());
 					if (codeItem != null)
 					{
 						if (isCheckLic)
@@ -222,7 +222,7 @@ public class TransformConfigStub extends AbstractServiceStub<FTSImpl>
 			}
 			else if (performer.getPerfType() == PerformerTypeEnum.RIG)
 			{
-				List<User> listUser = this.stubService.getAAS().listUserByRoleInGroup(performer.getPerfGuid());
+				List<User> listUser = this.stubService.getAas().listUserByRoleInGroup(performer.getPerfGuid());
 				if (!SetUtils.isNullList(listUser))
 				{
 					for (User user : listUser)
@@ -236,7 +236,7 @@ public class TransformConfigStub extends AbstractServiceStub<FTSImpl>
 			}
 			else if (performer.getPerfType() == PerformerTypeEnum.GROUP)
 			{
-				List<User> listUser = this.stubService.getAAS().listUserInGroupAndSubGroup(performer.getPerfGuid());
+				List<User> listUser = this.stubService.getAas().listUserInGroupAndSubGroup(performer.getPerfGuid());
 				if (!SetUtils.isNullList(listUser))
 				{
 					for (User user : listUser)
@@ -250,7 +250,7 @@ public class TransformConfigStub extends AbstractServiceStub<FTSImpl>
 			}
 			else if (performer.getPerfType() == PerformerTypeEnum.ROLE)
 			{
-				List<User> listUser = ((AASImpl) this.stubService.getAAS()).getUserStub().listUserInRole(performer.getPerfGuid(), true);
+				List<User> listUser = ((AASImpl) this.stubService.getAas()).getUserStub().listUserInRole(performer.getPerfGuid(), true);
 				if (!SetUtils.isNullList(listUser))
 				{
 					for (User user : listUser)
@@ -337,7 +337,7 @@ public class TransformConfigStub extends AbstractServiceStub<FTSImpl>
 
 		// 过滤不满足手动的条件
 		List<TransformConfig> resultList = new ArrayList<TransformConfig>();
-		FoundationObject foundation = this.stubService.getBOAS().getObjectByGuid(objectGuid);
+		FoundationObject foundation = this.stubService.getBoas().getObjectByGuid(objectGuid);
 		for (TransformConfig config : configList)
 		{
 			TransformManualConfig manualConfig = this.getManualConfig(config.getGuid());
@@ -474,7 +474,7 @@ public class TransformConfigStub extends AbstractServiceStub<FTSImpl>
 				{
 					if (!StringUtils.isNullString(config.getWorkflowName()))
 					{
-						WorkflowProcessInfo workflowProcess = this.stubService.getWFM().getProcessModelInfo(config.getWorkflowName());
+						WorkflowProcessInfo workflowProcess = this.stubService.getWfm().getProcessModelInfo(config.getWorkflowName());
 						if (workflowProcess != null)
 						{
 							String title = workflowProcess.getDescription();
@@ -484,7 +484,7 @@ public class TransformConfigStub extends AbstractServiceStub<FTSImpl>
 
 					if (!StringUtils.isNullString(config.getActivityName()))
 					{
-						WorkflowActivityInfo workflowActivity = this.stubService.getWFM().getWorkflowActivityInfoByName(config.getWorkflowName(), config.getActivityName());
+						WorkflowActivityInfo workflowActivity = this.stubService.getWfm().getWorkflowActivityInfoByName(config.getWorkflowName(), config.getActivityName());
 
 						if (workflowActivity != null)
 						{
@@ -1030,7 +1030,7 @@ public class TransformConfigStub extends AbstractServiceStub<FTSImpl>
 	public List<String> listTLicenseModules() throws ServiceRequestException
 	{
 		// String allModules =
-		List<String> allModules = this.stubService.getLIC().getLicenseModuleList();
+		List<String> allModules = this.stubService.getLic().getLicenseModuleList();
 		List<String> result = new ArrayList<String>();
 		if (!SetUtils.isNullList(allModules))
 		{
@@ -1060,7 +1060,7 @@ public class TransformConfigStub extends AbstractServiceStub<FTSImpl>
 				{
 					if (!StringUtils.isNullString(item.getPerfGuid()))
 					{
-						Group group = this.stubService.getAAS().getGroup(item.getPerfGuid());
+						Group group = this.stubService.getAas().getGroup(item.getPerfGuid());
 						if (group != null)
 						{
 							item.setName(group.getGroupId() + "-" + group.getGroupName());
@@ -1071,7 +1071,7 @@ public class TransformConfigStub extends AbstractServiceStub<FTSImpl>
 				{
 					if (!StringUtils.isNullString(item.getPerfGuid()))
 					{
-						Role role = this.stubService.getAAS().getRole(item.getPerfGuid());
+						Role role = this.stubService.getAas().getRole(item.getPerfGuid());
 						if (role != null)
 						{
 							item.setName(role.getRoleId() + "-" + role.getRoleName());
@@ -1082,18 +1082,18 @@ public class TransformConfigStub extends AbstractServiceStub<FTSImpl>
 				{
 					if (!StringUtils.isNullString(item.getPerfGuid()))
 					{
-						RIG rig = this.stubService.getAAS().getRIG(item.getPerfGuid());
+						RIG rig = this.stubService.getAas().getRIG(item.getPerfGuid());
 						if (rig != null)
 						{
 							Group group = null;
 							Role role = null;
 							if (!StringUtils.isNullString(rig.getGroupGuid()))
 							{
-								group = this.stubService.getAAS().getGroup(rig.getGroupGuid());
+								group = this.stubService.getAas().getGroup(rig.getGroupGuid());
 							}
 							if (!StringUtils.isNullString(rig.getRoleGuid()))
 							{
-								role = this.stubService.getAAS().getRole(rig.getRoleGuid());
+								role = this.stubService.getAas().getRole(rig.getRoleGuid());
 							}
 							if (group != null && role != null)
 							{
@@ -1107,7 +1107,7 @@ public class TransformConfigStub extends AbstractServiceStub<FTSImpl>
 				{
 					if (!StringUtils.isNullString(item.getPerfGuid()))
 					{
-						User user = this.stubService.getAAS().getUser(item.getPerfGuid());
+						User user = this.stubService.getAas().getUser(item.getPerfGuid());
 						if (user != null)
 						{
 							item.setName(user.getUserId() + "-" + user.getUserName());

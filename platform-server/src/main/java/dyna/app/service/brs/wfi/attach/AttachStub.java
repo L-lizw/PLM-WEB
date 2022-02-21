@@ -68,7 +68,7 @@ import java.util.Map.Entry;
 /**
  * 附件处理分支
  * 
- * @author Wanglei
+ * @author Lizw
  * 
  */
 @Component
@@ -89,7 +89,7 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 		ProcessRuntime processRuntime = this.stubService.getProcessRuntime(activity.getProcessRuntimeGuid());
 
 		List<WorkflowPhaseChangeInfo> listPhaseChange = null;
-		WorkflowActivity changePhaseActivities = ((WFMImpl) this.stubService.getWFM()).getActivitiyStub().listActivityByApplicationType(processRuntime.getName(),
+		WorkflowActivity changePhaseActivities = ((WFMImpl) this.stubService.getWfm()).getActivitiyStub().listActivityByApplicationType(processRuntime.getName(),
 				activity.getName(), WorkflowApplicationType.CHANGE_PHASE);
 
 		if (changePhaseActivities != null)
@@ -117,14 +117,14 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 			for (ProcAttach attach : listProcAttach)
 			{
 
-				LifecyclePhaseInfo lifecyclePhaseInfo = this.stubService.getEMM().getLifecyclePhaseInfo(attach.getLifecyclePhase());
-				LifecycleInfo lifecycleInfo = this.stubService.getEMM().getLifecycleInfoByGuid(lifecyclePhaseInfo.getMasterfk());
+				LifecyclePhaseInfo lifecyclePhaseInfo = this.stubService.getEmm().getLifecyclePhaseInfo(attach.getLifecyclePhase());
+				LifecycleInfo lifecycleInfo = this.stubService.getEmm().getLifecycleInfoByGuid(lifecyclePhaseInfo.getMasterfk());
 				// 判断是否可以跳转
 				if (statusChangeMap.containsKey(lifecycleInfo.getName() + ":" + lifecyclePhaseInfo.getName()))
 				{
 					// 调用通用状态变更方法
 					WorkflowPhaseChangeInfo workflowStatusChange = statusChangeMap.get(lifecycleInfo.getName() + ":" + lifecyclePhaseInfo.getName());
-					LifecyclePhaseInfo lifecyclePhaseInfoTo = this.stubService.getEMM().getLifecyclePhaseInfo(lifecycleInfo.getName(), workflowStatusChange.getToPhase());
+					LifecyclePhaseInfo lifecyclePhaseInfoTo = this.stubService.getEmm().getLifecyclePhaseInfo(lifecycleInfo.getName(), workflowStatusChange.getToPhase());
 					if (lifecyclePhaseInfoTo != null && !lifecyclePhaseInfoTo.getGuid().equalsIgnoreCase(attach.getLifecyclePhase()))
 					{
 						this.changePhase(attach.getInstanceGuid(), attach.getInstanceClassGuid(), lifecyclePhaseInfoTo.getGuid());
@@ -133,19 +133,19 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 				ObjectGuid mainObjectGuid = new ObjectGuid();
 				mainObjectGuid.setClassGuid(attach.getInstanceClassGuid());
 				mainObjectGuid.setGuid(attach.getInstanceGuid());
-				List<ViewObject> viewList = ((BOASImpl) this.stubService.getBOAS()).getRelationStub().listRelation(mainObjectGuid, false, true);
+				List<ViewObject> viewList = ((BOASImpl) this.stubService.getBoas()).getRelationStub().listRelation(mainObjectGuid, false, true);
 				if (!SetUtils.isNullList(viewList))
 				{
 					for (ViewObject obj : viewList)
 					{
-						lifecyclePhaseInfo = this.stubService.getEMM().getLifecyclePhaseInfo(obj.getLifecyclePhaseGuid());
-						lifecycleInfo = this.stubService.getEMM().getLifecycleInfoByGuid(lifecyclePhaseInfo.getMasterfk());
+						lifecyclePhaseInfo = this.stubService.getEmm().getLifecyclePhaseInfo(obj.getLifecyclePhaseGuid());
+						lifecycleInfo = this.stubService.getEmm().getLifecycleInfoByGuid(lifecyclePhaseInfo.getMasterfk());
 						// 判断是否可以跳转
 						if (statusChangeMap.containsKey(lifecycleInfo.getName() + ":" + lifecyclePhaseInfo.getName()))
 						{
 							// 调用通用状态变更方法
 							WorkflowPhaseChangeInfo workflowStatusChange = statusChangeMap.get(lifecycleInfo.getName() + ":" + lifecyclePhaseInfo.getName());
-							LifecyclePhaseInfo lifecyclePhaseInfoTo = this.stubService.getEMM().getLifecyclePhaseInfo(lifecycleInfo.getName(), workflowStatusChange.getToPhase());
+							LifecyclePhaseInfo lifecyclePhaseInfoTo = this.stubService.getEmm().getLifecyclePhaseInfo(lifecycleInfo.getName(), workflowStatusChange.getToPhase());
 							if (lifecyclePhaseInfoTo != null && !lifecyclePhaseInfoTo.getGuid().equalsIgnoreCase(attach.getLifecyclePhase()))
 							{
 								this.changePhase(obj.getObjectGuid().getGuid(), obj.getObjectGuid().getClassGuid(), lifecyclePhaseInfoTo.getGuid());
@@ -153,19 +153,19 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 						}
 					}
 				}
-				List<BOMView> bomviewList = ((BOMSImpl) this.stubService.getBOMS()).getBomViewStub().listBOMView(mainObjectGuid, false);
+				List<BOMView> bomviewList = ((BOMSImpl) this.stubService.getBoms()).getBomViewStub().listBOMView(mainObjectGuid, false);
 				if (!SetUtils.isNullList(bomviewList))
 				{
 					for (BOMView obj : bomviewList)
 					{
-						lifecyclePhaseInfo = this.stubService.getEMM().getLifecyclePhaseInfo(obj.getLifecyclePhaseGuid());
-						lifecycleInfo = this.stubService.getEMM().getLifecycleInfoByGuid(lifecyclePhaseInfo.getMasterfk());
+						lifecyclePhaseInfo = this.stubService.getEmm().getLifecyclePhaseInfo(obj.getLifecyclePhaseGuid());
+						lifecycleInfo = this.stubService.getEmm().getLifecycleInfoByGuid(lifecyclePhaseInfo.getMasterfk());
 						// 判断是否可以跳转
 						if (statusChangeMap.containsKey(lifecycleInfo.getName() + ":" + lifecyclePhaseInfo.getName()))
 						{
 							// 调用通用状态变更方法
 							WorkflowPhaseChangeInfo workflowStatusChange = statusChangeMap.get(lifecycleInfo.getName() + ":" + lifecyclePhaseInfo.getName());
-							LifecyclePhaseInfo lifecyclePhaseInfoTo = this.stubService.getEMM().getLifecyclePhaseInfo(lifecycleInfo.getName(), workflowStatusChange.getToPhase());
+							LifecyclePhaseInfo lifecyclePhaseInfoTo = this.stubService.getEmm().getLifecyclePhaseInfo(lifecycleInfo.getName(), workflowStatusChange.getToPhase());
 							if (lifecyclePhaseInfoTo != null && !lifecyclePhaseInfoTo.getGuid().equalsIgnoreCase(attach.getLifecyclePhase()))
 							{
 								this.changePhase(obj.getObjectGuid().getGuid(), obj.getObjectGuid().getClassGuid(), lifecyclePhaseInfoTo.getGuid());
@@ -186,8 +186,8 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 		ObjectGuid objectGuid = new ObjectGuid();
 		objectGuid.setGuid(instanceGuid);
 		objectGuid.setClassGuid(instanceClassGuid);
-		objectGuid.setClassName(this.stubService.getEMM().getClassByGuid(instanceClassGuid).getName());
-		List<ViewObject> viewList = this.stubService.getBOAS().listRelation(objectGuid);
+		objectGuid.setClassName(this.stubService.getEmm().getClassByGuid(instanceClassGuid).getName());
+		List<ViewObject> viewList = this.stubService.getBoas().listRelation(objectGuid);
 		if (!SetUtils.isNullList(viewList))
 		{
 			for (ViewObject viewObject : viewList)
@@ -219,7 +219,7 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 				this.stubService.getInstanceService().changePhase(attach.getInstanceGuid(), attach.getInstanceClassGuid(), attach.getInstanceLifcpBackup(), false,
 						this.stubService.getFixedTransactionId());
 				ObjectGuid objectGuid = new ObjectGuid(attach.getInstanceClassGuid(), null, attach.getInstanceGuid(), null);
-				((BOASImpl) this.stubService.getBOAS()).getFSaverStub().changeStatus(objectGuid, fromStatusEnum, toStatusEnum, true, false);
+				((BOASImpl) this.stubService.getBoas()).getFSaverStub().changeStatus(objectGuid, fromStatusEnum, toStatusEnum, true, false);
 				changeViewStatus(attach);
 			}
 		}
@@ -232,12 +232,12 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 	{
 		List<ViewObject> viewObjectList = new ArrayList<ViewObject>();
 		ObjectGuid objectGuid = new ObjectGuid(attach.getInstanceClassGuid(), null, attach.getInstanceGuid(), null);
-		FoundationObject foun = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObject(objectGuid, false);
+		FoundationObject foun = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObject(objectGuid, false);
 		if (foun == null)
 		{
 			return;
 		}
-		BOMView bomView = this.stubService.getBOMS().getBOMViewByEND1(foun.getObjectGuid(), "BOM");
+		BOMView bomView = this.stubService.getBoms().getBOMViewByEND1(foun.getObjectGuid(), "BOM");
 		if (bomView != null)
 		{
 			SystemStatusEnum fromStatus = SystemStatusEnum.getStatusEnum(bomView.getStatus().toString());
@@ -245,14 +245,14 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 			this.stubService.getInstanceService().changePhase(bomView.getGuid(), bomView.getObjectGuid().getClassGuid(), attach.getInstanceLifcpBackup(), false,
 					this.stubService.getFixedTransactionId());
 			ObjectGuid bomOjbectGuid = new ObjectGuid(bomView.getObjectGuid().getClassGuid(), null, bomView.getGuid(), null);
-			((BOASImpl) this.stubService.getBOAS()).getFSaverStub().changeStatus(bomOjbectGuid, fromStatus, toStatus, true, false);
+			((BOASImpl) this.stubService.getBoas()).getFSaverStub().changeStatus(bomOjbectGuid, fromStatus, toStatus, true, false);
 		}
-		List<RelationTemplateInfo> list = this.stubService.getEMM().listRelationTemplate(foun.getObjectGuid(), true);
+		List<RelationTemplateInfo> list = this.stubService.getEmm().listRelationTemplate(foun.getObjectGuid(), true);
 		if (!SetUtils.isNullList(list))
 		{
 			for (RelationTemplateInfo relTemp : list)
 			{
-				ViewObject viewObject = this.stubService.getBOAS().getRelationByEND1(foun.getObjectGuid(), relTemp.getName());
+				ViewObject viewObject = this.stubService.getBoas().getRelationByEND1(foun.getObjectGuid(), relTemp.getName());
 				if (viewObject != null)
 				{
 					viewObjectList.add(viewObject);
@@ -268,7 +268,7 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 				this.stubService.getInstanceService().changePhase(viewObject.getGuid(), viewObject.getObjectGuid().getClassGuid(), attach.getInstanceLifcpBackup(), false,
 						this.stubService.getFixedTransactionId());
 				ObjectGuid OjbectGuid = new ObjectGuid(viewObject.getObjectGuid().getClassGuid(), null, viewObject.getGuid(), null);
-				((BOASImpl) this.stubService.getBOAS()).getFSaverStub().changeStatus(OjbectGuid, fromStatus, toStatus, true, false);
+				((BOASImpl) this.stubService.getBoas()).getFSaverStub().changeStatus(OjbectGuid, fromStatus, toStatus, true, false);
 			}
 		}
 	}
@@ -284,7 +284,7 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 		ProcessRuntime processRuntime = this.stubService.getProcessRuntime(activity.getProcessRuntimeGuid());
 
 		List<WorkflowActrtStatusInfo> listStatusChange = null;
-		WorkflowActivity changeStatusActivities = ((WFMImpl) this.stubService.getWFM()).getActivitiyStub().listActivityByApplicationType(processRuntime.getName(),
+		WorkflowActivity changeStatusActivities = ((WFMImpl) this.stubService.getWfm()).getActivitiyStub().listActivityByApplicationType(processRuntime.getName(),
 				activity.getName(), WorkflowApplicationType.CHANGE_STATUS);
 		if (changeStatusActivities != null)
 		{
@@ -322,7 +322,7 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 					{
 						try
 						{
-							((BOASImpl) this.stubService.getBOAS()).getFoundationStub().stopUsingObject(objectGuid, false, activity.getProcessRuntimeGuid());
+							((BOASImpl) this.stubService.getBoas()).getFoundationStub().stopUsingObject(objectGuid, false, activity.getProcessRuntimeGuid());
 						}
 						catch (ServiceRequestException e)
 						{
@@ -337,7 +337,7 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 					{
 						try
 						{
-							((BOASImpl) this.stubService.getBOAS()).getFoundationStub().startUsingObject(objectGuid, false);
+							((BOASImpl) this.stubService.getBoas()).getFoundationStub().startUsingObject(objectGuid, false);
 						}
 						catch (ServiceRequestException e)
 						{
@@ -350,7 +350,7 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 					}
 					else
 					{
-						((BOASImpl) this.stubService.getBOAS()).getFSaverStub().changeStatus(objectGuid, fromStatusEnum, toStatusEnum, true, false);
+						((BOASImpl) this.stubService.getBoas()).getFSaverStub().changeStatus(objectGuid, fromStatusEnum, toStatusEnum, true, false);
 					}
 				}
 			}
@@ -417,7 +417,7 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 
 		try
 		{// 抛全部对象即合并队列（isExportAll=isMerge）
-			((ERPIImpl) this.stubService.getERP()).getERPStub().createERPJob(objecgGuidList, factoryList, null, erpTemplateGuid, null, true, isExportAll, false);
+			((ERPIImpl) this.stubService.getErpi()).getERPStub().createERPJob(objecgGuidList, factoryList, null, erpTemplateGuid, null, true, isExportAll, false);
 		}
 		catch (ServiceRequestException e)
 		{
@@ -661,12 +661,12 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 			return returnList;
 		}
 
-		if (this.stubService.getEMM().getClassByGuid(attachInstanceObjectGuid.getClassGuid()).hasInterface(ModelInterfaceEnum.IBOMView))
+		if (this.stubService.getEmm().getClassByGuid(attachInstanceObjectGuid.getClassGuid()).hasInterface(ModelInterfaceEnum.IBOMView))
 		{
 			List<BOInfo> startBOList = this.getStartBOList(attachInstanceObjectGuid);
 			for (BOInfo boInfo : startBOList)
 			{
-				List<BOInfo> listAllSubBOInfo = this.stubService.getEMM().listAllSubBOInfoContain(boInfo.getName());
+				List<BOInfo> listAllSubBOInfo = this.stubService.getEmm().listAllSubBOInfoContain(boInfo.getName());
 				if (!SetUtils.isNullList(listAllSubBOInfo))
 				{
 					for (BOInfo boInfo2 : listAllSubBOInfo)
@@ -685,8 +685,8 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 		}
 		else
 		{
-			BOInfo currentBizObject = this.stubService.getEMM().getCurrentBizObject(attachInstanceObjectGuid.getClassGuid());
-			List<BOInfo> listAllSubBOInfo = this.stubService.getEMM().listAllSubBOInfoContain(currentBizObject.getName());
+			BOInfo currentBizObject = this.stubService.getEmm().getCurrentBizObject(attachInstanceObjectGuid.getClassGuid());
+			List<BOInfo> listAllSubBOInfo = this.stubService.getEmm().listAllSubBOInfoContain(currentBizObject.getName());
 			if (!SetUtils.isNullList(listAllSubBOInfo))
 			{
 				for (BOInfo boInfo : listAllSubBOInfo)
@@ -711,7 +711,7 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 		{
 			if (set.isBOM())
 			{
-				List<BOMTemplateInfo> listBOMTemplateByName = this.stubService.getEMM().listBOMTemplateByEND1(attachInstanceObjectGuid);
+				List<BOMTemplateInfo> listBOMTemplateByName = this.stubService.getEmm().listBOMTemplateByEND1(attachInstanceObjectGuid);
 
 				set.setBomTemplateList(listBOMTemplateByName);
 			}
@@ -722,7 +722,7 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 				{
 					for (WorkflowTemplateScopeRTInfo rt : listScopeRT)
 					{
-						RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateById(rt.getTemplateID());
+						RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateById(rt.getTemplateID());
 						if (relationTemplate != null)
 						{
 							rtList.add(relationTemplate);
@@ -741,7 +741,7 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 			{
 				for (BOInfo boinfo : list)
 				{
-					List<BOInfo> listAllSubBOInfo = this.stubService.getEMM().listAllSubBOInfoContain(boinfo.getName());
+					List<BOInfo> listAllSubBOInfo = this.stubService.getEmm().listAllSubBOInfoContain(boinfo.getName());
 					for (BOInfo subBOInfo : listAllSubBOInfo)
 					{
 						if (subBOInfo.isAbstract())
@@ -779,9 +779,9 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 			{
 				if (!StringUtils.isNullString(dto.getValue().getBOName()))
 				{
-					BOInfo boinfo = this.stubService.getEMM().getCurrentBoInfoByName(dto.getValue().getBOName(), false);
+					BOInfo boinfo = this.stubService.getEmm().getCurrentBoInfoByName(dto.getValue().getBOName(), false);
 					copeClassGuidList.add(boinfo.getClassGuid());
-					List<ClassInfo> subclassList = this.stubService.getEMM().listSubClass(boinfo.getClassName(), boinfo.getClassGuid(), true, null);
+					List<ClassInfo> subclassList = this.stubService.getEmm().listSubClass(boinfo.getClassName(), boinfo.getClassGuid(), true, null);
 					if (subclassList != null)
 					{
 						for (ClassInfo subinfo : subclassList)
@@ -797,10 +797,10 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 
 	private List<BOInfo> getRelationBoInProcess(BOInfo boInfo, boolean isFirst, List<WFRelationSet> relationSetList) throws ServiceRequestException
 	{
-		EMM emm = this.stubService.getEMM();
+		EMM emm = this.stubService.getEmm();
 		List<BOInfo> returnList = new ArrayList<BOInfo>();
 		List<ClassInfo> listAllSuperClass = emm.listAllSuperClass(null, boInfo.getClassGuid());
-		ClassInfo classByGuid = this.stubService.getEMM().getClassByGuid(boInfo.getClassGuid());
+		ClassInfo classByGuid = this.stubService.getEmm().getClassByGuid(boInfo.getClassGuid());
 		listAllSuperClass.add(classByGuid);
 		for (WFRelationSet rt : relationSetList)
 		{
@@ -899,8 +899,8 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 	private List<BOInfo> getStartBOList(ObjectGuid attachInstanceObjectGuid) throws ServiceRequestException
 	{
 		String bmGuid = this.stubService.getUserSignature().getLoginGroupBMGuid();
-		BOMView bomView = ((BOMSImpl) this.stubService.getBOMS()).getBomViewStub().getBOMView(attachInstanceObjectGuid, false);
-		BOMTemplateInfo bomTemplate = this.stubService.getEMM().getBOMTemplateById(bomView.getTemplateID());
+		BOMView bomView = ((BOMSImpl) this.stubService.getBoms()).getBomViewStub().getBOMView(attachInstanceObjectGuid, false);
+		BOMTemplateInfo bomTemplate = this.stubService.getEmm().getBOMTemplateById(bomView.getTemplateID());
 		return this.getBOMEnd2BOInfo(bomTemplate, bmGuid);
 	}
 
@@ -917,7 +917,7 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 					BOInfo boInfo = null;
 					try
 					{
-						boInfo = this.stubService.getEMM().getCurrentBoInfoByName(end2.getEnd2BoName(), true);
+						boInfo = this.stubService.getEmm().getCurrentBoInfoByName(end2.getEnd2BoName(), true);
 					}
 					catch (Exception e)
 					{
@@ -949,7 +949,7 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 			{
 				for (ProcAttach attach : settings)
 				{
-					ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(attach.getInstanceClassGuid());
+					ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(attach.getInstanceClassGuid());
 					if (classInfo.hasInterface(ModelInterfaceEnum.IBOMView) || classInfo.hasInterface(ModelInterfaceEnum.IViewObject))
 					{
 						existAttachList.add(attach);
@@ -980,7 +980,7 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 						attach.setAttachmentType(AttachmentType.INSTANCE);
 					}
 
-					String instanceClassName = this.stubService.getEMM().getClassByGuid(attach.getInstanceClassGuid()).getName();
+					String instanceClassName = this.stubService.getEmm().getClassByGuid(attach.getInstanceClassGuid()).getName();
 
 					ObjectGuid objectGuid = new ObjectGuid();
 					objectGuid.setGuid(attach.getInstanceGuid());
@@ -1002,7 +1002,7 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 						}
 					}
 
-					FoundationObject instance = this.stubService.getBOAS().getObjectByGuid(objectGuid);
+					FoundationObject instance = this.stubService.getBoas().getObjectByGuid(objectGuid);
 					attach = this.dbStub.addAttachment(attach, instance.getIterationId());
 
 					String credential = this.stubService.getSignature().getCredential();
@@ -1043,7 +1043,7 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 			ObjectGuid mainAttachObjectGuid = new ObjectGuid(attach.getInstanceClassGuid(), null, attach.getInstanceGuid(), null);
 			ClassStub.decorateObjectGuid(mainAttachObjectGuid, stubService);
 
-			FoundationObject mainAttachObject = this.stubService.getBOAS().getObject(mainAttachObjectGuid);
+			FoundationObject mainAttachObject = this.stubService.getBoas().getObject(mainAttachObjectGuid);
 
 			String invalidReasion = null;
 
@@ -1069,7 +1069,7 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 			{
 				// 判断附件生命周器是否合法
 				boolean lifecycleValid = false;
-				List<WorkflowLifecyclePhaseInfo> allPhaseInfoList = this.stubService.getWFM().listLifecyclePhaseInfo(null, wfName);
+				List<WorkflowLifecyclePhaseInfo> allPhaseInfoList = this.stubService.getWfm().listLifecyclePhaseInfo(null, wfName);
 				if (!SetUtils.isNullList(allPhaseInfoList))
 				{
 					for (WorkflowLifecyclePhaseInfo phaseInfo : allPhaseInfoList)
@@ -1185,7 +1185,7 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 					ProcAttach attach = new ProcAttach();
 					if (!procAttachMap.containsKey(obj.getObjectGuid().getGuid()))
 					{
-						ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(obj.getObjectGuid().getClassGuid());
+						ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(obj.getObjectGuid().getClassGuid());
 						if (classInfo.hasInterface(ModelInterfaceEnum.IBOMView) || classInfo.hasInterface(ModelInterfaceEnum.IViewObject))
 						{
 							continue;
@@ -1272,7 +1272,7 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 
 				String classificationGuid = attach.getClassification();
 
-				BOInfo bizObject = this.stubService.getEMM().getBizObject(bmGuid, classGuid, classificationGuid == null ? "" : classificationGuid);
+				BOInfo bizObject = this.stubService.getEmm().getBizObject(bmGuid, classGuid, classificationGuid == null ? "" : classificationGuid);
 
 				if (bizObject != null)
 				{
@@ -1281,7 +1281,7 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 
 				if (StringUtils.isGuid(classificationGuid))
 				{
-					CodeItemInfo classification = this.stubService.getEMM().getCodeItem(classificationGuid);
+					CodeItemInfo classification = this.stubService.getEmm().getCodeItem(classificationGuid);
 					if (classification != null)
 					{
 						attach.setClassificationTitle(classification.getTitle());
@@ -1289,7 +1289,7 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 				}
 				if (StringUtils.isGuid(attach.getLifecyclePhase()))
 				{
-					LifecyclePhaseInfo info = this.stubService.getEMM().getLifecyclePhaseInfo(attach.getLifecyclePhase());
+					LifecyclePhaseInfo info = this.stubService.getEmm().getLifecyclePhaseInfo(attach.getLifecyclePhase());
 					if (info != null)
 					{
 						attach.put(SystemClassFieldEnum.LCPHASE.getName() + "TITLE", info.getTitle());
@@ -1301,7 +1301,7 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 					String type = attach.getFileType();
 					if (!StringUtils.isNullString(type))
 					{
-						FileType fileType = this.stubService.getDSS().getFileType(type);
+						FileType fileType = this.stubService.getDss().getFileType(type);
 						attach.clear(ProcAttach.FILE_ICON16);
 						attach.put(ProcAttach.FILE_ICON16, fileType.getIcon16());
 						attach.clear(ProcAttach.FILE_ICON32);
@@ -1310,7 +1310,7 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 				}
 
 				// bomview,view中fullname 显示为模板tilte
-				ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(classGuid);
+				ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(classGuid);
 				// 图标
 				if (classInfo != null)
 				{
@@ -1339,7 +1339,7 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 		{
 			for (ProcAttach procAttach : listProcAttach)
 			{
-				FoundationObject object = this.stubService.getBOAS().getObjectByGuid(new ObjectGuid(procAttach.getInstanceClassGuid(), null, procAttach.getInstanceGuid(), null));
+				FoundationObject object = this.stubService.getBoas().getObjectByGuid(new ObjectGuid(procAttach.getInstanceClassGuid(), null, procAttach.getInstanceGuid(), null));
 				if (procAttach.getStatus().equals(SystemStatusEnum.ECP.toString()) || (object != null && object.getECFlag() != null))
 				{
 					listECPAppachGuid.add(procAttach.getInstanceGuid());
@@ -1407,7 +1407,7 @@ public class AttachStub extends AbstractServiceStub<WFIImpl>
 				procAttach.reLoadFullName();
 				try
 				{
-					User ownerUser = this.stubService.getAAS().getUser(procAttach.getOwnerUser());
+					User ownerUser = this.stubService.getAas().getUser(procAttach.getOwnerUser());
 					if (ownerUser != null)
 					{
 						procAttach.setOwnerUserName(ownerUser.getName());

@@ -179,21 +179,21 @@ public class FoItemStub extends AbstractServiceStub<FBTSImpl>
 					}
 					else if (fo.getAccessType() == AccessTypeEnum.RIG)
 					{
-						if (this.stubService.getAAS().isUserInRIG(fo.getValueGuid(), this.stubService.getUserSignature().getUserGuid()))
+						if (this.stubService.getAas().isUserInRIG(fo.getValueGuid(), this.stubService.getUserSignature().getUserGuid()))
 						{
 							return tempList;
 						}
 					}
 					else if (fo.getAccessType() == AccessTypeEnum.GROUP)
 					{
-						if (this.stubService.getAAS().isUserInGroup(fo.getValueGuid(), this.stubService.getUserSignature().getUserGuid()))
+						if (this.stubService.getAas().isUserInGroup(fo.getValueGuid(), this.stubService.getUserSignature().getUserGuid()))
 						{
 							return tempList;
 						}
 					}
 					else if (fo.getAccessType() == AccessTypeEnum.ROLE)
 					{
-						if (this.stubService.getAAS().isUserInRole(fo.getValueGuid(), this.stubService.getUserSignature().getUserGuid()))
+						if (this.stubService.getAas().isUserInRole(fo.getValueGuid(), this.stubService.getUserSignature().getUserGuid()))
 						{
 							return tempList;
 						}

@@ -152,14 +152,14 @@ public class ManualActivityApplication extends AbstractServiceStub<WFIImpl> impl
 		List<User> users = this.stubService.listNotFinishPerformer(activity.getGuid());
 		String operatorGuid = this.stubService.getOperatorGuid();
 		LanguageEnum languageEnum = this.stubService.getUserSignature().getLanguageEnum();
-		User operatorUser = this.stubService.getAAS().getUser(operatorGuid);
+		User operatorUser = this.stubService.getAas().getUser(operatorGuid);
 		if (!SetUtils.isNullList(users))
 		{
 			for (User user : users)
 			{
 				if (!user.getGuid().equals(operatorGuid))
 				{
-					String content = this.stubService.getMSRM().getMSRString("ID_WF_ATTACH_ALREAD_DEAL", languageEnum.toString());
+					String content = this.stubService.getMsrm().getMSRString("ID_WF_ATTACH_ALREAD_DEAL", languageEnum.toString());
 					content = MessageFormat.format(content, operatorUser.getUserName());
 					this.stubService.getTrackStub().doTrack(activity.getProcessRuntimeGuid(), activity.getGuid(), decide, content, user.getGuid(), activity.getStartNumber(), null);
 				}

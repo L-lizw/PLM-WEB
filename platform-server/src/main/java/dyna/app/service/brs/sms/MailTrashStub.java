@@ -105,7 +105,7 @@ public class MailTrashStub extends AbstractServiceStub<SMSImpl>
 	 */
 	protected void clearMailByConfig() throws ServiceRequestException
 	{
-		List<User> listUser = this.stubService.getAAS().listAllUser(null, false);
+		List<User> listUser = this.stubService.getAas().listAllUser(null, false);
 		if (!SetUtils.isNullList(listUser))
 		{
 			for (User user : listUser)
@@ -134,7 +134,7 @@ public class MailTrashStub extends AbstractServiceStub<SMSImpl>
 	 */
 	private void clearMessageMail(User user) throws ServiceRequestException
 	{
-		int messageDay = ((POSImpl) this.stubService.getPOS()).getMessageClearCycle(user.getGuid());
+		int messageDay = ((POSImpl) this.stubService.getPos()).getMessageClearCycle(user.getGuid());
 		if (messageDay > 0)
 		{
 			Calendar calendar = Calendar.getInstance();
@@ -183,7 +183,7 @@ public class MailTrashStub extends AbstractServiceStub<SMSImpl>
 	 */
 	private void clearWorkFlowMail(User user) throws ServiceRequestException
 	{
-		int messageDay = ((POSImpl) this.stubService.getPOS()).getWorkFlowClearCycle(user.getGuid());
+		int messageDay = ((POSImpl) this.stubService.getPos()).getWorkFlowClearCycle(user.getGuid());
 		if (messageDay > 0)
 		{
 			Calendar calendar = Calendar.getInstance();

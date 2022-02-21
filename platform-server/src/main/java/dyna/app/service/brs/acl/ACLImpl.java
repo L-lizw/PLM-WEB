@@ -22,6 +22,8 @@ import dyna.net.service.brs.*;
 import dyna.net.service.data.AclService;
 import dyna.net.service.data.FolderService;
 import dyna.net.service.data.SystemDataService;
+import lombok.AccessLevel;
+import lombok.Getter;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +37,7 @@ import java.util.List;
  * @author Wanglei
  * 
  */
+@Getter(AccessLevel.PROTECTED)
 @Service
 public class ACLImpl extends BusinessRuleService implements ACL
 {
@@ -46,6 +49,15 @@ public class ACLImpl extends BusinessRuleService implements ACL
 	private SystemDataService systemDataService;
 	@DubboReference
 	private FolderService       folderService;
+
+	@Autowired
+	private AAS aas;
+	@Autowired
+	private BOAS boas;
+	@Autowired
+	private EDAP edap;
+	@Autowired
+	private EMM emm;
 
 	@Autowired
 	private ACLStub					aclStub					;
@@ -106,7 +118,7 @@ public class ACLImpl extends BusinessRuleService implements ACL
 		String groupGuid = signature.getLoginGroupGuid();
 		try
 		{
-			Group group = this.getAAS().getGroup(groupGuid);
+			Group group = this.getAas().getGroup(groupGuid);
 			if (group == null || !group.isAdminGroup())
 			{
 				throw new AuthorizeException("accessible for administrative group only");
@@ -230,56 +242,6 @@ public class ACLImpl extends BusinessRuleService implements ACL
 		return this.sharedFolderACLStub;
 	}
 
-	protected synchronized AAS getAAS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(AAS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
-
-	protected synchronized BOAS getBOAS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(BOAS.class);
-
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
-
-	protected synchronized EDAP getEDAP() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(EDAP.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized EMM getEMM() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(EMM.class);
-
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
 
 	@Override
 	public void batchDealWithACL(List<ACLItem> addAclItemList, List<ACLSubject> addAclSubjectList, List<ACLItem> updateAclItemList, List<ACLSubject> updateAclSubjectList,

@@ -6,6 +6,7 @@
 package dyna.app.service.helper;
 
 import dyna.app.service.DataAccessService;
+import dyna.app.util.SpringUtil;
 import dyna.common.bean.signature.Signature;
 import dyna.common.dto.model.ui.UIField;
 import dyna.common.exception.DynaDataException;
@@ -46,7 +47,7 @@ public class ServiceRequestExceptionWrap
 
 			try
 			{
-				EMM emm = service.getRefService(EMM.class);
+				EMM emm = SpringUtil.getBean(EMM.class);
 
 				UIField uiField = emm.getUIFieldByName(className, fieldName);
 				if (uiField != null)
@@ -56,28 +57,28 @@ public class ServiceRequestExceptionWrap
 				}
 				else if (SystemClassFieldEnum.ID.getName().equalsIgnoreCase(fieldName))
 				{
-					MSRM msrm = service.getRefService(MSRM.class);
+					MSRM msrm = SpringUtil.getBean(MSRM.class);
 
 					expArgs[1] = msrm.getMSRString(SystemClassFieldEnum.ID.getDescription(), service
 							.getUserSignature().getLanguageEnum().toString());
 				}
 				else if (SystemClassFieldEnum.ALTERID.getName().equalsIgnoreCase(fieldName))
 				{
-					MSRM msrm = service.getRefService(MSRM.class);
+					MSRM msrm = SpringUtil.getBean(MSRM.class);
 
 					expArgs[1] = msrm.getMSRString(SystemClassFieldEnum.ALTERID.getDescription(),
 							service.getUserSignature().getLanguageEnum().toString());
 				}
 				else if (SystemClassFieldEnum.NAME.getName().equalsIgnoreCase(fieldName))
 				{
-					MSRM msrm = service.getRefService(MSRM.class);
+					MSRM msrm = SpringUtil.getBean(MSRM.class);
 
 					expArgs[1] = msrm.getMSRString(SystemClassFieldEnum.NAME.getDescription(), service
 							.getUserSignature().getLanguageEnum().toString());
 				}
 				else if (SystemClassFieldEnum.CLASSIFICATION.getName().equalsIgnoreCase(fieldName))
 				{
-					MSRM msrm = service.getRefService(MSRM.class);
+					MSRM msrm = SpringUtil.getBean(MSRM.class);
 
 					expArgs[1] = msrm.getMSRString(
 							SystemClassFieldEnum.CLASSIFICATION.getDescription(), service
@@ -106,28 +107,28 @@ public class ServiceRequestExceptionWrap
 				// else
 				if (SystemClassFieldEnum.ID.getName().equalsIgnoreCase(fieldName))
 				{
-					MSRM msrm = service.getRefService(MSRM.class);
+					MSRM msrm = SpringUtil.getBean(MSRM.class);
 
 					expArgs[0] = msrm.getMSRString(SystemClassFieldEnum.ID.getDescription(), service
 							.getUserSignature().getLanguageEnum().toString());
 				}
 				else if (SystemClassFieldEnum.ALTERID.getName().equalsIgnoreCase(fieldName))
 				{
-					MSRM msrm = service.getRefService(MSRM.class);
+					MSRM msrm = SpringUtil.getBean(MSRM.class);
 
 					expArgs[0] = msrm.getMSRString(SystemClassFieldEnum.ALTERID.getDescription(),
 							service.getUserSignature().getLanguageEnum().toString());
 				}
 				else if (SystemClassFieldEnum.NAME.getName().equalsIgnoreCase(fieldName))
 				{
-					MSRM msrm = service.getRefService(MSRM.class);
+					MSRM msrm = SpringUtil.getBean(MSRM.class);
 
 					expArgs[0] = msrm.getMSRString(SystemClassFieldEnum.NAME.getDescription(), service
 							.getUserSignature().getLanguageEnum().toString());
 				}
 				else if (SystemClassFieldEnum.CLASSIFICATION.getName().equalsIgnoreCase(fieldName))
 				{
-					MSRM msrm = service.getRefService(MSRM.class);
+					MSRM msrm = SpringUtil.getBean(MSRM.class);
 
 					expArgs[0] = msrm.getMSRString(
 							SystemClassFieldEnum.CLASSIFICATION.getDescription(), service

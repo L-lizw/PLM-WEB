@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * @author WangLHB
+ * @author Lizw
  * 
  */
 @Component
@@ -42,17 +42,17 @@ public class NoticeStub extends AbstractServiceStub<WFIImpl>
 		{
 			ProcessRuntime processRuntime = this.stubService.getProcessRuntime(activity.getProcessRuntimeGuid());
 			LanguageEnum languageEnum = this.stubService.getUserSignature().getLanguageEnum();
-			String decideTitle = this.stubService.getMSRM()
+			String decideTitle = this.stubService.getMsrm()
 					.getMSRString(decide.getMessageId(), languageEnum.toString());
 
 			// "{0}({1})处理结果:{2}";
-			String title = this.stubService.getMSRM().getMSRString("ID_APP_WORKFLOW_ACTIVITY_COMPLETE_TITLE",
+			String title = this.stubService.getMsrm().getMSRString("ID_APP_WORKFLOW_ACTIVITY_COMPLETE_TITLE",
 					languageEnum.toString());
 			title = MessageFormat.format(title, activity.getTitle(languageEnum),
 					processRuntime.getWFTemplateTitle(languageEnum), decideTitle);
 
 			// "{0}({1})已完成,处理结果为{2}";
-			String contents = this.stubService.getMSRM().getMSRString("ID_APP_WORKFLOW_ACTIVITY_COMPLETE_CONTENTS",
+			String contents = this.stubService.getMsrm().getMSRString("ID_APP_WORKFLOW_ACTIVITY_COMPLETE_CONTENTS",
 					languageEnum.toString());
 
 			contents = MessageFormat.format(contents, activity.getTitle(languageEnum),
@@ -61,8 +61,7 @@ public class NoticeStub extends AbstractServiceStub<WFIImpl>
 			String receiverGuid = processRuntime.getCreateUserGuid();
 
 			this.stubService
-					.getSMS()
-					.getMailSentStub()
+					.getSms()
 					.sendMail4WorkFlow(comNoticeAllperList, receiverGuid, activity.getProcessRuntimeGuid(),
 							activity.getGuid(), contents, title, MailMessageType.WORKFLOWNOTIFY, MailCategoryEnum.INFO, activity.getStartNumber());
 		}
@@ -93,13 +92,13 @@ public class NoticeStub extends AbstractServiceStub<WFIImpl>
 			LanguageEnum languageEnum = this.stubService.getUserSignature().getLanguageEnum();
 
 			// "{0}({1})预警";
-			String title = this.stubService.getMSRM().getMSRString("ID_APP_WORKFLOW_ACTIVITY_ADV_TITLE",
+			String title = this.stubService.getMsrm().getMSRString("ID_APP_WORKFLOW_ACTIVITY_ADV_TITLE",
 					languageEnum.toString());
 			title = MessageFormat.format(title, activity.getTitle(languageEnum),
 					processRuntime.getWFTemplateTitle(languageEnum));
 
 			// "{0}({1}){2}的截止完成时间只剩{3}天";
-			String contents = this.stubService.getMSRM().getMSRString("ID_APP_WORKFLOW_ACTIVITY_ADV_CONTENTS",
+			String contents = this.stubService.getMsrm().getMSRString("ID_APP_WORKFLOW_ACTIVITY_ADV_CONTENTS",
 					languageEnum.toString());
 			contents = MessageFormat.format(contents, processRuntime.getWFTemplateTitle(languageEnum),
 					processRuntime.getDescription(), activity.getTitle(languageEnum),
@@ -109,8 +108,7 @@ public class NoticeStub extends AbstractServiceStub<WFIImpl>
 			String receiverGuid = processRuntime.getCreateUserGuid();
 
 			this.stubService
-					.getSMS()
-					.getMailSentStub()
+					.getSms()
 					.sendMail4WorkFlow(defNoticeAllperList, receiverGuid, activity.getProcessRuntimeGuid(),
 							activity.getGuid(), contents, title, MailMessageType.WORKFLOWNOTIFY, MailCategoryEnum.INFO, activity.getStartNumber());
 		}
@@ -143,12 +141,12 @@ public class NoticeStub extends AbstractServiceStub<WFIImpl>
 			LanguageEnum languageEnum = this.stubService.getUserSignature().getLanguageEnum();
 
 			// "{0}({1})已超期";
-			String title = this.stubService.getMSRM().getMSRString("ID_APP_WORKFLOW_ACTIVITY_DEF_TITLE",
+			String title = this.stubService.getMsrm().getMSRString("ID_APP_WORKFLOW_ACTIVITY_DEF_TITLE",
 					languageEnum.toString());
 			title = MessageFormat.format(title, activity.getTitle(languageEnum),
 					processRuntime.getWFTemplateTitle(languageEnum));
 			// "{0}({1}){2}已超期{3}天";
-			String contents = this.stubService.getMSRM().getMSRString("ID_APP_WORKFLOW_ACTIVITY_DEF_CONTENTS",
+			String contents = this.stubService.getMsrm().getMSRString("ID_APP_WORKFLOW_ACTIVITY_DEF_CONTENTS",
 					languageEnum.toString());
 			contents = MessageFormat.format(contents, processRuntime.getWFTemplateTitle(languageEnum),
 					processRuntime.getDescription(), activity.getTitle(languageEnum),
@@ -161,8 +159,7 @@ public class NoticeStub extends AbstractServiceStub<WFIImpl>
 			// 10.17 变更 流程消息的”发送者”改为流程的创建者
 
 			this.stubService
-					.getSMS()
-					.getMailSentStub()
+					.getSms()
 					.sendMail4WorkFlow(defNoticeAllperList, receiverGuid, activity.getProcessRuntimeGuid(),
 							activity.getGuid(), contents, title, MailMessageType.WORKFLOWNOTIFY,
 							MailCategoryEnum.WARNING, activity.getStartNumber());
@@ -198,18 +195,18 @@ public class NoticeStub extends AbstractServiceStub<WFIImpl>
 					String status = "";
 					if (processRuntime.getStatus() != null)
 					{
-						status = this.stubService.getMSRM().getMSRString(processRuntime.getStatus().getMsrId(),
+						status = this.stubService.getMsrm().getMSRString(processRuntime.getStatus().getMsrId(),
 								languageEnum.toString());
 					}
 
 					// "{0}[{1}]流程已启动";
-					String title = this.stubService.getMSRM().getMSRString("ID_APP_WORKFLOW_STARTUP_NOTICE_TITLE",
+					String title = this.stubService.getMsrm().getMSRString("ID_APP_WORKFLOW_STARTUP_NOTICE_TITLE",
 							languageEnum.toString());
 					title = MessageFormat.format(title, processRuntime.getWFTemplateTitle(languageEnum),
 							processRuntime.getDescription(), status);
 
 					// "{0}已于{1}启动 {2}[{3}]流程点击附件，可查看流程详细信息";
-					String contents = this.stubService.getMSRM().getMSRString(
+					String contents = this.stubService.getMsrm().getMSRString(
 							"ID_APP_WORKFLOW_STARTUP_NOTICE_CONTENTS", languageEnum.toString());
 					contents = MessageFormat.format(contents, processRuntime.getCreateUserName(),
 							DateFormat.formatYMDHMS(processRuntime.getCreateTime()),
@@ -218,10 +215,9 @@ public class NoticeStub extends AbstractServiceStub<WFIImpl>
 					String receiverGuid = processRuntime.getCreateUserGuid();
 
 					this.stubService
-							.getSMS()
-							.getMailSentStub()
+							.getSms()
 							.sendMail4WorkFlow(openAllperList, receiverGuid, procRtGuid, null, contents.toString(),
-									title.toString(), MailMessageType.WORKFLOWNOTIFY, MailCategoryEnum.INFO);
+									title.toString(), MailMessageType.WORKFLOWNOTIFY, MailCategoryEnum.INFO, null);
 				}
 			}
 		}
@@ -258,18 +254,18 @@ public class NoticeStub extends AbstractServiceStub<WFIImpl>
 					String status = "";
 					if (processRuntime.getStatus() != null)
 					{
-						status = this.stubService.getMSRM().getMSRString(processRuntime.getStatus().getMsrId(),
+						status = this.stubService.getMsrm().getMSRString(processRuntime.getStatus().getMsrId(),
 								languageEnum.toString());
 					}
 
 					// "{0}[{1}]流程{2}";
-					String title = this.stubService.getMSRM().getMSRString("ID_APP_WORKFLOW_COMPLETE_NOTICE_TITLE",
+					String title = this.stubService.getMsrm().getMSRString("ID_APP_WORKFLOW_COMPLETE_NOTICE_TITLE",
 							languageEnum.toString());
 					title = MessageFormat.format(title, processRuntime.getWFTemplateTitle(languageEnum),
 							processRuntime.getDescription(), status);
 
 					// "{0}[{1}]流程于{2}{3}点击附件，可查看流程详细信息";
-					String contents = this.stubService.getMSRM().getMSRString(
+					String contents = this.stubService.getMsrm().getMSRString(
 							"ID_APP_WORKFLOW_COMPLETE_NOTICE_CONTENTS", languageEnum.toString());
 					contents = MessageFormat.format(contents, processRuntime.getWFTemplateTitle(languageEnum),
 							processRuntime.getDescription(), DateFormat.formatYMDHMS(processRuntime.getFinishTime()),
@@ -278,10 +274,9 @@ public class NoticeStub extends AbstractServiceStub<WFIImpl>
 					String receiverGuid = processRuntime.getCreateUserGuid();
 					// 10.17 变更 流程消息的”发送者”改为流程的创建者
 					this.stubService
-							.getSMS()
-							.getMailSentStub()
+							.getSms()
 							.sendMail4WorkFlow(completeAllperList, receiverGuid, procRtGuid, null, contents, title,
-									MailMessageType.WORKFLOWNOTIFY, MailCategoryEnum.INFO);
+									MailMessageType.WORKFLOWNOTIFY, MailCategoryEnum.INFO, null);
 				}
 			}
 		}
@@ -303,7 +298,7 @@ public class NoticeStub extends AbstractServiceStub<WFIImpl>
 			throws ServiceRequestException
 	{
 		Set<String> toUserGuidSet = null;
-		AAS aas = this.stubService.getAAS();
+		AAS aas = this.stubService.getAas();
 		if (!SetUtils.isNullList(listPerformer))
 		{
 			toUserGuidSet = new HashSet<String>();
@@ -356,8 +351,7 @@ public class NoticeStub extends AbstractServiceStub<WFIImpl>
 			String receiverGuid = processRuntime.getCreateUserGuid();
 
 			this.stubService
-					.getSMS()
-					.getMailSentStub()
+					.getSms()
 					.sendMail4WorkFlow(toUserGuidList, receiverGuid, activity.getProcessRuntimeGuid(),
 							activity.getGuid(), contents, title, messageType, MailCategoryEnum.INFO, activity.getStartNumber());
 

@@ -15,6 +15,8 @@ import dyna.net.service.data.AclService;
 import dyna.net.service.data.FolderService;
 import dyna.net.service.data.InstanceService;
 import dyna.net.service.data.SystemDataService;
+import lombok.AccessLevel;
+import lombok.Getter;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,7 @@ import java.util.List;
  *
  * @author Lizw
  */
+@Getter(AccessLevel.PROTECTED)
 @Service public class EDAPImpl extends BusinessRuleService implements EDAP
 {
 	@DubboReference private AclService        aclService;
@@ -33,7 +36,25 @@ import java.util.List;
 	@DubboReference private InstanceService   instanceService;
 	@DubboReference private SystemDataService systemDataService;
 
+	@Autowired
+	private AAS aas;
+	@Autowired
+	private ACL acl;
 	@Autowired private Async async;
+	@Autowired
+	private BOAS boas;
+	@Autowired
+	private BOMS boms;
+	@Autowired
+	private EMM emm;
+	@Autowired
+	private EOSS eoss;
+	@Autowired
+	private MSRM msrm;
+	@Autowired
+	private SLC slc;
+	@Autowired
+	private SMS sms;
 
 	@Autowired private FolderStub    folderStub;
 	@Autowired private LibraryStub   libraryStub;
@@ -71,123 +92,6 @@ import java.util.List;
 	public LibraryStub getLibraryStub()
 	{
 		return this.libraryStub;
-	}
-
-	protected synchronized AAS getAAS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(AAS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized BOMS getBOMS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(BOMS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized SMS getSMS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(SMS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized MSRM getMSRM() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(MSRM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized ACL getACL() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(ACL.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized EMM getEMM() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(EMM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized SLC getSLC() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(SLC.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized BOAS getBOAS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(BOAS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized EOSS getEOSS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(EOSS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
 	}
 
 	@Override public void deleteFolder(String folderGuid) throws ServiceRequestException

@@ -211,7 +211,7 @@ public class MailInboxStub extends AbstractServiceStub<SMSImpl>
 	{
 		Map<String, Object> filter = new HashMap<String, Object>();
 
-		searchCondition = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().dealWithSearchCondition(searchCondition);
+		searchCondition = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().dealWithSearchCondition(searchCondition);
 		// 拼装检索条件
 		if (!SetUtils.isNullList(searchCondition.getCriterionList()))
 		{

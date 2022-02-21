@@ -46,15 +46,15 @@ public class FFolderStub extends AbstractServiceStub<BOASImpl>
 		{
 
 			FoundationObject foundationObject = this.stubService.getFoundationStub().getObject(objectGuid, isCheckAuth);
-			boolean toFolderGuidAuthorize = ((ACLImpl) this.stubService.getACL()).getFolderACLStub().hasUserAuthorize4Lib(toFolderGuid, isCheckAuth);
+			boolean toFolderGuidAuthorize = ((ACLImpl) this.stubService.getAcl()).getFolderACLStub().hasUserAuthorize4Lib(toFolderGuid, isCheckAuth);
 
-			boolean fromFolderGuidAuthorize = ((ACLImpl) this.stubService.getACL()).getFolderACLStub().hasUserAuthorize4Lib(fromFolderGuid, isCheckAuth);
+			boolean fromFolderGuidAuthorize = ((ACLImpl) this.stubService.getAcl()).getFolderACLStub().hasUserAuthorize4Lib(fromFolderGuid, isCheckAuth);
 
 			// DataServer.getTransactionManager().startTransaction(this.stubService.getFixedTransactionId());
 			this.stubService.getFolderService().moveToFolder(objectGuid, fromFolderGuid, toFolderGuid, !fromFolderGuidAuthorize, !toFolderGuidAuthorize, true, true, sessionId, this.stubService.getFixedTransactionId());
 
 			boolean isChangeLocation = false;
-			Folder toFolder = this.stubService.getEDAP().getFolder(toFolderGuid);
+			Folder toFolder = this.stubService.getEdap().getFolder(toFolderGuid);
 
 			// 如果目标文件夹是库 判断对象所在的库与目标文件夹所对应的库不一致的话 属于changeLocation
 			if (toFolder.getType().equals(FolderTypeEnum.LIB_FOLDER) && !toFolder.getLibraryUser().equals(foundationObject.getLocationlib()))
@@ -69,7 +69,7 @@ public class FFolderStub extends AbstractServiceStub<BOASImpl>
 
 			if (isChangeLocation)
 			{
-				EMM emm = this.stubService.getEMM();
+				EMM emm = this.stubService.getEmm();
 
 				// 处理relation
 				// 查找所有关联的ViewObject
@@ -79,7 +79,7 @@ public class FFolderStub extends AbstractServiceStub<BOASImpl>
 				{
 					for (ViewObject viewObject : viewObjectList)
 					{
-						RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateById(viewObject.get(ViewObject.TEMPLATE_ID) == null ? "" : (String) viewObject
+						RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateById(viewObject.get(ViewObject.TEMPLATE_ID) == null ? "" : (String) viewObject
 								.get(ViewObject.TEMPLATE_ID));
 						if (relationTemplate == null)
 						{

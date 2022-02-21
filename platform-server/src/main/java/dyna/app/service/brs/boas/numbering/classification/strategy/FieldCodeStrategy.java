@@ -31,7 +31,7 @@ public class FieldCodeStrategy extends FieldStratery
 	protected String getCodeValue(String codeItemGuid, ClassificationNumberField field,
 			DataAccessService dataAccessService, ClassficationFeatureItem item) throws ServiceRequestException
 	{
-		EMM emm = this.getService(dataAccessService, EMM.class);
+		EMM emm = this.stubService.getEmm();
 
 		if (StringUtils.isNullString(codeItemGuid))
 		{

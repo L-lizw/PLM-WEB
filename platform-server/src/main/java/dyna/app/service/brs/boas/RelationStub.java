@@ -72,7 +72,7 @@ public class RelationStub extends AbstractServiceStub<BOASImpl>
 		{
 			if (isDeleteEnd2)
 			{
-				relationTemplate = this.stubService.getEMM().getRelationTemplateById(relation.getTemplateID());
+				relationTemplate = this.stubService.getEmm().getRelationTemplateById(relation.getTemplateID());
 				String structureClassName = StructureObject.STRUCTURE_CLASS_NAME;
 
 				if (relationTemplate != null)
@@ -80,7 +80,7 @@ public class RelationStub extends AbstractServiceStub<BOASImpl>
 					structureClassName = relationTemplate.getStructureClassName();
 				}
 
-				List<UIObjectInfo> uiObjectList = this.stubService.getEMM().listUIObjectInCurrentBizModel(structureClassName, UITypeEnum.FORM, true);
+				List<UIObjectInfo> uiObjectList = this.stubService.getEmm().listUIObjectInCurrentBizModel(structureClassName, UITypeEnum.FORM, true);
 				SearchCondition searchCondition = null;
 				if (!SetUtils.isNullList(uiObjectList))
 				{
@@ -109,7 +109,7 @@ public class RelationStub extends AbstractServiceStub<BOASImpl>
 		}
 		finally
 		{
-			String bmGuid = this.stubService.getEMM().getCurrentBizModel().getGuid();
+			String bmGuid = this.stubService.getEmm().getCurrentBizModel().getGuid();
 			ClassStub.decorateObjectGuid(relation.getObjectGuid(), this.stubService);
 			this.stubService.getAsync().deleteReplaceData(relation.getObjectGuid(), relation.getName(), null , bmGuid, false);
 			if(relation.getEnd1ObjectGuid()!= null && relationTemplate != null)
@@ -138,7 +138,7 @@ public class RelationStub extends AbstractServiceStub<BOASImpl>
 			List<UIObjectInfo> uiObjectList = null;
 			try
 			{
-				uiObjectList = this.stubService.getEMM().listUIObjectInCurrentBizModel(objectGuid.getClassName(), UITypeEnum.FORM, true);
+				uiObjectList = this.stubService.getEmm().listUIObjectInCurrentBizModel(objectGuid.getClassName(), UITypeEnum.FORM, true);
 			}
 			catch (ServiceRequestException ignored)
 			{
@@ -162,7 +162,7 @@ public class RelationStub extends AbstractServiceStub<BOASImpl>
 			// 根据ObjectGuid中的className或者classGuid一个的值，获取另外一个的值并赋给ObjectGuid
 			ClassStub.decorateObjectGuid(objectGuid, this.stubService);
 
-			EMM emm = this.stubService.getEMM();
+			EMM emm = this.stubService.getEmm();
 			Set<String> fieldNames = emm.getObjectFieldNamesInSC(searchCondition);
 
 			FoundationObject foundationObject = this.stubService.getInstanceService().getFoundationObject(objectGuid, Constants.isSupervisor(isCheckAuth, this.stubService), sessionId);
@@ -171,13 +171,13 @@ public class RelationStub extends AbstractServiceStub<BOASImpl>
 				return null;
 			}
 
-			decoratorFactory.ofd.decorateWithField(fieldNames, foundationObject, this.stubService.getEMM(), sessionId, false);
+			decoratorFactory.ofd.decorateWithField(fieldNames, foundationObject, this.stubService.getEmm(), sessionId, false);
 
 			ViewObject retObject = new ViewObject(foundationObject);
 
 			retObject = this.decorateViewObjectByTemplate(Collections.singletonList(retObject)).get(0);
 
-			decoratorFactory.decorateViewObject(retObject, this.stubService.getEMM(), bmGuid);
+			decoratorFactory.decorateViewObject(retObject, this.stubService.getEmm(), bmGuid);
 
 			return retObject;
 		}
@@ -206,7 +206,7 @@ public class RelationStub extends AbstractServiceStub<BOASImpl>
 		{
 			// bom view 存在于revision上
 			end1ObjectGuid.setIsMaster(false);
-			RelationTemplateInfo asoTemp = this.stubService.getEMM().getRelationTemplateByName(end1ObjectGuid, name);
+			RelationTemplateInfo asoTemp = this.stubService.getEmm().getRelationTemplateByName(end1ObjectGuid, name);
 			if (asoTemp == null)
 			{
 				return null;
@@ -219,7 +219,7 @@ public class RelationStub extends AbstractServiceStub<BOASImpl>
 			List<UIObjectInfo> uiObjectList = null;
 			try
 			{
-				uiObjectList = this.stubService.getEMM().listUIObjectInCurrentBizModel(searchCondition.getObjectGuid().getClassName(), UITypeEnum.FORM, true);
+				uiObjectList = this.stubService.getEmm().listUIObjectInCurrentBizModel(searchCondition.getObjectGuid().getClassName(), UITypeEnum.FORM, true);
 			}
 			catch (ServiceRequestException ignored)
 			{
@@ -249,16 +249,16 @@ public class RelationStub extends AbstractServiceStub<BOASImpl>
 				return null;
 			}
 
-			EMM emm = this.stubService.getEMM();
+			EMM emm = this.stubService.getEmm();
 			Set<String> fieldNames = emm.getObjectFieldNamesInSC(searchCondition);
 
 			FoundationObject foundationObject = results.get(0);
 
-			decoratorFactory.ofd.decorateWithField(fieldNames, foundationObject, this.stubService.getEMM(), sessionId, false);
+			decoratorFactory.ofd.decorateWithField(fieldNames, foundationObject, this.stubService.getEmm(), sessionId, false);
 
 			ViewObject retObject = new ViewObject(results.get(0));
 			retObject = this.decorateViewObjectByTemplate(Collections.singletonList(retObject)).get(0);
-			decoratorFactory.decorateViewObject(retObject, this.stubService.getEMM(), bmGuid);
+			decoratorFactory.decorateViewObject(retObject, this.stubService.getEmm(), bmGuid);
 
 			return retObject;
 		}
@@ -318,7 +318,7 @@ public class RelationStub extends AbstractServiceStub<BOASImpl>
 			SearchCondition tempSC = searchCondition;
 			ViewObject viewObject = this.getRelation(viewObjectGuid, isCheckAuth);
 			String templateID = viewObject.getTemplateID();
-			RelationTemplateInfo template = this.stubService.getEMM().getRelationTemplateById(templateID);
+			RelationTemplateInfo template = this.stubService.getEmm().getRelationTemplateById(templateID);
 			if (template == null)
 			{
 				return null;
@@ -333,7 +333,7 @@ public class RelationStub extends AbstractServiceStub<BOASImpl>
 				tempSC.getObjectGuid().setClassName(strucClass);
 			}
 
-			ClassInfo strucClassInfo = this.stubService.getEMM().getClassByName(strucClass);
+			ClassInfo strucClassInfo = this.stubService.getEmm().getClassByName(strucClass);
 			if (strucClassInfo.hasInterface(ModelInterfaceEnum.ICADStructureObject))
 			{
 				tempSC.addResultField(StructureObject.FIELD_NAME_QUANTITY);
@@ -409,7 +409,7 @@ public class RelationStub extends AbstractServiceStub<BOASImpl>
 			String strucClass;
 			ViewObject viewObject = this.getRelation(viewObjectGuid, isCheckAuth);
 			String templateID = viewObject.getTemplateID();
-			RelationTemplateInfo template = this.stubService.getEMM().getRelationTemplateById(templateID);
+			RelationTemplateInfo template = this.stubService.getEmm().getRelationTemplateById(templateID);
 
 			if (template == null)
 			{
@@ -462,7 +462,7 @@ public class RelationStub extends AbstractServiceStub<BOASImpl>
 			SearchCondition tempSSC = structureSearchCondition;
 			ViewObject viewObject = this.getRelation(viewObjectGuid, isCheckAuth);
 			String templateID = viewObject.getTemplateID();
-			RelationTemplateInfo template = this.stubService.getEMM().getRelationTemplateById(templateID);
+			RelationTemplateInfo template = this.stubService.getEmm().getRelationTemplateById(templateID);
 
 			if (template == null)
 			{
@@ -531,7 +531,7 @@ public class RelationStub extends AbstractServiceStub<BOASImpl>
 				{
 					for (String name : list)
 					{
-						List<UIField> flist = this.stubService.getEMM().listUIFieldByUIObject(end2ObjectGuid.getClassName(), name);
+						List<UIField> flist = this.stubService.getEmm().listUIFieldByUIObject(end2ObjectGuid.getClassName(), name);
 						if (!SetUtils.isNullList(flist))
 						{
 							for (UIField ff : flist)
@@ -547,7 +547,7 @@ public class RelationStub extends AbstractServiceStub<BOASImpl>
 
 				if (end2SearchCondition.getObjectGuid() != null && !StringUtils.isNullString(end2SearchCondition.getObjectGuid().getClassName()))
 				{
-					ClassInfo classInfo = this.stubService.getEMM().getClassByName(end2SearchCondition.getObjectGuid().getClassName());
+					ClassInfo classInfo = this.stubService.getEmm().getClassByName(end2SearchCondition.getObjectGuid().getClassName());
 					List<ModelInterfaceEnum> interfaceList = classInfo.getInterfaceList();
 					if (!SetUtils.isNullList(interfaceList))
 					{
@@ -557,7 +557,7 @@ public class RelationStub extends AbstractServiceStub<BOASImpl>
 							{
 								continue;
 							}
-							List<ClassField> fieldList = this.stubService.getEMM().listClassFieldByInterface(interfaceEnum);
+							List<ClassField> fieldList = this.stubService.getEmm().listClassFieldByInterface(interfaceEnum);
 							if (!SetUtils.isNullList(fieldList))
 							{
 								for (ClassField field : fieldList)
@@ -598,7 +598,7 @@ public class RelationStub extends AbstractServiceStub<BOASImpl>
 			throws ServiceRequestException, DecorateException
 	{
 		String bmGuid = this.stubService.getUserSignature().getLoginGroupBMGuid();
-		EMM emm = this.stubService.getEMM();
+		EMM emm = this.stubService.getEmm();
 		Set<String> objectFieldNames = null;
 		Set<String> codeFieldNames = null;
 		if (structureSearchCondition != null && structureSearchCondition.getObjectGuid() != null)
@@ -641,8 +641,8 @@ public class RelationStub extends AbstractServiceStub<BOASImpl>
 			}
 			if (!isWithoutDecorator)
 			{
-				decoratorFactory.decorateStructureObject(objectFieldNames, soList, this.stubService.getEMM(), sessionId);
-				decoratorFactory.decorateFoundationObject(objectFieldNamesEnd2, foList, this.stubService.getEMM(), sessionId);
+				decoratorFactory.decorateStructureObject(objectFieldNames, soList, this.stubService.getEmm(), sessionId);
+				decoratorFactory.decorateFoundationObject(objectFieldNamesEnd2, foList, this.stubService.getEmm(), sessionId);
 			}
 
 			for (int i = 0; i < foList.size(); i++)
@@ -675,7 +675,7 @@ public class RelationStub extends AbstractServiceStub<BOASImpl>
 		{
 			Set<String> containSet = new HashSet<>();
 			Set<String> containGuidSet = new HashSet<>();
-			List<RelationTemplateInfo> relationTemplateList = this.stubService.getEMM().listRelationTemplate(end1ObjectGuid, isContainBuiltin);
+			List<RelationTemplateInfo> relationTemplateList = this.stubService.getEmm().listRelationTemplate(end1ObjectGuid, isContainBuiltin);
 			if (!SetUtils.isNullList(relationTemplateList))
 			{
 				for (RelationTemplateInfo relationTemplate : relationTemplateList)
@@ -742,8 +742,8 @@ public class RelationStub extends AbstractServiceStub<BOASImpl>
 			}
 
 			String bmGuid = this.stubService.getUserSignature().getLoginGroupBMGuid();
-			Set<String> fieldNames = this.stubService.getEMM().getObjectFieldNamesInSC(searchCondition);
-			decoratorFactory.decorateFoundationObject(fieldNames, foundationObjectList, this.stubService.getEMM(), sessionId);
+			Set<String> fieldNames = this.stubService.getEmm().getObjectFieldNamesInSC(searchCondition);
+			decoratorFactory.decorateFoundationObject(fieldNames, foundationObjectList, this.stubService.getEmm(), sessionId);
 
 			List<ViewObject> viewList = new ArrayList<>();
 			for (FoundationObject foundationObject : foundationObjectList)
@@ -753,7 +753,7 @@ public class RelationStub extends AbstractServiceStub<BOASImpl>
 						|| foundationObject.getName().equalsIgnoreCase(BuiltinRelationNameEnum.ITEMECAD.toString()))))
 				{
 					ViewObject viewObject = new ViewObject(foundationObject);
-					decoratorFactory.decorateViewObject(viewObject, this.stubService.getEMM(), bmGuid);
+					decoratorFactory.decorateViewObject(viewObject, this.stubService.getEmm(), bmGuid);
 
 					viewList.add(viewObject);
 				}
@@ -779,7 +779,7 @@ public class RelationStub extends AbstractServiceStub<BOASImpl>
 
 		try
 		{
-			List<RelationTemplateInfo> telationTemplateList = this.stubService.getEMM().listRelationTemplateByEND2(end2ObjectGuid);
+			List<RelationTemplateInfo> telationTemplateList = this.stubService.getEmm().listRelationTemplateByEND2(end2ObjectGuid);
 			if (SetUtils.isNullList(telationTemplateList))
 			{
 				return null;
@@ -815,7 +815,7 @@ public class RelationStub extends AbstractServiceStub<BOASImpl>
 				{
 					for (String name : list)
 					{
-						List<UIField> flist = this.stubService.getEMM().listUIFieldByUIObject(end1ObjectGuid.getClassName(), name);
+						List<UIField> flist = this.stubService.getEmm().listUIFieldByUIObject(end1ObjectGuid.getClassName(), name);
 						if (!SetUtils.isNullList(flist))
 						{
 							for (UIField ff : flist)
@@ -831,17 +831,17 @@ public class RelationStub extends AbstractServiceStub<BOASImpl>
 				BMInfo bizModel;
 				if (StringUtils.isNullString(relationTemplate.getBmGuid()) || "ALL".equalsIgnoreCase(relationTemplate.getBmGuid()))
 				{
-					bizModel = this.stubService.getEMM().getCurrentBizModel();
+					bizModel = this.stubService.getEmm().getCurrentBizModel();
 				}
 				else
 				{
-					bizModel = this.stubService.getEMM().getBizModel(relationTemplate.getBmGuid());
+					bizModel = this.stubService.getEmm().getBizModel(relationTemplate.getBmGuid());
 				}
 				if (bizModel == null)
 				{
 					return null;
 				}
-				BOInfo end1ClassInfo = this.stubService.getEMM().getBoInfoByNameAndBM(bizModel.getGuid(), relationTemplate.getEnd1BoName());
+				BOInfo end1ClassInfo = this.stubService.getEmm().getBoInfoByNameAndBM(bizModel.getGuid(), relationTemplate.getEnd1BoName());
 				if (end1ClassInfo == null)
 				{
 					return null;
@@ -850,7 +850,7 @@ public class RelationStub extends AbstractServiceStub<BOASImpl>
 				end1SearchCondition = SearchConditionFactory.createSearchCondition4Class(end1ClassName, null, false);
 			}
 			String bmGuid = this.stubService.getUserSignature().getLoginGroupBMGuid();
-			EMM emm = this.stubService.getEMM();
+			EMM emm = this.stubService.getEmm();
 
 			FoundationObject foun = this.stubService.getObject(end2ObjectGuid);
 			this.checkTemplateEnd2Type(foun, relationTemplate, dataRule);
@@ -883,7 +883,7 @@ public class RelationStub extends AbstractServiceStub<BOASImpl>
 			{
 				objectFieldSet.addAll(end1FieldList);
 			}
-			decoratorFactory.decorateFoundationObject(objectFieldSet, foundationObjectList, this.stubService.getEMM(), sessionId);
+			decoratorFactory.decorateFoundationObject(objectFieldSet, foundationObjectList, this.stubService.getEmm(), sessionId);
 
 			return foundationObjectList;
 		}
@@ -918,13 +918,13 @@ public class RelationStub extends AbstractServiceStub<BOASImpl>
 			// 判断此BO在流程中是否能建关系 relation.getEnd1ObjectGuid().getclassname()
 			if (StringUtils.isGuid(procRtGuid) && byTemplate)
 			{
-				ProcessRuntime processRuntime = this.stubService.getWFI().getProcessRuntime(procRtGuid);
-				List<ActivityRuntime> listCurrentActivityRuntime = this.stubService.getWFI().listCurrentActivityRuntime(procRtGuid);
+				ProcessRuntime processRuntime = this.stubService.getWfi().getProcessRuntime(procRtGuid);
+				List<ActivityRuntime> listCurrentActivityRuntime = this.stubService.getWfi().listCurrentActivityRuntime(procRtGuid);
 				if (processRuntime != null && !SetUtils.isNullList(listCurrentActivityRuntime))
 				{
-					RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateById(relation.getTemplateID());
+					RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateById(relation.getTemplateID());
 
-					WorkflowTemplateActClassRelationInfo classSetRelationInfo = ((WFIImpl) this.stubService.getWFI()).getTemplateStub().getWorkflowTemplateActClassSetRelationInfo(
+					WorkflowTemplateActClassRelationInfo classSetRelationInfo = ((WFIImpl) this.stubService.getWfi()).getTemplateStub().getWorkflowTemplateActClassSetRelationInfo(
 							processRuntime.getWFTemplateGuid(), listCurrentActivityRuntime.get(0).getName(), relation.getEnd1ObjectGuid().getClassGuid(),
 							relation.getEnd1ObjectGuid().getClassName(), relationTemplate.getName());
 					if (classSetRelationInfo != null)
@@ -963,7 +963,7 @@ public class RelationStub extends AbstractServiceStub<BOASImpl>
 				// 根据ObjectGuid中的className或者classGuid一个的值，获取另外一个的值并赋给ObjectGuid
 				ClassStub.decorateObjectGuid(relation.getObjectGuid(), this.stubService);
 
-				EMM emm = this.stubService.getEMM();
+				EMM emm = this.stubService.getEmm();
 				LifecyclePhaseInfo lifecyclePhaseInfo = emm.getFirstLifecyclePhaseInfoByClassName(relation.getObjectGuid().getClassName());
 				relation.setLifecyclePhaseGuid(lifecyclePhaseInfo.getGuid());
 				// 清除状态
@@ -1004,8 +1004,8 @@ public class RelationStub extends AbstractServiceStub<BOASImpl>
 	public ViewObject saveRelationByTemplate(String relationTemplateGuid, ObjectGuid end1ObjectGuid, boolean isCheckAcl, String procRtGuid) throws ServiceRequestException
 	{
 
-		RelationTemplate relationTemplate = this.stubService.getEMM().getRelationTemplate(relationTemplateGuid);
-		RelationTemplateInfo relationTemplateInfo = this.stubService.getEMM().getRelationTemplateByName(end1ObjectGuid, relationTemplate.getName());
+		RelationTemplate relationTemplate = this.stubService.getEmm().getRelationTemplate(relationTemplateGuid);
+		RelationTemplateInfo relationTemplateInfo = this.stubService.getEmm().getRelationTemplateByName(end1ObjectGuid, relationTemplate.getName());
 		if (relationTemplateInfo == null)
 		{
 			throw new ServiceRequestException("ID_APP_VIEW_TEMPLATE_NOT_EXIST", "View template is not exist");
@@ -1066,7 +1066,7 @@ public class RelationStub extends AbstractServiceStub<BOASImpl>
 			RelationTemplateInfo relationTemplate = null;
 			if (!StringUtils.isNullString(viewObject.getTemplateID()))
 			{
-				relationTemplate = this.stubService.getEMM().getRelationTemplateById(viewObject.getTemplateID());
+				relationTemplate = this.stubService.getEmm().getRelationTemplateById(viewObject.getTemplateID());
 			}
 			if (relationTemplate != null)
 			{
@@ -1091,8 +1091,8 @@ public class RelationStub extends AbstractServiceStub<BOASImpl>
 		}
 		if (end2SearchCondition == null)
 		{
-			RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateById(viewObject.getTemplateID());
-			end2SearchCondition = this.stubService.getEMM().createAssoEnd2SearchCondition(relationTemplate.getGuid(), false, false);
+			RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateById(viewObject.getTemplateID());
+			end2SearchCondition = this.stubService.getEmm().createAssoEnd2SearchCondition(relationTemplate.getGuid(), false, false);
 		}
 		return this.listFoundationObjectOfRelation(viewObjectGuid, structureSearchCondition, end2SearchCondition, dataRule, isCheckAuth);
 	}

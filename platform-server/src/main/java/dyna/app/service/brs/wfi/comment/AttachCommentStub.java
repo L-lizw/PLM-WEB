@@ -150,7 +150,7 @@ public class AttachCommentStub extends AbstractServiceStub<WFIImpl>
 			String createUserGuid = procTrackAttach.getCreateUserGuid();
 			if (!StringUtils.isNullString(createUserGuid))
 			{
-				User createUser = this.stubService.getAAS().getUser(createUserGuid);
+				User createUser = this.stubService.getAas().getUser(createUserGuid);
 				procTrackAttach.setCreateUserName(createUser == null ? null : createUser.getName());
 			}
 

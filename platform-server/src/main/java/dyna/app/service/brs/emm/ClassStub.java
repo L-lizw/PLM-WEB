@@ -7,6 +7,7 @@ package dyna.app.service.brs.emm;
 
 import dyna.app.service.AbstractServiceStub;
 import dyna.app.service.DataAccessService;
+import dyna.app.util.SpringUtil;
 import dyna.common.FieldOrignTypeEnum;
 import dyna.common.SearchCondition;
 import dyna.common.bean.data.FoundationObjectImpl;
@@ -34,10 +35,9 @@ import java.util.stream.Collectors;
 /**
  * 与class 相关的操作分支
  *
- * @author Wanglei
+ * @author Lizw
  */
-@Component
-public class ClassStub extends AbstractServiceStub<EMMImpl>
+@Component public class ClassStub extends AbstractServiceStub<EMMImpl>
 {
 
 	public static final String FIELD_NAME_SYMBOL = ":";
@@ -512,43 +512,37 @@ public class ClassStub extends AbstractServiceStub<EMMImpl>
 			return;
 		}
 
-		try
+		EMM emm = SpringUtil.getBean(EMM.class);
+		if (objectGuid.getClassGuid() != null && StringUtils.isNullString(objectGuid.getClassName()))
 		{
-			EMM emm = service.getRefService(EMM.class);
-			if (objectGuid.getClassGuid() != null && StringUtils.isNullString(objectGuid.getClassName()))
+			ClassInfo classInfo = emm.getClassByGuid(objectGuid.getClassGuid());
+			if (classInfo == null)
 			{
-				ClassInfo classInfo = emm.getClassByGuid(objectGuid.getClassGuid());
-				if (classInfo == null)
-				{
-					throw new ServiceRequestException("ID_APP_NO_FOUND_CALSS", "class is not found: " + objectGuid.getClassGuid(), null, objectGuid.getClassGuid());
-				}
-
-				objectGuid.setClassName(classInfo.getName());
-			}
-			else if (StringUtils.isNullString(objectGuid.getClassGuid()) && objectGuid.getClassName() != null)
-			{
-				ClassInfo classInfo = emm.getClassByName(objectGuid.getClassName());
-				if (classInfo == null)
-				{
-					throw new ServiceRequestException("ID_APP_NO_FOUND_CALSS", "class is not found: " + objectGuid.getClassName(), null, objectGuid.getClassName());
-				}
-
-				objectGuid.setClassGuid(classInfo.getGuid());
+				throw new ServiceRequestException("ID_APP_NO_FOUND_CALSS", "class is not found: " + objectGuid.getClassGuid(), null, objectGuid.getClassGuid());
 			}
 
-			if (StringUtils.isNullString(objectGuid.getBizObjectGuid()))
+			objectGuid.setClassName(classInfo.getName());
+		}
+		else if (StringUtils.isNullString(objectGuid.getClassGuid()) && objectGuid.getClassName() != null)
+		{
+			ClassInfo classInfo = emm.getClassByName(objectGuid.getClassName());
+			if (classInfo == null)
 			{
-				BOInfo boInfo = ((EMMImpl) emm).getBMStub().getBizObject(service.getUserSignature().getLoginGroupBMGuid(), objectGuid.getClassGuid(), null);
-				if (boInfo != null)
-				{
-					objectGuid.setBizObjectGuid(boInfo.getGuid());
-				}
+				throw new ServiceRequestException("ID_APP_NO_FOUND_CALSS", "class is not found: " + objectGuid.getClassName(), null, objectGuid.getClassName());
+			}
+
+			objectGuid.setClassGuid(classInfo.getGuid());
+		}
+
+		if (StringUtils.isNullString(objectGuid.getBizObjectGuid()))
+		{
+			BOInfo boInfo = ((EMMImpl) emm).getBMStub().getBizObject(service.getUserSignature().getLoginGroupBMGuid(), objectGuid.getClassGuid(), null);
+			if (boInfo != null)
+			{
+				objectGuid.setBizObjectGuid(boInfo.getGuid());
 			}
 		}
-		catch (ServiceNotFoundException e)
-		{
-			throw new ServiceRequestException("", null, e);
-		}
+
 	}
 
 	protected ClassField getFieldByName(String classObjectName, String fieldName, boolean isThrowException) throws ServiceRequestException

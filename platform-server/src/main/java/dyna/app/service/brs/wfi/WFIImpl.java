@@ -58,6 +58,8 @@ import dyna.net.service.brs.*;
 import dyna.net.service.das.MSRM;
 import dyna.net.service.data.*;
 import dyna.net.service.data.model.ClassModelService;
+import lombok.AccessLevel;
+import lombok.Getter;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
@@ -74,6 +76,7 @@ import java.util.Map;
  * @author Lizw
  */
 @Order(1)
+@Getter(AccessLevel.PUBLIC)
 @Service public class WFIImpl extends BusinessRuleService implements WFI
 {
 	@DubboReference private AclService        aclService;
@@ -84,7 +87,40 @@ import java.util.Map;
 	@DubboReference private RelationService   relationService;
 	@DubboReference private SystemDataService systemDataService;
 
+	@Autowired
+	private AAS aas;
+	@Autowired
+	private ACL acl;
 	@Autowired private Async async;
+	@Autowired
+	private BOAS boas;
+	@Autowired
+	private BOMS boms;
+	private CAD cad;
+	@Autowired
+	private DCR dcr;
+	@Autowired
+	private DSS dss;
+	@Autowired
+	private EDAP edap;
+	@Autowired
+	private EMM emm;
+	@Autowired
+	private ERPI erpi;
+	@Autowired
+	private EOSS eoss;
+	@Autowired
+	private FTS fts;
+	@Autowired
+	private MSRM msrm;
+	@Autowired
+	private PMS pms;
+	@Autowired
+	private SMS sms;
+	@Autowired
+	private UECS uecs;
+	@Autowired
+	private WFM wfm;
 
 	@Autowired private ActivityRuntimeStub       activityRuntimeStub;
 	@Autowired private AttachStub                attachStub;
@@ -114,357 +150,6 @@ import java.util.Map;
 	{
 		super.init(serviceDefinition);
 		this.getWfTemplateCacheStub().loadModel();
-	}
-
-	public AclService getAclService()
-	{
-		return this.aclService;
-	}
-
-	public ClassModelService getClassModelService()
-	{
-		return this.classModelService;
-	}
-
-	public DSCommonService getDsCommonService()
-	{
-		return this.dsCommonService;
-	}
-
-	public InstanceService getInstanceService()
-	{
-		return this.instanceService;
-	}
-
-	public RelationService getRelationService()
-	{
-		return this.relationService;
-	}
-
-	public SystemDataService getSystemDataService()
-	{
-		return this.systemDataService;
-	}
-
-	public WorkFlowService getWorkFlowService()
-	{
-		return this.workFlowService;
-	}
-
-	public Async getAsync()
-	{
-		return this.async;
-	}
-
-	/**
-	 * @return the activityRuntimeStub
-	 */
-	public ActivityRuntimeStub getActivityRuntimeStub()
-	{
-		return this.activityRuntimeStub;
-	}
-
-	/**
-	 * @return the attachStub
-	 */
-	public AttachStub getAttachStub()
-	{
-		return this.attachStub;
-	}
-
-	/**
-	 * @return the noticeStub
-	 */
-	public NoticeStub getNoticeStub()
-	{
-		return this.noticeStub;
-	}
-
-	/**
-	 * @return the attachStub
-	 */
-	public WorkflowTemplateStub getTemplateStub()
-	{
-		return this.templateStub;
-	}
-
-	/**
-	 * @return the favoriteCommentStub
-	 */
-	protected FavoriteCommentStub getFavoriteCommentStub()
-	{
-		return this.favoriteCommentStub;
-	}
-
-	/**
-	 * @return the attachCommentStub
-	 */
-	protected AttachCommentStub getAttachCommentStub()
-	{
-		return this.attachCommentStub;
-	}
-
-	/**
-	 * @return the graphStub
-	 */
-	protected GraphStub getGraphStub()
-	{
-		return this.graphStub;
-	}
-
-	/**
-	 * @return the lockStub
-	 */
-	public LockStub getLockStub()
-	{
-		return this.lockStub;
-	}
-
-	/**
-	 * @return the performerStub
-	 */
-	public PerformerStub getPerformerStub()
-	{
-		return this.performerStub;
-	}
-
-	/**
-	 * @return the processRuntimeStubr
-	 */
-	public ProcessRuntimeStub getProcessRuntimeStub()
-	{
-		return this.processRuntimeStub;
-	}
-
-	/**
-	 * @return the routRestrictionStub
-	 */
-	public RoutRestrictionStub getRoutRestrictionStub()
-	{
-		return this.routRestrictionStub;
-	}
-
-	/**
-	 * @return the trackStub
-	 */
-	public TrackStub getTrackStub()
-	{
-		return this.trackStub;
-	}
-
-	public WorkflowTemplateCacheStub getWfTemplateCacheStub()
-	{
-		return this.wfTemplateCacheStub;
-	}
-
-	public synchronized BOMS getBOMS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(BOMS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
-
-	public synchronized BOAS getBOAS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(BOAS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
-
-	public synchronized DCR getDCR() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(DCR.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	public synchronized FTS getFTS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(FTS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	public synchronized MSRM getMSRM() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(MSRM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	public synchronized UECS getUECS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(UECS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
-
-	public synchronized PMS getPMS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(PMS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
-
-	public synchronized CAD getCAD() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(CAD.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
-
-	public synchronized ERPI getERP() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(ERPI.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
-
-	public synchronized EMM getEMM() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(EMM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	public synchronized AAS getAAS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(AAS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	public synchronized ACL getACL() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(ACL.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	public synchronized WFM getWFM() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(WFM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
-
-	public synchronized SMSImpl getSMS() throws ServiceRequestException
-	{
-		try
-		{
-			return (SMSImpl) this.getRefService(SMS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
-
-	public synchronized EDAPImpl getEDAP() throws ServiceRequestException
-	{
-		try
-		{
-			return (EDAPImpl) this.getRefService(EDAP.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
-
-	public synchronized DSS getDSS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(DSS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
-
-	public synchronized EOSS getEOSS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(EOSS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
 	}
 
 	@Tracked(description = TrackedDesc.CREATE_PRC, renderer = TRProcessImpl.class) @Override public ProcessRuntime createProcess(String wfTemplateGuid, String parentProcGuid,
@@ -800,12 +485,12 @@ import java.util.Map;
 
 	@Override public FoundationObject getAttachment(ObjectGuid objectGuid, String processGuid) throws ServiceRequestException
 	{
-		return ((BOASImpl) this.getBOAS()).getFoundationStub().getObject(objectGuid, false);
+		return ((BOASImpl) this.getBoas()).getFoundationStub().getObject(objectGuid, false);
 	}
 
 	@Override public BOMView getBOMView(ObjectGuid objectGuid, String processGuid) throws ServiceRequestException
 	{
-		return ((BOMSImpl) this.getBOMS()).getBomViewStub().getBOMView(objectGuid, false);
+		return ((BOMSImpl) this.getBoms()).getBomViewStub().getBOMView(objectGuid, false);
 	}
 
 	/*
@@ -965,17 +650,17 @@ import java.util.Map;
 	@Override public List<StructureObject> listObjectOfRelation(ObjectGuid end1ObjectGuid, String viewName, SearchCondition searchCondition) throws ServiceRequestException
 	{
 
-		return ((BOASImpl) this.getBOAS()).getRelationStub().listObjectOfRelation(end1ObjectGuid, viewName, searchCondition, null, null, false);
+		return ((BOASImpl) this.getBoas()).getRelationStub().listObjectOfRelation(end1ObjectGuid, viewName, searchCondition, null, null, false);
 	}
 
 	@Override public ViewObject getRelation(ObjectGuid objectGuid) throws ServiceRequestException
 	{
-		return ((BOASImpl) this.getBOAS()).getRelationStub().getRelation(objectGuid, false);
+		return ((BOASImpl) this.getBoas()).getRelationStub().getRelation(objectGuid, false);
 	}
 
 	@Override public List<FoundationObject> listProductSummaryObject(ObjectGuid productObjectGuid, SearchCondition searchCondition, String viewName) throws ServiceRequestException
 	{
-		return ((PMSImpl) this.getPMS()).getItemProductStub().listProductSummaryObject(productObjectGuid, searchCondition, viewName, false);
+		return ((PMSImpl) this.getPms()).getItemProductStub().listProductSummaryObject(productObjectGuid, searchCondition, viewName, false);
 	}
 
 	/*
@@ -987,7 +672,7 @@ import java.util.Map;
 	@Tracked(description = TrackedDesc.SET_PREVIEW_FILE, renderer = TRDSSFileInfoImpl.class) @Override public DSSFileTrans uploadPreviewFile(ObjectGuid objectGuid,
 			DSSFileInfo file) throws ServiceRequestException
 	{
-		return ((DSSImpl) this.getDSS()).getTransFileStub().uploadPreviewFile(objectGuid, file, false);
+		return ((DSSImpl) this.getDss()).getTransFileStub().uploadPreviewFile(objectGuid, file, false);
 	}
 
 	/*
@@ -998,27 +683,27 @@ import java.util.Map;
 	@Tracked(description = TrackedDesc.ATTACH_FILE, renderer = TRDSSFileInfoImpl.class) @Override public DSSFileInfo attachFile(ObjectGuid objectGuid, DSSFileInfo file)
 			throws ServiceRequestException
 	{
-		return ((DSSImpl) this.getDSS()).getInstFileStub().attachFile(objectGuid, file, Constants.isSupervisor(false, this), false);
+		return ((DSSImpl) this.getDss()).getInstFileStub().attachFile(objectGuid, file, Constants.isSupervisor(false, this), false);
 	}
 
 	@Override public List<BOMView> listBOMView(ObjectGuid end1ObjectGuid) throws ServiceRequestException
 	{
-		return ((BOMSImpl) this.getBOMS()).getBomViewStub().listBOMView(end1ObjectGuid, false);
+		return ((BOMSImpl) this.getBoms()).getBomViewStub().listBOMView(end1ObjectGuid, false);
 	}
 
 	@Override public List<StructureObject> listObjectOfRelation(ObjectGuid viewObject, SearchCondition searchCondition) throws ServiceRequestException
 	{
-		return ((BOASImpl) this.getBOAS()).getRelationStub().listObjectOfRelation(viewObject, searchCondition, null, null, false);
+		return ((BOASImpl) this.getBoas()).getRelationStub().listObjectOfRelation(viewObject, searchCondition, null, null, false);
 	}
 
 	@Override public List<ViewObject> listRelation(ObjectGuid end1ObjectGuid) throws ServiceRequestException
 	{
-		return ((BOASImpl) this.getBOAS()).getRelationStub().listRelation(end1ObjectGuid, false, true);
+		return ((BOASImpl) this.getBoas()).getRelationStub().listRelation(end1ObjectGuid, false, true);
 	}
 
 	@Override public ViewObject getRelationByEND1(ObjectGuid end1ObjectGuid, String name) throws ServiceRequestException
 	{
-		return ((BOASImpl) this.getBOAS()).getRelationStub().getRelationByEND1(end1ObjectGuid, name, false);
+		return ((BOASImpl) this.getBoas()).getRelationStub().getRelationByEND1(end1ObjectGuid, name, false);
 	}
 
 	/*
@@ -1030,35 +715,35 @@ import java.util.Map;
 	@Tracked(description = TrackedDesc.LINK_RELATION) @Override public StructureObject link(ObjectGuid viewObjectGuid, ObjectGuid end2FoundationObjectGuid,
 			StructureObject structureObject, String procRtGuid) throws ServiceRequestException
 	{
-		return ((BOASImpl) this.getBOAS()).getRelationLinkStub().link(viewObjectGuid, end2FoundationObjectGuid, structureObject, false, procRtGuid);
+		return ((BOASImpl) this.getBoas()).getRelationLinkStub().link(viewObjectGuid, end2FoundationObjectGuid, structureObject, false, procRtGuid);
 	}
 
 	@Override public void saveStructure4Detail(ObjectGuid viewObjectGuid, List<FoundationObject> linkList, List<FoundationObject> unlinkList, List<FoundationObject> updateList,
 			String procRtGuid) throws ServiceRequestException
 	{
-		((BOASImpl) this.getBOAS()).getStructureStub().saveStructure4Detail(viewObjectGuid, linkList, unlinkList, updateList, procRtGuid);
+		((BOASImpl) this.getBoas()).getStructureStub().saveStructure4Detail(viewObjectGuid, linkList, unlinkList, updateList, procRtGuid);
 	}
 
 	@Override public FoundationObject saveObject(FoundationObject foundationObject, String procRtGuid) throws ServiceRequestException
 	{
-		return ((BOASImpl) this.getBOAS()).getFSaverStub().saveObject(foundationObject, true, false, procRtGuid);
+		return ((BOASImpl) this.getBoas()).getFSaverStub().saveObject(foundationObject, true, false, procRtGuid);
 	}
 
 	@Override public FoundationObject saveObject(FoundationObject foundationObject, RelationTemplateTypeEnum structureModel, String procRtGuid) throws ServiceRequestException
 	{
-		return ((BOASImpl) this.getBOAS()).getFSaverStub().saveObject(foundationObject, structureModel, false, procRtGuid);
+		return ((BOASImpl) this.getBoas()).getFSaverStub().saveObject(foundationObject, structureModel, false, procRtGuid);
 	}
 
 	@Tracked(description = TrackedDesc.SAVE_RELATION, renderer = TRFoundationImpl.class) @Override public ViewObject saveRelation(ViewObject relation, String procRtGuid)
 			throws ServiceRequestException
 	{
-		return ((BOASImpl) this.getBOAS()).getRelationStub().saveRelation(relation, false, procRtGuid);
+		return ((BOASImpl) this.getBoas()).getRelationStub().saveRelation(relation, false, procRtGuid);
 	}
 
 	@Tracked(description = TrackedDesc.SAVE_RELATION, renderer = TRSaveRelationByTemplateImpl.class) @Override public ViewObject saveRelationByTemplate(String relationTemplateGuid,
 			ObjectGuid end1ObjectGuid, String procRtGuid) throws ServiceRequestException
 	{
-		return ((BOASImpl) this.getBOAS()).getRelationStub().saveRelationByTemplate(relationTemplateGuid, end1ObjectGuid, false, procRtGuid);
+		return ((BOASImpl) this.getBoas()).getRelationStub().saveRelationByTemplate(relationTemplateGuid, end1ObjectGuid, false, procRtGuid);
 	}
 
 	/*
@@ -1120,7 +805,7 @@ import java.util.Map;
 	 */
 	@Override public List<ViewObject> listRelationWithOutBuiltIn(ObjectGuid end1ObjectGuid) throws ServiceRequestException
 	{
-		return ((BOASImpl) this.getBOAS()).getRelationStub().listRelation(end1ObjectGuid, false, false);
+		return ((BOASImpl) this.getBoas()).getRelationStub().listRelation(end1ObjectGuid, false, false);
 	}
 
 	/*
@@ -1135,12 +820,12 @@ import java.util.Map;
 
 	@Override public void unlink(StructureObject structureObject) throws ServiceRequestException
 	{
-		((BOASImpl) this.getBOAS()).getRelationUnlinkStub().unlink(structureObject, false);
+		((BOASImpl) this.getBoas()).getRelationUnlinkStub().unlink(structureObject, false);
 	}
 
 	@Override public void unlink(ObjectGuid viewObjectGuid, ObjectGuid end2FoundationObjectGuid, String relationTemplate) throws ServiceRequestException
 	{
-		((BOASImpl) this.getBOAS()).getRelationUnlinkStub().unlink(viewObjectGuid, end2FoundationObjectGuid, false);
+		((BOASImpl) this.getBoas()).getRelationUnlinkStub().unlink(viewObjectGuid, end2FoundationObjectGuid, false);
 	}
 
 	/*
@@ -1173,7 +858,7 @@ import java.util.Map;
 	@Override public void unlinkAndDeleteEnd2(StructureObject structureObject) throws ServiceRequestException
 	{
 
-		((BOASImpl) this.getBOAS()).getRelationUnlinkStub().unlinkAndDeleteEnd2(structureObject, false);
+		((BOASImpl) this.getBoas()).getRelationUnlinkStub().unlinkAndDeleteEnd2(structureObject, false);
 
 	}
 
@@ -1195,7 +880,7 @@ import java.util.Map;
 	 */
 	@Override public void detachFile(String fileGuid) throws ServiceRequestException
 	{
-		((DSSImpl) this.getDSS()).getInstFileStub().detachFile(fileGuid, true, true);
+		((DSSImpl) this.getDss()).getInstFileStub().detachFile(fileGuid, true, true);
 	}
 
 	/*
@@ -1245,7 +930,7 @@ import java.util.Map;
 
 	@Override public void changePrimaryObject(ObjectGuid end1ObjectGuid, String viewName, StructureObject structureObject) throws ServiceRequestException
 	{
-		((BOASImpl) this.getBOAS()).getStructureStub().changePrimaryObject(end1ObjectGuid, viewName, structureObject, false);
+		((BOASImpl) this.getBoas()).getStructureStub().changePrimaryObject(end1ObjectGuid, viewName, structureObject, false);
 
 	}
 
@@ -1296,7 +981,7 @@ import java.util.Map;
 	@Tracked(description = TrackedDesc.VIEW_OBJECT, renderer = TROpenObjectImpl.class) @Override public FoundationObject openObject(ObjectGuid objectGuid)
 			throws ServiceRequestException
 	{
-		return ((BOASImpl) this.getBOAS()).getFUIStub().openObject(objectGuid, false);
+		return ((BOASImpl) this.getBoas()).getFUIStub().openObject(objectGuid, false);
 	}
 
 	@Override public void removeECPAttachment(String procRtGuid) throws ServiceRequestException

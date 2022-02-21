@@ -28,12 +28,10 @@ import org.springframework.stereotype.Component;
  * CLASSNAME$<br>
  * 对于object类型的字段, 增加业务对象信息<br>
  * FIELDNAME$CLASSNAME
- * 
+ *
  * @author Wanglei
- * 
  */
-@Component("classNameDecorator")
-public class ClassNameDecorator implements Decorator
+@Component("classNameDecorator") public class ClassNameDecorator implements Decorator
 {
 
 	private <T extends DynaObject> void clearField(T object, String fieldName)
@@ -166,18 +164,13 @@ public class ClassNameDecorator implements Decorator
 				if (!StringUtils.isNullString(type))
 				{
 					FileType fileType;
-					try
-					{
-						fileType = ((EMMImpl) emm).getRefService(DSS.class).getFileType(type);
-						object.clear(ShortObject.FILE_ICON16);
-						object.put(ShortObject.FILE_ICON16, fileType.getIcon16());
-						object.clear(ShortObject.FILE_ICON32);
-						object.put(ShortObject.FILE_ICON32, fileType.getIcon32());
-					}
-					catch (ServiceNotFoundException e)
-					{
-						e.printStackTrace();
-					}
+
+					fileType = ((EMMImpl) emm).getDSS().getFileType(type);
+					object.clear(ShortObject.FILE_ICON16);
+					object.put(ShortObject.FILE_ICON16, fileType.getIcon16());
+					object.clear(ShortObject.FILE_ICON32);
+					object.put(ShortObject.FILE_ICON32, fileType.getIcon32());
+
 				}
 			}
 		}

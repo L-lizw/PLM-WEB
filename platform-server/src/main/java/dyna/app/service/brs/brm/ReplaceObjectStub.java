@@ -38,7 +38,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * @author wangweixia
+ * @author Lizw
  *         取替代关系新建、删除、修改
  */
 @Component
@@ -67,7 +67,7 @@ public class ReplaceObjectStub extends AbstractServiceStub<BRMImpl>
 			foundationObject.put((sid + ReplaceSubstituteConstants.ClassGuid).toUpperCase(), objectGuid.getClassGuid());
 			if (StringUtils.isNullString(objectGuid.getMasterGuid()))
 			{
-				FoundationObject fMasterItem = this.stubService.getBOAS().getObjectByGuid(objectGuid);
+				FoundationObject fMasterItem = this.stubService.getBoas().getObjectByGuid(objectGuid);
 				String masterGuid = fMasterItem.getObjectGuid().getMasterGuid();
 				foundationObject.put((sid + ReplaceSubstituteConstants.MASTER).toUpperCase(), masterGuid);
 			}
@@ -84,8 +84,8 @@ public class ReplaceObjectStub extends AbstractServiceStub<BRMImpl>
 	 */
 	protected FoundationObject newFoundationObject(ReplaceRangeEnum range, ReplaceTypeEnum type) throws ServiceRequestException
 	{
-		ClassInfo classInfo = this.stubService.getEMM().getFirstLevelClassByInterface(ModelInterfaceEnum.IReplaceSubstitute, null);
-		FoundationObject fo = this.stubService.getBOAS().newFoundationObject(classInfo.getGuid(), classInfo.getName());
+		ClassInfo classInfo = this.stubService.getEmm().getFirstLevelClassByInterface(ModelInterfaceEnum.IReplaceSubstitute, null);
+		FoundationObject fo = this.stubService.getBoas().newFoundationObject(classInfo.getGuid(), classInfo.getName());
 
 		setRsTypeAndRange(fo, range, type);
 
@@ -96,7 +96,7 @@ public class ReplaceObjectStub extends AbstractServiceStub<BRMImpl>
 	{
 		if (range != null && !StringUtils.isNullString(range.getValue()))
 		{
-			CodeItemInfo scope = this.stubService.getEMM().getCodeItemByName(ReplaceSubstituteConstants.Scope, range.getValue());
+			CodeItemInfo scope = this.stubService.getEmm().getCodeItemByName(ReplaceSubstituteConstants.Scope, range.getValue());
 			if (scope != null)
 			{
 				fo.put(ReplaceSubstituteConstants.Scope.toUpperCase(), scope.getGuid());
@@ -104,7 +104,7 @@ public class ReplaceObjectStub extends AbstractServiceStub<BRMImpl>
 		}
 		if (type != null && !StringUtils.isNullString(type.getValue()))
 		{
-			CodeItemInfo rSType = this.stubService.getEMM().getCodeItemByName(ReplaceSubstituteConstants.RSType, type.getValue());
+			CodeItemInfo rSType = this.stubService.getEmm().getCodeItemByName(ReplaceSubstituteConstants.RSType, type.getValue());
 			if (rSType != null)
 			{
 				fo.put(ReplaceSubstituteConstants.RSType.toUpperCase(), rSType.getGuid());
@@ -114,7 +114,7 @@ public class ReplaceObjectStub extends AbstractServiceStub<BRMImpl>
 
 	public FoundationObject saveObject(FoundationObject foundationObject) throws ServiceRequestException
 	{
-		BOASImpl boas = (BOASImpl) this.stubService.getBOAS();
+		BOASImpl boas = (BOASImpl) this.stubService.getBoas();
 		return boas.getFSaverStub().saveObject(foundationObject, true, false, false, null, true, false, false);
 	}
 
@@ -174,7 +174,7 @@ public class ReplaceObjectStub extends AbstractServiceStub<BRMImpl>
 			{
 				throw new ServiceRequestException("ID_APP_BRM_REPLACE_APPLY_DATE_ILLEGAL", "The date of batch-apply is illegal");
 			}
-			CodeItemInfo codeItemInfo = this.stubService.getEMM().getCodeItem((String) foundationObject.get(ReplaceSubstituteConstants.Scope.toUpperCase()));
+			CodeItemInfo codeItemInfo = this.stubService.getEmm().getCodeItem((String) foundationObject.get(ReplaceSubstituteConstants.Scope.toUpperCase()));
 			if (codeItemInfo != null)
 			{
 				String scopeCode = codeItemInfo.getCode();
@@ -200,7 +200,7 @@ public class ReplaceObjectStub extends AbstractServiceStub<BRMImpl>
 				foundationObject.setUpdateUserGuid(userGuid);
 				this.getKeyFromObjectGuid(componentObjectGuid, ReplaceSubstituteConstants.ComponentItem, foundationObject);
 				this.getKeyFromObjectGuid(replaceObjectGuid, ReplaceSubstituteConstants.RSItem, foundationObject);
-				saveObject = ((BOASImpl) this.stubService.getBOAS()).getFSaverStub().createObject(foundationObject, false);
+				saveObject = ((BOASImpl) this.stubService.getBoas()).getFSaverStub().createObject(foundationObject, false);
 			}
 		}
 		return saveObject;
@@ -300,7 +300,7 @@ public class ReplaceObjectStub extends AbstractServiceStub<BRMImpl>
 	 */
 	public void deleteReplaceData(ObjectGuid objectGuid) throws ServiceRequestException
 	{
-		this.stubService.getBOAS().deleteFoundationObject(objectGuid.getGuid(), objectGuid.getClassGuid());
+		this.stubService.getBoas().deleteFoundationObject(objectGuid.getGuid(), objectGuid.getClassGuid());
 	}
 
 	/**
@@ -312,7 +312,7 @@ public class ReplaceObjectStub extends AbstractServiceStub<BRMImpl>
 		if (StructureObjGuid != null && !StringUtils.isNullString(bomViewName))
 		{
 			SearchCondition searchCondition = SearchConditionFactory.createSearchConditionForStructure(StructureObjGuid.getClassName());
-			BOMStructure bomStructure = this.stubService.getBOMS().getBOM(StructureObjGuid, searchCondition, null);
+			BOMStructure bomStructure = this.stubService.getBoms().getBOM(StructureObjGuid, searchCondition, null);
 			if (bomStructure != null)
 			{
 				try
@@ -338,7 +338,7 @@ public class ReplaceObjectStub extends AbstractServiceStub<BRMImpl>
 	 */
 	public FoundationObject saveReplaceData(FoundationObject foundationObject) throws ServiceRequestException
 	{
-		BOASImpl boas = (BOASImpl) this.stubService.getBOAS();
+		BOASImpl boas = (BOASImpl) this.stubService.getBoas();
 		return boas.getFSaverStub().saveObject(foundationObject, true, true, false, null, true, false, true);
 	}
 
@@ -351,8 +351,8 @@ public class ReplaceObjectStub extends AbstractServiceStub<BRMImpl>
 	 */
 	public void exchangeRSNumber(ObjectGuid frontObjectGuid, ObjectGuid laterObjectGuid) throws ServiceRequestException
 	{
-		FoundationObject frontObject = this.stubService.getBOAS().getObject(frontObjectGuid);
-		FoundationObject laterObject = this.stubService.getBOAS().getObject(laterObjectGuid);
+		FoundationObject frontObject = this.stubService.getBoas().getObject(frontObjectGuid);
+		FoundationObject laterObject = this.stubService.getBoas().getObject(laterObjectGuid);
 		String laterSequence = (String) laterObject.get(ReplaceSubstituteConstants.RSNumber);
 		laterObject.put(ReplaceSubstituteConstants.RSNumber, frontObject.get(ReplaceSubstituteConstants.RSNumber));
 		frontObject.put(ReplaceSubstituteConstants.RSNumber, laterSequence);
@@ -403,8 +403,8 @@ public class ReplaceObjectStub extends AbstractServiceStub<BRMImpl>
 		boolean hasSame = false;
 		if (componentItemObjectGuid != null && rsItemObjectGuid != null)
 		{
-			FoundationObject componentItem = this.stubService.getBOAS().getObject(componentItemObjectGuid);
-			FoundationObject rsItem = this.stubService.getBOAS().getObject(rsItemObjectGuid);
+			FoundationObject componentItem = this.stubService.getBoas().getObject(componentItemObjectGuid);
+			FoundationObject rsItem = this.stubService.getBoas().getObject(rsItemObjectGuid);
 
 			// 判断替代件与元件是否相同
 			if (componentItemObjectGuid.getMasterGuid().equals(rsItemObjectGuid.getMasterGuid()))
@@ -436,7 +436,7 @@ public class ReplaceObjectStub extends AbstractServiceStub<BRMImpl>
 					throw new ServiceRequestException("ID_APP_BRM_BOMKEY_IS_NULL", "bomkey is null");
 				}
 				// 是否存在相同的局部取替代关系（不包含失效的数据）
-				FoundationObject masterItem = this.stubService.getBOAS().getObject(masterItemObjectGuid);
+				FoundationObject masterItem = this.stubService.getBoas().getObject(masterItemObjectGuid);
 				hasSame = this.stubService.getReplaceQueryStub().isHasCompentItemPartReplaceDataExceptExpire(masterItemObjectGuid, componentItemObjectGuid, rsItemObjectGuid,
 						bomViewName, bomKey);
 				if (hasSame)
@@ -555,25 +555,25 @@ public class ReplaceObjectStub extends AbstractServiceStub<BRMImpl>
 	@Deprecated
 	public void createBathReplaceRelation(String procRtGuid) throws ServiceRequestException
 	{
-		List<ProcAttach> listAllValidProcAttach = this.stubService.getWFI().listProcAttach(procRtGuid);
+		List<ProcAttach> listAllValidProcAttach = this.stubService.getWfi().listProcAttach(procRtGuid);
 		if (SetUtils.isNullList(listAllValidProcAttach))
 		{
 			return;
 		}
 		for (ProcAttach procAttach : listAllValidProcAttach)
 		{
-			FoundationObject procFoundation = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub()
+			FoundationObject procFoundation = ((BOASImpl) this.stubService.getBoas()).getFoundationStub()
 					.getObjectByGuid(new ObjectGuid(procAttach.getInstanceClassGuid(), null, procAttach.getInstanceGuid(), null), false);
 			if (procFoundation != null)
 			{
-				procFoundation = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObject(procFoundation.getObjectGuid(), false);
-				ClassInfo procAttachClassInfo = this.stubService.getEMM().getClassByGuid(procFoundation.getObjectGuid().getClassGuid());
+				procFoundation = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObject(procFoundation.getObjectGuid(), false);
+				ClassInfo procAttachClassInfo = this.stubService.getEmm().getClassByGuid(procFoundation.getObjectGuid().getClassGuid());
 				if (procAttachClassInfo != null && procAttachClassInfo.hasInterface(ModelInterfaceEnum.IRSApplyForm))
 				{
-					ViewObject viewObject = this.stubService.getBOAS().getRelationByEND1(procFoundation.getObjectGuid(), ReplaceSubstituteConstants.BATCHRS_ITEM);
+					ViewObject viewObject = this.stubService.getBoas().getRelationByEND1(procFoundation.getObjectGuid(), ReplaceSubstituteConstants.BATCHRS_ITEM);
 					if (viewObject != null)
 					{
-						List<StructureObject> listStructure = this.stubService.getBOAS().listObjectOfRelation(viewObject.getObjectGuid(), null, null, null);
+						List<StructureObject> listStructure = this.stubService.getBoas().listObjectOfRelation(viewObject.getObjectGuid(), null, null, null);
 						if (!SetUtils.isNullList(listStructure))
 						{
 							for (StructureObject stru : listStructure)
@@ -582,7 +582,7 @@ public class ReplaceObjectStub extends AbstractServiceStub<BRMImpl>
 								ObjectGuid componentItem = this.stubService.getReplaceQueryStub().getObjectGuid(procFoundation, ReplaceSubstituteConstants.ComponentItem);
 								ObjectGuid rsItem = this.stubService.getReplaceQueryStub().getObjectGuid(procFoundation, ReplaceSubstituteConstants.RSItem);
 								String bomCodeGuid = (String) procFoundation.get(ReplaceSubstituteConstants.BOMViewDisplay);
-								String bomViewName = this.stubService.getEMM().getCodeItem(bomCodeGuid).getName();
+								String bomViewName = this.stubService.getEmm().getCodeItem(bomCodeGuid).getName();
 								if (masterItem != null && componentItem != null && rsItem != null)
 								{
 									try
@@ -630,7 +630,7 @@ public class ReplaceObjectStub extends AbstractServiceStub<BRMImpl>
 	 */
 	public void batchDealReplaceApply(String procRtGuid) throws ServiceRequestException
 	{
-		List<ProcAttach> listAllValidProcAttach = this.stubService.getWFI().listProcAttach(procRtGuid);
+		List<ProcAttach> listAllValidProcAttach = this.stubService.getWfi().listProcAttach(procRtGuid);
 		if (SetUtils.isNullList(listAllValidProcAttach))
 		{
 			return;
@@ -639,31 +639,31 @@ public class ReplaceObjectStub extends AbstractServiceStub<BRMImpl>
 		for (ProcAttach procAttach : listAllValidProcAttach)
 		{
 
-			FoundationObject procFoundation = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub()
+			FoundationObject procFoundation = ((BOASImpl) this.stubService.getBoas()).getFoundationStub()
 					.getObjectByGuid(new ObjectGuid(procAttach.getInstanceClassGuid(), null, procAttach.getInstanceGuid(), null), false);
 			if (procFoundation == null)
 			{
 				continue;
 			}
 
-			procFoundation = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObject(procFoundation.getObjectGuid(), false);
+			procFoundation = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObject(procFoundation.getObjectGuid(), false);
 
-			String formType = this.stubService.getEMM().getCodeItem((String) procFoundation.get(ReplaceSubstituteConstants.FORM_TYPE)).getName();
+			String formType = this.stubService.getEmm().getCodeItem((String) procFoundation.get(ReplaceSubstituteConstants.FORM_TYPE)).getName();
 			if (formType == null)
 			{
 				continue;
 			}
 
-			RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateByName(procFoundation.getObjectGuid(), ReplaceSubstituteConstants.BATCHRS_ITEM);
-			ViewObject viewObject = this.stubService.getBOAS().getRelationByEND1(procFoundation.getObjectGuid(), ReplaceSubstituteConstants.BATCHRS_ITEM);
+			RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateByName(procFoundation.getObjectGuid(), ReplaceSubstituteConstants.BATCHRS_ITEM);
+			ViewObject viewObject = this.stubService.getBoas().getRelationByEND1(procFoundation.getObjectGuid(), ReplaceSubstituteConstants.BATCHRS_ITEM);
 			List<StructureObject> listStructure = null;
 			if (viewObject != null)
 			{
 				SearchCondition searchCondition = SearchConditionFactory.createSearchConditionForStructure(relationTemplate.getStructureClassName());
-				UIObjectInfo structureListUIObject = this.stubService.getEMM().getUIObjectInCurrentBizModel(relationTemplate.getStructureClassName(), UITypeEnum.LIST);
+				UIObjectInfo structureListUIObject = this.stubService.getEmm().getUIObjectInCurrentBizModel(relationTemplate.getStructureClassName(), UITypeEnum.LIST);
 				if (structureListUIObject != null)
 				{
-					List<UIField> uiFieldList = this.stubService.getEMM().listUIFieldByUIGuid(structureListUIObject.getGuid());
+					List<UIField> uiFieldList = this.stubService.getEmm().listUIFieldByUIGuid(structureListUIObject.getGuid());
 					if (!SetUtils.isNullList(uiFieldList))
 					{
 						for (UIField uiField : uiFieldList)
@@ -672,10 +672,10 @@ public class ReplaceObjectStub extends AbstractServiceStub<BRMImpl>
 						}
 					}
 				}
-				listStructure = this.stubService.getBOAS().listObjectOfRelation(viewObject.getObjectGuid(), searchCondition, null, null);
+				listStructure = this.stubService.getBoas().listObjectOfRelation(viewObject.getObjectGuid(), searchCondition, null, null);
 			}
 
-			ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(procAttach.getInstanceClassGuid());
+			ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(procAttach.getInstanceClassGuid());
 			if (classInfo == null)
 			{
 				throw new ServiceRequestException("ID_APP_BRM_UNABLE_TO_GET_THE_FORM_TYPE", "Unable to get the form type!");
@@ -775,7 +775,7 @@ public class ReplaceObjectStub extends AbstractServiceStub<BRMImpl>
 		ObjectGuid componentItem = this.stubService.getReplaceQueryStub().getObjectGuid(procFoundation, ReplaceSubstituteConstants.ComponentItem);
 		ObjectGuid rsItem = this.stubService.getReplaceQueryStub().getObjectGuid(procFoundation, ReplaceSubstituteConstants.RSItem);
 		String bomCodeGuid = (String) procFoundation.get(ReplaceSubstituteConstants.BOMViewDisplay);
-		String bomViewName = this.stubService.getEMM().getCodeItem(bomCodeGuid).getName();
+		String bomViewName = this.stubService.getEmm().getCodeItem(bomCodeGuid).getName();
 
 		boolean hasException = false; // 该申请单是否含有异常
 		for (StructureObject batchMasterStructureObject : listStructure)
@@ -835,7 +835,7 @@ public class ReplaceObjectStub extends AbstractServiceStub<BRMImpl>
 			StructureObject batchMasterStructureObject) throws ServiceRequestException
 	{
 		ObjectGuid replaceObjectGuid = this.stubService.getReplaceQueryStub().getObjectGuid(batchMasterStructureObject, ReplaceSubstituteConstants.REPLACE_DATA);
-		FoundationObject replaceData = this.stubService.getBOAS().getObject(replaceObjectGuid);
+		FoundationObject replaceData = this.stubService.getBoas().getObject(replaceObjectGuid);
 		updateReplaceData(procFoundation, replaceData);
 		this.stubService.saveReplaceData(replaceData);
 		updateProcessResult(batchMasterStructureObject, false, null);
@@ -857,7 +857,7 @@ public class ReplaceObjectStub extends AbstractServiceStub<BRMImpl>
 			try
 			{
 //				DataServer.getTransactionManager().startTransaction(this.stubService.getFixedTransactionId());
-				FoundationObject replaceData = this.stubService.getBOAS().getObject(structureObject.getEnd2ObjectGuid());
+				FoundationObject replaceData = this.stubService.getBoas().getObject(structureObject.getEnd2ObjectGuid());
 				updateReplaceData(procFoundation, replaceData);
 				this.stubService.saveReplaceData(replaceData);
 				updateProcessResult(structureObject, true, null);
@@ -914,7 +914,7 @@ public class ReplaceObjectStub extends AbstractServiceStub<BRMImpl>
 	@Deprecated
 	private void addRSRelation(FoundationObject procFoundation, FoundationObject fo) throws ServiceRequestException
 	{
-		RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateByName(procFoundation.getObjectGuid(),
+		RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateByName(procFoundation.getObjectGuid(),
 				ReplaceSubstituteConstants.BatchRS_RSRelationship);
 		if (relationTemplate == null)
 		{
@@ -925,19 +925,19 @@ public class ReplaceObjectStub extends AbstractServiceStub<BRMImpl>
 		{
 			structureClassName = StructureObject.STRUCTURE_CLASS_NAME;
 		}
-		StructureObject structureObject = this.stubService.getBOAS().newStructureObject(null, structureClassName);
+		StructureObject structureObject = this.stubService.getBoas().newStructureObject(null, structureClassName);
 		structureObject.setObjectGuid(new ObjectGuid(relationTemplate.getStructureClassGuid(), relationTemplate.getStructureClassName(), null, null));
 		structureObject.put("StructureClassName", relationTemplate.getStructureClassName());
 		structureObject.put("viewName", relationTemplate.getName());
 
-		RelationStub relationStub = ((BOASImpl) this.stubService.getBOAS()).getRelationStub();
-		ViewObject viewObject = this.stubService.getWFI().getRelationByEND1(procFoundation.getObjectGuid(), ReplaceSubstituteConstants.BatchRS_RSRelationship);
+		RelationStub relationStub = ((BOASImpl) this.stubService.getBoas()).getRelationStub();
+		ViewObject viewObject = this.stubService.getWfi().getRelationByEND1(procFoundation.getObjectGuid(), ReplaceSubstituteConstants.BatchRS_RSRelationship);
 		// 先创建一个View 然后再关联
 		if (viewObject == null)
 		{
 			viewObject = relationStub.saveRelationByTemplate(relationTemplate.getGuid(), procFoundation.getObjectGuid(), false, null);
 		}
-		((BOASImpl) this.stubService.getBOAS()).getRelationLinkStub().link(viewObject.getObjectGuid(), fo.getObjectGuid(), structureObject, false, null);
+		((BOASImpl) this.stubService.getBoas()).getRelationLinkStub().link(viewObject.getObjectGuid(), fo.getObjectGuid(), structureObject, false, null);
 	}
 
 	/**
@@ -957,8 +957,8 @@ public class ReplaceObjectStub extends AbstractServiceStub<BRMImpl>
 		{
 			componentItemObjectGuid.setIsMaster(true);
 			rsItemObjectGuid.setIsMaster(true);
-			FoundationObject componentItem = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObject(componentItemObjectGuid, false);
-			FoundationObject rsItem = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObject(rsItemObjectGuid, false);
+			FoundationObject componentItem = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObject(componentItemObjectGuid, false);
+			FoundationObject rsItem = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObject(rsItemObjectGuid, false);
 			if (componentItem.getObjectGuid() != null && rsItem.getObjectGuid() != null)
 			{
 				return this.createReplaceData(masterItemObjectGUid, componentItem.getObjectGuid(), rsItem.getObjectGuid(), bomKey, procFoundation, false);
@@ -988,7 +988,7 @@ public class ReplaceObjectStub extends AbstractServiceStub<BRMImpl>
 			String bomViewName = (String) foundationObject.get(ReplaceSubstituteConstants.BOMViewDisplay);
 			if (StringUtils.isGuid(bomViewName))
 			{
-				bomViewName = this.stubService.getEMM().getCodeItem(bomViewName).getName();
+				bomViewName = this.stubService.getEmm().getCodeItem(bomViewName).getName();
 			}
 			if (masterItemObjectGuid == null)
 			{
@@ -1075,8 +1075,8 @@ public class ReplaceObjectStub extends AbstractServiceStub<BRMImpl>
 				{
 					throw new ServiceRequestException("ID_APP_REPLACEOBJECTSTUB_BATHSAVE_SAME", "Save failed, componentItem and rsItem are identical!", null);
 				}
-				FoundationObject comfo = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObject(componentItemObjectGuid, false);
-				FoundationObject rsfo = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObject(rsItemObjectGuid, false);
+				FoundationObject comfo = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObject(componentItemObjectGuid, false);
+				FoundationObject rsfo = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObject(rsItemObjectGuid, false);
 				if (comfo == null || rsfo == null)
 				{
 					throw new ServiceRequestException("ID_DS_NO_DATA", "Data not exist!", null);
@@ -1094,7 +1094,7 @@ public class ReplaceObjectStub extends AbstractServiceStub<BRMImpl>
 			// {
 			Date effectiveDate = (Date) foundationObject.get(ReplaceSubstituteConstants.EffectiveDate);
 			Date expireDate = (Date) foundationObject.get(ReplaceSubstituteConstants.InvalidDate);
-			String formType = this.stubService.getEMM().getCodeItem((String) foundationObject.get(ReplaceSubstituteConstants.FORM_TYPE)).getName();
+			String formType = this.stubService.getEmm().getCodeItem((String) foundationObject.get(ReplaceSubstituteConstants.FORM_TYPE)).getName();
 			if (!this.checkDateForBatch(effectiveDate, expireDate, null, formType))
 			{
 				throw new ServiceRequestException("ID_APP_BRM_REPLACE_APPLY_DATE_ILLEGAL", "The date of batch-apply is illegal");
@@ -1152,7 +1152,7 @@ public class ReplaceObjectStub extends AbstractServiceStub<BRMImpl>
 							}
 							if (effectiveDate == null && invalidDate == null)
 							{
-								((BOASImpl) this.stubService.getBOAS()).getFoundationStub().deleteObject(fo, false);
+								((BOASImpl) this.stubService.getBoas()).getFoundationStub().deleteObject(fo, false);
 							}
 							else if (effectiveDate != null && invalidDate == null)
 							{
@@ -1185,7 +1185,7 @@ public class ReplaceObjectStub extends AbstractServiceStub<BRMImpl>
 			String classguid = objectGuid.getClassGuid();
 			if (StringUtils.isGuid(classguid))
 			{
-				ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(classguid);
+				ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(classguid);
 				if (classInfo != null && !classInfo.hasInterface(ModelInterfaceEnum.IReplaceSubstitute))
 				{
 
@@ -1195,7 +1195,7 @@ public class ReplaceObjectStub extends AbstractServiceStub<BRMImpl>
 					// 查询元件或者取替代件是否还有其他版本对象
 					objectGuid.setIsMaster(true);
 					objectGuid.setGuid(null);
-					FoundationObject fo = this.stubService.getBOAS().getObject(objectGuid);
+					FoundationObject fo = this.stubService.getBoas().getObject(objectGuid);
 					if (fo == null)
 					{
 						List<FoundationObject> listComponent = this.stubService.getReplaceQueryStub().listReplaceDataByRang(null, objectGuid, null,null, null, null, null, true, false);
@@ -1244,13 +1244,13 @@ public class ReplaceObjectStub extends AbstractServiceStub<BRMImpl>
 			ObjectGuid componentObjectGuid = new ObjectGuid((String) replaceData.get(ReplaceSubstituteConstants.ComponentItem + ReplaceSubstituteConstants.ClassGuid), null,
 					(String) replaceData.get(ReplaceSubstituteConstants.ComponentItem),
 					(String) replaceData.get(ReplaceSubstituteConstants.ComponentItem + ReplaceSubstituteConstants.MASTER), true, null);
-			List<BOMTemplateInfo> bomTemplateList = this.stubService.getEMM().listBOMTemplateByEND2(componentObjectGuid);
+			List<BOMTemplateInfo> bomTemplateList = this.stubService.getEmm().listBOMTemplateByEND2(componentObjectGuid);
 			String bomKey = (String) replaceData.get(ReplaceSubstituteConstants.BOMKey.toUpperCase());
 			if (!SetUtils.isNullList(bomTemplateList))
 			{
 				for (BOMTemplateInfo bomTemplate : bomTemplateList)
 				{
-					BOMView bomView = this.stubService.getBOMS().getBOMViewByEND1(masterObjectGuid, bomTemplate.getName());
+					BOMView bomView = this.stubService.getBoms().getBOMViewByEND1(masterObjectGuid, bomTemplate.getName());
 					if (bomView != null)
 					{
 						this.updateBOMStructure(masterObjectGuid, componentObjectGuid, bomTemplate.getName(), bomKey);
@@ -1267,14 +1267,14 @@ public class ReplaceObjectStub extends AbstractServiceStub<BRMImpl>
 	{
 		if (masterItemObjectGuid != null && componentItemObjectGuid != null && !StringUtils.isNullString(bomName))
 		{
-			BOMView bomView = this.stubService.getBOMS().getBOMViewByEND1(masterItemObjectGuid, bomName);
+			BOMView bomView = this.stubService.getBoms().getBOMViewByEND1(masterItemObjectGuid, bomName);
 			if (bomView != null)
 			{
 				String structureClassName = bomView.getStructureClassName();
 				SearchCondition searchCondition = null;
-				List<UIObjectInfo> uiObjectList = this.stubService.getEMM().listALLFormListUIObjectInBizModel(structureClassName);
+				List<UIObjectInfo> uiObjectList = this.stubService.getEmm().listALLFormListUIObjectInBizModel(structureClassName);
 				searchCondition = SearchConditionFactory.createSearchConditionForBOMStructure(structureClassName, uiObjectList);
-				List<BOMStructure> bomStructureList = this.stubService.getBOMS().listBOM(bomView.getObjectGuid(), searchCondition, null, null);
+				List<BOMStructure> bomStructureList = this.stubService.getBoms().listBOM(bomView.getObjectGuid(), searchCondition, null, null);
 				if (!SetUtils.isNullList(bomStructureList))
 				{
 					for (BOMStructure structure : bomStructureList)
@@ -1293,7 +1293,7 @@ public class ReplaceObjectStub extends AbstractServiceStub<BRMImpl>
 							{
 								structure.setRsFlag(true);
 							}
-							((BOMSImpl) this.stubService.getBOMS()).getBomStub().saveBOM(structure, false, true, true);
+							((BOMSImpl) this.stubService.getBoms()).getBomStub().saveBOM(structure, false, true, true);
 							return structure;
 						}
 					}
@@ -1354,11 +1354,11 @@ public class ReplaceObjectStub extends AbstractServiceStub<BRMImpl>
 		dynaObject.put(ReplaceSubstituteConstants.PROCESS_RESULT, BooleanUtils.getBooleanStringYN(hasException));
 		if (dynaObject instanceof StructureObject)
 		{
-			((BOASImpl) this.stubService.getBOAS()).getStructureStub().saveStructure((StructureObject) dynaObject, false); // 忽略权限保存StructureObject
+			((BOASImpl) this.stubService.getBoas()).getStructureStub().saveStructure((StructureObject) dynaObject, false); // 忽略权限保存StructureObject
 		}
 		else if (dynaObject instanceof FoundationObject)
 		{
-			((BOASImpl) this.stubService.getBOAS()).getFSaverStub().saveObject((FoundationObject) dynaObject, true, false, false, null, false, false, false);
+			((BOASImpl) this.stubService.getBoas()).getFSaverStub().saveObject((FoundationObject) dynaObject, true, false, false, null, false, false, false);
 		}
 	}
 
@@ -1374,7 +1374,7 @@ public class ReplaceObjectStub extends AbstractServiceStub<BRMImpl>
 			String errorMessage = null;
 			if (e instanceof ServiceRequestException)
 			{
-				errorMessage = this.stubService.getMSRM().getMSRString(((ServiceRequestException) e).getMsrId(), this.stubService.getUserSignature().getLanguageEnum().toString(),
+				errorMessage = this.stubService.getMsrm().getMSRString(((ServiceRequestException) e).getMsrId(), this.stubService.getUserSignature().getLanguageEnum().toString(),
 						((ServiceRequestException) e).getArgs());
 			}
 			else

@@ -25,6 +25,8 @@ import dyna.common.util.StringUtils;
 import dyna.net.service.brs.*;
 import dyna.net.service.data.InstanceService;
 import dyna.net.service.data.SystemDataService;
+import lombok.AccessLevel;
+import lombok.Getter;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,10 +37,11 @@ import java.util.*;
 /**
  * Distributed Storage Service implementation
  * 
- * @author Wanglei
+ * @author Lizw
  * 
  */
 @Service
+@Getter(AccessLevel.PROTECTED)
 public class DSSImpl extends BusinessRuleService implements DSS
 {
 
@@ -52,7 +55,21 @@ public class DSSImpl extends BusinessRuleService implements DSS
 	private SystemDataService   systemDataService;
 
 	@Autowired
+	private AAS aas;
+	@Autowired
+	private ACL acl;
+	@Autowired
 	private Async               async;
+	@Autowired
+	private BOAS boas;
+	@Autowired
+	private EDAP edap;
+	@Autowired
+	private EMM emm;
+	@Autowired
+	private FTS                 fts;
+	@Autowired
+	private WFI wfi;
 
 	@Autowired
 	private FileInfoStub		fileInfoStub		;
@@ -129,97 +146,6 @@ public class DSSImpl extends BusinessRuleService implements DSS
 				throw e;
 			}
 		}
-	}
-
-	protected synchronized FTS getFTS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(FTS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized AAS getAAS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(AAS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized BOAS getBOAS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(BOAS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized WFI getWFE() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(WFI.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized EMM getEMM() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(EMM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized ACL getACL() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(ACL.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized EDAP getEDAP() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(EDAP.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
 	}
 
 	/*

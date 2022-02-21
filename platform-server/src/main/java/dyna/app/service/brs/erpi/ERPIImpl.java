@@ -38,7 +38,10 @@ import dyna.net.service.data.DSCommonService;
 import dyna.net.service.data.SyncModelService;
 import dyna.net.service.data.SystemDataService;
 import dyna.net.service.data.model.CodeModelService;
+import lombok.AccessLevel;
+import lombok.Getter;
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Method;
@@ -50,12 +53,42 @@ import java.util.Map;
  *
  * @author Lizw
  */
+@Getter(AccessLevel.PROTECTED)
 @Service public class ERPIImpl extends BusinessRuleService implements ERPI
 {
 	@DubboReference private CodeModelService  codeModelService;
 	@DubboReference private DSCommonService   dsCommonService;
 	@DubboReference private SyncModelService  syncModelService;
 	@DubboReference private SystemDataService systemDataService;
+
+	@Autowired
+	private AAS aas;
+	@Autowired
+	private ACL acl;
+	@Autowired
+	private BOAS boas;
+	@Autowired
+	private BOMS boms;
+	@Autowired
+	private BRM brm;
+	@Autowired
+	private CPB cpb;
+	@Autowired
+	private DCR dcr;
+	@Autowired
+	private DSS dss;
+	@Autowired
+	private EMM  emm;
+	@Autowired
+	private JSS jss;
+	@Autowired
+	private MMS mms;
+	@Autowired
+	private MSRM msrm;
+	@Autowired
+	private SMS sms;
+	@Autowired
+	private UECS uecs;
 
 	// 下面的这些变量采用singleton模式，因此必须确保Job是单线程执行的，否则会产生线程安全问题
 	// 创建单线程Job方法：在相关的ERP**Stub类中的createQueue()方法中将isSingleThread参数指定为Y
@@ -110,174 +143,72 @@ import java.util.Map;
 		return this.portalStub;
 	}
 
-	public synchronized BOAS getBOAS() throws ServiceRequestException
+	public BOAS getBOAS()
 	{
-		try
-		{
-			return this.getRefService(BOAS.class);
-		}
-		catch (ServiceNotFoundException e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
+		return this.boas;
 
 	}
 
-	public synchronized BRM getBRM() throws ServiceRequestException
+	public  BRM getBRM()
 	{
-		try
-		{
-			return this.getRefService(BRM.class);
-		}
-		catch (ServiceNotFoundException e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
+		return this.brm;
 	}
 
-	public synchronized JSS getJSS() throws ServiceRequestException
+	public  JSS getJSS()
 	{
-		try
-		{
-			return this.getRefService(JSS.class);
-		}
-		catch (ServiceNotFoundException e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
+		return this.jss;
 	}
 
-	public synchronized UECS getUECS() throws ServiceRequestException
+	public  UECS getUECS()
 	{
-		try
-		{
-			return this.getRefService(UECS.class);
-		}
-		catch (ServiceNotFoundException e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
+		return this.uecs;
 	}
 
-	public synchronized DSS getDSS() throws ServiceRequestException
+	public  DSS getDSS()
 	{
-		try
-		{
-			return this.getRefService(DSS.class);
-		}
-		catch (ServiceNotFoundException e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
+		return this.dss;
 	}
 
-	public synchronized BOMS getBOMS() throws ServiceRequestException
+	public BOMS getBOMS()
 	{
-		try
-		{
-			return this.getRefService(BOMS.class);
-		}
-		catch (ServiceNotFoundException e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
+		return this.boms;
 	}
 
-	public synchronized SMS getSMS() throws ServiceRequestException
+	public  SMS getSMS()
 	{
-		try
-		{
-			return this.getRefService(SMS.class);
-		}
-		catch (ServiceNotFoundException e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
+		return this.sms;
 	}
 
-	public synchronized EMM getEMM() throws ServiceRequestException
+	public  EMM getEMM()
 	{
-		try
-		{
-			return this.getRefService(EMM.class);
-		}
-		catch (ServiceNotFoundException e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
+		return this.emm;
 	}
 
-	public synchronized MMS getMMS() throws ServiceRequestException
+	public  CPB getCPB()
 	{
-		try
-		{
-			return this.getRefService(MMS.class);
-		}
-		catch (ServiceNotFoundException e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
+		return this.cpb;
 	}
 
-	public synchronized CPB getCPB() throws ServiceRequestException
+	public  AAS getAAS()
 	{
-		try
-		{
-			return this.getRefService(CPB.class);
-		}
-		catch (ServiceNotFoundException e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
+		return this.aas;
 	}
 
-	public synchronized AAS getAAS() throws ServiceRequestException
+	public  DCR getDCR()
 	{
-		try
-		{
-			return this.getRefService(AAS.class);
-		}
-		catch (ServiceNotFoundException e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
+		return this.dcr;
 	}
 
-	public synchronized DCR getDCR() throws ServiceRequestException
+	public MMS getMMS()
 	{
-		try
-		{
-			return this.getRefService(DCR.class);
-		}
-		catch (ServiceNotFoundException e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
+		return this.mms;
 	}
 
-	public synchronized MSRM getMSRM() throws ServiceRequestException
+	public  MSRM getMSRM()
 	{
-		try
-		{
-			return this.getRefService(MSRM.class);
-		}
-		catch (ServiceNotFoundException e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
+		return this.msrm;
 	}
 
-	protected synchronized ACL getACL() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(ACL.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
 
 	/*
 	 * (non-Javadoc)

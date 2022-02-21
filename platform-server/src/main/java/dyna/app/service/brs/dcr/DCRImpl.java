@@ -15,17 +15,35 @@ import dyna.common.systemenum.RuleTypeEnum;
 import dyna.net.service.brs.*;
 import dyna.net.service.das.MSRM;
 import dyna.net.service.data.SystemDataService;
+import lombok.AccessLevel;
+import lombok.Getter;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Getter(AccessLevel.PROTECTED)
 @Service
 public class DCRImpl extends BusinessRuleService implements DCR
 {
 	@DubboReference
 	private SystemDataService       systemDataService;
+
+	@Autowired
+	private AAS aas;
+	@Autowired
+	private BOAS boas;
+	@Autowired
+	private BOMS boms;
+	@Autowired
+	private DSS dss;
+	@Autowired
+	private EMM emm;
+	@Autowired
+	private MSRM msrm;
+	@Autowired
+	private WFI wfi;
 
 	@Autowired
 	private DataCheckRuleQueryStub	checkRuleQueryStub	= null;
@@ -40,6 +58,36 @@ public class DCRImpl extends BusinessRuleService implements DCR
 		super.init(serviceDefinition);
 		checkRuleQueryStub.init();
 		DataCheckRuleFactory.init(this);
+	}
+
+	public AAS getAas()
+	{
+		return this.aas;
+	}
+
+	public BOMS getBoms()
+	{
+		return this.boms;
+	}
+
+	public BOAS getBoas()
+	{
+		return  this.boas;
+	}
+
+	public DSS getDss()
+	{
+		return this.dss;
+	}
+
+	public EMM getEmm()
+	{
+		return this.emm;
+	}
+
+	public WFI getWfi()
+	{
+		return this.getWfi();
 	}
 
 	protected SystemDataService getSystemDataService()
@@ -69,66 +117,6 @@ public class DCRImpl extends BusinessRuleService implements DCR
 	public DataCheckRuleSaveStub getDataCheckRuleSaveStub()
 	{
 		return this.checkRuleSaveStub;
-	}
-
-	public synchronized EMM getEMM() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(EMM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
-
-	public synchronized MSRM getMSRM() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(MSRM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
-
-	public synchronized BOAS getBOAS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(BOAS.class);
-		}
-		catch (ServiceNotFoundException e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
-
-	public synchronized BOMS getBOMS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(BOMS.class);
-		}
-		catch (ServiceNotFoundException e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
-
-	public synchronized WFI getWFI() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(WFI.class);
-		}
-		catch (ServiceNotFoundException e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
 	}
 
 	/**

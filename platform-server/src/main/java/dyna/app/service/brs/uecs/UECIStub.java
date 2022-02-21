@@ -47,7 +47,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
- * @author Wanglei
+ * @author Lizw
  * 
  */
 @Component
@@ -62,14 +62,14 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 		{
 			// 根据ObjectGuid中的className或者classGuid一个的值，获取另外一个的值并赋给ObjectGuid
 			ClassStub.decorateObjectGuid(end1ObjectGuid, this.stubService);
-			BOMView bomViewObject = ((BOMSImpl) this.stubService.getBOMS()).getBomViewStub().getBOMViewByEND1(end1ObjectGuid, viewName, false);
+			BOMView bomViewObject = ((BOMSImpl) this.stubService.getBoms()).getBomViewStub().getBOMViewByEND1(end1ObjectGuid, viewName, false);
 			if (bomViewObject == null)
 			{
 				return null;
 			}
 			ObjectGuid viewObjectGuid = bomViewObject.getObjectGuid();
 
-			BOMTemplateInfo bomTemplate = this.stubService.getEMM().getBOMTemplateById((String) bomViewObject.get(ViewObject.TEMPLATE_ID));
+			BOMTemplateInfo bomTemplate = this.stubService.getEmm().getBOMTemplateById((String) bomViewObject.get(ViewObject.TEMPLATE_ID));
 			if (bomTemplate == null)
 			{
 				return null;
@@ -77,11 +77,11 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 
 			if (searchConditionStructure == null)
 			{
-				List<UIObjectInfo> uiObjectList = this.stubService.getEMM().listALLFormListUIObjectInBizModel(bomTemplate.getStructureClassName());
+				List<UIObjectInfo> uiObjectList = this.stubService.getEmm().listALLFormListUIObjectInBizModel(bomTemplate.getStructureClassName());
 				searchConditionStructure = SearchConditionFactory.createSearchConditionForBOMStructure(bomTemplate.getStructureClassName(), uiObjectList);
 			}
 			searchConditionStructure.addResultField(ViewObject.PREFIX_END2 + BOMStructure.SPEC);
-			bomList = ((BOMSImpl) this.stubService.getBOMS()).getBomStub().listBOM(viewObjectGuid, searchConditionStructure, null, dataRule);
+			bomList = ((BOMSImpl) this.stubService.getBoms()).getBomStub().listBOM(viewObjectGuid, searchConditionStructure, null, dataRule);
 		}
 		catch (DynaDataException e)
 		{
@@ -97,15 +97,15 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 	public List<FoundationObject> getFormECIByECO(ObjectGuid ChangeItemObjectGuid, ObjectGuid SolveObjectGuid) throws ServiceRequestException
 	{
 		List<FoundationObject> resultList = new ArrayList<FoundationObject>();
-		List<ClassInfo> classInfoList = this.stubService.getEMM().listClassByInterface(ModelInterfaceEnum.IECI);
+		List<ClassInfo> classInfoList = this.stubService.getEmm().listClassByInterface(ModelInterfaceEnum.IECI);
 		if (SetUtils.isNullList(classInfoList))
 		{
 			return null;
 		}
 		ClassInfo classInfo = classInfoList.get(0);
 		// EC功能，不判断权限
-		FoundationObject changeItemObject = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObject(ChangeItemObjectGuid, false);
-		FoundationObject solveObject = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObject(SolveObjectGuid, false);
+		FoundationObject changeItemObject = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObject(ChangeItemObjectGuid, false);
+		FoundationObject solveObject = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObject(SolveObjectGuid, false);
 		if (changeItemObject == null || solveObject == null)
 		{
 			return null;
@@ -131,14 +131,14 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 		ClassStub.decorateObjectGuid(changeItemObject.getObjectGuid(), this.stubService);
 		ClassStub.decorateObjectGuid(solveObject.getObjectGuid(), this.stubService);
 
-		CodeItemInfo actionTypeMod = this.stubService.getEMM().getCodeItemByName(UpdatedECSConstants.ActionType, UECActionTypeEnum.Mod.toString());
-		CodeItemInfo changeTypeAttribute = this.stubService.getEMM().getCodeItemByName(UpdatedECSConstants.ChangeType, UECChangeTypeEnum.Attribute.toString());
-		List<UIField> uiFieldList = this.stubService.getEMM().listFormUIField(changeItemObject.getObjectGuid().getClassName());
+		CodeItemInfo actionTypeMod = this.stubService.getEmm().getCodeItemByName(UpdatedECSConstants.ActionType, UECActionTypeEnum.Mod.toString());
+		CodeItemInfo changeTypeAttribute = this.stubService.getEmm().getCodeItemByName(UpdatedECSConstants.ChangeType, UECChangeTypeEnum.Attribute.toString());
+		List<UIField> uiFieldList = this.stubService.getEmm().listFormUIField(changeItemObject.getObjectGuid().getClassName());
 		if (SetUtils.isNullList(uiFieldList))
 		{
 			return;
 		}
-		List<ClassField> classFieldList = this.stubService.getEMM().listFieldOfClass(changeItemObject.getObjectGuid().getClassName());
+		List<ClassField> classFieldList = this.stubService.getEmm().listFieldOfClass(changeItemObject.getObjectGuid().getClassName());
 		Map<String, ClassField> classfieldMap = new HashMap<String, ClassField>();
 
 		if (!SetUtils.isNullList(classFieldList))
@@ -168,7 +168,7 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 			}
 			if (isEciItem)
 			{
-				FoundationObject foObj = this.stubService.getBOAS().newFoundationObject(classInfo.getGuid(), classInfo.getName());
+				FoundationObject foObj = this.stubService.getBoas().newFoundationObject(classInfo.getGuid(), classInfo.getName());
 				foObj.put(UpdatedECSConstants.eciContent, itemUIField.getTitle(this.stubService.getUserSignature().getLanguageEnum()));
 				foObj.put(UpdatedECSConstants.ChangeType, changeTypeAttribute.getGuid());
 				foObj.put(UpdatedECSConstants.ActionType, actionTypeMod.getGuid());
@@ -194,7 +194,7 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 	private void getClassificationECI(List<FoundationObject> resultList, FoundationObject changeItemObject, FoundationObject solveObject, ClassInfo classInfo)
 			throws ServiceRequestException
 	{
-		CodeItemInfo actionTypeMod = this.stubService.getEMM().getCodeItemByName(UpdatedECSConstants.ActionType, UECActionTypeEnum.Mod.toString());
+		CodeItemInfo actionTypeMod = this.stubService.getEmm().getCodeItemByName(UpdatedECSConstants.ActionType, UECActionTypeEnum.Mod.toString());
 		Map<String, FoundationObject> changeItemClassificationFoMap = new HashMap<String, FoundationObject>();
 		Map<String, FoundationObject> solveClassificationFoMap = new HashMap<String, FoundationObject>();
 
@@ -218,7 +218,7 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 
 		if (!SetUtils.isNullMap(changeItemClassificationFoMap) || !SetUtils.isNullMap(solveClassificationFoMap))
 		{
-			List<ClassficationFeature> listClassficationFeature = this.stubService.getEMM().listClassficationFeature(changeItemObject.getObjectGuid().getClassGuid());
+			List<ClassficationFeature> listClassficationFeature = this.stubService.getEmm().listClassficationFeature(changeItemObject.getObjectGuid().getClassGuid());
 			if (!SetUtils.isNullList(listClassficationFeature))
 			{
 
@@ -238,8 +238,8 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 					}
 					if (!solveClassificationDetail.equals(changeItemClassificationDetail))
 					{
-						FoundationObject foObj = this.stubService.getBOAS().newFoundationObject(classInfo.getGuid(), classInfo.getName());
-						CodeItemInfo changeTypeAttribute = this.stubService.getEMM().getCodeItemByName(UpdatedECSConstants.ChangeType, UECChangeTypeEnum.Classification.toString());
+						FoundationObject foObj = this.stubService.getBoas().newFoundationObject(classInfo.getGuid(), classInfo.getName());
+						CodeItemInfo changeTypeAttribute = this.stubService.getEmm().getCodeItemByName(UpdatedECSConstants.ChangeType, UECChangeTypeEnum.Classification.toString());
 						foObj.put(UpdatedECSConstants.eciContent,
 								StringUtils.getMsrTitle(classficationFeature.getTitle(), this.stubService.getUserSignature().getLanguageEnum().getType()));
 						foObj.put(UpdatedECSConstants.ChangeType, changeTypeAttribute.getGuid());
@@ -275,7 +275,7 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 							&& (StringUtils.isGuid(changeItemObject.getClassificationGuid()) || StringUtils.isGuid(solveObject.getClassificationGuid())))
 							|| !classficationFeature.isMaster())
 					{
-						List<ClassField> classificationClassFieldList = this.stubService.getEMM().listClassificationField(solveClassificationDetail);
+						List<ClassField> classificationClassFieldList = this.stubService.getEmm().listClassificationField(solveClassificationDetail);
 						Map<String, ClassField> classificationClassfieldMap = new HashMap<String, ClassField>();
 						if (!SetUtils.isNullList(classificationClassFieldList))
 						{
@@ -284,7 +284,7 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 								classificationClassfieldMap.put(classField.getName(), classField);
 							}
 						}
-						List<UIField> classificationUiFieldList = this.stubService.getEMM().listCFUIField(solveClassificationDetail, UITypeEnum.FORM);
+						List<UIField> classificationUiFieldList = this.stubService.getEmm().listCFUIField(solveClassificationDetail, UITypeEnum.FORM);
 
 						if (!SetUtils.isNullList(classificationUiFieldList))
 						{
@@ -313,9 +313,9 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 								}
 								if (isEciItem)
 								{
-									CodeItemInfo changeTypeAttribute = this.stubService.getEMM().getCodeItemByName(UpdatedECSConstants.ChangeType,
+									CodeItemInfo changeTypeAttribute = this.stubService.getEmm().getCodeItemByName(UpdatedECSConstants.ChangeType,
 											UECChangeTypeEnum.ClassificationAttribute.toString());
-									FoundationObject foObj = this.stubService.getBOAS().newFoundationObject(classInfo.getGuid(), classInfo.getName());
+									FoundationObject foObj = this.stubService.getBoas().newFoundationObject(classInfo.getGuid(), classInfo.getName());
 									foObj.put(UpdatedECSConstants.eciContent,
 											StringUtils.getMsrTitle((String) solveFo.get("CLASSIFICATION$TITLE"), this.stubService.getUserSignature().getLanguageEnum().getType())
 													+ ":" + itemUIField.getTitle(this.stubService.getUserSignature().getLanguageEnum()));
@@ -555,11 +555,11 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 
 	public List<FoundationObject> getBomECIByECO(ObjectGuid changeItemObjectGuid, ObjectGuid solveObjectGuid, String relationTemplateName) throws ServiceRequestException
 	{
-		CodeItemInfo actionTypeAdd = this.stubService.getEMM().getCodeItemByName(UpdatedECSConstants.ActionType, UECActionTypeEnum.Add.toString());
-		CodeItemInfo actionTypeMod = this.stubService.getEMM().getCodeItemByName(UpdatedECSConstants.ActionType, UECActionTypeEnum.Mod.toString());
-		CodeItemInfo actionTypeDel = this.stubService.getEMM().getCodeItemByName(UpdatedECSConstants.ActionType, UECActionTypeEnum.Del.toString());
-		CodeItemInfo actionTypeReplace = this.stubService.getEMM().getCodeItemByName(UpdatedECSConstants.ActionType, UECActionTypeEnum.Replace.toString());
-		CodeItemInfo changeTypeBom = this.stubService.getEMM().getCodeItemByName(UpdatedECSConstants.ChangeType, UECChangeTypeEnum.BOM.toString());
+		CodeItemInfo actionTypeAdd = this.stubService.getEmm().getCodeItemByName(UpdatedECSConstants.ActionType, UECActionTypeEnum.Add.toString());
+		CodeItemInfo actionTypeMod = this.stubService.getEmm().getCodeItemByName(UpdatedECSConstants.ActionType, UECActionTypeEnum.Mod.toString());
+		CodeItemInfo actionTypeDel = this.stubService.getEmm().getCodeItemByName(UpdatedECSConstants.ActionType, UECActionTypeEnum.Del.toString());
+		CodeItemInfo actionTypeReplace = this.stubService.getEmm().getCodeItemByName(UpdatedECSConstants.ActionType, UECActionTypeEnum.Replace.toString());
+		CodeItemInfo changeTypeBom = this.stubService.getEmm().getCodeItemByName(UpdatedECSConstants.ChangeType, UECChangeTypeEnum.BOM.toString());
 
 		List<FoundationObject> result = new ArrayList<FoundationObject>();
 
@@ -567,7 +567,7 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 		List<BOMStructure> changeItemBomStructureList = this.listBOMByEnd1ForEc(changeItemObjectGuid, null, relationTemplateName, null);
 		List<BOMStructure> solveItemBomStructureList = this.listBOMByEnd1ForEc(solveObjectGuid, null, relationTemplateName, null);
 		Map<String, BOMStructure> changeItemMap = new HashMap<String, BOMStructure>();
-		List<ClassInfo> classInfoList = this.stubService.getEMM().listClassByInterface(ModelInterfaceEnum.IECI);
+		List<ClassInfo> classInfoList = this.stubService.getEmm().listClassByInterface(ModelInterfaceEnum.IECI);
 		if (SetUtils.isNullList(classInfoList))
 		{
 			return null;
@@ -585,7 +585,7 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 		{
 			for (BOMStructure solveBomStructure : solveItemBomStructureList)
 			{
-				FoundationObject foObj = this.stubService.getBOAS().newFoundationObject(classInfo.getGuid(), classInfo.getName());
+				FoundationObject foObj = this.stubService.getBoas().newFoundationObject(classInfo.getGuid(), classInfo.getName());
 				BOMStructure changeItemBomStructureMatched = null;
 				if (changeItemMap.containsKey(solveBomStructure.get("DATASEQ").toString()))
 				{
@@ -611,7 +611,7 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 						}
 					}
 
-					List<UIField> uiFieldList = this.stubService.getEMM().listListUIField(solveBomStructure.getObjectGuid().getClassName());
+					List<UIField> uiFieldList = this.stubService.getEmm().listListUIField(solveBomStructure.getObjectGuid().getClassName());
 					if (SetUtils.isNullList(uiFieldList))
 					{
 						uiFieldList = new ArrayList<UIField>();
@@ -663,7 +663,7 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 					{
 						changeItemMapForECI.put(fieldEntry.getKey() + "_OLD", fieldEntry.getValue());
 					}
-					FoundationObject foObj = this.stubService.getBOAS().newFoundationObject(classInfo.getGuid(), classInfo.getName());
+					FoundationObject foObj = this.stubService.getBoas().newFoundationObject(classInfo.getGuid(), classInfo.getName());
 					foObj.put(UpdatedECSConstants.Value1, changeItemMapForECI);
 					foObj.put(UpdatedECSConstants.ActionType, actionTypeDel.getGuid());
 					foObj.put(UpdatedECSConstants.ChangeType, changeTypeBom.getGuid());
@@ -677,21 +677,21 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 
 	public List<FoundationObject> getRelationECIByECO(ObjectGuid changeItemObjectGuid, ObjectGuid solveObjectGuid, String relationTemplateName) throws ServiceRequestException
 	{
-		CodeItemInfo actionTypeAdd = this.stubService.getEMM().getCodeItemByName(UpdatedECSConstants.ActionType, UECActionTypeEnum.Add.toString());
-		CodeItemInfo actionTypeMod = this.stubService.getEMM().getCodeItemByName(UpdatedECSConstants.ActionType, UECActionTypeEnum.Mod.toString());
-		CodeItemInfo actionTypeDel = this.stubService.getEMM().getCodeItemByName(UpdatedECSConstants.ActionType, UECActionTypeEnum.Del.toString());
-		CodeItemInfo actionTypeReplace = this.stubService.getEMM().getCodeItemByName(UpdatedECSConstants.ActionType, UECActionTypeEnum.Replace.toString());
-		CodeItemInfo changeTypeRelation = this.stubService.getEMM().getCodeItemByName(UpdatedECSConstants.ChangeType, UECChangeTypeEnum.Relation.toString());
+		CodeItemInfo actionTypeAdd = this.stubService.getEmm().getCodeItemByName(UpdatedECSConstants.ActionType, UECActionTypeEnum.Add.toString());
+		CodeItemInfo actionTypeMod = this.stubService.getEmm().getCodeItemByName(UpdatedECSConstants.ActionType, UECActionTypeEnum.Mod.toString());
+		CodeItemInfo actionTypeDel = this.stubService.getEmm().getCodeItemByName(UpdatedECSConstants.ActionType, UECActionTypeEnum.Del.toString());
+		CodeItemInfo actionTypeReplace = this.stubService.getEmm().getCodeItemByName(UpdatedECSConstants.ActionType, UECActionTypeEnum.Replace.toString());
+		CodeItemInfo changeTypeRelation = this.stubService.getEmm().getCodeItemByName(UpdatedECSConstants.ChangeType, UECChangeTypeEnum.Relation.toString());
 
 		List<FoundationObject> result = new ArrayList<FoundationObject>();
 
 		// EC功能，判断权限，不判断权限
-		List<StructureObject> changeItemBomStructureList = ((BOASImpl) this.stubService.getBOAS()).getRelationStub().listObjectOfRelation(changeItemObjectGuid,
+		List<StructureObject> changeItemBomStructureList = ((BOASImpl) this.stubService.getBoas()).getRelationStub().listObjectOfRelation(changeItemObjectGuid,
 				relationTemplateName, null, null, null, false);
-		List<StructureObject> solveItemBomStructureList = ((BOASImpl) this.stubService.getBOAS()).getRelationStub().listObjectOfRelation(solveObjectGuid, relationTemplateName,
+		List<StructureObject> solveItemBomStructureList = ((BOASImpl) this.stubService.getBoas()).getRelationStub().listObjectOfRelation(solveObjectGuid, relationTemplateName,
 				null, null, null, false);
 		Map<String, StructureObject> changeItemMap = new HashMap<String, StructureObject>();
-		List<ClassInfo> classInfoList = this.stubService.getEMM().listClassByInterface(ModelInterfaceEnum.IECI);
+		List<ClassInfo> classInfoList = this.stubService.getEmm().listClassByInterface(ModelInterfaceEnum.IECI);
 		if (SetUtils.isNullList(classInfoList))
 		{
 			return null;
@@ -709,7 +709,7 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 		{
 			for (StructureObject solveBomStructure : solveItemBomStructureList)
 			{
-				FoundationObject foObj = this.stubService.getBOAS().newFoundationObject(classInfo.getGuid(), classInfo.getName());
+				FoundationObject foObj = this.stubService.getBoas().newFoundationObject(classInfo.getGuid(), classInfo.getName());
 				StructureObjectImpl changeItemBomStructureMatched = null;
 				if (changeItemMap.containsKey(solveBomStructure.get("END2$").toString()))
 				{
@@ -735,7 +735,7 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 						}
 					}
 
-					List<UIField> uiFieldList = this.stubService.getEMM().listListUIField(solveBomStructure.getObjectGuid().getClassName());
+					List<UIField> uiFieldList = this.stubService.getEmm().listListUIField(solveBomStructure.getObjectGuid().getClassName());
 					boolean isValidModify = false;
 					if (!SetUtils.isNullList(uiFieldList))
 					{
@@ -778,7 +778,7 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 					{
 						changeItemMapForECI.put(fieldEntry.getKey() + "_OLD", fieldEntry.getValue());
 					}
-					FoundationObject foObj = this.stubService.getBOAS().newFoundationObject(classInfo.getGuid(), classInfo.getName());
+					FoundationObject foObj = this.stubService.getBoas().newFoundationObject(classInfo.getGuid(), classInfo.getName());
 					foObj.put(UpdatedECSConstants.Value1, changeItemMapForECI);
 					foObj.put(UpdatedECSConstants.ActionType, actionTypeDel.getGuid());
 					foObj.put(UpdatedECSConstants.ChangeType, changeTypeRelation.getGuid());
@@ -796,7 +796,7 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 		{
 			return;
 		}
-		List<ClassInfo> listEciClassInfo = this.stubService.getEMM().listClassByInterface(ModelInterfaceEnum.IECI);
+		List<ClassInfo> listEciClassInfo = this.stubService.getEmm().listClassByInterface(ModelInterfaceEnum.IECI);
 		ClassInfo eciClassInfo = null;
 		if (!SetUtils.isNullList(listEciClassInfo))
 		{
@@ -807,10 +807,10 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 		{
 			for (FoundationObject eciFo : eciList)
 			{
-				CodeItemInfo codeItemInfo = this.stubService.getEMM().getCodeItem((String) eciFo.get("CHANGETYPE"));
+				CodeItemInfo codeItemInfo = this.stubService.getEmm().getCodeItem((String) eciFo.get("CHANGETYPE"));
 				if (!codeItemInfo.getName().equals(UECChangeTypeEnum.Others.name()))
 				{
-					((BOASImpl) this.stubService.getBOAS()).getFoundationStub().deleteFoundationObject(eciFo.getGuid(), eciFo.getObjectGuid().getClassGuid(), false);
+					((BOASImpl) this.stubService.getBoas()).getFoundationStub().deleteFoundationObject(eciFo.getGuid(), eciFo.getObjectGuid().getClassGuid(), false);
 				}
 			}
 		}
@@ -826,7 +826,7 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 		}
 
 		// ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-		List<BOMTemplateInfo> bomTemplateList = this.stubService.getEMM().listBOMTemplateByEND1(changeItemObjectGuid);
+		List<BOMTemplateInfo> bomTemplateList = this.stubService.getEmm().listBOMTemplateByEND1(changeItemObjectGuid);
 		if (!SetUtils.isNullList(bomTemplateList))
 		{
 			for (BOMTemplateInfo bomTemplate : bomTemplateList)
@@ -853,8 +853,8 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 		}
 
 		// ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-		List<RelationTemplateInfo> relationTemplateList = this.stubService.getEMM().listRelationTemplate(changeItemObjectGuid);
-		relationTemplateList.addAll(this.stubService.getEMM().listRelationTemplate4Builtin(changeItemObjectGuid));
+		List<RelationTemplateInfo> relationTemplateList = this.stubService.getEmm().listRelationTemplate(changeItemObjectGuid);
+		relationTemplateList.addAll(this.stubService.getEmm().listRelationTemplate4Builtin(changeItemObjectGuid));
 		if (!SetUtils.isNullList(relationTemplateList))
 		{
 			for (RelationTemplateInfo relationTemplate : relationTemplateList)
@@ -883,14 +883,14 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 
 	private void createECIwhenCancel(FoundationObject ecifo, ObjectGuid ecoObjectGuid) throws ServiceRequestException
 	{
-		FoundationObject ecoFoundation = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObject(ecoObjectGuid, false);
+		FoundationObject ecoFoundation = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObject(ecoObjectGuid, false);
 		// 新建设置id
 		if (StringUtils.isNullString(ecifo.getId()))
 		{
-			boolean hasNumberingModelOfId = this.stubService.getEMM().hasNumberingModelByField(null, ecifo.getObjectGuid().getClassName(), SystemClassFieldEnum.ID.getName());
+			boolean hasNumberingModelOfId = this.stubService.getEmm().hasNumberingModelByField(null, ecifo.getObjectGuid().getClassName(), SystemClassFieldEnum.ID.getName());
 			if (hasNumberingModelOfId)
 			{
-				ecifo.setId(this.stubService.getBOAS().allocateUniqueId(ecifo));
+				ecifo.setId(this.stubService.getBoas().allocateUniqueId(ecifo));
 			}
 			else
 			{
@@ -901,18 +901,18 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 				ecifo.setId(ecoFoundation.getId());
 			}
 		}
-		FoundationObject foundationObject = this.stubService.getBOAS().createObject(ecifo);
+		FoundationObject foundationObject = this.stubService.getBoas().createObject(ecifo);
 		if (StringUtils.isNullString(foundationObject.getId()))
 		{
 			ecifo.setId(ecoFoundation.getId());
-			this.stubService.getBOAS().saveObject(ecifo);
+			this.stubService.getBoas().saveObject(ecifo);
 		}
 		this.stubService.getUECNECOStub().linkECO_ECI(ecoFoundation.getObjectGuid(), foundationObject.getObjectGuid(), null);
 	}
 
 	public void completeEco(ObjectGuid ecoObjectGuid) throws ServiceRequestException
 	{
-		ClassInfo ecoClassInfo = this.stubService.getEMM().getClassByGuid(ecoObjectGuid.getClassGuid());
+		ClassInfo ecoClassInfo = this.stubService.getEmm().getClassByGuid(ecoObjectGuid.getClassGuid());
 		boolean isBatchEco = false;
 		if (null != ecoClassInfo)
 		{
@@ -930,7 +930,7 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 			{
 				ObjectGuid changeItemObjectGuid = new ObjectGuid();
 				ObjectGuid solveObjectGuid = new ObjectGuid();
-				List<StructureObject> ecoChangeItemList = ((BOASImpl) this.stubService.getBOAS()).getRelationStub().listObjectOfRelation(ecoObjectGuid,
+				List<StructureObject> ecoChangeItemList = ((BOASImpl) this.stubService.getBoas()).getRelationStub().listObjectOfRelation(ecoObjectGuid,
 						UpdatedECSConstants.ECO_CHANGEITEM$, null, null, null, false);
 				if (!SetUtils.isNullList(ecoChangeItemList))
 				{
@@ -942,7 +942,7 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 //					this.stubService.getTransactionManager().commitTransaction();
 					return;
 				}
-				List<StructureObject> ecoChangeItemAfterList = ((BOASImpl) this.stubService.getBOAS()).getRelationStub().listObjectOfRelation(ecoObjectGuid,
+				List<StructureObject> ecoChangeItemAfterList = ((BOASImpl) this.stubService.getBoas()).getRelationStub().listObjectOfRelation(ecoObjectGuid,
 						UpdatedECSConstants.ECO_CHANGEITEMAFTER$, null, null, null, false);
 				if (!SetUtils.isNullList(ecoChangeItemAfterList))
 				{
@@ -955,14 +955,14 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 					return;
 				}
 				this.persistenceECI(changeItemObjectGuid, solveObjectGuid, ecoObjectGuid);
-				((DSSImpl) this.stubService.getDSS()).getFileInfoStub().copyFile(ecoObjectGuid, solveObjectGuid, false);
+				((DSSImpl) this.stubService.getDss()).getFileInfoStub().copyFile(ecoObjectGuid, solveObjectGuid, false);
 			}
 
 			// 修改解决对象，bom和关系的状态////////////////////////////////////////////////////
 			if (!isBatchEco)
 			{
 				ObjectGuid solveObjectGuid = new ObjectGuid();
-				List<StructureObject> ecoChangeItemAfterList = ((BOASImpl) this.stubService.getBOAS()).getRelationStub().listObjectOfRelation(ecoObjectGuid,
+				List<StructureObject> ecoChangeItemAfterList = ((BOASImpl) this.stubService.getBoas()).getRelationStub().listObjectOfRelation(ecoObjectGuid,
 						UpdatedECSConstants.ECO_CHANGEITEMAFTER$, null, null, null, false);
 				if (!SetUtils.isNullList(ecoChangeItemAfterList))
 				{
@@ -974,18 +974,18 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 					return;
 				}
 
-				((BOASImpl) this.stubService.getBOAS()).getFSaverStub().changeStatus(solveObjectGuid, SystemStatusEnum.WIP, SystemStatusEnum.ECP, true, false);
+				((BOASImpl) this.stubService.getBoas()).getFSaverStub().changeStatus(solveObjectGuid, SystemStatusEnum.WIP, SystemStatusEnum.ECP, true, false);
 			}
 			else
 			{
-				List<StructureObject> ecoChangeItemAfterList = ((BOASImpl) this.stubService.getBOAS()).getRelationStub().listObjectOfRelation(ecoObjectGuid,
+				List<StructureObject> ecoChangeItemAfterList = ((BOASImpl) this.stubService.getBoas()).getRelationStub().listObjectOfRelation(ecoObjectGuid,
 						UpdatedECSConstants.ECO_CHANGEITEMAFTER$, null, null, null, false);
 				if (!SetUtils.isNullList(ecoChangeItemAfterList))
 				{
 					for (StructureObject structure : ecoChangeItemAfterList)
 					{
 						ObjectGuid solveObjectGuid = structure.getEnd2ObjectGuid();
-						((BOASImpl) this.stubService.getBOAS()).getFSaverStub().changeStatus(solveObjectGuid, SystemStatusEnum.WIP, SystemStatusEnum.ECP, true, false);
+						((BOASImpl) this.stubService.getBoas()).getFSaverStub().changeStatus(solveObjectGuid, SystemStatusEnum.WIP, SystemStatusEnum.ECP, true, false);
 					}
 				}
 			}
@@ -1040,10 +1040,10 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 						subject1 = (String) ecn.get(UpdatedECSConstants.Subject);
 					}
 					// subject:ECO执行通知
-					String subject2 = this.stubService.getMSRM().getMSRString("ID_APP_UECS_SENDMAIL_TOECN_CREATER_SUBJECT",
+					String subject2 = this.stubService.getMsrm().getMSRString("ID_APP_UECS_SENDMAIL_TOECN_CREATER_SUBJECT",
 							this.stubService.getUserSignature().getLanguageEnum().toString());
 					String msr = ecn.getFullName() + subject1 + subject2;
-					this.stubService.getSMS().sendMailToUser(msr, msr, MailCategoryEnum.INFO, objectGuidList, ecn.getCreateUserGuid(), MailMessageType.ECNOTIFY);
+					this.stubService.getSms().sendMailToUser(msr, msr, MailCategoryEnum.INFO, objectGuidList, ecn.getCreateUserGuid(), MailMessageType.ECNOTIFY);
 				}
 			}
 		}
@@ -1058,7 +1058,7 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 	public void deleteSolveObjectAndBackup(FoundationObject ecoFoundation) throws ServiceRequestException
 	{
 		ObjectGuid ecoObjectGuid = ecoFoundation.getObjectGuid();
-		ClassInfo ecoClassInfo = this.stubService.getEMM().getClassByGuid(ecoObjectGuid.getClassGuid());
+		ClassInfo ecoClassInfo = this.stubService.getEmm().getClassByGuid(ecoObjectGuid.getClassGuid());
 		boolean isBatchEco = false;
 		if (null != ecoClassInfo)
 		{
@@ -1075,7 +1075,7 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 			ObjectGuid changeItemObjectGuid = new ObjectGuid();
 			ObjectGuid solveObjectGuid = new ObjectGuid();
 
-			List<StructureObject> ecoChangeItemList = ((BOASImpl) this.stubService.getBOAS()).getRelationStub().listObjectOfRelation(ecoObjectGuid,
+			List<StructureObject> ecoChangeItemList = ((BOASImpl) this.stubService.getBoas()).getRelationStub().listObjectOfRelation(ecoObjectGuid,
 					UpdatedECSConstants.ECO_CHANGEITEM$, null, null, null, false);
 			if (!SetUtils.isNullList(ecoChangeItemList))
 			{
@@ -1085,7 +1085,7 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 			{
 				return;
 			}
-			List<StructureObject> ecoChangeItemAfterList = ((BOASImpl) this.stubService.getBOAS()).getRelationStub().listObjectOfRelation(ecoObjectGuid,
+			List<StructureObject> ecoChangeItemAfterList = ((BOASImpl) this.stubService.getBoas()).getRelationStub().listObjectOfRelation(ecoObjectGuid,
 					UpdatedECSConstants.ECO_CHANGEITEMAFTER$, null, null, null, false);
 			if (!SetUtils.isNullList(ecoChangeItemAfterList))
 			{
@@ -1097,25 +1097,25 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 			}
 			this.persistenceECI(changeItemObjectGuid, solveObjectGuid, ecoObjectGuid);
 
-			((DSSImpl) this.stubService.getDSS()).getFileInfoStub().copyFile(ecoObjectGuid, solveObjectGuid, false);
+			((DSSImpl) this.stubService.getDss()).getFileInfoStub().copyFile(ecoObjectGuid, solveObjectGuid, false);
 
 			String sessionId = this.stubService.getSignature().getCredential();
 			this.stubService.getInstanceService().changeStatus(SystemStatusEnum.ECP, SystemStatusEnum.WIP, solveObjectGuid, false, sessionId);
-			((BOASImpl) this.stubService.getBOAS()).getFoundationStub().deleteFoundationObject(solveObjectGuid.getGuid(), solveObjectGuid.getClassGuid(), false);
+			((BOASImpl) this.stubService.getBoas()).getFoundationStub().deleteFoundationObject(solveObjectGuid.getGuid(), solveObjectGuid.getClassGuid(), false);
 
 			ecoFoundation.put("SolveItem", null);
-			((BOASImpl) this.stubService.getBOAS()).getFSaverStub().saveObject(ecoFoundation, false, false, false, null);
+			((BOASImpl) this.stubService.getBoas()).getFSaverStub().saveObject(ecoFoundation, false, false, false, null);
 		}
 
 		else
 		{
 			// 批量变更时,需要删除解决对象和取替代对象
-			List<StructureObject> ecoChangeItemAfterList = ((BOASImpl) this.stubService.getBOAS()).getRelationStub().listObjectOfRelation(ecoObjectGuid,
+			List<StructureObject> ecoChangeItemAfterList = ((BOASImpl) this.stubService.getBoas()).getRelationStub().listObjectOfRelation(ecoObjectGuid,
 					UpdatedECSConstants.ECO_CHANGEITEMAFTER$, null, null, null, false);
 			if (!SetUtils.isNullList(ecoChangeItemAfterList))
 			{
 				// 取得替代对象
-				FoundationObject ecof = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObject(ecoObjectGuid, false);
+				FoundationObject ecof = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObject(ecoObjectGuid, false);
 				ObjectGuid rsObjectGuid = this.getTargetItemObjectGuid(ecof);
 				String bomTemplateName = (String) ecof.get(UpdatedECSConstants.BOMTemplate);
 				for (StructureObject structure : ecoChangeItemAfterList)
@@ -1129,15 +1129,15 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 						String sessionId = this.stubService.getSignature().getCredential();
 						this.stubService.getInstanceService().changeStatus(SystemStatusEnum.ECP, SystemStatusEnum.WIP, solveObjectGuid, false, sessionId);
 
-						((BOASImpl) this.stubService.getBOAS()).getFoundationStub().deleteFoundationObject(solveObjectGuid.getGuid(), solveObjectGuid.getClassGuid(), false);
+						((BOASImpl) this.stubService.getBoas()).getFoundationStub().deleteFoundationObject(solveObjectGuid.getGuid(), solveObjectGuid.getClassGuid(), false);
 
 						ecoFoundation.put("SolveItem", null);
-						((BOASImpl) this.stubService.getBOAS()).getFSaverStub().saveObject(ecoFoundation, false, false, false, null);
+						((BOASImpl) this.stubService.getBoas()).getFSaverStub().saveObject(ecoFoundation, false, false, false, null);
 					}
 				}
 			}
 			// 修改结构
-			List<StructureObject> ecoChangeITemList = ((BOASImpl) this.stubService.getBOAS()).getRelationStub().listObjectOfRelation(ecoObjectGuid,
+			List<StructureObject> ecoChangeITemList = ((BOASImpl) this.stubService.getBoas()).getRelationStub().listObjectOfRelation(ecoObjectGuid,
 					UpdatedECSConstants.ECO_CHANGEITEMBEFORE$, null, null, null, false);
 			if (!SetUtils.isNullList(ecoChangeITemList))
 			{
@@ -1147,7 +1147,7 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 					stucture.put(UpdatedECSConstants.ECTargetItem + UpdatedECSConstants.CLASSNAME, null);
 					stucture.put(UpdatedECSConstants.ECTargetItem + UpdatedECSConstants.ClassGuid, null);
 					stucture.put(UpdatedECSConstants.ECTargetItem + UpdatedECSConstants.MASTER, null);
-					((BOASImpl) this.stubService.getBOAS()).getStructureStub().saveStructure(stucture, false);
+					((BOASImpl) this.stubService.getBoas()).getStructureStub().saveStructure(stucture, false);
 				}
 			}
 		}
@@ -1163,17 +1163,17 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 	 */
 	private void deleteRepalceObject(ObjectGuid solveObjectGuid, ObjectGuid rsObjectGuid, String BOMname, String bomKey) throws ServiceRequestException
 	{
-		FoundationObject solveObject = this.stubService.getBOAS().getObject(solveObjectGuid);
+		FoundationObject solveObject = this.stubService.getBoas().getObject(solveObjectGuid);
 		if (solveObject != null && rsObjectGuid != null && !StringUtils.isNullString(BOMname))
 		{
 			ObjectGuid masterObjectGuid = solveObject.getObjectGuid();
-			List<FoundationObject> replaceObjectList = this.stubService.getBRM().listReplaceDataByRang(masterObjectGuid, rsObjectGuid,null,
+			List<FoundationObject> replaceObjectList = this.stubService.getBrm().listReplaceDataByRang(masterObjectGuid, rsObjectGuid,null,
 					ReplaceRangeEnum.PART, ReplaceTypeEnum.QUDAI, BOMname, bomKey, true, false);
 			if (!SetUtils.isNullList(replaceObjectList))
 			{
 				for (FoundationObject replaceObject : replaceObjectList)
 				{
-					((BOASImpl) this.stubService.getBOAS()).getFoundationStub().deleteFoundationObject(replaceObject.getGuid(), replaceObject.getObjectGuid().getClassGuid(),
+					((BOASImpl) this.stubService.getBoas()).getFoundationStub().deleteFoundationObject(replaceObject.getGuid(), replaceObject.getObjectGuid().getClassGuid(),
 							false);
 				}
 			}
@@ -1193,11 +1193,11 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 		if (ecof != null)
 		{
 			String modify = (String) ecof.get(UpdatedECSConstants.ModifyType);
-			CodeItemInfo modifyTypeCode = this.stubService.getEMM().getCodeItem(modify);
+			CodeItemInfo modifyTypeCode = this.stubService.getEmm().getCodeItem(modify);
 			if (modifyTypeCode != null && modifyTypeCode.getName().equals(UECModifyTypeEnum.BatchReplace.name()))
 			{
 				String typeGuid = (String) ecof.get(UpdatedECSConstants.Replacepolicy);
-				CodeItemInfo typeCode = this.stubService.getEMM().getCodeItem(typeGuid);
+				CodeItemInfo typeCode = this.stubService.getEmm().getCodeItem(typeGuid);
 				if (typeCode != null && UECReplacepolicyEnum.NaturalReplace.name().equals(typeCode.getName()))
 				{
 					ObjectGuid targetItem = new ObjectGuid((String) ecof.get((UpdatedECSConstants.TargetItem + ReplaceSubstituteConstants.ClassGuid).toUpperCase()),
@@ -1213,7 +1213,7 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 
 	public void recoveryEco(ObjectGuid ecoObjectGuid) throws ServiceRequestException
 	{
-		ClassInfo ecoClassInfo = this.stubService.getEMM().getClassByGuid(ecoObjectGuid.getClassGuid());
+		ClassInfo ecoClassInfo = this.stubService.getEmm().getClassByGuid(ecoObjectGuid.getClassGuid());
 		boolean isBatchEco = false;
 		if (null != ecoClassInfo)
 		{
@@ -1225,7 +1225,7 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 		}
 		if (!isBatchEco)
 		{
-			List<ClassInfo> listEciClassInfo = this.stubService.getEMM().listClassByInterface(ModelInterfaceEnum.IECI);
+			List<ClassInfo> listEciClassInfo = this.stubService.getEmm().listClassByInterface(ModelInterfaceEnum.IECI);
 			ClassInfo eciClassInfo = null;
 			if (!SetUtils.isNullList(listEciClassInfo))
 			{
@@ -1236,10 +1236,10 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 			{
 				for (FoundationObject eciFo : eciList)
 				{
-					CodeItemInfo codeItemInfo = this.stubService.getEMM().getCodeItem((String) eciFo.get("CHANGETYPE"));
+					CodeItemInfo codeItemInfo = this.stubService.getEmm().getCodeItem((String) eciFo.get("CHANGETYPE"));
 					if (!codeItemInfo.getName().equals(UECChangeTypeEnum.Others.name()))
 					{
-						((BOASImpl) this.stubService.getBOAS()).getFoundationStub().deleteFoundationObject(eciFo.getGuid(), eciFo.getObjectGuid().getClassGuid(), false);
+						((BOASImpl) this.stubService.getBoas()).getFoundationStub().deleteFoundationObject(eciFo.getGuid(), eciFo.getObjectGuid().getClassGuid(), false);
 					}
 				}
 			}
@@ -1250,7 +1250,7 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 		if (!isBatchEco)
 		{
 			ObjectGuid solveObjectGuid = new ObjectGuid();
-			List<StructureObject> ecoChangeItemAfterList = ((BOASImpl) this.stubService.getBOAS()).getRelationStub().listObjectOfRelation(ecoObjectGuid,
+			List<StructureObject> ecoChangeItemAfterList = ((BOASImpl) this.stubService.getBoas()).getRelationStub().listObjectOfRelation(ecoObjectGuid,
 					UpdatedECSConstants.ECO_CHANGEITEMAFTER$, null, null, null, false);
 			if (!SetUtils.isNullList(ecoChangeItemAfterList))
 			{
@@ -1263,7 +1263,7 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 
 			this.stubService.getInstanceService().changeStatus(SystemStatusEnum.ECP, SystemStatusEnum.WIP, solveObjectGuid, false, sessionId);
 
-			List<BOMView> listBomView = ((BOMSImpl) this.stubService.getBOMS()).getBomViewStub().listBOMView(solveObjectGuid.getObjectGuid(), false);
+			List<BOMView> listBomView = ((BOMSImpl) this.stubService.getBoms()).getBomViewStub().listBOMView(solveObjectGuid.getObjectGuid(), false);
 			if (!SetUtils.isNullList(listBomView))
 			{
 				for (BOMView bomView : listBomView)
@@ -1272,7 +1272,7 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 				}
 			}
 
-			List<ViewObject> listRelView = ((BOASImpl) this.stubService.getBOAS()).getRelationStub().listRelation(solveObjectGuid.getObjectGuid(), false, true);
+			List<ViewObject> listRelView = ((BOASImpl) this.stubService.getBoas()).getRelationStub().listRelation(solveObjectGuid.getObjectGuid(), false, true);
 			if (!SetUtils.isNullList(listRelView))
 			{
 				for (ViewObject viewObject : listRelView)
@@ -1283,14 +1283,14 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 		}
 		else
 		{
-			List<StructureObject> ecoChangeItemAfterList = ((BOASImpl) this.stubService.getBOAS()).getRelationStub().listObjectOfRelation(ecoObjectGuid,
+			List<StructureObject> ecoChangeItemAfterList = ((BOASImpl) this.stubService.getBoas()).getRelationStub().listObjectOfRelation(ecoObjectGuid,
 					UpdatedECSConstants.ECO_CHANGEITEMAFTER$, null, null, null, false);
 			if (SetUtils.isNullList(ecoChangeItemAfterList))
 			{
 				return;
 			}
 			// 取得替代对象
-			FoundationObject ecof = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObject(ecoObjectGuid, false);
+			FoundationObject ecof = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObject(ecoObjectGuid, false);
 			ObjectGuid targetObjectGuid = this.getTargetItemObjectGuid(ecof);
 			String bomTemplateName = (String) ecof.get(UpdatedECSConstants.BOMTemplate);
 			for (StructureObject structure : ecoChangeItemAfterList)
@@ -1299,7 +1299,7 @@ public class UECIStub extends AbstractServiceStub<UECSImpl>
 				this.stubService.getInstanceService().changeStatus(SystemStatusEnum.ECP, SystemStatusEnum.WIP, solveObjectGuid.getObjectGuid(), false, sessionId);
 
 				this.deleteRepalceObject(solveObjectGuid, targetObjectGuid, bomTemplateName, (String) structure.get(BOMStructure.BOMKEY));
-				((BOASImpl) this.stubService.getBOAS()).getFoundationStub().deleteFoundationObject(solveObjectGuid.getGuid(), solveObjectGuid.getClassGuid(), false);
+				((BOASImpl) this.stubService.getBoas()).getFoundationStub().deleteFoundationObject(solveObjectGuid.getGuid(), solveObjectGuid.getClassGuid(), false);
 			}
 		}
 	}

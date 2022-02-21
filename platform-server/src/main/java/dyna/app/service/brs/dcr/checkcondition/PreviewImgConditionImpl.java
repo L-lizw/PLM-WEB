@@ -19,7 +19,7 @@ public class PreviewImgConditionImpl extends AbstractFieldCondition
 	@Override
 	public boolean check() throws ServiceRequestException
 	{
-		DSS dss = this.getServiceInstance(DSS.class);
+		DSS dss = this.stubService.getDss();
 		return dss.hasPreviewFile(this.getFoundationObject().getObjectGuid(), this.getFoundationObject().getIterationId());
 	}
 }

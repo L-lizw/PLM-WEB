@@ -8,6 +8,7 @@ package dyna.app.service.helper;
 import java.util.Map;
 
 import dyna.app.service.DataAccessService;
+import dyna.app.util.SpringUtil;
 import dyna.common.bean.signature.Signature;
 import dyna.common.dto.aas.Group;
 import dyna.common.exception.ServiceRequestException;
@@ -73,7 +74,7 @@ public class Constants
 				return false;
 			}
 
-			Group group = service.getServiceInstance(AAS.class, service.getUserSignature().getCredential()).getGroup(service.getUserSignature().getLoginGroupGuid());
+			Group group = SpringUtil.getBean(AAS.class).getGroup(service.getUserSignature().getLoginGroupGuid());
 
 			if (group != null && group.isAdminGroup())
 			{

@@ -236,7 +236,7 @@ public class LoginStub extends AbstractServiceStub<AASImpl>
 			if (appType != ApplicationTypeEnum.MONITOR && appType != ApplicationTypeEnum.INTERNAL)
 			{
 
-				List<Session> userSessions = this.stubService.getLIC().listUserSession(user.getGuid());
+				List<Session> userSessions = this.stubService.getLic().listUserSession(user.getGuid());
 				boolean requestLicense = true;
 				if (SetUtils.isNullList(userSessions) == false)
 				{
@@ -266,7 +266,7 @@ public class LoginStub extends AbstractServiceStub<AASImpl>
 				}
 				if (requestLicense)
 				{
-					sucRequestLicense = this.serverContext.getLicenseDaemon().requestLicense(this.stubService.getLIC(), appType.name());
+					sucRequestLicense = this.serverContext.getLicenseDaemon().requestLicense(this.stubService.getLic(), appType.name());
 				}
 			}
 
@@ -287,11 +287,11 @@ public class LoginStub extends AbstractServiceStub<AASImpl>
 
 			credential = this.stubService.getSystemDataService().save(session);
 
-			// session = this.stubService.getLIC().getSession(credential);
+			// session = this.stubService.getLic().getSession(credential);
 			// if (session.getUserSessionCount() == 1)
 			// {
 			// sucRequestLicense = this.serverContext.getLicenseDaemon()
-			// .requestLicense(this.stubService.getLIC());
+			// .requestLicense(this.stubService.getLic());
 			// }
 
 			if (session.getAppType() == ApplicationTypeEnum.OM)
@@ -346,7 +346,7 @@ public class LoginStub extends AbstractServiceStub<AASImpl>
 
 	protected void logout() throws ServiceRequestException
 	{
-		((LICImpl) this.stubService.getLIC()).getSessionStub().deleteSessionInside(this.stubService.getSignature().getCredential());
+		((LICImpl) this.stubService.getLic()).getSessionStub().deleteSessionInside(this.stubService.getSignature().getCredential());
 	}
 
 	protected void logout(String userID, String groupID, String roleID, ApplicationTypeEnum appType) throws ServiceRequestException
@@ -387,7 +387,7 @@ public class LoginStub extends AbstractServiceStub<AASImpl>
 			}
 
 			Session session = sessionList.get(0);
-			((LICImpl) this.stubService.getLIC()).getSessionStub().deleteSessionInside(session.getGuid());
+			((LICImpl) this.stubService.getLic()).getSessionStub().deleteSessionInside(session.getGuid());
 		}
 		catch (DynaDataException e)
 		{
@@ -412,7 +412,7 @@ public class LoginStub extends AbstractServiceStub<AASImpl>
 				return;
 			}
 
-			this.stubService.getLIC().kickUser(sessionList.get(0).getGuid());
+			this.stubService.getLic().kickUser(sessionList.get(0).getGuid());
 		}
 		catch (DynaDataException e)
 		{
@@ -501,7 +501,7 @@ public class LoginStub extends AbstractServiceStub<AASImpl>
 			{
 				throw new ServiceRequestException("ID_WEB_LOGIN_VALIDATE_ERROR", "id or password error");
 			}
-			List<Session> userSessions = this.stubService.getLIC().listUserSession(user.getGuid());
+			List<Session> userSessions = this.stubService.getLic().listUserSession(user.getGuid());
 			if (SetUtils.isNullList(userSessions) == false)
 			{
 				for (Session s : userSessions)

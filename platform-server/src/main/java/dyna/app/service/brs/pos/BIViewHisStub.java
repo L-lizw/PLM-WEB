@@ -28,7 +28,7 @@ import java.util.*;
 /**
  * 与最近访问的对象的历史相关的操作分支
  *
- * @author Caogc
+ * @author Lizw
  */
 @Component
 public class BIViewHisStub extends AbstractServiceStub<POSImpl>
@@ -36,19 +36,6 @@ public class BIViewHisStub extends AbstractServiceStub<POSImpl>
 
 	@Autowired
 	private DecoratorFactory decoratorFactory;
-
-	public synchronized BOAS getBOAS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.stubService.getRefService(BOAS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
 
 	protected List<FoundationObject> listBIViewHis(final SearchCondition searchCondition) throws ServiceRequestException
 	{
@@ -100,11 +87,11 @@ public class BIViewHisStub extends AbstractServiceStub<POSImpl>
 
 			for (FoundationObject foundationObject : foundationObjectList)
 			{
-				decoratorFactory.decorateFoundationObject(fieldNames, foundationObject, this.stubService.getEMM(), this.stubService.getUserSignature().getLoginGroupBMGuid(), null);
-				decoratorFactory.decorateFoundationObjectCode(fieldNames, foundationObject, this.stubService.getEMM(), this.stubService.getUserSignature().getLoginGroupBMGuid());
+				decoratorFactory.decorateFoundationObject(fieldNames, foundationObject, this.stubService.getEmm(), this.stubService.getUserSignature().getLoginGroupBMGuid(), null);
+				decoratorFactory.decorateFoundationObjectCode(fieldNames, foundationObject, this.stubService.getEmm(), this.stubService.getUserSignature().getLoginGroupBMGuid());
 			}
 
-			decoratorFactory.decorateFoundationObject(fieldNames, foundationObjectList, this.stubService.getEMM(), this.stubService.getSignature().getCredential());
+			decoratorFactory.decorateFoundationObject(fieldNames, foundationObjectList, this.stubService.getEmm(), this.stubService.getSignature().getCredential());
 			return foundationObjectList;
 		}
 		catch (DynaDataException e)

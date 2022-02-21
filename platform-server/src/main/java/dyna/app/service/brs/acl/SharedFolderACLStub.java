@@ -130,7 +130,7 @@ public class SharedFolderACLStub extends AbstractServiceStub<ACLImpl>
 			{
 				return;
 			}
-			Folder folder = this.stubService.getEDAP().getFolder(aclItem.getFolderGuid());
+			Folder folder = this.stubService.getEdap().getFolder(aclItem.getFolderGuid());
 
 			if (!folder.getOwnerUserGuid().equals(userGuid))
 			{
@@ -190,7 +190,7 @@ public class SharedFolderACLStub extends AbstractServiceStub<ACLImpl>
 
 		try
 		{
-			Folder folder = this.stubService.getEDAP().getFolder(folderGuid);
+			Folder folder = this.stubService.getEdap().getFolder(folderGuid);
 
 			if (!folder.getOwnerUserGuid().equals(userGuid))
 			{

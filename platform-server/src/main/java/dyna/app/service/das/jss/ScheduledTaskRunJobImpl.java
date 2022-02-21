@@ -136,7 +136,7 @@ public class ScheduledTaskRunJobImpl extends AbstractScheduledTask
 					this.job.setResult(result);
 					this.job.setJobStatus(JobStatus.FAILED);
 					this.job = this.stubService.saveJob(this.job);
-					String str = this.stubService.getMSRM().getMSRString("ID_APP_JSS_JOB_RUN_FAIL", this.serverContext.getSystemInternalSignature().getLanguageEnum().getId());
+					String str = this.stubService.getMsrm().getMSRString("ID_APP_JSS_JOB_RUN_FAIL", this.serverContext.getSystemInternalSignature().getLanguageEnum().getId());
 					this.notifyCreator(this.job, MailCategoryEnum.ERROR, str + result);
 				}
 				catch (ServiceRequestException e1)
@@ -175,8 +175,8 @@ public class ScheduledTaskRunJobImpl extends AbstractScheduledTask
 
 		try
 		{
-			User user = this.stubService.getServiceInstance(AAS.class).getUser(job.getCreateUserGuid());
-			MSRM msr = this.stubService.getServiceInstance(MSRM.class);
+			User user = this.stubService.getAAS().getUser(job.getCreateUserGuid());
+			MSRM msr = this.stubService.getMsrm();
 			String title = "";
 			JobDefinition jobDefinition = this.stubService.getJobDefinition(job.getExecutorClass());
 			if (StringUtils.isNullString(jobDefinition.getMsrId()))
@@ -191,7 +191,7 @@ public class ScheduledTaskRunJobImpl extends AbstractScheduledTask
 			{
 				title = job.getType();
 			}
-			this.stubService.getSMS().sendMailToUser(job.getType(), msg, category, null, user.getUserId(), MailMessageType.JOBNOTIFY);
+			this.stubService.getSms().sendMailToUser(job.getType(), msg, category, null, user.getUserId(), MailMessageType.JOBNOTIFY);
 		}
 		catch (Exception e)
 		{

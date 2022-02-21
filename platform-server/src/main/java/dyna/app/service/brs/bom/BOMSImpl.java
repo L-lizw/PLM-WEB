@@ -25,6 +25,8 @@ import dyna.net.service.data.AclService;
 import dyna.net.service.data.InstanceService;
 import dyna.net.service.data.RelationService;
 import dyna.net.service.data.SystemDataService;
+import lombok.AccessLevel;
+import lombok.Getter;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,12 +41,24 @@ import java.util.Map;
  *
  * @author Lizw
  */
+@Getter(AccessLevel.PROTECTED)
 @Service public class BOMSImpl extends BusinessRuleService implements BOMS
 {
 	@DubboReference private AclService        aclService;
 	@DubboReference private InstanceService   instanceService;
 	@DubboReference private RelationService   relationService;
 	@DubboReference private SystemDataService systemDataService;
+
+	@Autowired private AAS                         aas;
+	@Autowired private ACL                         acl;
+	@Autowired private Async                       async;
+	@Autowired private BOAS                        boas;
+	@Autowired private BRM                         brm;
+	@Autowired private DCR                         dcr;
+	@Autowired private EMM                         emm;
+	@Autowired private EOSS                        eoss;
+	@Autowired private JSS                         jss;
+	@Autowired private WFI                         wfi;
 
 	@Autowired private BOMStub      bomStub;
 	@Autowired private BOMViewStub                 bomViewStub;
@@ -55,14 +69,6 @@ import java.util.Map;
 	@Autowired private BOMViewCancelCheckOutStub   bomViewCancelCheckOutStub;
 	@Autowired private BOMViewTransferCheckOutStub bomViewTransferCheckOutStub;
 	@Autowired private DrawTransferBOMStub         drawTransferBOMStub;
-	@Autowired private AAS                         aas;
-	@Autowired private ACL                         acl;
-	@Autowired private Async                       async;
-	@Autowired private BOAS                        boas;
-	@Autowired private BRM                         brm;
-	@Autowired private DCR                         dcr;
-	@Autowired private JSS                         jss;
-	@Autowired private WFI                         wfi;
 
 	protected AclService getAclService()
 	{
@@ -82,46 +88,6 @@ import java.util.Map;
 	protected SystemDataService getSystemDataService()
 	{
 		return this.systemDataService;
-	}
-
-	protected AAS getAAS()
-	{
-		return this.aas;
-	}
-
-	protected ACL getACL()
-	{
-		return this.acl;
-	}
-
-	protected Async getAsync()
-	{
-		return this.async;
-	}
-
-	protected BOAS getBOAS()
-	{
-		return this.boas;
-	}
-
-	protected BRM getBRM()
-	{
-		return this.brm;
-	}
-
-	protected JSS getJss()
-	{
-		return this.jss;
-	}
-
-	protected WFI getWFI()
-	{
-		return this.wfi;
-	}
-
-	protected DCR getDCR()
-	{
-		return this.dcr;
 	}
 
 	public BOMCompareStub getBomCompareStub()
@@ -147,32 +113,6 @@ import java.util.Map;
 	public DrawTransferBOMStub getDrawTransferBOMStub()
 	{
 		return this.drawTransferBOMStub;
-	}
-
-	protected synchronized EMM getEMM() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(EMM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized EOSS getEOSS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(EOSS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
 	}
 
 	/**

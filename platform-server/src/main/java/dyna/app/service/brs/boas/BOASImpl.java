@@ -41,6 +41,8 @@ import dyna.net.service.das.MSRM;
 import dyna.net.service.data.*;
 import dyna.net.service.data.model.ClassModelService;
 import dyna.net.service.data.model.InterfaceModelService;
+import lombok.AccessLevel;
+import lombok.Getter;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,9 +57,9 @@ import java.util.Set;
  *
  * @author Lizw
  */
+@Getter(AccessLevel.PROTECTED)
 @Service public class BOASImpl extends BusinessRuleService implements BOAS
 {
-	private static boolean initialized = false;
 
 	@DubboReference private AclService            aclService;
 	@DubboReference private ClassModelService     classModelService;
@@ -70,7 +72,27 @@ import java.util.Set;
 	@DubboReference private DSToolService         dsToolService;
 	@DubboReference private WorkFlowService       workFlowService;
 
+	@Autowired private AAS aas;
 	@Autowired private Async async;
+	@Autowired private ACL acl;
+	@Autowired private BOMS boms;
+	@Autowired private BRM brm;
+	private CAD cad;
+	@Autowired private DSS dss;
+	@Autowired private EDAP  edap;
+	@Autowired private EMM emm;
+	@Autowired private EOSS eoss;
+	@Autowired private FTS fts;
+	@Autowired private PPMS ppms;
+	@Autowired private WFI wfi;
+	@Autowired private DCR dcr;
+	@Autowired private POS pos;
+	@Autowired private SLC slc;
+	@Autowired private SMS sms;
+	@Autowired private SRS srs;
+	@Autowired private LIC lic;
+	@Autowired private MSRM msrm;
+
 
 	@Autowired private CheckInStub          checkInStub;
 	@Autowired private CheckOutStub         checkOutStub;
@@ -164,6 +186,16 @@ import java.util.Set;
 		return this.numberAllocate;
 	}
 
+	public AAS getAas()
+	{
+		return this.aas;
+	}
+
+	public EMM getEmm()
+	{
+		return this.emm;
+	}
+
 
 	@Deprecated @Override public String allocateUniqueId(FoundationObject foundationObject) throws ServiceRequestException
 	{
@@ -184,219 +216,6 @@ import java.util.Set;
 			throws ServiceRequestException
 	{
 		this.getRelationLinkStub().batchLink(viewObjectGuid, end2FoundationObjectGuidList, structureObjectList, null);
-	}
-
-	protected synchronized ACL getACL() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(ACL.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected Async getAsync()
-	{
-		return this.async;
-	}
-
-	protected synchronized WFI getWFI() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(WFI.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized FTS getFTS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(FTS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized PPMS getPPMS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(PPMS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized DCR getDCR() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(DCR.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized SMS getSMS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(SMS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized LIC getLIC() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(LIC.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized MSRM getMSRM() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(MSRM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized AAS getAAS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(AAS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized BRM getBRM() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(BRM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized DSS getDSS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(DSS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized BOMS getBOMS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(BOMS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized EDAP getEDAP() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(EDAP.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized CAD getCAD() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(CAD.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	public synchronized EMM getEMM() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(EMM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized EOSS getEOSS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(EOSS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
 	}
 
 	public CancelCheckOutStub getCancelCheckOutStub()
@@ -546,19 +365,6 @@ import java.util.Set;
 		return this.getFoundationStub().getObjectByGuid(new ObjectGuid(classGuid, null, guid, null), procrtGuid == null ? Constants.isSupervisor(true, this) : false);
 	}
 
-	protected synchronized POS getPOS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(POS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
 	@Override public ViewObject getRelation(ObjectGuid objectGuid) throws ServiceRequestException
 	{
 		return this.getRelationStub().getRelation(objectGuid);
@@ -594,19 +400,6 @@ import java.util.Set;
 	public RelationUnlinkStub getRelationUnlinkStub()
 	{
 		return this.relationUnlinkStub;
-	}
-
-	protected synchronized SLC getSLC() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(SLC.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
 	}
 
 	/**
@@ -734,7 +527,7 @@ import java.util.Set;
 			List<FoundationObject> updateList) throws ServiceRequestException
 	{
 		ViewObject viewObj = this.getRelationByEND1(end1ObjectGuid, name);
-		RelationTemplateInfo relationTemplate = this.getEMM().getRelationTemplateByName(end1ObjectGuid, name);
+		RelationTemplateInfo relationTemplate = this.getEmm().getRelationTemplateByName(end1ObjectGuid, name);
 		if (viewObj == null)
 		{
 			if (relationTemplate == null)
@@ -926,7 +719,7 @@ import java.util.Set;
 		// FoundationObject saveAsObject = this.getFRevisionStub().createRevision(operatorGuid, groupGuid,
 		// foundationObject, isContainBom);
 
-		ClassInfo classInfo = this.getEMM().getClassByGuid(saveAsObject.getObjectGuid().getClassGuid());
+		ClassInfo classInfo = this.getEmm().getClassByGuid(saveAsObject.getObjectGuid().getClassGuid());
 		// 打开取替代对象时，不记录历史
 		if (classInfo != null && !classInfo.hasInterface(ModelInterfaceEnum.IReplaceSubstitute))
 		{
@@ -936,7 +729,7 @@ import java.util.Set;
 			biViewHis.setInstanceBOGuid(saveAsObject.getObjectGuid().getBizObjectGuid());
 			biViewHis.put(BIViewHis.CREATE_USER, this.getOperatorGuid());
 
-			this.getPOS().saveBIViewHis(biViewHis);
+			this.getPos().saveBIViewHis(biViewHis);
 		}
 
 		try
@@ -982,7 +775,7 @@ import java.util.Set;
 				.saveAsObject(foundationObject, groupGuid, operatorGuid, true, false, Constants.isSupervisor(true, this), isContainBom, isContainPartReplace, isContainGlobalReplce,
 						true);
 
-		ClassInfo classInfo = this.getEMM().getClassByGuid(saveAsObject.getObjectGuid().getClassGuid());
+		ClassInfo classInfo = this.getEmm().getClassByGuid(saveAsObject.getObjectGuid().getClassGuid());
 		// 打开取替代对象时，不记录历史
 		if (classInfo != null && !classInfo.hasInterface(ModelInterfaceEnum.IReplaceSubstitute))
 		{
@@ -992,7 +785,7 @@ import java.util.Set;
 			biViewHis.setInstanceBOGuid(saveAsObject.getObjectGuid().getBizObjectGuid());
 			biViewHis.put(BIViewHis.CREATE_USER, this.getOperatorGuid());
 
-			this.getPOS().saveBIViewHis(biViewHis);
+			this.getPos().saveBIViewHis(biViewHis);
 		}
 
 		// 检出

@@ -34,24 +34,11 @@ import java.util.List;
 public class FUIStub extends AbstractServiceStub<BOASImpl>
 {
 
-	private synchronized POS getPOS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.stubService.getRefService(POS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
 	public FoundationObject openObject(ObjectGuid objectGuid, boolean icCheckACL) throws ServiceRequestException
 	{
 		FoundationObject foundationObject = this.stubService.getFoundationStub().getObject(objectGuid, icCheckACL);
 
-		ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(foundationObject.getObjectGuid().getClassGuid());
+		ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(foundationObject.getObjectGuid().getClassGuid());
 		// 打开取替代对象时，不记录历史
 		if (classInfo != null && !classInfo.hasInterface(ModelInterfaceEnum.IReplaceSubstitute))
 		{
@@ -61,7 +48,7 @@ public class FUIStub extends AbstractServiceStub<BOASImpl>
 			biViewHis.setInstanceBOGuid(objectGuid.getBizObjectGuid());
 			biViewHis.put(BIViewHis.CREATE_USER, this.stubService.getOperatorGuid());
 
-			this.getPOS().saveBIViewHis(biViewHis);
+			this.stubService.getPos().saveBIViewHis(biViewHis);
 		}
 		return foundationObject;
 	}
@@ -69,7 +56,7 @@ public class FUIStub extends AbstractServiceStub<BOASImpl>
 	private SearchCondition createSearchCondition4Structure(String strucClassName) throws ServiceRequestException
 	{
 		SearchCondition searchCondition = SearchConditionFactory.createSearchConditionForStructure(strucClassName);
-		List<UIObjectInfo> uiObjectList = this.stubService.getEMM().listUIObjectInCurrentBizModel(strucClassName, UITypeEnum.FORM, true);
+		List<UIObjectInfo> uiObjectList = this.stubService.getEmm().listUIObjectInCurrentBizModel(strucClassName, UITypeEnum.FORM, true);
 		if (!SetUtils.isNullList(uiObjectList))
 		{
 			for (UIObjectInfo uiObject : uiObjectList)
@@ -89,7 +76,7 @@ public class FUIStub extends AbstractServiceStub<BOASImpl>
 
 		ClassStub.decorateObjectGuid(objectGuid, this.stubService);
 		String className = objectGuid.getClassName();
-		EMM emm = this.stubService.getEMM();
+		EMM emm = this.stubService.getEmm();
 		ClassInfo classInfo = null;
 		try
 		{
@@ -103,9 +90,9 @@ public class FUIStub extends AbstractServiceStub<BOASImpl>
 		DynaObject object = null;
 		if (classInfo.hasInterface(ModelInterfaceEnum.IBOMStructure))
 		{
-			List<UIObjectInfo> uiObjectList = this.stubService.getEMM().listUIObjectInCurrentBizModel(className, UITypeEnum.FORM, true);
+			List<UIObjectInfo> uiObjectList = this.stubService.getEmm().listUIObjectInCurrentBizModel(className, UITypeEnum.FORM, true);
 			SearchCondition searchCondition = SearchConditionFactory.createSearchConditionForBOMStructure(className, uiObjectList);
-			object = this.stubService.getBOMS().getBOM(objectGuid, searchCondition, null);
+			object = this.stubService.getBoms().getBOM(objectGuid, searchCondition, null);
 		}
 		else if (classInfo.hasInterface(ModelInterfaceEnum.IStructureObject))
 		{
@@ -130,7 +117,7 @@ public class FUIStub extends AbstractServiceStub<BOASImpl>
 		{
 			infoBuffer.append(StringUtils.getMsrTitle((String) object.get("BOTITLE$"), lang.getType()));
 			infoBuffer.append("\n");
-			infoBuffer.append(this.stubService.getMSRM().getMSRString("ID_SYS_FIELD_FULLNAME", lang.toString()));
+			infoBuffer.append(this.stubService.getMsrm().getMSRString("ID_SYS_FIELD_FULLNAME", lang.toString()));
 			infoBuffer.append(": ");
 			infoBuffer.append(((FoundationObject) object).getFullName());
 			infoBuffer.append("\n");
@@ -140,9 +127,9 @@ public class FUIStub extends AbstractServiceStub<BOASImpl>
 			{
 				String phase = StringUtils.getMsrTitle(((FoundationObject) object).getLifecyclePhase(), lang.getType());
 				phase = StringUtils.isNullString(phase) ? "" : phase;
-				phase += "(" + this.stubService.getMSRM().getMSRString(statusEnum.getMsrId(), lang.toString()) + ")";
+				phase += "(" + this.stubService.getMsrm().getMSRString(statusEnum.getMsrId(), lang.toString()) + ")";
 
-				infoBuffer.append(this.stubService.getMSRM().getMSRString(SystemClassFieldEnum.STATUS.getDescription(), lang.toString()));
+				infoBuffer.append(this.stubService.getMsrm().getMSRString(SystemClassFieldEnum.STATUS.getDescription(), lang.toString()));
 				infoBuffer.append(": ");
 				infoBuffer.append(phase);
 				infoBuffer.append("\n");

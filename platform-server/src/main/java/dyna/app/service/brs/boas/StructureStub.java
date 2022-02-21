@@ -64,7 +64,7 @@ public class StructureStub extends AbstractServiceStub<BOASImpl>
 			}
 
 			ViewObject viewObject = new ViewObject(foundationObject);
-			RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateById(viewObject.getTemplateID());
+			RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateById(viewObject.getTemplateID());
 
 			structureObjectList = this.stubService.getRelationService().listObjectOfRelation(viewObjectGuid, relationTemplate.getGuid(), null,
 					Constants.isSupervisor(isCheckAcl, this.stubService), sessionId, null);
@@ -96,7 +96,7 @@ public class StructureStub extends AbstractServiceStub<BOASImpl>
 					}
 				}
 			}
-			EMM emm = this.stubService.getEMM();
+			EMM emm = this.stubService.getEmm();
 
 			Set<String> objectFieldNames = null;
 			Set<String> codeFieldNames = null;
@@ -105,7 +105,7 @@ public class StructureStub extends AbstractServiceStub<BOASImpl>
 			{
 				decoratorFactory.decorateStructureObject(structureObject, objectFieldNames, codeFieldNames, emm, bmGuid);
 			}
-			decoratorFactory.decorateStructureObject(objectFieldNames, structureObjectList, this.stubService.getEMM(), sessionId);
+			decoratorFactory.decorateStructureObject(objectFieldNames, structureObjectList, this.stubService.getEmm(), sessionId);
 		}
 		catch (DynaDataException e)
 		{
@@ -130,7 +130,7 @@ public class StructureStub extends AbstractServiceStub<BOASImpl>
 		{
 			ViewObject viewObject = this.stubService.getRelationStub().getRelation(structureObject.getViewObjectGuid(), isCheckAcl);
 
-			RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateById(viewObject.getTemplateID());
+			RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateById(viewObject.getTemplateID());
 			boolean isCheckCycle = false;
 			boolean ischeckEnd2 = false;
 			String originalEnd2MasterGuid = (String) structureObject.getOriginalValue("END2$MASTERFK");
@@ -223,10 +223,10 @@ public class StructureStub extends AbstractServiceStub<BOASImpl>
 			List<ObjectGuid> end2ObjectGuidList = new ArrayList<>();
 			end2ObjectGuidList.add(structureObject.getEnd2ObjectGuid());
 			viewObject.getTemplateID();
-			this.stubService.getDCR().check(structureObject.getEnd1ObjectGuid(), end2ObjectGuidList, relationTemplate.getName(), RuleTypeEnum.RELATION);
+			this.stubService.getDcr().check(structureObject.getEnd1ObjectGuid(), end2ObjectGuidList, relationTemplate.getName(), RuleTypeEnum.RELATION);
 
 			ClassStub.decorateObjectGuid(structureObject.getObjectGuid(), this.stubService);
-			EOSS eoss = this.stubService.getEOSS();
+			EOSS eoss = this.stubService.getEoss();
 			// !invoke update.before
 			eoss.executeUpdateBeforeEvent(structureObject);
 
@@ -307,9 +307,9 @@ public class StructureStub extends AbstractServiceStub<BOASImpl>
 	private void checkFoundationFieldRegex(StructureObject structureObject) throws ServiceRequestException
 	{
 		String classGuid = structureObject.getObjectGuid().getClassGuid();
-		ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(classGuid);
+		ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(classGuid);
 
-		List<ClassField> listFieldOfClass = this.stubService.getEMM().listFieldOfClass(classInfo.getName());
+		List<ClassField> listFieldOfClass = this.stubService.getEmm().listFieldOfClass(classInfo.getName());
 		if (!SetUtils.isNullList(listFieldOfClass))
 		{
 			for (ClassField field : listFieldOfClass)
@@ -320,7 +320,7 @@ public class StructureStub extends AbstractServiceStub<BOASImpl>
 					boolean matches = pattern.matcher(StringUtils.convertNULLtoString(structureObject.get(field.getName()))).matches();
 					if (matches)
 					{
-						UIField uiField = this.stubService.getEMM().getUIFieldByName(classInfo.getName(), field.getName());
+						UIField uiField = this.stubService.getEmm().getUIFieldByName(classInfo.getName(), field.getName());
 						String title = uiField == null ? field.getName() : uiField.getTitle(this.stubService.getUserSignature().getLanguageEnum());
 						throw new ServiceRequestException("ID_CLIENT_VALIDATOR_REGEXLEGAL", "field value ilegal.", null, title);
 					}
@@ -414,16 +414,16 @@ public class StructureStub extends AbstractServiceStub<BOASImpl>
 			Set<String> objectFieldNames = null;
 			Set<String> codeFieldNames = null;
 			String bmGuid = this.stubService.getUserSignature().getLoginGroupBMGuid();
-			EMM emm = this.stubService.getEMM();
+			EMM emm = this.stubService.getEmm();
 			if (searchCondition != null && searchCondition.getObjectGuid() != null)
 			{
 				objectFieldNames = emm.getObjectFieldNamesInSC(searchCondition);
 				codeFieldNames = emm.getCodeFieldNamesInSC(searchCondition);
 			}
 			decoratorFactory.decorateStructureObject(structure, objectFieldNames, codeFieldNames, emm, bmGuid);
-			decoratorFactory.ofd.decorateWithField(objectFieldNames, structure, this.stubService.getEMM(), sessionId, false);
+			decoratorFactory.ofd.decorateWithField(objectFieldNames, structure, this.stubService.getEmm(), sessionId, false);
 			String templeteId = (String) structure.get(ViewObject.TEMPLATE_ID);
-			RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateById(templeteId);
+			RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateById(templeteId);
 			if (relationTemplate != null)
 			{
 				ObjectGuid end2ObjectGuid = structure.getEnd2ObjectGuid();
@@ -480,7 +480,7 @@ public class StructureStub extends AbstractServiceStub<BOASImpl>
 	 */
 	public void changePrimaryObject(ObjectGuid end1ObjectGuid, String viewName, StructureObject structureObject, boolean isCheckAcl) throws ServiceRequestException
 	{
-		RelationTemplateInfo relationTemplateByName = this.stubService.getEMM().getRelationTemplateByName(end1ObjectGuid, viewName);
+		RelationTemplateInfo relationTemplateByName = this.stubService.getEmm().getRelationTemplateByName(end1ObjectGuid, viewName);
 
 		SearchCondition createSearchConditionForStructure = SearchConditionFactory.createSearchConditionForStructure(relationTemplateByName.getStructureClassName());
 		createSearchConditionForStructure.setPageSize(SearchCondition.MAX_PAGE_SIZE);

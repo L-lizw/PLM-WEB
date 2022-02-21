@@ -24,6 +24,8 @@ import dyna.net.service.data.DSToolService;
 import dyna.net.service.data.ECService;
 import dyna.net.service.data.InstanceService;
 import dyna.net.service.data.model.ClassModelService;
+import lombok.AccessLevel;
+import lombok.Getter;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,8 +36,9 @@ import java.util.Map;
 /**
  * Engineering Change Service Implement工程变更服务的实现类
  *
- * @author caogc
+ * @author Lizw
  */
+@Getter(AccessLevel.PROTECTED)
 @Service public class UECSImpl extends BusinessRuleService implements UECS
 {
 	@DubboReference private ClassModelService classModelService;
@@ -43,7 +46,27 @@ import java.util.Map;
 	@DubboReference private ECService         ecService;
 	@DubboReference private InstanceService   instanceService;
 
+	@Autowired
+	private AAS aas;
 	@Autowired private Async async;
+	@Autowired
+	private BOAS boas;
+	@Autowired
+	private BOMS boms;
+	@Autowired
+	private BRM brm;
+	@Autowired
+	private DSS dss;
+	@Autowired
+	private EDAP edap;
+	@Autowired
+	private MSRM msrm;
+	@Autowired
+	private EMM emm;
+	@Autowired
+	private SMS sms;
+	@Autowired
+	private WFI wfi;
 
 	@Autowired private UECRECPStub  uecrStub;
 	@Autowired private UECSStub     uecsStub;
@@ -69,12 +92,12 @@ import java.util.Map;
 	{
 		try
 		{
-			List<ClassInfo> listClassInfo = this.getEMM().listClassByInterface(ModelInterfaceEnum.IBatchForEc);
+			List<ClassInfo> listClassInfo = this.getEmm().listClassByInterface(ModelInterfaceEnum.IBatchForEc);
 			if (!SetUtils.isNullList(listClassInfo))
 			{
 				for (ClassInfo classinfo : listClassInfo)
 				{
-					ClassField classField = this.getEMM().getFieldByName(classinfo.getName(), UpdatedECSConstants.ChangeItem, true);
+					ClassField classField = this.getEmm().getFieldByName(classinfo.getName(), UpdatedECSConstants.ChangeItem, true);
 					if (classField != null)
 					{
 						classField.setValueScope(ModelInterfaceEnum.IItem.name());
@@ -137,127 +160,6 @@ import java.util.Map;
 	public UECSStub getUECSStub()
 	{
 		return this.uecsStub;
-	}
-
-	public synchronized BOAS getBOAS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(BOAS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
-
-	public synchronized EDAP getEDAP() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(EDAP.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
-
-	public synchronized DSS getDSS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(DSS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
-
-	public synchronized BRM getBRM() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(BRM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	public synchronized EMM getEMM() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(EMM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
-
-	public synchronized WFI getWFI() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(WFI.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
-
-	public synchronized AAS getAAS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(AAS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
-
-	public synchronized SMS getSMS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(SMS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
-
-	public synchronized MSRM getMSRM() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(MSRM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
-
-	public synchronized BOMS getBOMS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(BOMS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
 	}
 
 	public List<FoundationObject> getECPByECRTree(ObjectGuid end1ObjectGuid) throws ServiceRequestException
@@ -572,7 +474,7 @@ import java.util.Map;
 	 */
 	@Override public void deleteNotCheckOut(ObjectGuid objectGuid, String tagString) throws ServiceRequestException
 	{
-		FoundationObject foundation = this.getBOAS().getObject(objectGuid);
+		FoundationObject foundation = this.getBoas().getObject(objectGuid);
 		this.getUECSStub().deleteObject(foundation);
 	}
 

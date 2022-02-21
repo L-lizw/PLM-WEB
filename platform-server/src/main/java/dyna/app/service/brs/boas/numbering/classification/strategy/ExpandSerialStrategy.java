@@ -50,7 +50,7 @@ public class ExpandSerialStrategy extends FieldStratery
 
 				if (!controlNumberField.isHasAllocate())
 				{
-					EMM emm = this.getService(parameter.dataAccessService, EMM.class);
+					EMM emm = this.stubService.getEmm();
 					parameter.control.allocateNumberField(parameter.dataAccessService, parameter.item, parameter.classificationMap, parameter.classficationFeatureItemList,
 							parameter.classificationNumberFieldList, controlNumberField, parameter.isCreate);
 

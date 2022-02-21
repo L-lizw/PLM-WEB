@@ -24,12 +24,12 @@ public class BMBOManagerModifyStub extends AbstractServiceStub<MMSImpl>
 
 	protected void checkAndReBuildBusinessModel() throws ServiceRequestException
 	{
-		List<BMInfo> bmInfoList = this.stubService.getEMM().listBizModel();
+		List<BMInfo> bmInfoList = this.stubService.getEmm().listBizModel();
 		if (bmInfoList == null)
 		{
 			bmInfoList = new ArrayList<BMInfo>();
 		}
-		BMInfo shareBMInfo = this.stubService.getEMM().getSharedBizModel();
+		BMInfo shareBMInfo = this.stubService.getEmm().getSharedBizModel();
 		if (shareBMInfo != null)
 		{
 			bmInfoList.add(shareBMInfo);
@@ -112,7 +112,7 @@ public class BMBOManagerModifyStub extends AbstractServiceStub<MMSImpl>
 			newBMInfo.setSequence(i);
 			sds.save(newBMInfo);
 
-			List<BOInfo> boInfoList = this.stubService.getEMM().listBizObjectOfModelByBMGuid(oldBMguid);
+			List<BOInfo> boInfoList = this.stubService.getEmm().listBizObjectOfModelByBMGuid(oldBMguid);
 			if (!SetUtils.isNullList(boInfoList))
 			{
 				for (BOInfo boInfo : boInfoList)
@@ -161,7 +161,7 @@ public class BMBOManagerModifyStub extends AbstractServiceStub<MMSImpl>
 
 			sds.save(newBOInfo);
 
-			List<BOInfo> subBOInfoList = this.stubService.getEMM().listSubBOInfoByBM(sourceBOInfo.getBMGuid(), sourceBOInfo.getGuid());
+			List<BOInfo> subBOInfoList = this.stubService.getEmm().listSubBOInfoByBM(sourceBOInfo.getBMGuid(), sourceBOInfo.getGuid());
 			if (!SetUtils.isNullList(subBOInfoList))
 			{
 				for (BOInfo subBOInfo : subBOInfoList)
@@ -193,8 +193,8 @@ public class BMBOManagerModifyStub extends AbstractServiceStub<MMSImpl>
 //		DataServer.getTransactionManager().startTransaction(this.stubService.getFixedTransactionId());
 		try
 		{
-			BMInfo bmInfo = this.stubService.getEMM().getBizModel(bmguid);
-			BOInfo parentBOInfo = this.stubService.getEMM().getBizObject(bmguid, parentBOguid);
+			BMInfo bmInfo = this.stubService.getEmm().getBizModel(bmguid);
+			BOInfo parentBOInfo = this.stubService.getEmm().getBizObject(bmguid, parentBOguid);
 			if (!SetUtils.isNullList(sourceBOInfoList))
 			{
 				for (BOInfo boInfo : sourceBOInfoList)
@@ -266,7 +266,7 @@ public class BMBOManagerModifyStub extends AbstractServiceStub<MMSImpl>
 
 		try
 		{
-			BMInfo bmInfo = this.stubService.getEMM().getBizModel(boInfo.getBMGuid());
+			BMInfo bmInfo = this.stubService.getEmm().getBizModel(boInfo.getBMGuid());
 			if (bmInfo != null)
 			{
 
@@ -283,7 +283,7 @@ public class BMBOManagerModifyStub extends AbstractServiceStub<MMSImpl>
 
 //				DataServer.getTransactionManager().commitTransaction();
 
-				return this.stubService.getEMM().getBizObject(boInfo.getBMGuid(), boInfo.getGuid());
+				return this.stubService.getEmm().getBizObject(boInfo.getBMGuid(), boInfo.getGuid());
 			}
 		}
 		catch (ServiceRequestException e)

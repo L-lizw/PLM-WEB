@@ -52,7 +52,7 @@ public class UECRECPStub extends AbstractServiceStub<UECSImpl>
 		{
 			return null;
 		}
-		RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateByName(ecrObject, UpdatedECSConstants.ECR_ECP$);
+		RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateByName(ecrObject, UpdatedECSConstants.ECR_ECP$);
 		if (relationTemplate == null)
 		{
 			throw new ServiceRequestException("ID_APP_UECRECPSTUB_TEMPLATE_NULL", "the template is null", null, UpdatedECSConstants.ECR_ECP$);
@@ -167,8 +167,8 @@ public class UECRECPStub extends AbstractServiceStub<UECSImpl>
 			{
 				for (ObjectGuid ecpORecoObjectGuid : listEcpOREcoObjectGuid)
 				{
-					FoundationObject ecpORecoFoundation = this.stubService.getBOAS().getObject(ecpORecoObjectGuid);
-					ClassInfo foClassInfo = this.stubService.getEMM().getClassByGuid(ecpORecoFoundation.getObjectGuid().getClassGuid());
+					FoundationObject ecpORecoFoundation = this.stubService.getBoas().getObject(ecpORecoObjectGuid);
+					ClassInfo foClassInfo = this.stubService.getEmm().getClassByGuid(ecpORecoFoundation.getObjectGuid().getClassGuid());
 					if (foClassInfo.hasInterface(ModelInterfaceEnum.IECOM))
 					{
 						this.deleteECOsInfo(ecpORecoFoundation);
@@ -194,7 +194,7 @@ public class UECRECPStub extends AbstractServiceStub<UECSImpl>
 				List<FoundationObject> deleteEcpOrEcoMenuList = new ArrayList<FoundationObject>();
 				for (ObjectGuid ecpORecoObjectGuid : listEcpOREcoObjectGuid)
 				{
-					FoundationObject ecpORecoFo = this.stubService.getBOAS().getObject(ecpORecoObjectGuid);
+					FoundationObject ecpORecoFo = this.stubService.getBoas().getObject(ecpORecoObjectGuid);
 					deleteEcpOrEcoMenuList.add(ecpORecoFo);
 					List<FoundationObject> listALLChildFo = this.stubService.getUECQueryStub().listALLChildbyParentObjectGuid(ecpORecoFo.getObjectGuid(), parentString);
 					deleteEcpOrEcoMenuList.addAll(listALLChildFo);
@@ -203,7 +203,7 @@ public class UECRECPStub extends AbstractServiceStub<UECSImpl>
 				{
 					for (FoundationObject fo : deleteEcpOrEcoMenuList)
 					{
-						ClassInfo foClassInfo = this.stubService.getEMM().getClassByGuid(fo.getObjectGuid().getClassGuid());
+						ClassInfo foClassInfo = this.stubService.getEmm().getClassByGuid(fo.getObjectGuid().getClassGuid());
 						if (foClassInfo.hasInterface(ModelInterfaceEnum.IECOM))
 						{
 							this.deleteECOsInfo(fo);
@@ -235,25 +235,25 @@ public class UECRECPStub extends AbstractServiceStub<UECSImpl>
 
 	public void deleteECOsInfo(FoundationObject ecpORecoFoundation) throws ServiceRequestException
 	{
-		LifecyclePhaseInfo ecoLife = this.stubService.getEMM().getLifecyclePhaseInfo(ecpORecoFoundation.getLifecyclePhaseGuid());
+		LifecyclePhaseInfo ecoLife = this.stubService.getEmm().getLifecyclePhaseInfo(ecpORecoFoundation.getLifecyclePhaseGuid());
 		if (!ecoLife.getName().equals(ECOLifecyclePhaseEnum.Performing.name()) && !ecoLife.getName().equals(ECOLifecyclePhaseEnum.Canceled.name())
 				&& !ecoLife.getName().equals(ECOLifecyclePhaseEnum.Created.name()))
 		{
 			throw new ServiceRequestException("ID_APP_UECS_ECO_CANNOT_BE_DELETE", "", null, ecpORecoFoundation.getFullName());
 		}
 
-		List<StructureObject> ecoChangeItemAfterList = ((BOASImpl) this.stubService.getBOAS()).getRelationStub().listObjectOfRelation(ecpORecoFoundation.getObjectGuid(),
+		List<StructureObject> ecoChangeItemAfterList = ((BOASImpl) this.stubService.getBoas()).getRelationStub().listObjectOfRelation(ecpORecoFoundation.getObjectGuid(),
 				UpdatedECSConstants.ECO_CHANGEITEMAFTER$, null, null, null, false);
 		if (!SetUtils.isNullList(ecoChangeItemAfterList))
 		{
 			for (StructureObject structure : ecoChangeItemAfterList)
 			{
 				ObjectGuid solveObjectGuid = structure.getEnd2ObjectGuid();
-				this.stubService.getBOAS().deleteFoundationObject(solveObjectGuid.getGuid(), solveObjectGuid.getClassGuid());
+				this.stubService.getBoas().deleteFoundationObject(solveObjectGuid.getGuid(), solveObjectGuid.getClassGuid());
 			}
 		}
 
-		List<ClassInfo> listEciClassInfo = this.stubService.getEMM().listClassByInterface(ModelInterfaceEnum.IECI);
+		List<ClassInfo> listEciClassInfo = this.stubService.getEmm().listClassByInterface(ModelInterfaceEnum.IECI);
 		ClassInfo eciClassInfo = null;
 		if (!SetUtils.isNullList(listEciClassInfo))
 		{
@@ -265,10 +265,10 @@ public class UECRECPStub extends AbstractServiceStub<UECSImpl>
 		{
 			for (FoundationObject eciFo : eciList)
 			{
-				CodeItemInfo codeItemInfo = this.stubService.getEMM().getCodeItem((String) eciFo.get("CHANGETYPE"));
+				CodeItemInfo codeItemInfo = this.stubService.getEmm().getCodeItem((String) eciFo.get("CHANGETYPE"));
 				if (!codeItemInfo.getName().equals(UECChangeTypeEnum.Others.name()))
 				{
-					this.stubService.getBOAS().deleteFoundationObject(eciFo.getGuid(), eciFo.getObjectGuid().getClassGuid());
+					this.stubService.getBoas().deleteFoundationObject(eciFo.getGuid(), eciFo.getObjectGuid().getClassGuid());
 				}
 			}
 		}
@@ -293,18 +293,18 @@ public class UECRECPStub extends AbstractServiceStub<UECSImpl>
 	 */
 	protected FoundationObject saveNotCheckout(FoundationObject contentFoundation) throws ServiceRequestException
 	{
-		return ((BOASImpl) this.stubService.getBOAS()).getFSaverStub().saveObject(contentFoundation, false, false, false, null, true, false, true);
+		return ((BOASImpl) this.stubService.getBoas()).getFSaverStub().saveObject(contentFoundation, false, false, false, null, true, false, true);
 	}
 
 	protected FoundationObject saveOnly(FoundationObject contentFoundation) throws ServiceRequestException
 	{
-		return ((BOASImpl) this.stubService.getBOAS()).getFSaverStub().saveObject(contentFoundation, false, false, false, false, null, true, false, false, false);
+		return ((BOASImpl) this.stubService.getBoas()).getFSaverStub().saveObject(contentFoundation, false, false, false, false, null, true, false, false, false);
 	}
 
 	protected FoundationObject createRevision(FoundationObject contentFoundation, boolean isContainBom) throws ServiceRequestException
 	{
-		FoundationObject reFoundationObject = this.stubService.getBOAS().createRevision(contentFoundation, isContainBom);
-		reFoundationObject = this.stubService.getBOAS().getObject(reFoundationObject.getObjectGuid());
+		FoundationObject reFoundationObject = this.stubService.getBoas().createRevision(contentFoundation, isContainBom);
+		reFoundationObject = this.stubService.getBoas().getObject(reFoundationObject.getObjectGuid());
 		return reFoundationObject;
 
 	}
@@ -323,7 +323,7 @@ public class UECRECPStub extends AbstractServiceStub<UECSImpl>
 		{
 			return;
 		}
-		FoundationObject ecrFoundation = this.stubService.getBOAS().getObject(ecrObjectGuid);
+		FoundationObject ecrFoundation = this.stubService.getBoas().getObject(ecrObjectGuid);
 		if (ecrFoundation == null)
 		{
 			return;
@@ -338,19 +338,19 @@ public class UECRECPStub extends AbstractServiceStub<UECSImpl>
 				{
 					// 撤销所有的流程
 					this.cancelWorkFlow(ecpFoundation);
-					ecpFoundation = this.stubService.getBOAS().getObject(ecpFoundation.getObjectGuid());
-					ClassInfo ecpClassInfo = this.stubService.getEMM().getClassByGuid(ecpFoundation.getObjectGuid().getClassGuid());
+					ecpFoundation = this.stubService.getBoas().getObject(ecpFoundation.getObjectGuid());
+					ClassInfo ecpClassInfo = this.stubService.getEmm().getClassByGuid(ecpFoundation.getObjectGuid().getClassGuid());
 					String lifeCyclePhaseOriginal = ecpFoundation.getLifecyclePhaseGuid();
-					String lifeCyclePhaseDest = this.stubService.getEMM().getLifecyclePhaseInfo(ecpClassInfo.getLifecycleName(), ECPLifecyclePhaseEnum.Canceled.name()).getGuid();
+					String lifeCyclePhaseDest = this.stubService.getEmm().getLifecyclePhaseInfo(ecpClassInfo.getLifecycleName(), ECPLifecyclePhaseEnum.Canceled.name()).getGuid();
 					ecpFoundation = this.stubService.getUECSStub().updateLifeCyclePhase(ecpFoundation.getObjectGuid(), lifeCyclePhaseOriginal, lifeCyclePhaseDest);
 				}
 			}
 			// 撤销所有的流程
 			this.cancelWorkFlow(ecrFoundation);
-			ecrFoundation = this.stubService.getBOAS().getObject(ecrFoundation.getObjectGuid());
-			ClassInfo ecrClassInfo = this.stubService.getEMM().getClassByGuid(ecrFoundation.getObjectGuid().getClassGuid());
+			ecrFoundation = this.stubService.getBoas().getObject(ecrFoundation.getObjectGuid());
+			ClassInfo ecrClassInfo = this.stubService.getEmm().getClassByGuid(ecrFoundation.getObjectGuid().getClassGuid());
 			String lifeCyclePhaseOriginal = ecrFoundation.getLifecyclePhaseGuid();
-			String lifeCyclePhaseDest = this.stubService.getEMM().getLifecyclePhaseInfo(ecrClassInfo.getLifecycleName(), ECRLifecyclePhaseEnum.Canceled.name()).getGuid();
+			String lifeCyclePhaseDest = this.stubService.getEmm().getLifecyclePhaseInfo(ecrClassInfo.getLifecycleName(), ECRLifecyclePhaseEnum.Canceled.name()).getGuid();
 			ecrFoundation = this.stubService.getUECSStub().updateLifeCyclePhase(ecrFoundation.getObjectGuid(), lifeCyclePhaseOriginal, lifeCyclePhaseDest);
 //			DataServer.getTransactionManager().commitTransaction();
 		}
@@ -383,19 +383,19 @@ public class UECRECPStub extends AbstractServiceStub<UECSImpl>
 	{
 		if (fo.getObjectGuid() != null && StringUtils.isGuid(fo.getObjectGuid().getGuid()))
 		{
-			List<ProcessRuntime> runList = this.stubService.getWFI().listProcessRuntimeOfObject(fo.getObjectGuid(), null);
+			List<ProcessRuntime> runList = this.stubService.getWfi().listProcessRuntimeOfObject(fo.getObjectGuid(), null);
 
 			if (!SetUtils.isNullList(runList))
 			{
 				for (ProcessRuntime processRuntime : runList)
 				{
-					List<ActivityRuntime> activityList = this.stubService.getWFI().listCurrentActivityRuntime(processRuntime.getGuid());
+					List<ActivityRuntime> activityList = this.stubService.getWfi().listCurrentActivityRuntime(processRuntime.getGuid());
 					if (!SetUtils.isNullList(activityList))
 					{
 						ActivityRuntime activity = activityList.get(0);
 						if (activity != null & StringUtils.isGuid(activity.getGuid()))
 						{
-							this.stubService.getWFI().recallProcessRuntime(processRuntime.getGuid(), activity.getGuid());
+							this.stubService.getWfi().recallProcessRuntime(processRuntime.getGuid(), activity.getGuid());
 						}
 					}
 
@@ -444,7 +444,7 @@ public class UECRECPStub extends AbstractServiceStub<UECSImpl>
 			{
 				// 取得结构信息
 				List<StructureObjectImpl> bomStructureList = this.stubService.getUECNECOStub().getBOMStructure(structureObjectList);
-				CodeItemInfo codeItem = this.stubService.getEMM().getCodeItem(typeGuid);
+				CodeItemInfo codeItem = this.stubService.getEmm().getCodeItem(typeGuid);
 				if (codeItem.getName().equals(UECModifyTypeEnum.BatchAdd.name()))
 				{
 					// 判断顺序是否重复
@@ -468,7 +468,7 @@ public class UECRECPStub extends AbstractServiceStub<UECSImpl>
 					String repalcePolicy = (String) ecpFoundationObject.get(UpdatedECSConstants.Replacepolicy);
 					if (StringUtils.isGuid(repalcePolicy))
 					{
-						CodeItemInfo policy = this.stubService.getEMM().getCodeItem(repalcePolicy);
+						CodeItemInfo policy = this.stubService.getEmm().getCodeItem(repalcePolicy);
 						if (policy != null && policy.getName().equals(UECReplacepolicyEnum.MandatoryReplace))
 						{
 							// 判断BOM结构是否循环
@@ -488,7 +488,7 @@ public class UECRECPStub extends AbstractServiceStub<UECSImpl>
 				StructureObject stru = structureObjectList.get(i);
 				if (StringUtils.isGuid(stru.getObjectGuid().getGuid()))
 				{
-					((BOASImpl) this.stubService.getBOAS()).getStructureStub().saveStructure(stru, false);
+					((BOASImpl) this.stubService.getBoas()).getStructureStub().saveStructure(stru, false);
 				}
 				else
 				{
@@ -529,7 +529,7 @@ public class UECRECPStub extends AbstractServiceStub<UECSImpl>
 		if (foundationObject != null && foundationObject.getObjectGuid() != null)
 		{
 			// 取得ECR-ECP
-			ViewObject viewObject = this.stubService.getBOAS().getRelationByEND1(foundationObject.getObjectGuid(), UpdatedECSConstants.ECR_ECP$);
+			ViewObject viewObject = this.stubService.getBoas().getRelationByEND1(foundationObject.getObjectGuid(), UpdatedECSConstants.ECR_ECP$);
 			if (viewObject != null && viewObject.getObjectGuid() != null)
 			{
 				try
@@ -541,28 +541,28 @@ public class UECRECPStub extends AbstractServiceStub<UECSImpl>
 						for (FoundationObject ecpFo : listECP)
 						{
 							// ECP_ECPCONTENT$
-							ViewObject viewObject2 = this.stubService.getBOAS().getRelationByEND1(ecpFo.getObjectGuid(), UpdatedECSConstants.ECP_ECPCONTENT$);
+							ViewObject viewObject2 = this.stubService.getBoas().getRelationByEND1(ecpFo.getObjectGuid(), UpdatedECSConstants.ECP_ECPCONTENT$);
 							if (viewObject2 != null && viewObject2.getObjectGuid() != null)
 							{
-								((BOASImpl) this.stubService.getBOAS()).getRelationStub().deleteRelation(viewObject2, true, false);
+								((BOASImpl) this.stubService.getBoas()).getRelationStub().deleteRelation(viewObject2, true, false);
 							}
 							// ECP_ECO$
-							ViewObject viewObject1 = this.stubService.getBOAS().getRelationByEND1(ecpFo.getObjectGuid(), UpdatedECSConstants.ECP_ECO$);
+							ViewObject viewObject1 = this.stubService.getBoas().getRelationByEND1(ecpFo.getObjectGuid(), UpdatedECSConstants.ECP_ECO$);
 							if (viewObject1 != null && viewObject1.getObjectGuid() != null)
 							{
-								((BOASImpl) this.stubService.getBOAS()).getRelationStub().deleteRelation(viewObject1, false, false);
+								((BOASImpl) this.stubService.getBoas()).getRelationStub().deleteRelation(viewObject1, false, false);
 							}
 							// ECP_CHANGEITEMBEFORE$
-							ViewObject viewObject3 = this.stubService.getBOAS().getRelationByEND1(ecpFo.getObjectGuid(), UpdatedECSConstants.ECP_CHANGEITEMBEFORE$);
+							ViewObject viewObject3 = this.stubService.getBoas().getRelationByEND1(ecpFo.getObjectGuid(), UpdatedECSConstants.ECP_CHANGEITEMBEFORE$);
 							if (viewObject3 != null && viewObject3.getObjectGuid() != null)
 							{
-								((BOASImpl) this.stubService.getBOAS()).getRelationStub().deleteRelation(viewObject3, false, false);
+								((BOASImpl) this.stubService.getBoas()).getRelationStub().deleteRelation(viewObject3, false, false);
 							}
 							// ECP_CHANGEITEM$
-							ViewObject viewObject4 = this.stubService.getBOAS().getRelationByEND1(ecpFo.getObjectGuid(), UpdatedECSConstants.ECP_CHANGEITEM$);
+							ViewObject viewObject4 = this.stubService.getBoas().getRelationByEND1(ecpFo.getObjectGuid(), UpdatedECSConstants.ECP_CHANGEITEM$);
 							if (viewObject4 != null && viewObject4.getObjectGuid() != null)
 							{
-								((BOASImpl) this.stubService.getBOAS()).getRelationStub().deleteRelation(viewObject4, false, false);
+								((BOASImpl) this.stubService.getBoas()).getRelationStub().deleteRelation(viewObject4, false, false);
 							}
 							// 删除ecp
 							this.stubService.getUECSStub().deleteObject(ecpFo);

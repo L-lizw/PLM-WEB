@@ -76,7 +76,7 @@ public class MailStub extends AbstractServiceStub<SMSImpl>
 
 			if(!StringUtils.isNullString(mail.getReceiveUser()))
 			{
-				User receiver = this.stubService.getAAS().getUser(mail.getReceiveUser());
+				User receiver = this.stubService.getAas().getUser(mail.getReceiveUser());
 				if(receiver != null)
 				{
 					mail.put(Mail.RECEIVE_USER_NAME, receiver.getName());
@@ -86,7 +86,7 @@ public class MailStub extends AbstractServiceStub<SMSImpl>
 			
 			if(!StringUtils.isNullString(mail.getSenderUser()))
 			{
-				User sender = this.stubService.getAAS().getUser(mail.getSenderUser());
+				User sender = this.stubService.getAas().getUser(mail.getSenderUser());
 				if(sender != null)
 				{
 					mail.put(Mail.SENDER_USER_NAME, sender.getName());
@@ -99,7 +99,7 @@ public class MailStub extends AbstractServiceStub<SMSImpl>
 			mail.setMailAttachmentList(mailAttachmentList);
 			if (!SetUtils.isNullList(mailAttachmentList))
 			{
-				EMM emm = this.stubService.getEMM();
+				EMM emm = this.stubService.getEmm();
 				for (MailAttachment att : mailAttachmentList)
 				{
 					decoratorFactory.decorateMailAttachment(att, emm);
@@ -166,7 +166,7 @@ public class MailStub extends AbstractServiceStub<SMSImpl>
 				throw new ServiceRequestException("ID_APP_NO_MATCH_MAIL_ATTACHMENT", "no match mail attachment");
 			}
 
-			return ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObject(objectGuid, false);
+			return ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObject(objectGuid, false);
 		}
 		catch (DynaDataException e)
 		{

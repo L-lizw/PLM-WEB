@@ -53,7 +53,7 @@ public class SessionStub extends AbstractServiceStub<LICImpl>
 	{
 		try
 		{
-			this.stubService.administrativeAuthorize(this.stubService.getUserSignature(), this.stubService.getAAS());
+			this.stubService.administrativeAuthorize(this.stubService.getUserSignature(), this.stubService.getAas());
 			this.deleteSessionInside(sessionId);
 		}
 		catch (AuthorizeException e)
@@ -178,7 +178,7 @@ public class SessionStub extends AbstractServiceStub<LICImpl>
 		{
 			try
 			{
-				this.stubService.administrativeAuthorize(this.stubService.getUserSignature(), this.stubService.getAAS());
+				this.stubService.administrativeAuthorize(this.stubService.getUserSignature(), this.stubService.getAas());
 				this.clearSessionInside();
 			}
 			catch (AuthorizeException e)
@@ -221,7 +221,7 @@ public class SessionStub extends AbstractServiceStub<LICImpl>
 		{
 			try
 			{
-				this.stubService.administrativeAuthorize(this.stubService.getUserSignature(), this.stubService.getAAS());
+				this.stubService.administrativeAuthorize(this.stubService.getUserSignature(), this.stubService.getAas());
 				this.deleteSessionInside(sessionId);
 			}
 			catch (AuthorizeException e)
@@ -240,7 +240,7 @@ public class SessionStub extends AbstractServiceStub<LICImpl>
 		{
 			try
 			{
-				User user = this.stubService.getAAS().getUser(this.stubService.getSession(sessionId).getUserGuid());
+				User user = this.stubService.getAas().getUser(this.stubService.getSession(sessionId).getUserGuid());
 				if (user != null)
 				{
 					DynaLogger.debug("[deleteSessionInside]" + " userId: " + user.getUserId() + " sessionId: " + sessionId, new Exception());

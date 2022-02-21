@@ -159,6 +159,6 @@ public class MultiCodeFieldConditionImpl extends AbstractFieldCondition
 
 	private EMM getEMM() throws ServiceRequestException
 	{
-		return this.getServiceInstance(EMM.class);
+		return this.stubService.getEmm();
 	}
 }

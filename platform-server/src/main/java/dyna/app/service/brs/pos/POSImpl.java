@@ -21,6 +21,8 @@ import dyna.net.service.brs.*;
 import dyna.net.service.data.AclService;
 import dyna.net.service.data.DSCommonService;
 import dyna.net.service.data.SystemDataService;
+import lombok.AccessLevel;
+import lombok.Getter;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,13 +36,20 @@ import java.util.List;
  *
  * @author Lizw
  */
+@Getter(AccessLevel.PROTECTED)
 @Service public class POSImpl extends BusinessRuleService implements POS
 {
 	@DubboReference private AclService        aclService;
 	@DubboReference private DSCommonService   dsCommonService;
 	@DubboReference private SystemDataService systemDataService;
 
+	@Autowired
+	private AAS aas;
 	@Autowired private Async async;
+	@Autowired
+	private EDAP edap;
+	@Autowired
+	private EMM emm;
 
 	@Autowired private BIViewHisStub         biViewHisStub       ;
 	@Autowired private MyScheduleStub        myScheduleStub      ;
@@ -94,44 +103,6 @@ import java.util.List;
 	protected BIViewHisStub getBIViewHisStub()
 	{
 		return this.biViewHisStub;
-	}
-
-	protected synchronized EDAP getEDAP() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(EDAP.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	public synchronized AAS getAAS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(AAS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
-
-	protected synchronized EMM getEMM() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(EMM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
 	}
 
 	@Override public MySchedule getMySchedule(String guid) throws ServiceRequestException

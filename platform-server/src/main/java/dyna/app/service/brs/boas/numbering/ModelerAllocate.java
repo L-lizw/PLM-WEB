@@ -55,19 +55,6 @@ import org.springframework.stereotype.Component;
 public class ModelerAllocate extends AbstractServiceStub<BOASImpl>
 {
 
-	protected <T extends ApplicationService> T getService(DataAccessService dataAccessService, Class<T> clazz) throws ServiceRequestException
-	{
-		try
-		{
-			return dataAccessService.getRefService(clazz);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
 	private String fillLength(Integer length, String number) throws ServiceRequestException
 	{
 		if (length == null)
@@ -91,7 +78,7 @@ public class ModelerAllocate extends AbstractServiceStub<BOASImpl>
 	protected String allocateUnique(FoundationObject foundationObject, String fieldName, boolean needMadeNumber, boolean onlyInsert, int stepLength,
 			DataAccessService dataAccessService) throws ServiceRequestException
 	{
-		EMM emm = this.getService(dataAccessService, EMM.class);
+		EMM emm = this.stubService.getEmm();
 
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		String sessionId = dataAccessService.getUserSignature().getCredential();
@@ -421,8 +408,8 @@ public class ModelerAllocate extends AbstractServiceStub<BOASImpl>
 	private String getObjectValue(NumberingObject numberingObject, String guid, String sessionId, String classGuid, String className, String numbermodelFieldName, DataAccessService dataAccessService) throws ServiceRequestException
 	{
 
-		BOAS boas = this.getService(dataAccessService, BOAS.class);
-		EMM emm = this.getService(dataAccessService, EMM.class);
+		BOAS boas = this.stubService;
+		EMM emm = this.stubService.getEmm();
 		String fieldName = null;
 		FieldTypeEnum fieldType = null;
 		// boolean isSystemField = false;

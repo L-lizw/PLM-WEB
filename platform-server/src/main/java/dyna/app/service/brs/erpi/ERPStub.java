@@ -66,8 +66,7 @@ import java.util.*;
 /**
  * @author wangweixia
  */
-@Component
-public class ERPStub extends AbstractServiceStub<ERPIImpl>
+@Component public class ERPStub extends AbstractServiceStub<ERPIImpl>
 {
 	/**
 	 * 将xml配置文件缓存到map中，只有当xml文件发生变化，更新这个缓存. key是文件路径
@@ -91,11 +90,8 @@ public class ERPStub extends AbstractServiceStub<ERPIImpl>
 	 */
 	public static       int                 objectBatchSize = 50;
 
-	@Autowired
-	private ConfigurableServerImpl          configurableServer;
-	@Autowired
-	private ConfigurableServiceImpl         configurableService;
-
+	@Autowired private ConfigurableServerImpl  configurableServer;
+	@Autowired private ConfigurableServiceImpl configurableService;
 
 	public Document getDocument(String fileName) throws Exception
 	{
@@ -238,7 +234,6 @@ public class ERPStub extends AbstractServiceStub<ERPIImpl>
 		this.stubService.newTransactionId();
 		return this.setERPJobStatus(jobId, userId, jobStatusVal, message, isNotify);
 	}
-
 
 	public BooleanResult setERPJobStatus(String jobId, String userId, String jobStatusVal, String message, boolean isNotify) throws ServiceRequestException
 	{
@@ -1100,26 +1095,20 @@ public class ERPStub extends AbstractServiceStub<ERPIImpl>
 				{
 					for (FoundationObject ecpfo : listECP)
 					{
-						try
+
+						ClassInfo info = this.stubService.getEMM().getClassByName(ecpfo.getObjectGuid().getClassName());
+						if (info.hasInterface(ModelInterfaceEnum.IItem))
 						{
-							ClassInfo info = this.stubService.getEMM().getClassByName(ecpfo.getObjectGuid().getClassName());
-							if (info.hasInterface(ModelInterfaceEnum.IItem))
+							List<FoundationObject> eciList = this.stubService.getUECS().getBomECIByECO(null, null, parameterMap.get("templateName"), eco.getObjectGuid());
+							if (SetUtils.isNullList(eciList))
 							{
-								List<FoundationObject> eciList = this.stubService.getServiceInstance(UECS.class)
-										.getBomECIByECO(null, null, parameterMap.get("templateName"), eco.getObjectGuid());
-								if (SetUtils.isNullList(eciList))
-								{
-									parameterMap.put("BOMChange", "N");
-								}
-								// this.createJob(ecpfo.getObjectGuid(), erpListCanUse, parameterMap, isGoFlow,
-								// isMerge);
-								this.createQueue(parameterMap, ecpfo.getObjectGuid(), isGoFlow);
+								parameterMap.put("BOMChange", "N");
 							}
+							// this.createJob(ecpfo.getObjectGuid(), erpListCanUse, parameterMap, isGoFlow,
+							// isMerge);
+							this.createQueue(parameterMap, ecpfo.getObjectGuid(), isGoFlow);
 						}
-						catch (ServiceNotFoundException e)
-						{
-							throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-						}
+
 					}
 				}
 			}
@@ -1523,7 +1512,7 @@ public class ERPStub extends AbstractServiceStub<ERPIImpl>
 		conditionMap.put("TEMPLATEGUID", serviceGuid);
 		try
 		{
-//			DataServer.getTransactionManager().startTransaction(this.stubService.getFixedTransactionId());
+			//			DataServer.getTransactionManager().startTransaction(this.stubService.getFixedTransactionId());
 			sds.delete(WorkflowTemplateActPerformerInfo.class, conditionMap, "deleteNoticerByTemplateguid");
 			if (!SetUtils.isNullList(userList))
 			{
@@ -1534,16 +1523,16 @@ public class ERPStub extends AbstractServiceStub<ERPIImpl>
 
 				}
 			}
-//			DataServer.getTransactionManager().commitTransaction();
+			//			DataServer.getTransactionManager().commitTransaction();
 		}
 		catch (DynaDataException e)
 		{
-//			DataServer.getTransactionManager().rollbackTransaction();
+			//			DataServer.getTransactionManager().rollbackTransaction();
 			throw ServiceRequestExceptionWrap.createByDynaDataException(this.stubService, e);
 		}
 		catch (Exception e)
 		{
-//			DataServer.getTransactionManager().rollbackTransaction();
+			//			DataServer.getTransactionManager().rollbackTransaction();
 			if (e instanceof ServiceRequestException)
 			{
 				throw (ServiceRequestException) e;
@@ -1916,7 +1905,7 @@ public class ERPStub extends AbstractServiceStub<ERPIImpl>
 		conditionMap.put("ERPTYPEFLAG", serverType);
 		try
 		{
-//			DataServer.getTransactionManager().startTransaction(this.stubService.getFixedTransactionId());
+			//			DataServer.getTransactionManager().startTransaction(this.stubService.getFixedTransactionId());
 			sds.delete(ERPMoreCompanies.class, conditionMap, "deleteForAll");
 			if (!SetUtils.isNullList(morecompanyList))
 			{
@@ -1924,17 +1913,17 @@ public class ERPStub extends AbstractServiceStub<ERPIImpl>
 				{
 					sds.save(company, "insertForAll");// 保存多公司
 				}
-//				DataServer.getTransactionManager().commitTransaction();
+				//				DataServer.getTransactionManager().commitTransaction();
 			}
 		}
 		catch (DynaDataException e)
 		{
-//			DataServer.getTransactionManager().rollbackTransaction();
+			//			DataServer.getTransactionManager().rollbackTransaction();
 			throw ServiceRequestExceptionWrap.createByDynaDataException(this.stubService, e);
 		}
 		catch (Exception e)
 		{
-//			DataServer.getTransactionManager().rollbackTransaction();
+			//			DataServer.getTransactionManager().rollbackTransaction();
 			if (e instanceof ServiceRequestException)
 			{
 				throw (ServiceRequestException) e;

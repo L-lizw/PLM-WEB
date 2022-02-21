@@ -336,7 +336,7 @@ public class TransformSignStub extends AbstractServiceStub<FTSImpl>
 				{
 					if (!StringUtils.isNullString(config.getWorkflowName()))
 					{
-						WorkflowProcessInfo workflowProcess = this.stubService.getWFM().getProcessModelInfo(config.getWorkflowName());
+						WorkflowProcessInfo workflowProcess = this.stubService.getWfm().getProcessModelInfo(config.getWorkflowName());
 						if (workflowProcess != null)
 						{
 							String title = workflowProcess.getDescription();
@@ -347,7 +347,7 @@ public class TransformSignStub extends AbstractServiceStub<FTSImpl>
 
 					if (!StringUtils.isNullString(config.getActivityName()))
 					{
-						WorkflowActivityInfo workflowActivity = this.stubService.getWFM().getWorkflowActivityInfoByName(config.getWorkflowName(), config.getActivityName());
+						WorkflowActivityInfo workflowActivity = this.stubService.getWfm().getWorkflowActivityInfoByName(config.getWorkflowName(), config.getActivityName());
 
 						if (workflowActivity != null)
 						{
@@ -427,13 +427,13 @@ public class TransformSignStub extends AbstractServiceStub<FTSImpl>
 
 							if (objectGuid.getClassName().equalsIgnoreCase(objectMap.getClassName()))
 							{
-								ClassField classField = this.stubService.getEMM().getFieldByName(objectGuid.getClassName(), objectMap.getFieldName(), true);
+								ClassField classField = this.stubService.getEmm().getFieldByName(objectGuid.getClassName(), objectMap.getFieldName(), true);
 								if (classField != null && classField.getType() != null)
 								{
 									param.put("FIELDTYPE", classField.getType().toString());
 								}
 
-								FoundationObject object = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObject(objectGuid, false);
+								FoundationObject object = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObject(objectGuid, false);
 								if (object != null)
 								{
 									if ("OWNERUSER$".equals(objectMap.getFieldName()) //
@@ -441,7 +441,7 @@ public class TransformSignStub extends AbstractServiceStub<FTSImpl>
 									{
 										if (object.get(objectMap.getFieldName()) != null)
 										{
-											User user = this.stubService.getAAS().getUser((String) object.get(objectMap.getFieldName()));
+											User user = this.stubService.getAas().getUser((String) object.get(objectMap.getFieldName()));
 											if (user != null)
 											{
 												param.setValue(user.getUserName());
@@ -450,10 +450,10 @@ public class TransformSignStub extends AbstractServiceStub<FTSImpl>
 									}
 									else if (classField != null && classField.getType() == FieldTypeEnum.OBJECT)
 									{
-										ClassInfo typeValueObject = this.stubService.getEMM().getClassByName(classField.getTypeValue());
+										ClassInfo typeValueObject = this.stubService.getEmm().getClassByName(classField.getTypeValue());
 										if (typeValueObject != null && typeValueObject.hasInterface(ModelInterfaceEnum.IUser))
 										{
-											User user = this.stubService.getAAS().getUser((String) object.get(objectMap.getFieldName()));
+											User user = this.stubService.getAas().getUser((String) object.get(objectMap.getFieldName()));
 											if (user != null)
 											{
 												param.setValue(user.getUserName());
@@ -489,12 +489,12 @@ public class TransformSignStub extends AbstractServiceStub<FTSImpl>
 						 */
 						if (StringUtils.isGuid(proguid))
 						{
-							ProcessRuntime processRuntime = this.stubService.getWFI().getProcessRuntime(proguid);
+							ProcessRuntime processRuntime = this.stubService.getWfi().getProcessRuntime(proguid);
 							pcrt = processRuntime;
 						}
 						else
 						{
-							List<ProcessRuntime> wfList = this.stubService.getWFI().listProcessRuntimeOfObject(objectGuid, null);
+							List<ProcessRuntime> wfList = this.stubService.getWfi().listProcessRuntimeOfObject(objectGuid, null);
 							if (!SetUtils.isNullList(wfList))
 							{
 								for (ProcessRuntime pcrt_ : wfList)
@@ -520,7 +520,7 @@ public class TransformSignStub extends AbstractServiceStub<FTSImpl>
 							continue;
 						}
 
-						List<ActivityRuntime> activityRuntimeList = this.stubService.getWFI().listHistoryActivityRuntimeAndPerformer(pcrt.getGuid());
+						List<ActivityRuntime> activityRuntimeList = this.stubService.getWfi().listHistoryActivityRuntimeAndPerformer(pcrt.getGuid());
 						Map<String, ActivityRuntime> activityNameMap = new HashMap<String, ActivityRuntime>();
 						if (!SetUtils.isNullList(activityRuntimeList))
 						{
@@ -549,7 +549,7 @@ public class TransformSignStub extends AbstractServiceStub<FTSImpl>
 								{
 									startNumber = (activityRuntime.getStartNumber().intValue()) + "";
 								}
-								List<ProcTrack> listActivityComment = this.stubService.getWFI().listActivityComment(activityRuntime.getGuid(), startNumber);
+								List<ProcTrack> listActivityComment = this.stubService.getWfi().listActivityComment(activityRuntime.getGuid(), startNumber);
 								StringBuffer sb = new StringBuffer();
 								if (!SetUtils.isNullList(listActivityComment))
 								{

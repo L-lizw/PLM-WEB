@@ -85,8 +85,8 @@ public class FavoriteCommentDBStub extends AbstractServiceStub<WFIImpl>
 			{
 				for (ProcTrackComm info : listProcComm)
 				{
-					info.setCreateUserName(this.stubService.getAAS().getUser(info.getCreateUserGuid()).getName());
-					info.setUpdateUserName(this.stubService.getAAS().getUser(info.getUpdateUserGuid()).getName());
+					info.setCreateUserName(this.stubService.getAas().getUser(info.getCreateUserGuid()).getName());
+					info.setUpdateUserName(this.stubService.getAas().getUser(info.getUpdateUserGuid()).getName());
 				}
 			}
 		}

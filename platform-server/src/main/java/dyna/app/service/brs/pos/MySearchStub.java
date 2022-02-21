@@ -95,7 +95,7 @@ public class MySearchStub extends AbstractServiceStub<POSImpl>
 
 			if (search != null && createCondtion)
 			{
-				search = this.organizeSearchObject(search, this.stubService.getEMM());
+				search = this.organizeSearchObject(search, this.stubService.getEmm());
 			}
 		}
 		catch (DynaDataException e)
@@ -124,7 +124,7 @@ public class MySearchStub extends AbstractServiceStub<POSImpl>
 			List<Search> searchList = sds.query(Search.class, filter);
 			if (!SetUtils.isNullList(searchList))
 			{
-				search = this.organizeSearchObject(searchList.get(0), this.stubService.getEMM());
+				search = this.organizeSearchObject(searchList.get(0), this.stubService.getEmm());
 			}
 		}
 		catch (DynaDataException e)
@@ -158,7 +158,7 @@ public class MySearchStub extends AbstractServiceStub<POSImpl>
 				{
 					try
 					{
-						search = this.organizeSearchObject(search, this.stubService.getEMM());
+						search = this.organizeSearchObject(search, this.stubService.getEmm());
 						retList.add(search);
 					}
 					catch (Exception e)
@@ -332,7 +332,7 @@ public class MySearchStub extends AbstractServiceStub<POSImpl>
 
 						if (hasAuthorityForPublicSearch)
 						{
-							search = this.organizeSearchObject(search, this.stubService.getEMM());
+							search = this.organizeSearchObject(search, this.stubService.getEmm());
 							retList.add(search);
 						}
 					}
@@ -380,7 +380,7 @@ public class MySearchStub extends AbstractServiceStub<POSImpl>
 
 		if (folderGuid != null)
 		{
-			folder = ((EDAPImpl) this.stubService.getEDAP()).getFolderStub().getFolder(folderGuid, false);
+			folder = ((EDAPImpl) this.stubService.getEdap()).getFolderStub().getFolder(folderGuid, false);
 		}
 
 		if (search.getClassGuid() != null)
@@ -398,8 +398,8 @@ public class MySearchStub extends AbstractServiceStub<POSImpl>
 				className = classInfo.getName();
 			}
 
-			String bmGuid = this.stubService.getEMM().getCurrentBizModel().getGuid();
-			boInfo = this.stubService.getEMM().getBizObject(bmGuid, classGuid, classificationGuid);
+			String bmGuid = this.stubService.getEmm().getCurrentBizModel().getGuid();
+			boInfo = this.stubService.getEmm().getBizObject(bmGuid, classGuid, classificationGuid);
 
 			sc = SearchConditionFactory.createSearchCondition4GlobalSearch(boInfo, folder, false);
 		}
@@ -564,7 +564,7 @@ public class MySearchStub extends AbstractServiceStub<POSImpl>
 	{
 		if (field.getType() == FieldTypeEnum.OBJECT)
 		{
-			ClassInfo clasInfo = this.stubService.getEMM().getClassByName(field.getTypeValue());
+			ClassInfo clasInfo = this.stubService.getEmm().getClassByName(field.getTypeValue());
 			if (clasInfo == null)
 			{
 				throw new DynaDataExceptionAll("query error ,the object type filed has not type value. fieldName is " + field.getName(), null,
@@ -950,7 +950,7 @@ public class MySearchStub extends AbstractServiceStub<POSImpl>
 					try
 					{
 
-						search = this.organizeSearchObject(search, this.stubService.getEMM());
+						search = this.organizeSearchObject(search, this.stubService.getEmm());
 						if (search != null)
 						{
 							retList.add(search);
@@ -1153,7 +1153,7 @@ public class MySearchStub extends AbstractServiceStub<POSImpl>
 
 		if (StringUtils.isGuid(boGuid))
 		{
-			BOInfo boInfo = this.stubService.getEMM().getCurrentBizObjectByGuid(boGuid);
+			BOInfo boInfo = this.stubService.getEmm().getCurrentBizObjectByGuid(boGuid);
 			if (boInfo != null)
 			{
 				searchCondition.addFilter(Search.CLASS_GUID, boInfo.getClassGuid(), OperateSignEnum.EQUALS);

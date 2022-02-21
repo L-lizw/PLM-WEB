@@ -28,7 +28,7 @@ public class ConfigCheckStub extends AbstractServiceStub<CPBImpl>
 
 	protected List<String> checkAllValuesOfTabs(ObjectGuid end1ObjectGuid, DataRule dataRule) throws ServiceRequestException
 	{
-		FoundationObject end1 = this.stubService.getBOAS().getObject(end1ObjectGuid);
+		FoundationObject end1 = this.stubService.getBoas().getObject(end1ObjectGuid);
 		if (end1 == null)
 		{
 			throw new ServiceRequestException("ID_DS_NO_DATA", "data is not exist, guid='" + end1ObjectGuid.getGuid() + "'", null, end1ObjectGuid.getGuid());
@@ -735,7 +735,7 @@ public class ConfigCheckStub extends AbstractServiceStub<CPBImpl>
 				 * inptTableName));
 				 * }
 				 */
-				ClassInfo end2ClassInfo = this.stubService.getEMM().getClassByGuid(end2.getObjectGuid().getClassGuid());
+				ClassInfo end2ClassInfo = this.stubService.getEmm().getClassByGuid(end2.getObjectGuid().getClassGuid());
 
 				// 客供料不需要转换类，查询所有物料
 				boolean isSuppliedItem = false;
@@ -760,7 +760,7 @@ public class ConfigCheckStub extends AbstractServiceStub<CPBImpl>
 					}
 					else
 					{
-						CodeItemInfo codeItemInfo = this.stubService.getEMM().getCodeItem(matchedClass);
+						CodeItemInfo codeItemInfo = this.stubService.getEmm().getCodeItem(matchedClass);
 						if (codeItemInfo == null)
 						{
 							// matchedClass can not be null
@@ -769,7 +769,7 @@ public class ConfigCheckStub extends AbstractServiceStub<CPBImpl>
 						else
 						{
 							String matchedClassName = codeItemInfo.getName();
-							ClassInfo classInfo = this.stubService.getEMM().getClassByName(matchedClassName);
+							ClassInfo classInfo = this.stubService.getEmm().getClassByName(matchedClassName);
 							if (classInfo == null)
 							{
 								// matchedClass is not exist
@@ -878,6 +878,6 @@ public class ConfigCheckStub extends AbstractServiceStub<CPBImpl>
 
 	private String getMessage(String id, Object... agrs) throws ServiceRequestException
 	{
-		return this.stubService.getMSRM().getMSRString(id, this.stubService.getUserSignature().getLanguageEnum().getId(), agrs);
+		return this.stubService.getMsrm().getMSRString(id, this.stubService.getUserSignature().getLanguageEnum().getId(), agrs);
 	}
 }

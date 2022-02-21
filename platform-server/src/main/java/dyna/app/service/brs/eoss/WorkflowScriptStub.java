@@ -33,13 +33,13 @@ public class WorkflowScriptStub extends AbstractScriptServiceStub
 
 	protected Script getWorkflowActionScript(String workflowName, String activityName, int... segments) throws ServiceRequestException
 	{
-		Script script = ((WFMImpl) this.stubService.getWFM()).getWfScriptStub().getActionScript(workflowName, activityName);
+		Script script = ((WFMImpl) this.stubService.getWfm()).getWfScriptStub().getActionScript(workflowName, activityName);
 		return this.getScriptSegment(script, segments);
 	}
 
 	protected Script getWorkflowEventScript(String workflowName, EventTypeEnum type, int... segments) throws ServiceRequestException
 	{
-		Script script = ((WFMImpl) this.stubService.getWFM()).getWfScriptStub().getEventScript(workflowName, type);
+		Script script = ((WFMImpl) this.stubService.getWfm()).getWfScriptStub().getEventScript(workflowName, type);
 		return this.getScriptSegment(script, segments);
 	}
 
@@ -51,7 +51,7 @@ public class WorkflowScriptStub extends AbstractScriptServiceStub
 		if (scriptContext != null)
 		{
 			String scriptName1 = scriptContext.scriptName + "." + scriptContext.segment;
-			script = ((WFMImpl) this.stubService.getWFM()).getWfScriptStub().getScript(scriptName1);
+			script = ((WFMImpl) this.stubService.getWfm()).getWfScriptStub().getScript(scriptName1);
 		}
 		else
 		{

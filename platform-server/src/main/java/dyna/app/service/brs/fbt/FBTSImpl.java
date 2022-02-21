@@ -14,6 +14,8 @@ import dyna.common.exception.ServiceRequestException;
 import dyna.common.util.StringUtils;
 import dyna.net.service.brs.*;
 import dyna.net.service.data.SystemDataService;
+import lombok.AccessLevel;
+import lombok.Getter;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,9 +27,20 @@ import java.util.List;
  *
  * @author Lizw
  */
+@Getter(AccessLevel.PROTECTED)
 @Service public class FBTSImpl extends BusinessRuleService implements FBTS
 {
 	@DubboReference private SystemDataService systemDataService;
+
+	@Autowired
+	private AAS aas;
+	@Autowired
+	private EMM emm;
+	@Autowired
+	private BOAS boas;
+	@Autowired
+	private DSS dss;
+	private CAD cad;
 
 	@Autowired private FoConfigStub  foConfigStub      ;
 	@Autowired private FoItemStub    foItemStub        ;
@@ -102,70 +115,6 @@ import java.util.List;
 		return this.fbtStub;
 	}
 
-	protected synchronized AAS getAAS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(AAS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized EMM getEMM() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(EMM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized BOAS getBOAS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(BOAS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized DSS getDSS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(DSS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized CAD getCAD() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(CAD.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
 
 	/*
 	 * (non-Javadoc)

@@ -13,6 +13,8 @@ import dyna.net.service.brs.EDAP;
 import dyna.net.service.brs.EMM;
 import dyna.net.service.brs.SLC;
 import dyna.net.service.data.SystemDataService;
+import lombok.AccessLevel;
+import lombok.Getter;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,12 +22,15 @@ import org.springframework.stereotype.Service;
 /**
  * SLC System Logical Configuration Implement(系统配置服务)
  *
- * @author caogc
+ * @author Lizw
  */
+@Getter(AccessLevel.PROTECTED)
 @Service public class SLCImpl extends BusinessRuleService implements SLC
 {
-
 	@DubboReference private SystemDataService  systemDataService;
+
+	@Autowired private EMM emm;
+	@Autowired private EDAP edap;
 	@Autowired private      ConfigRuleBOLMStub configRuleBOLMStub ;
 	@Autowired private      RuleReviseStub     ruleReviseStub     ;
 
@@ -48,32 +53,6 @@ import org.springframework.stereotype.Service;
 	protected RuleReviseStub getRuleReviseStub()
 	{
 		return this.ruleReviseStub;
-	}
-
-	protected synchronized EMM getEMM() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(EMM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized EDAP getEDAP() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(EDAP.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
 	}
 
 	@Override public void deleteConfigRuleRevise(String guid) throws ServiceRequestException

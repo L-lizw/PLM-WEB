@@ -445,7 +445,7 @@ public class DataCheckRuleQueryStub extends AbstractServiceStub<DCRImpl>
 			return list;
 		}
 
-		ClassInfo classInfo = this.stubService.getEMM().getClassByName(end1ClassName);
+		ClassInfo classInfo = this.stubService.getEmm().getClassByName(end1ClassName);
 		if (classInfo == null)
 		{
 			return null;
@@ -455,7 +455,7 @@ public class DataCheckRuleQueryStub extends AbstractServiceStub<DCRImpl>
 		if (ruleTypeEnum == RuleTypeEnum.OBJECTFIELD && SetUtils.isNullList(conditionByTypeRuleList))
 		{
 			// 递归取父类
-			ClassInfo klassInfo = this.stubService.getEMM().getClassByName(end1ClassName);
+			ClassInfo klassInfo = this.stubService.getEmm().getClassByName(end1ClassName);
 			if (StringUtils.isNullString(klassInfo.getSuperclass()))
 			{
 				return conditionByTypeRuleList;
@@ -499,7 +499,7 @@ public class DataCheckRuleQueryStub extends AbstractServiceStub<DCRImpl>
 			return;
 		}
 
-		ClassInfo classInfo = this.stubService.getEMM().getClassByName(className);
+		ClassInfo classInfo = this.stubService.getEmm().getClassByName(className);
 		String superClassName = classInfo.getSuperclass();
 		for (CheckRule rule : ruleList)
 		{
@@ -542,7 +542,7 @@ public class DataCheckRuleQueryStub extends AbstractServiceStub<DCRImpl>
 			return;
 		}
 
-		ClassInfo classInfo = this.stubService.getEMM().getClassByName(className);
+		ClassInfo classInfo = this.stubService.getEmm().getClassByName(className);
 		String superClassName = classInfo.getSuperclass();
 		for (CheckRule rule : ruleList)
 		{
@@ -611,7 +611,7 @@ public class DataCheckRuleQueryStub extends AbstractServiceStub<DCRImpl>
 
 	private String getConditionDesc(ClassConditionDetailData detail) throws ServiceRequestException
 	{
-		Map<String, String> messageMap = this.stubService.getMSRM().getMSRMap(this.stubService.getUserSignature().getLanguageEnum().toString());
+		Map<String, String> messageMap = this.stubService.getMsrm().getMSRMap(this.stubService.getUserSignature().getLanguageEnum().toString());
 		String conditionstr = null;
 		if (!SetUtils.isNullList(detail.getDetailDataList()))
 		{
@@ -667,11 +667,11 @@ public class DataCheckRuleQueryStub extends AbstractServiceStub<DCRImpl>
 			return joinTypeTitle + " " + MessageFormat.format(messageMap.get("ID_RM_DOCHECK"), doCheckRule.getName());
 		}
 
-		ClassField field = this.stubService.getEMM().getFieldByName(detail.getClassName(), detail.getFieldName(), false);
+		ClassField field = this.stubService.getEmm().getFieldByName(detail.getClassName(), detail.getFieldName(), false);
 		ClassInfo classInfo = null;
 		try
 		{
-			classInfo = this.stubService.getEMM().getClassByName(detail.getClassName());
+			classInfo = this.stubService.getEmm().getClassByName(detail.getClassName());
 		}
 		catch (ServiceRequestException e)
 		{
@@ -701,7 +701,7 @@ public class DataCheckRuleQueryStub extends AbstractServiceStub<DCRImpl>
 		ClassInfo classInfo = null;
 		try
 		{
-			classInfo = this.stubService.getEMM().getClassByName(className);
+			classInfo = this.stubService.getEmm().getClassByName(className);
 		}
 		catch (ServiceRequestException e)
 		{
@@ -710,14 +710,14 @@ public class DataCheckRuleQueryStub extends AbstractServiceStub<DCRImpl>
 		{
 			return value;
 		}
-		ClassField classField = this.stubService.getEMM().getFieldByName(className, fieldName, false);
+		ClassField classField = this.stubService.getEmm().getFieldByName(className, fieldName, false);
 		if (SystemClassFieldEnum.STATUS.getName().equals(fieldName))
 		{
-			value = this.stubService.getMSRM().getMSRString(SystemStatusEnum.getStatusEnum(value).getMsrId(), locale);
+			value = this.stubService.getMsrm().getMSRString(SystemStatusEnum.getStatusEnum(value).getMsrId(), locale);
 		}
 		else if (SystemClassFieldEnum.LCPHASE.getName().equals(fieldName))
 		{
-			LifecyclePhaseInfo phase = this.stubService.getEMM().getLifecyclePhaseInfo(classInfo.getLifecycleName(), value);
+			LifecyclePhaseInfo phase = this.stubService.getEmm().getLifecyclePhaseInfo(classInfo.getLifecycleName(), value);
 			if (phase != null)
 			{
 				value = StringUtils.getMsrTitle(phase.getTitle(), this.stubService.getUserSignature().getLanguageEnum().getType());
@@ -736,7 +736,7 @@ public class DataCheckRuleQueryStub extends AbstractServiceStub<DCRImpl>
 			else if (classField.getType() == FieldTypeEnum.CLASSIFICATION || classField.getType() == FieldTypeEnum.CODE)
 			{
 				String typeValue = classField.getTypeValue();
-				CodeItemInfo codeItemInfo = this.stubService.getEMM().getCodeItemByName(typeValue, value);
+				CodeItemInfo codeItemInfo = this.stubService.getEmm().getCodeItemByName(typeValue, value);
 				if (codeItemInfo != null)
 				{
 					StringBuffer stringBuffer = new StringBuffer();
@@ -759,7 +759,7 @@ public class DataCheckRuleQueryStub extends AbstractServiceStub<DCRImpl>
 						{
 							stringBuffer.append(";");
 						}
-						CodeItemInfo codeItemInfo = this.stubService.getEMM().getCodeItemByName(typeValue, s);
+						CodeItemInfo codeItemInfo = this.stubService.getEmm().getCodeItemByName(typeValue, s);
 						if (codeItemInfo != null)
 						{
 							stringBuffer.append(StringUtils.getMsrTitle(codeItemInfo.getTitle(), this.stubService.getUserSignature().getLanguageEnum().getType()));

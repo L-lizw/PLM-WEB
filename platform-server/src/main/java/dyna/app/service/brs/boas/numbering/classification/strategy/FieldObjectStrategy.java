@@ -44,7 +44,7 @@ public class FieldObjectStrategy extends FieldStratery
 			return null;
 		}
 
-		EMM emm = this.getService(parameter.dataAccessService, EMM.class);
+		EMM emm = this.stubService.getEmm();
 		ClassInfo subClassInfo = null;
 		if (parameter.numberClassField.getTypeValue() != null)
 		{
@@ -74,7 +74,7 @@ public class FieldObjectStrategy extends FieldStratery
 		{
 			if (subClassInfo.hasInterface(ModelInterfaceEnum.IGroup))
 			{
-				AAS aas = this.getService(parameter.dataAccessService, AAS.class);
+				AAS aas = this.stubService.getAas();
 				Group group = aas.getGroup(subGuid);
 				if (group != null)
 				{
@@ -91,7 +91,7 @@ public class FieldObjectStrategy extends FieldStratery
 			}
 			else if (subClassInfo.hasInterface(ModelInterfaceEnum.IUser))
 			{
-				AAS aas = this.getService(parameter.dataAccessService, AAS.class);
+				AAS aas = this.stubService.getAas();
 				User user = aas.getUser(subGuid);
 				if (user != null)
 				{
@@ -126,7 +126,7 @@ public class FieldObjectStrategy extends FieldStratery
 		// 取值采用默认值时用fileName1，用自定义设置的值时用fieldName2
 		ClassField subClassField = emm.getFieldByName(subClassInfo.getName(), fieldName1.trim(), true);
 		ObjectGuid objectGuid = new ObjectGuid(subClassInfo.getGuid(), null, subGuid, null);
-		BOAS boas = this.getService(parameter.dataAccessService, BOAS.class);
+		BOAS boas = this.stubService;
 		FoundationObject subFoundation = boas.getObject(objectGuid);
 
 		Strategy strategy = ClassificationAllocate.getStrategy(parameter.field, subClassField);

@@ -86,7 +86,7 @@ public class InstFileStub extends AbstractServiceStub<DSSImpl>
 		// instance info
 		ClassStub.decorateObjectGuid(objectGuid, this.stubService);
 
-		ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(objectGuid.getClassGuid());
+		ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(objectGuid.getClassGuid());
 		if (!isPreviewFile && !isIconFile && !classInfo.hasInterface(ModelInterfaceEnum.IStorage))
 		{
 			throw new ServiceRequestException("ID_APP_NOT_STORABLE", "not storable object");
@@ -120,7 +120,7 @@ public class InstFileStub extends AbstractServiceStub<DSSImpl>
 
 		SystemDataService sds = this.stubService.getSystemDataService();
 
-		FoundationObject object = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObjectByGuid(objectGuid, false);
+		FoundationObject object = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObjectByGuid(objectGuid, false);
 
 		ACLItem aclItem = null;
 		isAclCheck = isAclCheck ? !(!object.isCommited() && object.getOwnerUserGuid().equals(this.stubService.getOperatorGuid())) : isAclCheck;
@@ -139,7 +139,7 @@ public class InstFileStub extends AbstractServiceStub<DSSImpl>
 			// // throw new ServiceRequestException("ID_APP_IN_PROCESS", "object in process running.");
 			// }
 
-			aclItem = this.stubService.getACL().getACLItemForObject(objectGuid);
+			aclItem = this.stubService.getAcl().getACLItemForObject(objectGuid);
 		}
 
 		if (isCheckCheckOut && object.isCheckOut() && !this.stubService.getOperatorGuid().equalsIgnoreCase(object.getCheckedOutUserGuid()))
@@ -290,7 +290,7 @@ public class InstFileStub extends AbstractServiceStub<DSSImpl>
 				FoundationObject object = null;
 				if (!isForce)
 				{
-					object = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObjectByGuid(new ObjectGuid(fileInfo.getClassGuid(), null, revisionGuid, null), false);
+					object = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObjectByGuid(new ObjectGuid(fileInfo.getClassGuid(), null, revisionGuid, null), false);
 					isForce = isForce ? isForce : !object.isCommited() && object.getOwnerUserGuid().equals(this.stubService.getOperatorGuid());
 				}
 
@@ -302,12 +302,12 @@ public class InstFileStub extends AbstractServiceStub<DSSImpl>
 						throw new ServiceRequestException("ID_APP_FILE_EDIT_DENY", "file edit deny at status (pre-release, release, obsolete)");
 					}
 
-					if (!StringUtils.isNullString(this.stubService.getWFE().isInRunningProcess(object.getObjectGuid())))
+					if (!StringUtils.isNullString(this.stubService.getWfi().isInRunningProcess(object.getObjectGuid())))
 					{
 						throw new ServiceRequestException("ID_APP_IN_PROCESS", "object in process running.");
 					}
 
-					ACLItem aclItem = this.stubService.getACL().getACLItemForObject(object.getObjectGuid());
+					ACLItem aclItem = this.stubService.getAcl().getACLItemForObject(object.getObjectGuid());
 					if (!aclItem.isDeleteFile())
 					{
 						throw new ServiceRequestException("ID_APP_NO_AUTH_DELETE_FILE", "permission denied, no authorized.");
@@ -397,7 +397,7 @@ public class InstFileStub extends AbstractServiceStub<DSSImpl>
 
 	protected List<DSSFileInfo> listFile(ObjectGuid objectGuid, SearchCondition searchCondition, boolean isCheckAuth, boolean includePreviewFile) throws ServiceRequestException
 	{
-		FoundationObject object = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObject(objectGuid, false);
+		FoundationObject object = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObject(objectGuid, false);
 		if (object == null)
 		{
 			throw new ServiceRequestException("not found object");
@@ -415,7 +415,7 @@ public class InstFileStub extends AbstractServiceStub<DSSImpl>
 			// 变更20130312 listfile时不判断查看权限
 			// if (isCheckAuth)
 			// {
-			// ACLItem aclItem = this.stubService.getACL().getACLItemForObject(objectGuid);
+			// ACLItem aclItem = this.stubService.getAcl().getACLItemForObject(objectGuid);
 			// if (!aclItem.isViewFile())
 			// {
 			// throw new ServiceRequestException("ID_APP_NO_AUTH_VIEW_FILE", "permission denied, no authorized.");
@@ -492,7 +492,7 @@ public class InstFileStub extends AbstractServiceStub<DSSImpl>
 			{
 				if (!StringUtils.isNullString(info.getCreateUserGuid()))
 				{
-					User user = this.stubService.getAAS().getUser(info.getCreateUserGuid());
+					User user = this.stubService.getAas().getUser(info.getCreateUserGuid());
 					info.put(DSSFileInfo.CREATE_USER_NAME, user.getName());
 				}
 			}

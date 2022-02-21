@@ -50,7 +50,7 @@ public class TransFileStub extends AbstractServiceStub<DSSImpl>
 
 	public DSSFileInfo getFileInfoByFileType(ObjectGuid objectGuid, int iterationId, String fileType) throws ServiceRequestException
 	{
-		ACLItem aclItem = this.stubService.getACL().getACLItemForObject(objectGuid);
+		ACLItem aclItem = this.stubService.getAcl().getACLItemForObject(objectGuid);
 		if (!aclItem.isPreviewFile())
 		{
 			throw new ServiceRequestException("ID_APP_NO_AUTH_PREVIEW_FILE", "preview permission denied, no authorized.");
@@ -227,7 +227,7 @@ public class TransFileStub extends AbstractServiceStub<DSSImpl>
 				if (StringUtils.isGuid(tempFileInfo.getClassGuid()))
 				{
 					ObjectGuid objectGuid = new ObjectGuid(tempFileInfo.getClassGuid(), null, tempFileInfo.getRevisionGuid(), null);
-					this.stubService.getFTS().createTransformQueue4Upload(objectGuid, fileGuid);
+					this.stubService.getFts().createTransformQueue4Upload(objectGuid, fileGuid);
 				}
 			}
 		}
@@ -712,10 +712,10 @@ public class TransFileStub extends AbstractServiceStub<DSSImpl>
 			String revisionGuid = fileInfo.getRevisionGuid();
 			if (StringUtils.isGuid(revisionGuid))
 			{
-				FoundationObject object = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub()
+				FoundationObject object = ((BOASImpl) this.stubService.getBoas()).getFoundationStub()
 						.getObjectByGuid(new ObjectGuid(fileInfo.getClassGuid(), null, revisionGuid, null), false);
 
-				ACLItem aclItem = this.stubService.getACL().getACLItemForObject(object.getObjectGuid());
+				ACLItem aclItem = this.stubService.getAcl().getACLItemForObject(object.getObjectGuid());
 				if (checkAuth == AuthorityEnum.DOWNLOADFILE && !aclItem.isDownloadFile())
 				{
 					throw new ServiceRequestException("ID_APP_NO_AUTH_DOWNLOAD_FILE", "permission denied, no authorized.");
@@ -831,10 +831,10 @@ public class TransFileStub extends AbstractServiceStub<DSSImpl>
 		String revisionGuid = fileInfo.getRevisionGuid();
 		if (StringUtils.isGuid(revisionGuid))
 		{
-			FoundationObject object = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObjectByGuid(new ObjectGuid(fileInfo.getClassGuid(), null, revisionGuid, null),
+			FoundationObject object = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObjectByGuid(new ObjectGuid(fileInfo.getClassGuid(), null, revisionGuid, null),
 					false);
 
-			ACLItem aclItem = this.stubService.getACL().getACLItemForObject(object.getObjectGuid());
+			ACLItem aclItem = this.stubService.getAcl().getACLItemForObject(object.getObjectGuid());
 			if (!aclItem.isDownloadFile())
 			{
 				throw new ServiceRequestException("ID_APP_NO_AUTH_DOWNLOAD_FILE", "permission denied, no authorized.");

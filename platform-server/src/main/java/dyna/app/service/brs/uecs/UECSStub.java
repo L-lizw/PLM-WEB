@@ -39,7 +39,7 @@ import java.util.*;
 /**
  * ECS的公共方法
  * 
- * @author wangweixia
+ * @author Lizw
  * 
  */
 @Component
@@ -55,7 +55,7 @@ public class UECSStub extends AbstractServiceStub<UECSImpl>
 			foundationObject.put((sid).toUpperCase(), object.getGuid());
 			if (StringUtils.isNullString(object.getMasterGuid()))
 			{
-				FoundationObject fMasterItem = this.stubService.getBOAS().getObjectByGuid(object);
+				FoundationObject fMasterItem = this.stubService.getBoas().getObjectByGuid(object);
 				String masterGuid = fMasterItem.getObjectGuid().getMasterGuid();
 				foundationObject.put((sid + UpdatedECSConstants.MASTER).toUpperCase(), masterGuid);
 			}
@@ -86,7 +86,7 @@ public class UECSStub extends AbstractServiceStub<UECSImpl>
 		{
 			throw new ServiceRequestException("ID_APP_UECRECPSTUB_TEMPLATE_NULL", "the template is null", null, "'");
 		}
-		RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateByName(end1ObjectGuid, strings[0]);
+		RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateByName(end1ObjectGuid, strings[0]);
 		if (relationTemplate == null)
 		{
 			throw new ServiceRequestException("ID_APP_UECRECPSTUB_TEMPLATE_NULL", "the template is null", null, strings[0]);
@@ -98,22 +98,22 @@ public class UECSStub extends AbstractServiceStub<UECSImpl>
 			{
 				structureClassName = StructureObject.STRUCTURE_CLASS_NAME;
 			}
-			structureObject = this.stubService.getBOAS().newStructureObject(null, structureClassName);
+			structureObject = this.stubService.getBoas().newStructureObject(null, structureClassName);
 			structureObject.setObjectGuid(new ObjectGuid(relationTemplate.getStructureClassGuid(), relationTemplate.getStructureClassName(), null, null));
 			structureObject.put("StructureClassName", relationTemplate.getStructureClassName());
 			structureObject.put("viewName", relationTemplate.getName());
 		}
 
-		RelationStub relationStub = ((BOASImpl) this.stubService.getBOAS()).getRelationStub();
+		RelationStub relationStub = ((BOASImpl) this.stubService.getBoas()).getRelationStub();
 		ViewObject viewObject = null;
-		viewObject = this.stubService.getBOAS().getRelationByEND1(end1ObjectGuid, relationTemplate.getName());
+		viewObject = this.stubService.getBoas().getRelationByEND1(end1ObjectGuid, relationTemplate.getName());
 
 		// 先创建一个View 然后再关联
 		if (viewObject == null)
 		{
 			viewObject = relationStub.saveRelationByTemplate(relationTemplate.getGuid(), end1ObjectGuid, false, null);
 		}
-		((BOASImpl) this.stubService.getBOAS()).getRelationLinkStub().link(viewObject.getObjectGuid(), end2ObjectGuid, structureObject, false, proGuid);
+		((BOASImpl) this.stubService.getBoas()).getRelationLinkStub().link(viewObject.getObjectGuid(), end2ObjectGuid, structureObject, false, proGuid);
 
 	}
 
@@ -129,7 +129,7 @@ public class UECSStub extends AbstractServiceStub<UECSImpl>
 		{
 			try
 			{
-				this.stubService.getBOAS().getObject(foundation.getObjectGuid());
+				this.stubService.getBoas().getObject(foundation.getObjectGuid());
 			}
 			catch (ServiceRequestException e)
 			{
@@ -144,13 +144,13 @@ public class UECSStub extends AbstractServiceStub<UECSImpl>
 			}
 			if (foundation.isCheckOut())
 			{
-				foundation = this.stubService.getBOAS().checkIn(foundation, false);
+				foundation = this.stubService.getBoas().checkIn(foundation, false);
 			}
 			// 如果对象是ECO，则先解锁
 			String classguid = foundation.getObjectGuid().getClassGuid();
 			if (StringUtils.isGuid(classguid))
 			{
-				ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(classguid);
+				ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(classguid);
 				if (classInfo != null)
 				{
 					if (classInfo.hasInterface(ModelInterfaceEnum.IECOM))
@@ -159,7 +159,7 @@ public class UECSStub extends AbstractServiceStub<UECSImpl>
 					}
 				}
 			}
-			((BOASImpl) this.stubService.getBOAS()).getFoundationStub().deleteObject(foundation, false);
+			((BOASImpl) this.stubService.getBoas()).getFoundationStub().deleteObject(foundation, false);
 		}
 	}
 
@@ -178,7 +178,7 @@ public class UECSStub extends AbstractServiceStub<UECSImpl>
 		List<BOMStructure> returnValue = null;
 		if (end1ObjectGuid != null && end2ObjectGuid != null && !StringUtils.isNullString(viewName))
 		{
-			List<BOMStructure> listStructure = this.stubService.getBOMS().listBOM(end1ObjectGuid, viewName, null, null, null);
+			List<BOMStructure> listStructure = this.stubService.getBoms().listBOM(end1ObjectGuid, viewName, null, null, null);
 			if (!SetUtils.isNullList(listStructure))
 			{
 				returnValue = new ArrayList<BOMStructure>();
@@ -199,19 +199,19 @@ public class UECSStub extends AbstractServiceStub<UECSImpl>
 	{
 		String ownerUserGuid = this.stubService.getUserSignature().getUserGuid();
 		String ownerGroupGuid = this.stubService.getUserSignature().getLoginGroupGuid();
-		return ((BOASImpl) this.stubService.getBOAS()).getFSaverStub().createObject(foundationObject, null, ownerGroupGuid, ownerUserGuid, false, true, true, true, null, true);
+		return ((BOASImpl) this.stubService.getBoas()).getFSaverStub().createObject(foundationObject, null, ownerGroupGuid, ownerUserGuid, false, true, true, true, null, true);
 	}
 
 	public FoundationObject updateLifeCyclePhase(ObjectGuid objectGuid, String lifeCyclePhaseOriginal, String lifeCyclePhaseDest) throws ServiceRequestException
 	{
 		if (StringUtils.isGuid(lifeCyclePhaseOriginal) && StringUtils.isGuid(lifeCyclePhaseDest))
 		{
-			EMM emm = this.stubService.getEMM();
+			EMM emm = this.stubService.getEmm();
 			LifecyclePhaseInfo srcPhase = emm.getLifecyclePhaseInfo(lifeCyclePhaseOriginal);
 			LifecyclePhaseInfo destPhase = emm.getLifecyclePhaseInfo(lifeCyclePhaseDest);
-			return ((BOASImpl) this.stubService.getBOAS()).getFUpdaterStub().updateLifeCyclePhase(objectGuid, new Date(), srcPhase, destPhase, false);
+			return ((BOASImpl) this.stubService.getBoas()).getFUpdaterStub().updateLifeCyclePhase(objectGuid, new Date(), srcPhase, destPhase, false);
 		}
-		return this.stubService.getBOAS().getObject(objectGuid);
+		return this.stubService.getBoas().getObject(objectGuid);
 
 	}
 
@@ -223,7 +223,7 @@ public class UECSStub extends AbstractServiceStub<UECSImpl>
 	private void putSolveItemInWorkFlow(FoundationObject eco, List<FoundationObject> allAttachMent) throws ServiceRequestException
 	{
 		// 查看ECO下面是否有解决对象
-		ViewObject ecoViewObject = this.stubService.getBOAS().getRelationByEND1(eco.getObjectGuid(), UpdatedECSConstants.ECO_CHANGEITEMAFTER$);
+		ViewObject ecoViewObject = this.stubService.getBoas().getRelationByEND1(eco.getObjectGuid(), UpdatedECSConstants.ECO_CHANGEITEMAFTER$);
 		if (ecoViewObject != null && ecoViewObject.getObjectGuid() != null)
 		{
 			List<FoundationObject> listSolveFo = this.listFoundationObjectOfRelation(ecoViewObject.getObjectGuid(), null);
@@ -241,17 +241,17 @@ public class UECSStub extends AbstractServiceStub<UECSImpl>
 
 	public void sendMailtoPerformerByScript(String procRtGuid) throws ServiceRequestException
 	{
-		List<ProcAttach> listAllValidProcAttach = this.stubService.getWFI().listProcAttach(procRtGuid);
+		List<ProcAttach> listAllValidProcAttach = this.stubService.getWfi().listProcAttach(procRtGuid);
 		if (SetUtils.isNullList(listAllValidProcAttach))
 		{
 			return;
 		}
 		for (ProcAttach procAttach : listAllValidProcAttach)
 		{
-			FoundationObject procFoundation = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObjectByGuid(
+			FoundationObject procFoundation = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObjectByGuid(
 					new ObjectGuid(procAttach.getInstanceClassGuid(), null, procAttach.getInstanceGuid(), null), false);
-			procFoundation = this.stubService.getBOAS().getObject(procFoundation.getObjectGuid());
-			ClassInfo procClassInfo = this.stubService.getEMM().getClassByGuid(procFoundation.getObjectGuid().getClassGuid());
+			procFoundation = this.stubService.getBoas().getObject(procFoundation.getObjectGuid());
+			ClassInfo procClassInfo = this.stubService.getEmm().getClassByGuid(procFoundation.getObjectGuid().getClassGuid());
 			if (procClassInfo == null)
 			{
 				continue;
@@ -262,7 +262,7 @@ public class UECSStub extends AbstractServiceStub<UECSImpl>
 				String receiver = "";
 				if (procFoundation.get("PERFORMER") != null && StringUtils.isGuid((String) procFoundation.get("PERFORMER")))
 				{
-					User user = this.stubService.getAAS().getUser((String) procFoundation.get("PERFORMER"));
+					User user = this.stubService.getAas().getUser((String) procFoundation.get("PERFORMER"));
 					if (user != null)
 					{
 						receiver = (String) procFoundation.get("PERFORMER");
@@ -272,7 +272,7 @@ public class UECSStub extends AbstractServiceStub<UECSImpl>
 				{
 					if (procFoundation.getOwnerUserGuid() != null && StringUtils.isGuid(procFoundation.getOwnerUserGuid()))
 					{
-						User user = this.stubService.getAAS().getUser(procFoundation.getOwnerUserGuid());
+						User user = this.stubService.getAas().getUser(procFoundation.getOwnerUserGuid());
 						if (user != null)
 						{
 							receiver = procFoundation.getOwnerUserGuid();
@@ -286,7 +286,7 @@ public class UECSStub extends AbstractServiceStub<UECSImpl>
 
 				LanguageEnum languageEnum = this.stubService.getUserSignature().getLanguageEnum();
 				// subject:ECO执行通知
-				String subject = this.stubService.getMSRM().getMSRString("ID_APP_UECS_SENDMAIL_TOECO_PERFORMER_SUBJECT", languageEnum.toString());
+				String subject = this.stubService.getMsrm().getMSRString("ID_APP_UECS_SENDMAIL_TOECO_PERFORMER_SUBJECT", languageEnum.toString());
 				if (StringUtils.isNullString(subject))
 				{
 					subject = "ID_APP_UECS_SENDMAIL_TOECO_PERFORMER_SUBJECT";
@@ -306,7 +306,7 @@ public class UECSStub extends AbstractServiceStub<UECSImpl>
 				if (ecnFoundation != null)
 				{
 					// 请执行隶属于ECN{0}(ECN的编号加名称)的ECO{1}（ECN的编号加变更主题）
-					String contents = this.stubService.getMSRM().getMSRString("ID_APP_UECS_SENDMAIL_TOECO_PERFORMER_CONTENTS_1", languageEnum.toString());
+					String contents = this.stubService.getMsrm().getMSRString("ID_APP_UECS_SENDMAIL_TOECO_PERFORMER_CONTENTS_1", languageEnum.toString());
 					if (StringUtils.isNullString(contents))
 					{
 						contents = "ID_APP_UECS_SENDMAIL_TOECO_PERFORMER_CONTENTS_1";
@@ -318,7 +318,7 @@ public class UECSStub extends AbstractServiceStub<UECSImpl>
 				else
 				{
 					// 请执行ECO{0}（ECN的编号加变更主题）
-					String contents = this.stubService.getMSRM().getMSRString("ID_APP_UECS_SENDMAIL_TOECO_PERFORMER_CONTENTS_2", languageEnum.toString());
+					String contents = this.stubService.getMsrm().getMSRString("ID_APP_UECS_SENDMAIL_TOECO_PERFORMER_CONTENTS_2", languageEnum.toString());
 					if (StringUtils.isNullString(contents))
 					{
 						contents = "ID_APP_UECS_SENDMAIL_TOECO_PERFORMER_CONTENTS_2";
@@ -329,7 +329,7 @@ public class UECSStub extends AbstractServiceStub<UECSImpl>
 
 				List<ObjectGuid> objectGuidList = new ArrayList<ObjectGuid>();
 				objectGuidList.add(procFoundation.getObjectGuid());
-				this.stubService.getSMS().sendMailToUser(subject, contentsMsr, MailCategoryEnum.INFO, objectGuidList, receiver, MailMessageType.ECNOTIFY);
+				this.stubService.getSms().sendMailToUser(subject, contentsMsr, MailCategoryEnum.INFO, objectGuidList, receiver, MailMessageType.ECNOTIFY);
 			}
 		}
 	}
@@ -343,7 +343,7 @@ public class UECSStub extends AbstractServiceStub<UECSImpl>
 	 */
 	public void checkAttachMent(String procRtGuid) throws ServiceRequestException
 	{
-		List<ProcAttach> listAllValidProcAttach = this.stubService.getWFI().listProcAttach(procRtGuid);
+		List<ProcAttach> listAllValidProcAttach = this.stubService.getWfi().listProcAttach(procRtGuid);
 		if (SetUtils.isNullList(listAllValidProcAttach))
 		{
 			return;
@@ -351,7 +351,7 @@ public class UECSStub extends AbstractServiceStub<UECSImpl>
 		Map<String, FoundationObject> procAttachMap = new HashMap<String, FoundationObject>();
 		for (ProcAttach procAttach : listAllValidProcAttach)
 		{
-			FoundationObject fObj = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObjectByGuid(
+			FoundationObject fObj = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObjectByGuid(
 					new ObjectGuid(procAttach.getInstanceClassGuid(), null, procAttach.getInstanceGuid(), null), false);
 			procAttachMap.put(procAttach.getInstanceGuid(), fObj);
 		}
@@ -359,7 +359,7 @@ public class UECSStub extends AbstractServiceStub<UECSImpl>
 		for (String keyString : procAttachMap.keySet())
 		{
 			FoundationObject procFoundation = procAttachMap.get(keyString);
-			ClassInfo procAttachClassInfo = this.stubService.getEMM().getClassByGuid(procFoundation.getObjectGuid().getClassGuid());
+			ClassInfo procAttachClassInfo = this.stubService.getEmm().getClassByGuid(procFoundation.getObjectGuid().getClassGuid());
 			if (procAttachClassInfo.hasInterface(ModelInterfaceEnum.IUpdatedECN))
 			{
 				List<FoundationObject> ecoList = this.stubService.getUECQueryStub().getECOByECNAll(procFoundation.getObjectGuid());
@@ -369,7 +369,7 @@ public class UECSStub extends AbstractServiceStub<UECSImpl>
 				}
 				for (FoundationObject ecoObj : ecoList)
 				{
-					LifecyclePhaseInfo ecoLifephase = this.stubService.getEMM().getLifecyclePhaseInfo(ecoObj.getLifecyclePhaseGuid());
+					LifecyclePhaseInfo ecoLifephase = this.stubService.getEmm().getLifecyclePhaseInfo(ecoObj.getLifecyclePhaseGuid());
 					if (ecoLifephase.getName().equals(ECOLifecyclePhaseEnum.Performing.name()) && !"Y".equals(ecoObj.get(UpdatedECSConstants.isCompleted)))
 					{
 						throw new ServiceRequestException("ID_APP_UECSSTUB_ECO_NOT_COMPLETE", "eco not complete", null, ecoObj.getFullName());
@@ -380,8 +380,8 @@ public class UECSStub extends AbstractServiceStub<UECSImpl>
 					{
 						for (FoundationObject fo : attachMent)
 						{
-							ClassInfo foClassInfo = this.stubService.getEMM().getClassByGuid(fo.getObjectGuid().getClassGuid());
-							LifecyclePhaseInfo foLifecyclePhase = this.stubService.getEMM().getLifecyclePhaseInfo(fo.getLifecyclePhaseGuid());
+							ClassInfo foClassInfo = this.stubService.getEmm().getClassByGuid(fo.getObjectGuid().getClassGuid());
+							LifecyclePhaseInfo foLifecyclePhase = this.stubService.getEmm().getLifecyclePhaseInfo(fo.getLifecyclePhaseGuid());
 							if (foClassInfo.hasInterface(ModelInterfaceEnum.IUpdatedECN) && foLifecyclePhase.getName().equals(ECNLifecyclePhaseEnum.Canceled.name()))
 							{
 								continue;
@@ -402,8 +402,8 @@ public class UECSStub extends AbstractServiceStub<UECSImpl>
 			}
 			else if (procAttachClassInfo.hasInterface(ModelInterfaceEnum.IECOM))
 			{
-				FoundationObject ecoObj = this.stubService.getBOAS().getObject(procFoundation.getObjectGuid());
-				LifecyclePhaseInfo ecoLifephase = this.stubService.getEMM().getLifecyclePhaseInfo(ecoObj.getLifecyclePhaseGuid());
+				FoundationObject ecoObj = this.stubService.getBoas().getObject(procFoundation.getObjectGuid());
+				LifecyclePhaseInfo ecoLifephase = this.stubService.getEmm().getLifecyclePhaseInfo(ecoObj.getLifecyclePhaseGuid());
 				if (ecoLifephase.getName().equals(ECOLifecyclePhaseEnum.Performing.name()) && !"Y".equals(ecoObj.get(UpdatedECSConstants.isCompleted)))
 				{
 					throw new ServiceRequestException("ID_APP_UECSSTUB_ECO_NOT_COMPLETE", "eco not complete", null, ecoObj.getFullName());
@@ -414,8 +414,8 @@ public class UECSStub extends AbstractServiceStub<UECSImpl>
 				{
 					for (FoundationObject fo : attachMent)
 					{
-						ClassInfo foClassInfo = this.stubService.getEMM().getClassByGuid(fo.getObjectGuid().getClassGuid());
-						LifecyclePhaseInfo foLifecyclePhase = this.stubService.getEMM().getLifecyclePhaseInfo(fo.getLifecyclePhaseGuid());
+						ClassInfo foClassInfo = this.stubService.getEmm().getClassByGuid(fo.getObjectGuid().getClassGuid());
+						LifecyclePhaseInfo foLifecyclePhase = this.stubService.getEmm().getLifecyclePhaseInfo(fo.getLifecyclePhaseGuid());
 						if (foClassInfo.hasInterface(ModelInterfaceEnum.IUpdatedECN) && foLifecyclePhase.getName().equals(ECNLifecyclePhaseEnum.Canceled.name()))
 						{
 							continue;
@@ -460,7 +460,7 @@ public class UECSStub extends AbstractServiceStub<UECSImpl>
 	 */
 	public void addAttachMent(String procRtGuid) throws ServiceRequestException
 	{
-		List<ProcAttach> listAllValidProcAttach = this.stubService.getWFI().listProcAttach(procRtGuid);
+		List<ProcAttach> listAllValidProcAttach = this.stubService.getWfi().listProcAttach(procRtGuid);
 		if (SetUtils.isNullList(listAllValidProcAttach))
 		{
 			return;
@@ -470,7 +470,7 @@ public class UECSStub extends AbstractServiceStub<UECSImpl>
 		Map<String, FoundationObject> procAttachMap = new HashMap<String, FoundationObject>();
 		for (ProcAttach procAttach : listAllValidProcAttach)
 		{
-			FoundationObject fObj = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObjectByGuid(
+			FoundationObject fObj = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObjectByGuid(
 					new ObjectGuid(procAttach.getInstanceClassGuid(), null, procAttach.getInstanceGuid(), null), false);
 			procAttachMap.put(procAttach.getInstanceGuid(), fObj);
 		}
@@ -478,7 +478,7 @@ public class UECSStub extends AbstractServiceStub<UECSImpl>
 		for (String keyString : procAttachMap.keySet())
 		{
 			FoundationObject procFoundation = procAttachMap.get(keyString);
-			ClassInfo procAttachClassInfo = this.stubService.getEMM().getClassByGuid(procFoundation.getObjectGuid().getClassGuid());
+			ClassInfo procAttachClassInfo = this.stubService.getEmm().getClassByGuid(procFoundation.getObjectGuid().getClassGuid());
 			if (procAttachClassInfo.hasInterface(ModelInterfaceEnum.IUpdatedECN))
 			{
 				List<FoundationObject> ecoList = this.stubService.getUECQueryStub().getECOByECNAll(procFoundation.getObjectGuid());
@@ -559,19 +559,19 @@ public class UECSStub extends AbstractServiceStub<UECSImpl>
 		if (!SetUtils.isNullList(tmpBeAddedProcList))
 		{
 			ProcAttach[] settings = tmpBeAddedProcList.toArray(new ProcAttach[tmpBeAddedProcList.size()]);
-			this.stubService.getWFI().addAttachment(procRtGuid, settings);
+			this.stubService.getWfi().addAttachment(procRtGuid, settings);
 		}
 	}
 
 	protected List<StructureObject> listStructureObjects(ObjectGuid end1ObjectGuid, String relationTemplate) throws ServiceRequestException
 	{
-		RelationTemplateInfo relationChangeItemBefore = this.stubService.getEMM().getRelationTemplateByName(end1ObjectGuid, relationTemplate);
+		RelationTemplateInfo relationChangeItemBefore = this.stubService.getEmm().getRelationTemplateByName(end1ObjectGuid, relationTemplate);
 		if (relationChangeItemBefore == null)
 		{
 			return null;
 		}
 		SearchCondition searchCondition = SearchConditionFactory.createSearchConditionForStructure(relationChangeItemBefore.getStructureClassName());
-		List<ClassField> classFieldList = this.stubService.getEMM().listFieldOfClass(relationChangeItemBefore.getStructureClassName());
+		List<ClassField> classFieldList = this.stubService.getEmm().listFieldOfClass(relationChangeItemBefore.getStructureClassName());
 		if (!SetUtils.isNullList(classFieldList))
 		{
 			for (ClassField classField : classFieldList)
@@ -579,7 +579,7 @@ public class UECSStub extends AbstractServiceStub<UECSImpl>
 				searchCondition.addResultField(classField.getName());
 			}
 		}
-		return ((BOASImpl) this.stubService.getBOAS()).getRelationStub().listObjectOfRelation(end1ObjectGuid, relationTemplate, searchCondition, null, null, false);
+		return ((BOASImpl) this.stubService.getBoas()).getRelationStub().listObjectOfRelation(end1ObjectGuid, relationTemplate, searchCondition, null, null, false);
 	}
 
 	/**
@@ -592,7 +592,7 @@ public class UECSStub extends AbstractServiceStub<UECSImpl>
 	protected StructureObject getStructureObject(String structureObjectGuid, String className) throws ServiceRequestException
 	{
 		SearchCondition searchCondition = SearchConditionFactory.createSearchConditionForStructure(className);
-		List<ClassField> classFieldList = this.stubService.getEMM().listFieldOfClass(className);
+		List<ClassField> classFieldList = this.stubService.getEmm().listFieldOfClass(className);
 		if (!SetUtils.isNullList(classFieldList))
 		{
 			for (ClassField classField : classFieldList)
@@ -603,7 +603,7 @@ public class UECSStub extends AbstractServiceStub<UECSImpl>
 		ObjectGuid oldBom=new ObjectGuid();
 		oldBom.setGuid(structureObjectGuid);
 		oldBom.setClassName(className);
-		return ((BOASImpl) this.stubService.getBOAS()).getStructureStub().getStructureObject(oldBom, searchCondition, false, null);
+		return ((BOASImpl) this.stubService.getBoas()).getStructureStub().getStructureObject(oldBom, searchCondition, false, null);
 	}
 
 	/**
@@ -615,12 +615,12 @@ public class UECSStub extends AbstractServiceStub<UECSImpl>
 	 */
 	protected List<FoundationObject> listFoundationObjectOfRelation(ObjectGuid viewObject, SearchCondition searchCondition) throws ServiceRequestException
 	{
-		return ((BOASImpl) this.stubService.getBOAS()).getRelationStub().listFoundationObjectOfRelation(viewObject, searchCondition, null, null, false);
+		return ((BOASImpl) this.stubService.getBoas()).getRelationStub().listFoundationObjectOfRelation(viewObject, searchCondition, null, null, false);
 	}
 
 	public void unlockFoundation(String procRtGuid) throws ServiceRequestException
 	{
-		List<ProcAttach> listAllValidProcAttach = this.stubService.getWFI().listProcAttach(procRtGuid);
+		List<ProcAttach> listAllValidProcAttach = this.stubService.getWfi().listProcAttach(procRtGuid);
 		if (SetUtils.isNullList(listAllValidProcAttach))
 		{
 			return;
@@ -629,13 +629,13 @@ public class UECSStub extends AbstractServiceStub<UECSImpl>
 		{
 			try
 			{
-				ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(oraginAttach.getInstanceClassGuid());
+				ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(oraginAttach.getInstanceClassGuid());
 				if (classInfo != null)
 				{
 					if (classInfo.hasInterface(ModelInterfaceEnum.IECOM))
 					{
 						// 解锁其对应的解决对象
-						FoundationObject foun = this.stubService.getBOAS().getObjectByGuid(
+						FoundationObject foun = this.stubService.getBoas().getObjectByGuid(
 								new ObjectGuid(oraginAttach.getInstanceClassGuid(), null, oraginAttach.getInstanceGuid(), null));
 						if (foun != null)
 						{

@@ -13,6 +13,8 @@ import dyna.common.util.SetUtils;
 import dyna.net.service.brs.*;
 import dyna.net.service.das.MSRM;
 import dyna.net.service.data.SystemDataService;
+import lombok.AccessLevel;
+import lombok.Getter;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,11 +23,31 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 
+@Getter(AccessLevel.PROTECTED)
 @Service
 public class FTSImpl extends BusinessRuleService implements FTS
 {
 	@DubboReference
 	private SystemDataService   systemDataService;
+
+	@Autowired
+	private AAS aas;
+	@Autowired
+	private BOAS boas;
+	@Autowired
+	private DSS dss;
+	@Autowired
+	private EMM emm;
+	@Autowired
+	private LIC lic;
+	@Autowired
+	private MSRM msrm;
+	@Autowired
+	private SMS sms;
+	@Autowired
+	private WFM wfm;
+	@Autowired
+	private WFI wfi;
 
 	@Autowired
 	private TransformStub		transformStub		= null;
@@ -59,123 +81,6 @@ public class FTSImpl extends BusinessRuleService implements FTS
 	protected SystemDataService getSystemDataService()
 	{
 		return this.systemDataService;
-	}
-
-	protected synchronized DSS getDSS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(DSS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized EMM getEMM() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(EMM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized LIC getLIC() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(LIC.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized SMS getSMS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(SMS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized BOAS getBOAS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(BOAS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized WFM getWFM() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(WFM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized AAS getAAS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(AAS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized WFI getWFI() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(WFI.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	protected synchronized MSRM getMSRM() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(MSRM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
 	}
 
 	public TransformStub getTransformStub()

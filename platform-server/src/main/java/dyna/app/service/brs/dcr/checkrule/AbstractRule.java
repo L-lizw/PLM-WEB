@@ -92,7 +92,7 @@ public abstract class AbstractRule extends AbstractCondition implements Serializ
 	/**
 	 * 判断foundationObject是不是classCondition指定的类或者其子类
 	 * 
-	 * @param condition
+	 * @param classCondition
 	 * @param foundationObject
 	 * @return
 	 */
@@ -103,10 +103,10 @@ public abstract class AbstractRule extends AbstractCondition implements Serializ
 		{
 			return true;
 		}
-		ClassInfo foClassInfo = super.getServiceInstance(EMM.class).getClassByName(foClassName);
+		ClassInfo foClassInfo = this.stubService.getEmm().getClassByName(foClassName);
 		while (!StringUtils.isNullString(foClassInfo.getSuperclass()))
 		{
-			foClassInfo = super.getServiceInstance(EMM.class).getClassByName(foClassInfo.getSuperclass());
+			foClassInfo = this.stubService.getEmm().getClassByName(foClassInfo.getSuperclass());
 			if (foClassInfo.getName().equals(classCondition.getClassName()))
 			{
 				return true;

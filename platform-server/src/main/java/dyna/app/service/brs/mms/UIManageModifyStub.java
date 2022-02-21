@@ -35,9 +35,9 @@ public class UIManageModifyStub extends AbstractServiceStub<MMSImpl>
 			if (!SetUtils.isNullList(sourceUIList))
 			{
 				// 复制来源类
-				ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(sourceUIList.get(0).getClassGuid());
+				ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(sourceUIList.get(0).getClassGuid());
 				// 目的类
-				ClassInfo toClassInfo = this.stubService.getEMM().getClassByGuid(toclassGuid);
+				ClassInfo toClassInfo = this.stubService.getEmm().getClassByGuid(toclassGuid);
 				if (toClassInfo != null)
 				{
 					for (UIObjectInfo uiObjectInfo : sourceUIList)
@@ -84,7 +84,7 @@ public class UIManageModifyStub extends AbstractServiceStub<MMSImpl>
 			String newUiObjectGuid = sds.save(newUIObjectInfo);
 
 			Map<String, String> canUseFieldNameguidMap = new HashMap<String, String>();
-			List<ClassField> allFieldList = this.stubService.getEMM().listFieldOfClass(toClassInfo.getName());
+			List<ClassField> allFieldList = this.stubService.getEmm().listFieldOfClass(toClassInfo.getName());
 			if (!SetUtils.isNullList(allFieldList))
 			{
 				for (ClassField classField : allFieldList)
@@ -93,7 +93,7 @@ public class UIManageModifyStub extends AbstractServiceStub<MMSImpl>
 				}
 			}
 
-			List<UIField> uiFieldList = this.stubService.getEMM().listUIFieldByUIGuid(sourceUIObjectInfo.getGuid());
+			List<UIField> uiFieldList = this.stubService.getEmm().listUIFieldByUIGuid(sourceUIObjectInfo.getGuid());
 			if (!SetUtils.isNullList(uiFieldList))
 			{
 				for (UIField uiField : uiFieldList)
@@ -112,7 +112,7 @@ public class UIManageModifyStub extends AbstractServiceStub<MMSImpl>
 
 				}
 			}
-			List<UIAction> uiActionList = this.stubService.getEMM().listUIAction(sourceUIObjectInfo.getGuid());
+			List<UIAction> uiActionList = this.stubService.getEmm().listUIAction(sourceUIObjectInfo.getGuid());
 			if (!SetUtils.isNullList(uiActionList))
 			{
 				for (UIAction uiAction : uiActionList)
@@ -150,9 +150,9 @@ public class UIManageModifyStub extends AbstractServiceStub<MMSImpl>
 			if (!SetUtils.isNullList(sourceUIList))
 			{
 				// 复制来源分类子项
-				CodeItemInfo code = this.stubService.getEMM().getCodeItem(sourceUIList.get(0).getClassificationGuid());
+				CodeItemInfo code = this.stubService.getEmm().getCodeItem(sourceUIList.get(0).getClassificationGuid());
 				// 目的分类子项
-				CodeItemInfo toCodeItemInfo = this.stubService.getEMM().getCodeItem(toCodeItemGuid);
+				CodeItemInfo toCodeItemInfo = this.stubService.getEmm().getCodeItem(toCodeItemGuid);
 				if (toCodeItemInfo != null)
 				{
 					for (ClassificationUIInfo uiObjectInfo : sourceUIList)
@@ -198,7 +198,7 @@ public class UIManageModifyStub extends AbstractServiceStub<MMSImpl>
 			String newUiObjectGuid = sds.save(newUIObjectInfo);
 
 			Map<String, String> canUseFieldNameguidMap = new HashMap<String, String>();
-			List<ClassField> allFieldList = this.stubService.getEMM().listClassificationField(toClassificationItem.getGuid());
+			List<ClassField> allFieldList = this.stubService.getEmm().listClassificationField(toClassificationItem.getGuid());
 			if (!SetUtils.isNullList(allFieldList))
 			{
 				for (ClassField classField : allFieldList)
@@ -207,7 +207,7 @@ public class UIManageModifyStub extends AbstractServiceStub<MMSImpl>
 				}
 			}
 
-			List<UIField> uiFieldList = this.stubService.getEMM().listCFUIField(sourceUIObjectInfo.getGuid());
+			List<UIField> uiFieldList = this.stubService.getEmm().listCFUIField(sourceUIObjectInfo.getGuid());
 			if (!SetUtils.isNullList(uiFieldList))
 			{
 				for (UIField uiField : uiFieldList)

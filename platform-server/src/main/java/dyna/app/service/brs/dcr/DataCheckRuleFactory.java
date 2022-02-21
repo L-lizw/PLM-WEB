@@ -13,6 +13,7 @@ import dyna.app.service.brs.dcr.checkrule.ERPRule;
 import dyna.app.service.brs.dcr.checkrule.ICondition;
 import dyna.app.service.brs.dcr.checkrule.RelationRule;
 import dyna.app.service.brs.dcr.checkrule.WFRule;
+import dyna.app.util.SpringUtil;
 import dyna.common.bean.data.FoundationObject;
 import dyna.common.bean.data.ObjectGuid;
 import dyna.common.bean.data.checkrule.CheckRule;
@@ -185,16 +186,11 @@ public class DataCheckRuleFactory
 					if (StringUtils.isGuid(guid) && StringUtils.isGuid(classGuid))
 					{
 						ObjectGuid objectGuid = new ObjectGuid(classGuid, null, guid, null);
-						try
-						{
-							BOAS boas = service.getRefService(BOAS.class);
-							FoundationObject fieldObject = boas.getObjectNotCheckAuthor(objectGuid);
-							return getRule(doCheckRule, (FoundationObject) checkRule.getTempObject(), fieldObject);
-						}
-						catch (ServiceNotFoundException e)
-						{
-							throw new ServiceRequestException(null, null, e);
-						}
+
+						BOAS boas = SpringUtil.getBean(BOAS.class);
+						FoundationObject fieldObject = boas.getObjectNotCheckAuthor(objectGuid);
+						return getRule(doCheckRule, (FoundationObject) checkRule.getTempObject(), fieldObject);
+
 					}
 				}
 			}
@@ -207,21 +203,15 @@ public class DataCheckRuleFactory
 	{
 		String fieldName = detail.getFieldName();
 
-		try
+		EMM emm = SpringUtil.getBean(EMM.class);
+		FieldTypeEnum fieldType = null;
+		ClassField classField = emm.getFieldByName(detail.getClassName(), fieldName, true);
+		if (classField != null)
 		{
-			EMM emm = service.getRefService(EMM.class);
-			FieldTypeEnum fieldType = null;
-			ClassField classField = emm.getFieldByName(detail.getClassName(), fieldName, true);
-			if (classField != null)
-			{
-				fieldType = classField.getType();
-			}
-			return FieldConditionFactory.getFieldCondition(fieldName, fieldType, detail.getOperator(), detail.getValue());
+			fieldType = classField.getType();
 		}
-		catch (ServiceNotFoundException e)
-		{
-			throw new ServiceRequestException(null, null, e);
-		}
+		return FieldConditionFactory.getFieldCondition(fieldName, fieldType, detail.getOperator(), detail.getValue());
+
 	}
 
 	public static void init(DataAccessService service_)

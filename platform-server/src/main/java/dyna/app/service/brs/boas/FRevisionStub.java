@@ -96,7 +96,7 @@ public class FRevisionStub extends AbstractServiceStub<BOASImpl>
 			String bmGuid = this.stubService.getUserSignature().getLoginGroupBMGuid();
 
 			// get ui model object for this object.
-			List<UIObjectInfo> uiObjectList = ((EMMImpl) this.stubService.getEMM()).listUIObjectInCurrentBizModel(objectGuid.getClassName(), UITypeEnum.FORM, true);
+			List<UIObjectInfo> uiObjectList = ((EMMImpl) this.stubService.getEmm()).listUIObjectInCurrentBizModel(objectGuid.getClassName(), UITypeEnum.FORM, true);
 
 			if (!SetUtils.isNullList(uiObjectList))
 			{
@@ -119,7 +119,7 @@ public class FRevisionStub extends AbstractServiceStub<BOASImpl>
 				return null;
 			}
 
-			EMM emm = this.stubService.getEMM();
+			EMM emm = this.stubService.getEmm();
 			// 装饰检索结果
 			for (FoundationObject retObject : results)
 			{
@@ -127,7 +127,7 @@ public class FRevisionStub extends AbstractServiceStub<BOASImpl>
 				decoratorFactory.decorateFoundationObjectCode(emm.getCodeFieldNamesInSC(searchCondition), retObject, emm, bmGuid);
 			}
 
-			decoratorFactory.decorateFoundationObject(emm.getObjectFieldNamesInSC(searchCondition), results, this.stubService.getEMM(), sessionId);
+			decoratorFactory.decorateFoundationObject(emm.getObjectFieldNamesInSC(searchCondition), results, this.stubService.getEmm(), sessionId);
 
 			return results;
 		}
@@ -177,7 +177,7 @@ public class FRevisionStub extends AbstractServiceStub<BOASImpl>
 				return null;
 			}
 
-			EMM emm = this.stubService.getEMM();
+			EMM emm = this.stubService.getEmm();
 			// 装饰检索结果
 			for (FoundationObject retObject : results)
 			{
@@ -185,7 +185,7 @@ public class FRevisionStub extends AbstractServiceStub<BOASImpl>
 				decoratorFactory.decorateFoundationObjectCode(emm.getCodeFieldNamesInSC(searchCondition), retObject, emm, bmGuid);
 			}
 
-			decoratorFactory.decorateFoundationObject(emm.getObjectFieldNamesInSC(searchCondition), results, this.stubService.getEMM(), sessionId);
+			decoratorFactory.decorateFoundationObject(emm.getObjectFieldNamesInSC(searchCondition), results, this.stubService.getEmm(), sessionId);
 
 			return results;
 		}
@@ -214,7 +214,7 @@ public class FRevisionStub extends AbstractServiceStub<BOASImpl>
 			// get the bmGuid
 			String bmGuid = this.stubService.getUserSignature().getLoginGroupBMGuid();
 			// get ui model object for this object.
-			List<UIObjectInfo> uiObjectList = ((EMMImpl) this.stubService.getEMM()).listUIObjectInCurrentBizModel(objectGuid.getClassName(), UITypeEnum.FORM, true);
+			List<UIObjectInfo> uiObjectList = ((EMMImpl) this.stubService.getEmm()).listUIObjectInCurrentBizModel(objectGuid.getClassName(), UITypeEnum.FORM, true);
 
 			if (!SetUtils.isNullList(uiObjectList))
 			{
@@ -238,7 +238,7 @@ public class FRevisionStub extends AbstractServiceStub<BOASImpl>
 				return null;
 			}
 
-			EMM emm = this.stubService.getEMM();
+			EMM emm = this.stubService.getEmm();
 			Set<String> fieldNameList = emm.getObjectFieldNamesInSC(searchCondition);
 			// 装饰检索结果
 			for (FoundationObject retObject : results)
@@ -247,7 +247,7 @@ public class FRevisionStub extends AbstractServiceStub<BOASImpl>
 				decoratorFactory.decorateFoundationObjectCode(fieldNameList, retObject, emm, bmGuid);
 			}
 
-			decoratorFactory.decorateFoundationObject(fieldNameList, results, this.stubService.getEMM(), sessionId);
+			decoratorFactory.decorateFoundationObject(fieldNameList, results, this.stubService.getEmm(), sessionId);
 
 			return results;
 		}

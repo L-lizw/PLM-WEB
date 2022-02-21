@@ -41,32 +41,6 @@ import java.util.List;
 public class TransferCheckOutStub extends AbstractServiceStub<BOASImpl>
 {
 
-	private synchronized MSRM getMSRM() throws ServiceRequestException
-	{
-		try
-		{
-			return this.stubService.getRefService(MSRM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	private synchronized SMS getSMS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.stubService.getRefService(SMS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
 	/**
 	 * 检出状态迁移 _把一个对象的检出者由检出者本人迁移给另外一个人 递归处理end2
 	 * 
@@ -93,29 +67,26 @@ public class TransferCheckOutStub extends AbstractServiceStub<BOASImpl>
 
 			if (isDealBom)
 			{
-				List<BOMView> bomViewList = this.stubService.getBOMS().listBOMView(retFoundationObject.getObjectGuid());
+				List<BOMView> bomViewList = this.stubService.getBoms().listBOMView(retFoundationObject.getObjectGuid());
 				if (!SetUtils.isNullList(bomViewList))
 				{
 					for (BOMView bomView : bomViewList)
 					{
 						if (bomView.getCheckedOutUserGuid() == null || "".equals(bomView.getCheckedOutUserGuid()))
 						{
-							((BOMSImpl) this.stubService.getBOMS()).getBOMViewCheckOutStub().checkOut(bomView, toUserGuid, true);
+							((BOMSImpl) this.stubService.getBoms()).getBOMViewCheckOutStub().checkOut(bomView, toUserGuid, true);
 						}
 						else if (this.stubService.getOperatorGuid().equals(bomView.getCheckedOutUserGuid()))
 						{
-							this.stubService.getBOMS().transferCheckout(bomView, toUserGuid);
+							this.stubService.getBoms().transferCheckout(bomView, toUserGuid);
 						}
 					}
 				}
 			}
 
-			SMS sms = this.getSMS();
-			MSRM msrm = this.getMSRM();
-			EMM emm = this.stubService.getEMM();
 
 			List<ObjectGuid> objectGuidList = Arrays.asList(retFoundationObject.getObjectGuid());
-			sms.sendMailToUser(msrm.getMSRString("ID_WEB_TRANSFERCHECKED_MAIL_SUBJECT", locale), msrm.getMSRString("ID_WEB_TRANSFERCHECKED_MAIL_CONTENT", locale),
+			this.stubService.getSms().sendMailToUser(this.stubService.getMsrm().getMSRString("ID_WEB_TRANSFERCHECKED_MAIL_SUBJECT", locale), this.stubService.getMsrm().getMSRString("ID_WEB_TRANSFERCHECKED_MAIL_CONTENT", locale),
 					MailCategoryEnum.INFO, objectGuidList, toUserGuid, MailMessageType.TRANSFERCHECKOUT);
 			// 处理relation
 			// 查找所有关联的ViewObject
@@ -125,7 +96,7 @@ public class TransferCheckOutStub extends AbstractServiceStub<BOASImpl>
 			{
 				for (ViewObject viewObject : viewObjectList)
 				{
-					RelationTemplateInfo relationTemplate = this.stubService.getEMM()
+					RelationTemplateInfo relationTemplate = this.stubService.getEmm()
 							.getRelationTemplateById(viewObject.get(ViewObject.TEMPLATE_ID) == null ? "" : (String) viewObject.get(ViewObject.TEMPLATE_ID));
 					if (relationTemplate == null)
 					{
@@ -139,7 +110,7 @@ public class TransferCheckOutStub extends AbstractServiceStub<BOASImpl>
 						{
 							String structureClassName = relationTemplate.getStructureClassName();
 
-							List<UIObjectInfo> uiObjectList = emm.listUIObjectInCurrentBizModel(structureClassName, UITypeEnum.FORM, true);
+							List<UIObjectInfo> uiObjectList = this.stubService.getEmm().listUIObjectInCurrentBizModel(structureClassName, UITypeEnum.FORM, true);
 							SearchCondition searchCondition = null;
 							if (!SetUtils.isNullList(uiObjectList))
 							{

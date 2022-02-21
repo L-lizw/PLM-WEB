@@ -39,13 +39,9 @@ public abstract class AbstractReportBuilder implements ReportBuilder
 	{
 		try
 		{
-			SMS sms = srs.getRefService(SMS.class);
+			SMS sms = srs.getSMS();
 			sms.sendMailToUser(this.getNotifySubject(), this.getNotifyMessage(), MailCategoryEnum.INFO,
 					this.notifyAttachmentList, this.getCreatorId(), MailMessageType.REPORTNOTIFY);
-		}
-		catch (ServiceNotFoundException e)
-		{
-			DynaLogger.error(e.getMessage());
 		}
 		catch (ServiceRequestException e)
 		{

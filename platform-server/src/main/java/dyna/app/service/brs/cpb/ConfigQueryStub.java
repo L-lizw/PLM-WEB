@@ -45,7 +45,7 @@ public class ConfigQueryStub extends AbstractServiceStub<CPBImpl>
 	 */
 	protected List<DynamicColumnTitle> listColumnTitles(ObjectGuid objectGuid, ConfigParameterTableType tableTypeEnum, Date ruleTime) throws ServiceRequestException
 	{
-		FoundationObject instance = this.stubService.getBOAS().getObjectByGuid(objectGuid);
+		FoundationObject instance = this.stubService.getBoas().getObjectByGuid(objectGuid);
 		if (instance == null)
 		{
 			throw new ServiceRequestException("ID_DS_NO_DATA", "contract is not exist, guid='" + objectGuid.getGuid() + "'");
@@ -152,7 +152,7 @@ public class ConfigQueryStub extends AbstractServiceStub<CPBImpl>
 	 */
 	protected List<TableOfList> listTableOfListData(ObjectGuid objectGuid, ConfigParameterTableType tableTypeEnum, Date ruleTime) throws ServiceRequestException
 	{
-		FoundationObject instance = this.stubService.getBOAS().getObjectByGuid(objectGuid);
+		FoundationObject instance = this.stubService.getBoas().getObjectByGuid(objectGuid);
 		if (instance == null)
 		{
 			throw new ServiceRequestException("ID_DS_NO_DATA", "contract is not exist, guid='" + objectGuid.getGuid() + "'");
@@ -209,7 +209,7 @@ public class ConfigQueryStub extends AbstractServiceStub<CPBImpl>
 	 */
 	protected List<TableOfGroup> listTableOfGroup(ObjectGuid objectGuid, Date ruleTime) throws ServiceRequestException
 	{
-		FoundationObject instance = this.stubService.getBOAS().getObjectByGuid(objectGuid);
+		FoundationObject instance = this.stubService.getBoas().getObjectByGuid(objectGuid);
 		if (instance == null)
 		{
 			throw new ServiceRequestException("ID_DS_NO_DATA", "contract is not exist, guid='" + objectGuid.getGuid() + "'");
@@ -292,7 +292,7 @@ public class ConfigQueryStub extends AbstractServiceStub<CPBImpl>
 	 */
 	protected List<TableOfRegion> listTableOfRegion(ObjectGuid objectGuid, ConfigParameterTableType tableTypeEnum, Date ruleTime) throws ServiceRequestException
 	{
-		FoundationObject instance = this.stubService.getBOAS().getObjectByGuid(objectGuid);
+		FoundationObject instance = this.stubService.getBoas().getObjectByGuid(objectGuid);
 		if (instance == null)
 		{
 			throw new ServiceRequestException("ID_DS_NO_DATA", "contract is not exist, guid='" + objectGuid.getGuid() + "'");
@@ -359,7 +359,7 @@ public class ConfigQueryStub extends AbstractServiceStub<CPBImpl>
 	 */
 	protected List<TableOfExpression> listTableOfExpression(ObjectGuid objectGuid, Date ruleTime) throws ServiceRequestException
 	{
-		FoundationObject instance = this.stubService.getBOAS().getObjectByGuid(objectGuid);
+		FoundationObject instance = this.stubService.getBoas().getObjectByGuid(objectGuid);
 		if (instance == null)
 		{
 			throw new ServiceRequestException("ID_DS_NO_DATA", "contract is not exist, guid='" + objectGuid.getGuid() + "'");
@@ -393,7 +393,7 @@ public class ConfigQueryStub extends AbstractServiceStub<CPBImpl>
 	 */
 	protected List<TableOfParameter> listTableOfParameter(ObjectGuid objectGuid, String gNumber, Date ruleTime) throws ServiceRequestException
 	{
-		FoundationObject instance = this.stubService.getBOAS().getObjectByGuid(objectGuid);
+		FoundationObject instance = this.stubService.getBoas().getObjectByGuid(objectGuid);
 		if (instance == null)
 		{
 			throw new ServiceRequestException("ID_DS_NO_DATA", "contract is not exist, guid='" + objectGuid.getGuid() + "'");
@@ -480,7 +480,7 @@ public class ConfigQueryStub extends AbstractServiceStub<CPBImpl>
 
 	protected List<TableOfInputVariable> listTableOfInputVariable(ObjectGuid objectGuid, Date ruleTime) throws ServiceRequestException
 	{
-		FoundationObject instance = this.stubService.getBOAS().getObjectByGuid(objectGuid);
+		FoundationObject instance = this.stubService.getBoas().getObjectByGuid(objectGuid);
 		if (instance == null)
 		{
 			throw new ServiceRequestException("ID_DS_NO_DATA", "contract is not exist, guid='" + objectGuid.getGuid() + "'");
@@ -514,7 +514,7 @@ public class ConfigQueryStub extends AbstractServiceStub<CPBImpl>
 
 	protected List<TableOfMark> listTableOfMarkData(ObjectGuid objectGuid, Date ruleTime) throws ServiceRequestException
 	{
-		FoundationObject instance = this.stubService.getBOAS().getObjectByGuid(objectGuid);
+		FoundationObject instance = this.stubService.getBoas().getObjectByGuid(objectGuid);
 		if (instance == null)
 		{
 			throw new ServiceRequestException("ID_DS_NO_DATA", "contract is not exist, guid='" + objectGuid.getGuid() + "'");
@@ -555,13 +555,13 @@ public class ConfigQueryStub extends AbstractServiceStub<CPBImpl>
 	protected List<StructureObject> listStructureObject(ObjectGuid end1ObjectGuid, String viewName, DataRule dataRule, SearchCondition strucSearchCondition,
 			SearchCondition end2SearchCondition) throws ServiceRequestException
 	{
-		RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateByName(end1ObjectGuid, viewName);
+		RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateByName(end1ObjectGuid, viewName);
 		if (relationTemplate == null)
 		{
 			return null;
 		}
 
-		ViewObject viewObject = this.stubService.getBOAS().getRelationByEND1(end1ObjectGuid, viewName);
+		ViewObject viewObject = this.stubService.getBoas().getRelationByEND1(end1ObjectGuid, viewName);
 		if (viewObject == null)
 		{
 			return null;
@@ -574,10 +574,10 @@ public class ConfigQueryStub extends AbstractServiceStub<CPBImpl>
 
 		if (end2SearchCondition == null)
 		{
-			end2SearchCondition = this.stubService.getEMM().createAssoEnd2SearchCondition(relationTemplate.getGuid(), true, true);
+			end2SearchCondition = this.stubService.getEmm().createAssoEnd2SearchCondition(relationTemplate.getGuid(), true, true);
 		}
 
-		List<FoundationObject> end2List = ((BOASImpl) this.stubService.getBOAS()).getRelationStub().listFoundationObjectOfRelation(viewObject.getObjectGuid(), strucSearchCondition,
+		List<FoundationObject> end2List = ((BOASImpl) this.stubService.getBoas()).getRelationStub().listFoundationObjectOfRelation(viewObject.getObjectGuid(), strucSearchCondition,
 				end2SearchCondition, dataRule, true, true);
 
 		List<StructureObject> resList = new ArrayList<StructureObject>();
@@ -598,13 +598,13 @@ public class ConfigQueryStub extends AbstractServiceStub<CPBImpl>
 	protected List<StructureObject> listStructureObject(ObjectGuid end1ObjectGuid, DataRule dataRule, List<String> gNumberList, SearchCondition strucSearchCondition,
 			SearchCondition end2SearchCondition) throws ServiceRequestException
 	{
-		ViewObject viewObject = this.stubService.getBOAS().getRelationByEND1(end1ObjectGuid, ConfigParameterConstants.CONFIG_PARAMETER_RELATION_TEMPLATE_NAME);
+		ViewObject viewObject = this.stubService.getBoas().getRelationByEND1(end1ObjectGuid, ConfigParameterConstants.CONFIG_PARAMETER_RELATION_TEMPLATE_NAME);
 		if (viewObject == null)
 		{
 			return null;
 		}
 
-		RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateByName(end1ObjectGuid,
+		RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateByName(end1ObjectGuid,
 				ConfigParameterConstants.CONFIG_PARAMETER_RELATION_TEMPLATE_NAME);
 		if (relationTemplate == null)
 		{
@@ -624,7 +624,7 @@ public class ConfigQueryStub extends AbstractServiceStub<CPBImpl>
 			{
 				for (RelationTemplateEnd2 templateEnd2 : templateEnd2List)
 				{
-					limitClassNameList.add(this.stubService.getEMM().getCurrentBoInfoByName(templateEnd2.getEnd2BoName(), true).getClassName());
+					limitClassNameList.add(this.stubService.getEmm().getCurrentBoInfoByName(templateEnd2.getEnd2BoName(), true).getClassName());
 				}
 			}
 			else
@@ -670,7 +670,7 @@ public class ConfigQueryStub extends AbstractServiceStub<CPBImpl>
 		end2SearchCondition.addResultField(ConfigParameterConstants.MATCHEDCLASS);
 		end2SearchCondition.addResultField(ConfigParameterConstants.UNIQUENO);
 		end2SearchCondition.addResultField(ConfigParameterConstants.ITEM_CLASSIFICATION);
-		List<FoundationObject> end2List = ((BOASImpl) this.stubService.getBOAS()).getRelationStub().listFoundationObjectOfRelation(viewObject.getObjectGuid(), strucSearchCondition,
+		List<FoundationObject> end2List = ((BOASImpl) this.stubService.getBoas()).getRelationStub().listFoundationObjectOfRelation(viewObject.getObjectGuid(), strucSearchCondition,
 				end2SearchCondition, dataRule, true, true);
 
 		List<StructureObject> resList = new ArrayList<StructureObject>();
@@ -724,7 +724,7 @@ public class ConfigQueryStub extends AbstractServiceStub<CPBImpl>
 	 */
 	protected List<TableOfList> listAllList(ObjectGuid objectGuid, Date ruleTime, String lNumber) throws ServiceRequestException
 	{
-		FoundationObject instance = this.stubService.getBOAS().getObjectByGuid(objectGuid);
+		FoundationObject instance = this.stubService.getBoas().getObjectByGuid(objectGuid);
 		if (instance == null)
 		{
 			throw new ServiceRequestException("ID_DS_NO_DATA", "contract is not exist, guid='" + objectGuid.getGuid() + "'");
@@ -766,7 +766,7 @@ public class ConfigQueryStub extends AbstractServiceStub<CPBImpl>
 			return null;
 		}
 
-		FoundationObject instance = this.stubService.getBOAS().getObjectByGuid(objectGuid);
+		FoundationObject instance = this.stubService.getBoas().getObjectByGuid(objectGuid);
 		if (instance == null)
 		{
 			throw new ServiceRequestException("ID_DS_NO_DATA", "contract is not exist, guid='" + objectGuid.getGuid() + "'");
@@ -798,9 +798,9 @@ public class ConfigQueryStub extends AbstractServiceStub<CPBImpl>
 		{
 			SearchCondition tempSSC = searchCondition;
 			String strucClass = null;
-			ViewObject viewObject = this.stubService.getBOAS().getRelation(viewObjectGuid);
+			ViewObject viewObject = this.stubService.getBoas().getRelation(viewObjectGuid);
 			String templateID = viewObject.getTemplateID();
-			RelationTemplateInfo template = this.stubService.getEMM().getRelationTemplateById(templateID);
+			RelationTemplateInfo template = this.stubService.getEmm().getRelationTemplateById(templateID);
 
 			if (template == null)
 			{
@@ -872,7 +872,7 @@ public class ConfigQueryStub extends AbstractServiceStub<CPBImpl>
 				{
 					for (String name : list)
 					{
-						List<UIField> flist = this.stubService.getEMM().listUIFieldByUIObject(end2ObjectGuid.getClassName(), name);
+						List<UIField> flist = this.stubService.getEmm().listUIFieldByUIObject(end2ObjectGuid.getClassName(), name);
 						if (!SetUtils.isNullList(flist))
 						{
 							for (UIField ff : flist)
@@ -888,7 +888,7 @@ public class ConfigQueryStub extends AbstractServiceStub<CPBImpl>
 
 				if (end2SearchCondition.getObjectGuid() != null && !StringUtils.isNullString(end2SearchCondition.getObjectGuid().getClassName()))
 				{
-					ClassInfo classInfo = this.stubService.getEMM().getClassByName(end2SearchCondition.getObjectGuid().getClassName());
+					ClassInfo classInfo = this.stubService.getEmm().getClassByName(end2SearchCondition.getObjectGuid().getClassName());
 					List<ModelInterfaceEnum> interfaceList = classInfo.getInterfaceList();
 					if (!SetUtils.isNullList(interfaceList))
 					{
@@ -898,7 +898,7 @@ public class ConfigQueryStub extends AbstractServiceStub<CPBImpl>
 							{
 								continue;
 							}
-							List<ClassField> fieldList = this.stubService.getEMM().listClassFieldByInterface(interfaceEnum);
+							List<ClassField> fieldList = this.stubService.getEmm().listClassFieldByInterface(interfaceEnum);
 							if (!SetUtils.isNullList(fieldList))
 							{
 								for (ClassField field : fieldList)
@@ -996,7 +996,7 @@ public class ConfigQueryStub extends AbstractServiceStub<CPBImpl>
 
 	public List<TableOfMultiCondition> listTableOfMultiVariable(ObjectGuid objectGuid, Date ruleTime) throws ServiceRequestException
 	{
-		FoundationObject instance = this.stubService.getBOAS().getObjectByGuid(objectGuid);
+		FoundationObject instance = this.stubService.getBoas().getObjectByGuid(objectGuid);
 		if (instance == null)
 		{
 			throw new ServiceRequestException("ID_DS_NO_DATA", "contract is not exist, guid='" + objectGuid.getGuid() + "'");

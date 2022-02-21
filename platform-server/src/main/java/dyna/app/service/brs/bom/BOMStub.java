@@ -89,7 +89,7 @@ public class BOMStub extends AbstractServiceStub<BOMSImpl>
 			Set<String> objectFieldNames = null;
 			Set<String> codeFieldNames = null;
 			String bmGuid = this.stubService.getUserSignature().getLoginGroupBMGuid();
-			EMM emm = this.stubService.getEMM();
+			EMM emm = this.stubService.getEmm();
 			if (searchCondition != null && searchCondition.getObjectGuid() != null)
 			{
 				objectFieldNames = emm.getObjectFieldNamesInSC(searchCondition);
@@ -98,7 +98,7 @@ public class BOMStub extends AbstractServiceStub<BOMSImpl>
 			decoratorFactory.decorateStructureObject(bomStructure, objectFieldNames, codeFieldNames, emm, bmGuid);
 			decoratorFactory.ofd.decorateWithField(objectFieldNames, bomStructure, emm, sessionId, false);
 			String templeteId = (String) bomStructure.get(ViewObject.TEMPLATE_ID);
-			BOMTemplateInfo bomTemplate = this.stubService.getEMM().getBOMTemplateById(templeteId);
+			BOMTemplateInfo bomTemplate = this.stubService.getEmm().getBOMTemplateById(templeteId);
 			if (bomTemplate != null)
 			{
 				ObjectGuid end2ObjectGuid = bomStructure.getEnd2ObjectGuid();
@@ -157,7 +157,7 @@ public class BOMStub extends AbstractServiceStub<BOMSImpl>
 			{
 				return null;
 			}
-			BOMTemplateInfo bomTemplate = this.stubService.getEMM().getBOMTemplateById((String) bomViewObject.get(ViewObject.TEMPLATE_ID));
+			BOMTemplateInfo bomTemplate = this.stubService.getEmm().getBOMTemplateById((String) bomViewObject.get(ViewObject.TEMPLATE_ID));
 			if (bomTemplate == null)
 			{
 				return null;
@@ -165,7 +165,7 @@ public class BOMStub extends AbstractServiceStub<BOMSImpl>
 
 			if (searchCondition == null)
 			{
-				List<UIObjectInfo> uiObjectList = this.stubService.getEMM().listALLFormListUIObjectInBizModel(bomTemplate.getStructureClassName());
+				List<UIObjectInfo> uiObjectList = this.stubService.getEmm().listALLFormListUIObjectInBizModel(bomTemplate.getStructureClassName());
 				searchCondition = SearchConditionFactory.createSearchConditionForBOMStructure(bomTemplate.getStructureClassName(), uiObjectList);
 			}
 
@@ -216,7 +216,7 @@ public class BOMStub extends AbstractServiceStub<BOMSImpl>
 			}
 			ObjectGuid viewObjectGuid = bomViewObject.getObjectGuid();
 
-			BOMTemplateInfo bomTemplate = this.stubService.getEMM().getBOMTemplateById((String) bomViewObject.get(ViewObject.TEMPLATE_ID));
+			BOMTemplateInfo bomTemplate = this.stubService.getEmm().getBOMTemplateById((String) bomViewObject.get(ViewObject.TEMPLATE_ID));
 			if (bomTemplate == null)
 			{
 				return null;
@@ -224,7 +224,7 @@ public class BOMStub extends AbstractServiceStub<BOMSImpl>
 
 			if (searchConditionStructure == null)
 			{
-				List<UIObjectInfo> uiObjectList = this.stubService.getEMM().listALLFormListUIObjectInBizModel(bomTemplate.getStructureClassName());
+				List<UIObjectInfo> uiObjectList = this.stubService.getEmm().listALLFormListUIObjectInBizModel(bomTemplate.getStructureClassName());
 				searchConditionStructure = SearchConditionFactory.createSearchConditionForBOMStructure(bomTemplate.getStructureClassName(), uiObjectList);
 			}
 			if (end2SearchCondition != null)
@@ -262,7 +262,7 @@ public class BOMStub extends AbstractServiceStub<BOMSImpl>
 		List<FoundationObject> foundationObjectList = null;
 		try
 		{
-			List<BOMTemplateInfo> bomTemplateList = this.stubService.getEMM().listBOMTemplateByName(viewName, false);
+			List<BOMTemplateInfo> bomTemplateList = this.stubService.getEmm().listBOMTemplateByName(viewName, false);
 			if (SetUtils.isNullList(bomTemplateList))
 			{
 				return null;
@@ -290,7 +290,7 @@ public class BOMStub extends AbstractServiceStub<BOMSImpl>
 				{
 					for (String name : list)
 					{
-						List<UIField> flist = this.stubService.getEMM().listUIFieldByUIObject(end1ObjectGuid.getClassName(), name);
+						List<UIField> flist = this.stubService.getEmm().listUIFieldByUIObject(end1ObjectGuid.getClassName(), name);
 						if (!SetUtils.isNullList(flist))
 						{
 							for (UIField ff : flist)
@@ -309,17 +309,17 @@ public class BOMStub extends AbstractServiceStub<BOMSImpl>
 				BMInfo bizModel = null;
 				if ("ALL".equalsIgnoreCase(bomTemplate.getBmGuid()))
 				{
-					bizModel = this.stubService.getEMM().getCurrentBizModel();
+					bizModel = this.stubService.getEmm().getCurrentBizModel();
 				}
 				else
 				{
-					bizModel = this.stubService.getEMM().getBizModel(bomTemplate.getBmGuid());
+					bizModel = this.stubService.getEmm().getBizModel(bomTemplate.getBmGuid());
 				}
 				if (bizModel == null)
 				{
 					return null;
 				}
-				BOInfo end1ClassInfo = this.stubService.getEMM().getBoInfoByNameAndBM(bizModel.getGuid(), bomTemplate.getEnd1BoName());
+				BOInfo end1ClassInfo = this.stubService.getEmm().getBoInfoByNameAndBM(bizModel.getGuid(), bomTemplate.getEnd1BoName());
 				if (end1ClassInfo == null)
 				{
 					return null;
@@ -345,7 +345,7 @@ public class BOMStub extends AbstractServiceStub<BOMSImpl>
 				return null;
 			}
 			String bmGuid = this.stubService.getUserSignature().getLoginGroupBMGuid();
-			EMM emm = this.stubService.getEMM();
+			EMM emm = this.stubService.getEmm();
 
 			Set<String> objectFieldSet = new HashSet<String>();
 			Set<String> codeFieldSet = new HashSet<String>();
@@ -421,7 +421,7 @@ public class BOMStub extends AbstractServiceStub<BOMSImpl>
 				throw new ServiceRequestException("ID_APP_VEIW_STATUS_NOT_UPDATE", "view not update");
 			}
 
-			BOMTemplateInfo bomTemplate = this.stubService.getEMM().getBOMTemplateById(viewObject.getTemplateID());
+			BOMTemplateInfo bomTemplate = this.stubService.getEmm().getBOMTemplateById(viewObject.getTemplateID());
 
 			boolean isCheckEnd2Unique = bomStructure.isChanged("END2$MASTER");
 			if (isCheckEnd2Unique)
@@ -440,7 +440,7 @@ public class BOMStub extends AbstractServiceStub<BOMSImpl>
 						}
 						if (end2MasterGuidList.contains(bomStructure.getEnd2ObjectGuid().getMasterGuid()))
 						{
-							FoundationObject objectByGuid = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObjectByGuid(bomStructure.getEnd2ObjectGuid(), false);
+							FoundationObject objectByGuid = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObjectByGuid(bomStructure.getEnd2ObjectGuid(), false);
 
 							throw new ServiceRequestException("ID_APP_BOMEDIT_CANT_CONECT_BOMVIEW", "end2 is not relation", null, objectByGuid.getFullName());
 						}
@@ -486,17 +486,17 @@ public class BOMStub extends AbstractServiceStub<BOMSImpl>
 			// DCR规则检查
 			List<ObjectGuid> end2ObjectGuidList = new ArrayList<ObjectGuid>();
 			end2ObjectGuidList.add(bomStructure.getEnd2ObjectGuid());
-			BOMTemplateInfo bomTemplate = this.stubService.getEMM().getBOMTemplateById(bomView.getTemplateID());
-			this.stubService.getDCR().check(bomView.getEnd1ObjectGuid(), end2ObjectGuidList, bomTemplate.getName(), RuleTypeEnum.BOM);
+			BOMTemplateInfo bomTemplate = this.stubService.getEmm().getBOMTemplateById(bomView.getTemplateID());
+			this.stubService.getDcr().check(bomView.getEnd1ObjectGuid(), end2ObjectGuidList, bomTemplate.getName(), RuleTypeEnum.BOM);
 
 			String sessionId = this.stubService.getSignature().getCredential();
-			EOSS eoss = this.stubService.getEOSS();
+			EOSS eoss = this.stubService.getEoss();
 			// !invoke update.before
 			eoss.executeUpdateBeforeEvent(bomStructure);
 
 			if (isCheckField)
 			{
-				String message = ((BOASImpl) this.stubService.getBOAS()).getFSaverStub().checkDynaObjectField(bomStructure);
+				String message = ((BOASImpl) this.stubService.getBoas()).getFSaverStub().checkDynaObjectField(bomStructure);
 				if (!StringUtils.isNullString(message))
 				{
 					throw new ServiceRequestException(message);
@@ -552,7 +552,7 @@ public class BOMStub extends AbstractServiceStub<BOMSImpl>
 			{
 				return null;
 			}
-			BOMTemplateInfo bomTemplate = this.stubService.getEMM().getBOMTemplateById((String) bomViewObject.get(ViewObject.TEMPLATE_ID));
+			BOMTemplateInfo bomTemplate = this.stubService.getEmm().getBOMTemplateById((String) bomViewObject.get(ViewObject.TEMPLATE_ID));
 			if (bomTemplate == null)
 			{
 				return null;
@@ -560,7 +560,7 @@ public class BOMStub extends AbstractServiceStub<BOMSImpl>
 
 			if (searchCondition == null)
 			{
-				List<UIObjectInfo> uiObjectList = this.stubService.getEMM().listALLFormListUIObjectInBizModel(bomTemplate.getStructureClassName());
+				List<UIObjectInfo> uiObjectList = this.stubService.getEmm().listALLFormListUIObjectInBizModel(bomTemplate.getStructureClassName());
 				searchCondition = SearchConditionFactory.createSearchConditionForBOMStructure(bomTemplate.getStructureClassName(), uiObjectList);
 			}
 
@@ -631,8 +631,8 @@ public class BOMStub extends AbstractServiceStub<BOMSImpl>
 
 		if (!StringUtils.isNullString(end2SearchCondition.getObjectGuid().getClassName()))
 		{
-			ClassInfo superInfo = this.stubService.getEMM().getClassByName(end2SearchCondition.getObjectGuid().getClassName());
-			List<ClassInfo> end2ClassList = this.stubService.getEMM().listSubClass(end2SearchCondition.getObjectGuid().getClassName(),
+			ClassInfo superInfo = this.stubService.getEmm().getClassByName(end2SearchCondition.getObjectGuid().getClassName());
+			List<ClassInfo> end2ClassList = this.stubService.getEmm().listSubClass(end2SearchCondition.getObjectGuid().getClassName(),
 					end2SearchCondition.getObjectGuid().getClassGuid(), true, null);
 			Set<String> end2ClassGuidList = new HashSet<String>();
 			end2ClassGuidList.add(superInfo.getGuid());
@@ -647,7 +647,7 @@ public class BOMStub extends AbstractServiceStub<BOMSImpl>
 			if (!StringUtils.isNullString(end2SearchCondition.getClassification()))
 			{
 				end2ClfGuidList.add(end2SearchCondition.getClassification());
-				List<CodeItemInfo> clfList = this.stubService.getEMM().listLeafCodeItemInfoByDatail(end2SearchCondition.getClassification());
+				List<CodeItemInfo> clfList = this.stubService.getEmm().listLeafCodeItemInfoByDatail(end2SearchCondition.getClassification());
 				if (clfList != null)
 				{
 					for (CodeItemInfo info : clfList)
@@ -771,7 +771,7 @@ public class BOMStub extends AbstractServiceStub<BOMSImpl>
 			{
 				return null;
 			}
-			BOMTemplateInfo bomTemplate = this.stubService.getEMM().getBOMTemplateById((String) bomViewObject.get(ViewObject.TEMPLATE_ID));
+			BOMTemplateInfo bomTemplate = this.stubService.getEmm().getBOMTemplateById((String) bomViewObject.get(ViewObject.TEMPLATE_ID));
 			if (bomTemplate == null)
 			{
 				return null;
@@ -779,7 +779,7 @@ public class BOMStub extends AbstractServiceStub<BOMSImpl>
 
 			if (searchCondition == null)
 			{
-				List<UIObjectInfo> uiObjectList = this.stubService.getEMM().listALLFormListUIObjectInBizModel(bomTemplate.getStructureClassName());
+				List<UIObjectInfo> uiObjectList = this.stubService.getEmm().listALLFormListUIObjectInBizModel(bomTemplate.getStructureClassName());
 				searchCondition = SearchConditionFactory.createSearchConditionForBOMStructure(bomTemplate.getStructureClassName(), uiObjectList);
 			}
 
@@ -816,7 +816,7 @@ public class BOMStub extends AbstractServiceStub<BOMSImpl>
 			{
 				ObjectGuid viewObjectGuid = bomViewObject.getObjectGuid();
 
-				BOMTemplateInfo bomTemplate = this.stubService.getEMM().getBOMTemplateById((String) bomViewObject.get(ViewObject.TEMPLATE_ID));
+				BOMTemplateInfo bomTemplate = this.stubService.getEmm().getBOMTemplateById((String) bomViewObject.get(ViewObject.TEMPLATE_ID));
 				if (bomTemplate != null)
 				{
 					String sessionId = this.stubService.getUserSignature().getCredential();
@@ -866,7 +866,7 @@ public class BOMStub extends AbstractServiceStub<BOMSImpl>
 			{
 				return null;
 			}
-			BOMTemplateInfo bomTemplate = this.stubService.getEMM().getBOMTemplateById((String) bomViewObject.get(ViewObject.TEMPLATE_ID));
+			BOMTemplateInfo bomTemplate = this.stubService.getEmm().getBOMTemplateById((String) bomViewObject.get(ViewObject.TEMPLATE_ID));
 			if (bomTemplate == null)
 			{
 				return null;
@@ -905,7 +905,7 @@ public class BOMStub extends AbstractServiceStub<BOMSImpl>
 
 	protected BOMStructure newBOMStructure(String classGuid, String className) throws ServiceRequestException
 	{
-		return ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().newFoundationObject(BOMStructure.class, classGuid, className, false, null);
+		return ((BOASImpl) this.stubService.getBoas()).getFoundationStub().newFoundationObject(BOMStructure.class, classGuid, className, false, null);
 	}
 
 	/**
@@ -935,7 +935,7 @@ public class BOMStub extends AbstractServiceStub<BOMSImpl>
 				{
 					for (String name : list)
 					{
-						List<UIField> flist = this.stubService.getEMM().listUIFieldByUIObject(end2ObjectGuid.getClassName(), name);
+						List<UIField> flist = this.stubService.getEmm().listUIFieldByUIObject(end2ObjectGuid.getClassName(), name);
 						if (!SetUtils.isNullList(flist))
 						{
 							for (UIField ff : flist)
@@ -965,7 +965,7 @@ public class BOMStub extends AbstractServiceStub<BOMSImpl>
 			List<FoundationObject> retList, List<BOMStructure> sretList, boolean isFoundation, ObjectGuid end1ObjectGuid) throws ServiceRequestException, DecorateException
 	{
 		String bmGuid = this.stubService.getUserSignature().getLoginGroupBMGuid();
-		EMM emm = this.stubService.getEMM();
+		EMM emm = this.stubService.getEmm();
 		Set<String> objectFieldNames = null;
 		Set<String> codeFieldNames = null;
 		if (structureSearchCondition != null && structureSearchCondition.getObjectGuid() != null)
@@ -1033,8 +1033,8 @@ public class BOMStub extends AbstractServiceStub<BOMSImpl>
 		{
 			for (String resultUiName : resultUINameList)
 			{
-				UIObjectInfo uiObject = this.stubService.getEMM().getUIObjectByName(className, resultUiName);
-				List<UIField> uiFieldList = this.stubService.getEMM().listUIFieldByUIGuid(uiObject.getGuid());
+				UIObjectInfo uiObject = this.stubService.getEmm().getUIObjectByName(className, resultUiName);
+				List<UIField> uiFieldList = this.stubService.getEmm().listUIFieldByUIGuid(uiObject.getGuid());
 				if (uiObject != null && uiFieldList != null)
 				{
 					if (!SetUtils.isNullList(uiFieldList))
@@ -1057,9 +1057,9 @@ public class BOMStub extends AbstractServiceStub<BOMSImpl>
 	private void checkFoundationFieldRegex(BOMStructure bomStructure) throws ServiceRequestException
 	{
 		String classGuid = bomStructure.getObjectGuid().getClassGuid();
-		ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(classGuid);
+		ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(classGuid);
 
-		List<ClassField> listFieldOfClass = this.stubService.getEMM().listFieldOfClass(classInfo.getName());
+		List<ClassField> listFieldOfClass = this.stubService.getEmm().listFieldOfClass(classInfo.getName());
 		if (!SetUtils.isNullList(listFieldOfClass))
 		{
 			for (ClassField field : listFieldOfClass)
@@ -1070,7 +1070,7 @@ public class BOMStub extends AbstractServiceStub<BOMSImpl>
 					boolean matches = pattern.matcher(StringUtils.convertNULLtoString(bomStructure.get(field.getName()))).matches();
 					if (matches)
 					{
-						UIField uiField = this.stubService.getEMM().getUIFieldByName(classInfo.getName(), field.getName());
+						UIField uiField = this.stubService.getEmm().getUIFieldByName(classInfo.getName(), field.getName());
 						String title = uiField == null ? field.getName() : uiField.getTitle(this.stubService.getUserSignature().getLanguageEnum());
 						throw new ServiceRequestException("ID_CLIENT_VALIDATOR_REGEXLEGAL", "field value ilegal.", null, title);
 					}

@@ -206,7 +206,7 @@ public class ItemProductStub extends AbstractServiceStub<PMSImpl>
 		String sessionId = this.stubService.getSignature().getCredential();
 		try
 		{
-			ListProductSummaryUtil util = new ListProductSummaryUtil(this.stubService.getAsync(), this.stubService.getEMM());
+			ListProductSummaryUtil util = new ListProductSummaryUtil(this.stubService.getAsync(), this.stubService.getEmm());
 			results = util.listProductSummaryObject(productObjectGuid, viewname, searchCondition, new DataRule());
 
 			if (SetUtils.isNullList(results))
@@ -214,7 +214,7 @@ public class ItemProductStub extends AbstractServiceStub<PMSImpl>
 				return results;
 			}
 
-			EMM emm = this.stubService.getEMM();
+			EMM emm = this.stubService.getEmm();
 
 			Set<String> fieldNames = searchCondition == null ? null : emm.getObjectFieldNamesInSC(searchCondition);
 			Set<String> fieldCodeNames = searchCondition == null ? null : emm.getCodeFieldNamesInSC(searchCondition);
@@ -245,17 +245,17 @@ public class ItemProductStub extends AbstractServiceStub<PMSImpl>
 
 	public List<RelationTemplateInfo> listProductSummaryRelationTemplate(ObjectGuid productObjectGuid) throws ServiceRequestException
 	{
-		List<BOInfo> bomEnd2InfoList = this.stubService.getEMM().listBizObjectByInterface(ModelInterfaceEnum.IItem);
+		List<BOInfo> bomEnd2InfoList = this.stubService.getEmm().listBizObjectByInterface(ModelInterfaceEnum.IItem);
 		List<RelationTemplate> returnList = new ArrayList<RelationTemplate>();
 		Map<String, RelationTemplate> tempNameMap = new HashMap<String, RelationTemplate>();
 		for (BOInfo boinfo : bomEnd2InfoList)
 		{
-			List<RelationTemplateInfo> list = ((EMMImpl) this.stubService.getEMM()).getRelationTemplateStub().listRelationTemplate(null, null, null, boinfo.getGuid(), false);
+			List<RelationTemplateInfo> list = ((EMMImpl) this.stubService.getEmm()).getRelationTemplateStub().listRelationTemplate(null, null, null, boinfo.getGuid(), false);
 			if (list != null)
 			{
 				for (RelationTemplateInfo temp : list)
 				{
-					List<RelationTemplateEnd2> relationTemplateEnd2List = ((EMMImpl) this.stubService.getEMM()).getRelationTemplateStub().listRelationTemplateEnd2(temp.getGuid());
+					List<RelationTemplateEnd2> relationTemplateEnd2List = ((EMMImpl) this.stubService.getEmm()).getRelationTemplateStub().listRelationTemplateEnd2(temp.getGuid());
 					if (!SetUtils.isNullList(relationTemplateEnd2List))
 					{
 						RelationTemplate retTemp = null;
@@ -282,12 +282,12 @@ public class ItemProductStub extends AbstractServiceStub<PMSImpl>
 										isAdd = false;
 										break;
 									}
-									else if (this.stubService.getEMM().isSuperClass(end2ClassName, cend2ClassName))
+									else if (this.stubService.getEmm().isSuperClass(end2ClassName, cend2ClassName))
 									{
 										isAdd = false;
 										break;
 									}
-									else if (this.stubService.getEMM().isSuperClass(cend2ClassName, end2ClassName))
+									else if (this.stubService.getEmm().isSuperClass(cend2ClassName, end2ClassName))
 									{
 										cend2.putAll(end2);
 										cend2.put("END2CLASSNAME", end2ClassName);
@@ -330,16 +330,16 @@ public class ItemProductStub extends AbstractServiceStub<PMSImpl>
 					for (RelationTemplateEnd2 end2 : retTemp.getRelationTemplateEnd2List())
 					{
 						String end2ClassName = (String) end2.get("END2CLASSNAME");
-						if (!this.stubService.getEMM().isSuperClass(end2ClassName, rootClassName))
+						if (!this.stubService.getEmm().isSuperClass(end2ClassName, rootClassName))
 						{
-							rootClassName = this.stubService.getEMM().getClassByName(rootClassName).getSuperclass();
+							rootClassName = this.stubService.getEmm().getClassByName(rootClassName).getSuperclass();
 							isLockRoot = true;
 							break;
 						}
 					}
 				}
 			}
-			if (this.stubService.getEMM().getClassByName(rootClassName).isCreateTable() == false)
+			if (this.stubService.getEmm().getClassByName(rootClassName).isCreateTable() == false)
 			{
 				returnList.remove(i);
 				continue;
@@ -352,7 +352,7 @@ public class ItemProductStub extends AbstractServiceStub<PMSImpl>
 			for (int i = retTemp.getRelationTemplateEnd2List().size() - 1; i > -1; i--)
 			{
 				RelationTemplateEnd2 end2 = retTemp.getRelationTemplateEnd2List().get(i);
-				List<BOInfo> list = this.stubService.getEMM().listAllSubBOInfo(end2.getEnd2BoName());
+				List<BOInfo> list = this.stubService.getEmm().listAllSubBOInfo(end2.getEnd2BoName());
 				if (list != null && list.size() > 1)
 				{
 					int y = i + 1;
@@ -390,7 +390,7 @@ public class ItemProductStub extends AbstractServiceStub<PMSImpl>
 		BOInfo boInfo = null;
 		try
 		{
-			boInfo = this.stubService.getEMM().getCurrentBoInfoByName(boName, true);
+			boInfo = this.stubService.getEmm().getCurrentBoInfoByName(boName, true);
 		}
 		catch (ServiceRequestException e)
 		{

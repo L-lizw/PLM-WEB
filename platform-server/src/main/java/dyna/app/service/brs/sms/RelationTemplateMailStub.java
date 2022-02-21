@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @author Wanglei
+ * @author Lizw
  */
 @Component
 public class RelationTemplateMailStub extends AbstractServiceStub<SMSImpl>
@@ -99,7 +99,7 @@ public class RelationTemplateMailStub extends AbstractServiceStub<SMSImpl>
 			String groupGuid = this.stubService.getUserSignature().getLoginGroupGuid();
 			try
 			{
-				Group group = this.stubService.getAAS().getGroup(groupGuid);
+				Group group = this.stubService.getAas().getGroup(groupGuid);
 
 				if (group == null || !group.isAdminGroup())
 				{
@@ -160,19 +160,19 @@ public class RelationTemplateMailStub extends AbstractServiceStub<SMSImpl>
 					BOInfo boInfo;
 					if (!BOMTemplateInfo.ALL.equals(relationTemplate.getBmGuid()))
 					{
-						boInfo = this.stubService.getEMM().getBoInfoByNameAndBM(relationTemplate.getBmGuid(), relationTemplateEnd2.getEnd2BoName());
+						boInfo = this.stubService.getEmm().getBoInfoByNameAndBM(relationTemplate.getBmGuid(), relationTemplateEnd2.getEnd2BoName());
 					}
 					else
 					{
 
-						BMInfo sharedBizModel = this.stubService.getEMM().getSharedBizModel();
-						boInfo = this.stubService.getEMM().getBoInfoByNameAndBM(sharedBizModel.getGuid(), relationTemplateEnd2.getEnd2BoName());
+						BMInfo sharedBizModel = this.stubService.getEmm().getSharedBizModel();
+						boInfo = this.stubService.getEmm().getBoInfoByNameAndBM(sharedBizModel.getGuid(), relationTemplateEnd2.getEnd2BoName());
 					}
 					if (relationTemplate.getEnd2Interface() != null)
 					{
 						if (boInfo != null)
 						{
-							ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(boInfo.getClassGuid());
+							ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(boInfo.getClassGuid());
 							if (classInfo != null)
 							{
 								if (!classInfo.hasInterface(relationTemplate.getEnd2Interface()))
@@ -244,7 +244,7 @@ public class RelationTemplateMailStub extends AbstractServiceStub<SMSImpl>
 	{
 		try
 		{
-			RelationTemplate relationTemplate = this.stubService.getEMM().getRelationTemplate(relationTemplateGuid);
+			RelationTemplate relationTemplate = this.stubService.getEmm().getRelationTemplate(relationTemplateGuid);
 			if (relationTemplate != null)
 			{
 				if ("0".equals(relationTemplate.getTemplateType()))
@@ -267,7 +267,7 @@ public class RelationTemplateMailStub extends AbstractServiceStub<SMSImpl>
 	{
 		try
 		{
-			RelationTemplate relationTemplate = this.stubService.getEMM().getRelationTemplate(relationTemplateGuid);
+			RelationTemplate relationTemplate = this.stubService.getEmm().getRelationTemplate(relationTemplateGuid);
 			if (relationTemplate != null)
 			{
 				if (relationTemplate.isValid())

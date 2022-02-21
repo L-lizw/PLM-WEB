@@ -66,7 +66,7 @@ public class RelationUnlinkStub extends AbstractServiceStub<BOASImpl>
 			throw new ServiceRequestException("ID_APP_VEIW_NOT_FOUND", "view not found");
 		}
 
-		RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateById(viewObject.getTemplateID());
+		RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateById(viewObject.getTemplateID());
 		if (relationTemplate == null)
 		{
 			throw new ServiceRequestException("ID_APP_VEIW_NOT_FOUND", "view not found");
@@ -237,7 +237,7 @@ public class RelationUnlinkStub extends AbstractServiceStub<BOASImpl>
 		ObjectGuid end1ObjectGuid = null;
 		try
 		{
-			EOSS eoss = this.stubService.getEOSS();
+			EOSS eoss = this.stubService.getEoss();
 
 			if (viewObject == null)
 			{
@@ -256,12 +256,12 @@ public class RelationUnlinkStub extends AbstractServiceStub<BOASImpl>
 			}
 
 			// DCR规则检查
-			RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateById(viewObject.getTemplateID());
+			RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateById(viewObject.getTemplateID());
 			relationTemplateGuid = relationTemplate.getGuid();
 			List<ObjectGuid> end2ObjectGuidList = new ArrayList<>();
 			end2ObjectGuidList.add(structureObject.getEnd2ObjectGuid());
 			viewObject.getTemplateID();
-			this.stubService.getDCR().check(viewObject.getEnd1ObjectGuid(), end2ObjectGuidList, relationTemplate.getName(), RuleTypeEnum.RELATION);
+			this.stubService.getDcr().check(viewObject.getEnd1ObjectGuid(), end2ObjectGuidList, relationTemplate.getName(), RuleTypeEnum.RELATION);
 
 			// !invoke unlink.before
 			eoss.executeDeleteBeforeEvent(structureObject);

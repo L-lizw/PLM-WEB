@@ -66,7 +66,7 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 
 	protected void createTransformQueue4WF(ActivityRuntime activity) throws ServiceRequestException
 	{
-		ProcessRuntime processRuntime = this.stubService.getWFI().getProcessRuntime(activity.getProcessRuntimeGuid());
+		ProcessRuntime processRuntime = this.stubService.getWfi().getProcessRuntime(activity.getProcessRuntimeGuid());
 		if (processRuntime == null)
 		{
 			return;
@@ -78,7 +78,7 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 			return;
 		}
 
-		List<ProcAttach> listProcAttach = this.stubService.getWFI().listProcAttach(activity.getProcessRuntimeGuid());
+		List<ProcAttach> listProcAttach = this.stubService.getWfi().listProcAttach(activity.getProcessRuntimeGuid());
 		if (!SetUtils.isNullList(listProcAttach))
 		{
 			for (ProcAttach attach : listProcAttach)
@@ -116,7 +116,7 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 			return;
 		}
 
-		FoundationObject foundation = this.stubService.getBOAS().getObjectByGuid(objectGuid);
+		FoundationObject foundation = this.stubService.getBoas().getObjectByGuid(objectGuid);
 		TransformManualConfig manualConfig = this.stubService.getManualConfig(transformConfig.getGuid());
 		transformConfig.setManualConfig(manualConfig);
 
@@ -161,7 +161,7 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 			return;
 		}
 
-		DSSFileInfo file = this.stubService.getDSS().getFile(fileGuid);
+		DSSFileInfo file = this.stubService.getDss().getFile(fileGuid);
 		if (file == null)
 		{
 			return;
@@ -190,7 +190,7 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 				return false;
 			}
 
-			CodeItemInfo codeItem = this.stubService.getEMM().getCodeItem(transformType);
+			CodeItemInfo codeItem = this.stubService.getEmm().getCodeItem(transformType);
 			if (codeItem == null)
 			{
 				return false;
@@ -237,8 +237,8 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 			}
 			else
 			{
-				boas = this.stubService.getBOAS();
-				dss = this.stubService.getDSS();
+				boas = this.stubService.getBoas();
+				dss = this.stubService.getDss();
 			}
 			// if ("PDFSIG".equalsIgnoreCase((String) config.get(TransformConfig.TRANSFORM_TYPE + "NAME")))
 			// { // 签注
@@ -267,7 +267,7 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 			else if (config.getResultTypeEnum() == TransStorageType.PREVIEW)
 			{
 				allFile = null;
-				FoundationObject object = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObjectByGuid(objectGuid, false);
+				FoundationObject object = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObjectByGuid(objectGuid, false);
 				DSSFileInfo fileInfoByFileType = ((DSSImpl) dss).getTransFileStub().getFileInfoByFileType(objectGuid, object.getIterationId(), FileType.PREVIEW_FILE_TYPE);
 				// dss.downloadPreviewFile(objectGuid, iterationId)
 				if (fileInfoByFileType != null)
@@ -340,11 +340,11 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 		boolean isUpload = (listFile != null);
 		if (listFile == null)
 		{
-			allFile = this.stubService.getDSS().listFile(objectGuid, null);
+			allFile = this.stubService.getDss().listFile(objectGuid, null);
 		}
 		else
 		{
-			allFile = ((DSSImpl) (this.stubService.getDSS())).getInstFileStub().listFile(objectGuid, listFile.get(0).getIterationId(), null, false, false);
+			allFile = ((DSSImpl) (this.stubService.getDss())).getInstFileStub().listFile(objectGuid, listFile.get(0).getIterationId(), null, false, false);
 		}
 
 		// for (DSSFileInfo info : allFile)
@@ -391,12 +391,12 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 			{ // 签注
 				if (signAllFile == null)
 				{
-					List<StructureObject> listObjectOfRelation = this.stubService.getBOAS().listObjectOfRelation(objectGuid, BuiltinRelationNameEnum.TRANSFROM.toString(), null,
+					List<StructureObject> listObjectOfRelation = this.stubService.getBoas().listObjectOfRelation(objectGuid, BuiltinRelationNameEnum.TRANSFROM.toString(), null,
 							null, null);
 
 					if (!SetUtils.isNullList(listObjectOfRelation))
 					{
-						signAllFile = ((DSSImpl) (this.stubService.getDSS())).getInstFileStub().listFile(listObjectOfRelation.get(0).getEnd2ObjectGuid(),
+						signAllFile = ((DSSImpl) (this.stubService.getDss())).getInstFileStub().listFile(listObjectOfRelation.get(0).getEnd2ObjectGuid(),
 								listObjectOfRelation.get(0).getIterationId(), null, false, false);
 					}
 
@@ -624,19 +624,19 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 				if ((JobStatus.SUCCESSFUL.getValue() + "").equalsIgnoreCase(status) || (JobStatus.CANCEL.getValue() + "").equalsIgnoreCase(status))
 				{
 
-					List<ActivityRuntime> listCurrentActivityRuntime = this.stubService.getWFI().listCurrentActivityRuntime(procrtGuid);
+					List<ActivityRuntime> listCurrentActivityRuntime = this.stubService.getWfi().listCurrentActivityRuntime(procrtGuid);
 					if (!SetUtils.isNullList(listCurrentActivityRuntime))
 					{
 						for (ActivityRuntime activity : listCurrentActivityRuntime)
 						{
-							List<User> listPerFormer = this.stubService.getWFI().listNotFinishPerformer(activity.getGuid());
+							List<User> listPerFormer = this.stubService.getWfi().listNotFinishPerformer(activity.getGuid());
 							if (!SetUtils.isNullList(listPerFormer))
 							{
 								for (User user : listPerFormer)
 								{
 									if (this.stubService.getUserSignature().getUserGuid().equalsIgnoreCase(user.getGuid()))
 									{
-										this.stubService.getWFI().performActivityRuntime(activity.getGuid(), null, DecisionEnum.ACCEPT, null, null,null, false);
+										this.stubService.getWfi().performActivityRuntime(activity.getGuid(), null, DecisionEnum.ACCEPT, null, null,null, false);
 										break;
 									}
 								}
@@ -675,7 +675,7 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 				String actUser = null;
 				if (procrtGuid != null)
 				{
-					List<Performer> listPerformer = this.stubService.getWFI().listPerformer(actrtGuid);
+					List<Performer> listPerformer = this.stubService.getWfi().listPerformer(actrtGuid);
 					if (!SetUtils.isNullList(listPerformer))
 					{
 						for (Performer per : listPerformer)
@@ -696,13 +696,13 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 				if (errorList.size() > 0)
 				{
 
-					subject = this.stubService.getMSRM().getMSRString("ID_APP_TRANSFORM_TITLE_ERROR", this.stubService.getUserSignature().getLanguageEnum().getId());
-					content = this.stubService.getMSRM().getMSRString("ID_APP_TRANSFORM_ERROR_CONTENT", this.stubService.getUserSignature().getLanguageEnum().getId());
+					subject = this.stubService.getMsrm().getMSRString("ID_APP_TRANSFORM_TITLE_ERROR", this.stubService.getUserSignature().getLanguageEnum().getId());
+					content = this.stubService.getMsrm().getMSRString("ID_APP_TRANSFORM_ERROR_CONTENT", this.stubService.getUserSignature().getLanguageEnum().getId());
 					content = MessageFormat.format(content, listQueue.size());
 
 					for (TransformQueue q : errorList)
 					{
-						String content1 = this.stubService.getMSRM().getMSRString("ID_APP_TRANSFORM_ERROR_CONTENT_LIST",
+						String content1 = this.stubService.getMsrm().getMSRString("ID_APP_TRANSFORM_ERROR_CONTENT_LIST",
 								this.stubService.getUserSignature().getLanguageEnum().getId());
 						ObjectGuid objectGuid = new ObjectGuid(q.getTransformInstanceClassGuid(), null, q.getTransformInstanceGuid(), null);
 						content1 = MessageFormat.format(content1, q.get("FULLNAME"), queue2.getFileName(), q.get("TRANSFORMTYPE$TITLE"));
@@ -710,15 +710,15 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 						content = content + "\r\n" + content1;
 					}
 
-					this.stubService.getSMS().sendMailToUsers(subject, content, MailCategoryEnum.ERROR, objectGuidList, toUserIdList, MailMessageType.JOBNOTIFY);
+					this.stubService.getSms().sendMailToUsers(subject, content, MailCategoryEnum.ERROR, objectGuidList, toUserIdList, MailMessageType.JOBNOTIFY);
 
 				}
 				else
 				{
-					subject = this.stubService.getMSRM().getMSRString("ID_APP_TRANSFORM_TITLE_SUCCESSFUL", this.stubService.getUserSignature().getLanguageEnum().getId());
-					content = this.stubService.getMSRM().getMSRString("ID_APP_TRANSFORM_SUCCESSFUL_CONTENT", this.stubService.getUserSignature().getLanguageEnum().getId());
+					subject = this.stubService.getMsrm().getMSRString("ID_APP_TRANSFORM_TITLE_SUCCESSFUL", this.stubService.getUserSignature().getLanguageEnum().getId());
+					content = this.stubService.getMsrm().getMSRString("ID_APP_TRANSFORM_SUCCESSFUL_CONTENT", this.stubService.getUserSignature().getLanguageEnum().getId());
 					content = MessageFormat.format(content, listQueue.size());
-					this.stubService.getSMS().sendMailToUsers(subject, content, MailCategoryEnum.INFO, objectGuidList, toUserIdList, MailMessageType.JOBNOTIFY);
+					this.stubService.getSms().sendMailToUsers(subject, content, MailCategoryEnum.INFO, objectGuidList, toUserIdList, MailMessageType.JOBNOTIFY);
 
 				}
 			}
@@ -787,7 +787,7 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 			if (queue != null && StringUtils.isGuid(queue.getTransformType()))
 			{
 
-				CodeItemInfo codeItem = this.stubService.getEMM().getCodeItem(queue.getTransformType());
+				CodeItemInfo codeItem = this.stubService.getEmm().getCodeItem(queue.getTransformType());
 				if (codeItem != null)
 				{
 					queue.put(TransformConfig.TRANSFORM_TYPE + "NAME", codeItem.getCode());
@@ -837,7 +837,7 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 						continue;
 					}
 
-					CodeItemInfo codeItem = this.stubService.getEMM().getCodeItem(queue.getTransformType());
+					CodeItemInfo codeItem = this.stubService.getEmm().getCodeItem(queue.getTransformType());
 					if (codeItem != null)
 					{
 						queue.put(TransformConfig.TRANSFORM_TYPE + "NAME", codeItem.getCode());
@@ -934,7 +934,7 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 						{
 							try
 							{
-								FoundationObject fo = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub()
+								FoundationObject fo = ((BOASImpl) this.stubService.getBoas()).getFoundationStub()
 										.getObjectByGuid(new ObjectGuid(queue.getTransformInstanceClassGuid(), null, queue.getTransformInstanceGuid(), null), false);
 								if (fo != null)
 								{
@@ -943,7 +943,7 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 
 								if (StringUtils.isGuid((String) queue.get(TransformQueue.TARGETREVISIONGUID)))
 								{
-									fo = this.stubService.getBOAS().getObjectByGuid(new ObjectGuid((String) queue.get(TransformQueue.TARGETREVISIONCLASSGUID), null,
+									fo = this.stubService.getBoas().getObjectByGuid(new ObjectGuid((String) queue.get(TransformQueue.TARGETREVISIONCLASSGUID), null,
 											(String) queue.get(TransformQueue.TARGETREVISIONGUID), null));
 									if (fo != null)
 									{
@@ -962,7 +962,7 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 							continue;
 						}
 
-						CodeItemInfo codeItem = this.stubService.getEMM().getCodeItem(queue.getTransformType());
+						CodeItemInfo codeItem = this.stubService.getEmm().getCodeItem(queue.getTransformType());
 						if (codeItem != null)
 						{
 							queue.put(TransformConfig.TRANSFORM_TYPE + "NAME", codeItem.getCode());
@@ -1028,16 +1028,16 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 		DSSFileTrans downloadFile = null;
 		if (needTransform)
 		{
-			downloadFile = this.stubService.getDSS().downloadFile(queue.getFileGuid());
+			downloadFile = this.stubService.getDss().downloadFile(queue.getFileGuid());
 		}
 		else
 		{
 			TransformConfig transformConfig = this.stubService.getTransformConfigStub().getTransformConfig(queue.getTransformConfigGuid());
 			if (transformConfig != null && transformConfig.getResultTypeEnum() == TransStorageType.ATTACHMENT)
 			{
-				FoundationObject objectByGuid = ((BOASImpl) this.stubService.getBOAS())
+				FoundationObject objectByGuid = ((BOASImpl) this.stubService.getBoas())
 						.getObjectByGuid(new ObjectGuid(queue.getTransformInstanceClassGuid(), null, queue.getTransformInstanceGuid(), null));
-				List<DSSFileInfo> listFile = this.stubService.getDSS().listFile(objectByGuid.getObjectGuid(), objectByGuid.getIterationId(), null);
+				List<DSSFileInfo> listFile = this.stubService.getDss().listFile(objectByGuid.getObjectGuid(), objectByGuid.getIterationId(), null);
 				if (!SetUtils.isNullList(listFile))
 				{
 					for (DSSFileInfo info : listFile)
@@ -1052,7 +1052,7 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 
 						if (preIName.equalsIgnoreCase(preName))
 						{
-							downloadFile = this.stubService.getDSS().downloadFile(info.getGuid());
+							downloadFile = this.stubService.getDss().downloadFile(info.getGuid());
 							break;
 						}
 					}
@@ -1061,14 +1061,14 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 			}
 			else if (transformConfig != null && transformConfig.getResultTypeEnum() == TransStorageType.OBJECT)
 			{
-				List<StructureObject> listObjectOfRelation = this.stubService.getBOAS().listObjectOfRelation(
+				List<StructureObject> listObjectOfRelation = this.stubService.getBoas().listObjectOfRelation(
 						new ObjectGuid(queue.getTransformInstanceClassGuid(), null, queue.getTransformInstanceGuid(), null), BuiltinRelationNameEnum.TRANSFROM.toString(), null,
 						null, null);
 				if (!SetUtils.isNullList(listObjectOfRelation))
 				{
 
-					FoundationObject objectByGuid = ((BOASImpl) this.stubService.getBOAS()).getObjectByGuid(listObjectOfRelation.get(0).getEnd2ObjectGuid());
-					List<DSSFileInfo> listFile = this.stubService.getDSS().listFile(objectByGuid.getObjectGuid(), objectByGuid.getIterationId(), null);
+					FoundationObject objectByGuid = ((BOASImpl) this.stubService.getBoas()).getObjectByGuid(listObjectOfRelation.get(0).getEnd2ObjectGuid());
+					List<DSSFileInfo> listFile = this.stubService.getDss().listFile(objectByGuid.getObjectGuid(), objectByGuid.getIterationId(), null);
 					if (!SetUtils.isNullList(listFile))
 					{
 						for (DSSFileInfo info : listFile)
@@ -1078,7 +1078,7 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 
 							if (preIName.equalsIgnoreCase(preName))
 							{
-								downloadFile = this.stubService.getDSS().downloadFile(info.getGuid());
+								downloadFile = this.stubService.getDss().downloadFile(info.getGuid());
 								break;
 							}
 						}
@@ -1105,21 +1105,21 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 			if (TransStorageType.ATTACHMENT.name().equalsIgnoreCase(transformConfig.getResultType()))
 			{
 
-				DSSFileInfo attachFile = ((DSSImpl) this.stubService.getDSS()).getInstFileStub().attachFile(objectGuid, file, false, false);
-				uploadFile = this.stubService.getDSS().uploadFile(attachFile.getGuid(), clientFilePath);
+				DSSFileInfo attachFile = ((DSSImpl) this.stubService.getDss()).getInstFileStub().attachFile(objectGuid, file, false, false);
+				uploadFile = this.stubService.getDss().uploadFile(attachFile.getGuid(), clientFilePath);
 
 			}
 			else if (TransStorageType.PREVIEW.name().equalsIgnoreCase(transformConfig.getResultType()))
 			{
 				if ("Y".equalsIgnoreCase((String) file.get("ISPREVIEW")))
 				{
-					DSSFileInfo fileInfo = ((DSSImpl) this.stubService.getDSS()).getInstFileStub().attachFile(objectGuid, file, true, false, false, false);
-					uploadFile = ((DSSImpl) this.stubService.getDSS()).getTransFileStub().createFileTrans(fileInfo.getGuid(), clientFilePath, FileTransTypeEnum.UPL);
+					DSSFileInfo fileInfo = ((DSSImpl) this.stubService.getDss()).getInstFileStub().attachFile(objectGuid, file, true, false, false, false);
+					uploadFile = ((DSSImpl) this.stubService.getDss()).getTransFileStub().createFileTrans(fileInfo.getGuid(), clientFilePath, FileTransTypeEnum.UPL);
 				}
 				else
 				{
-					DSSFileInfo fileInfo = ((DSSImpl) this.stubService.getDSS()).getInstFileStub().attachFile(objectGuid, file, false, true, false, false);
-					uploadFile = ((DSSImpl) this.stubService.getDSS()).getTransFileStub().createFileTrans(fileInfo.getGuid(), clientFilePath, FileTransTypeEnum.UPL);
+					DSSFileInfo fileInfo = ((DSSImpl) this.stubService.getDss()).getInstFileStub().attachFile(objectGuid, file, false, true, false, false);
+					uploadFile = ((DSSImpl) this.stubService.getDss()).getTransFileStub().createFileTrans(fileInfo.getGuid(), clientFilePath, FileTransTypeEnum.UPL);
 				}
 			}
 			else if (TransStorageType.OBJECT.name().equalsIgnoreCase(transformConfig.getResultType()) && !StringUtils.isNullString(transformConfig.getMappingClass()))
@@ -1127,7 +1127,7 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 				ObjectGuid targetObjectGuid = null;
 				// true:已经存在的关联， false:其他版本中已经存在的关联，null:对象未创建
 				Boolean isFormOwner = null;
-				List<StructureObject> listObjectOfRelation = this.stubService.getBOAS().listObjectOfRelation(objectGuid, BuiltinRelationNameEnum.TRANSFROM.toString(), null, null,
+				List<StructureObject> listObjectOfRelation = this.stubService.getBoas().listObjectOfRelation(objectGuid, BuiltinRelationNameEnum.TRANSFROM.toString(), null, null,
 						null);
 				if (!SetUtils.isNullList(listObjectOfRelation))
 				{
@@ -1149,13 +1149,13 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 				}
 				if (targetObjectGuid == null)
 				{
-					FoundationObject oriFoundation = this.stubService.getBOAS().getObjectByGuid(objectGuid);
-					List<FoundationObject> listObjectRevisionHistory = this.stubService.getBOAS().listObjectRevisionHistory(oriFoundation.getObjectGuid());
+					FoundationObject oriFoundation = this.stubService.getBoas().getObjectByGuid(objectGuid);
+					List<FoundationObject> listObjectRevisionHistory = this.stubService.getBoas().listObjectRevisionHistory(oriFoundation.getObjectGuid());
 					if (!SetUtils.isNullList(listObjectRevisionHistory))
 					{
 						for (FoundationObject object : listObjectRevisionHistory)
 						{
-							listObjectOfRelation = this.stubService.getBOAS().listObjectOfRelation(object.getObjectGuid(), BuiltinRelationNameEnum.TRANSFROM.toString(), null, null,
+							listObjectOfRelation = this.stubService.getBoas().listObjectOfRelation(object.getObjectGuid(), BuiltinRelationNameEnum.TRANSFROM.toString(), null, null,
 									null);
 							if (!SetUtils.isNullList(listObjectOfRelation))
 							{
@@ -1183,7 +1183,7 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 
 				if (isFormOwner == null || isFormOwner == false)
 				{
-					RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateByName(objectGuid, BuiltinRelationNameEnum.TRANSFROM.toString());
+					RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateByName(objectGuid, BuiltinRelationNameEnum.TRANSFROM.toString());
 					if (relationTemplate == null)
 					{
 						DynaLogger.info("relation template isnot exist, transform file upload error");
@@ -1193,18 +1193,18 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 					FoundationObject newFoundationObject = null;
 					if (isFormOwner == null)
 					{
-						newFoundationObject = this.stubService.getBOAS().newFoundationObject(transformConfig.getMappingClass(), null);
+						newFoundationObject = this.stubService.getBoas().newFoundationObject(transformConfig.getMappingClass(), null);
 					}
 					else
 					{
-						newFoundationObject = ((BOASImpl) this.stubService.getBOAS()).getFoundationStub().getObject(targetObjectGuid, false);
+						newFoundationObject = ((BOASImpl) this.stubService.getBoas()).getFoundationStub().getObject(targetObjectGuid, false);
 					}
 
 					// 添加映射字段
 					List<TransformFieldMapping> listFieldMappingConfig = this.stubService.getTransformConfigStub().listFieldMappingConfig(transformConfig.getGuid());
 					if (!SetUtils.isNullList(listFieldMappingConfig))
 					{
-						FoundationObject oriFoundation = this.stubService.getBOAS().getObject(objectGuid);
+						FoundationObject oriFoundation = this.stubService.getBoas().getObject(objectGuid);
 
 						for (TransformFieldMapping fieldMapping : listFieldMappingConfig)
 						{
@@ -1219,21 +1219,21 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 					}
 					if (isFormOwner == null)
 					{
-						FoundationObject createObject = ((BOASImpl) this.stubService.getBOAS()).getFSaverStub().createObject(newFoundationObject, null, false, false);
+						FoundationObject createObject = ((BOASImpl) this.stubService.getBoas()).getFSaverStub().createObject(newFoundationObject, null, false, false);
 						targetObjectGuid = createObject.getObjectGuid();
 					}
 					else if (isFormOwner == false)
 					{
-						((BOASImpl) this.stubService.getBOAS()).getFSaverStub().saveObject(newFoundationObject, false, false, false, false, null, true, false, true, true);
+						((BOASImpl) this.stubService.getBoas()).getFSaverStub().saveObject(newFoundationObject, false, false, false, false, null, true, false, true, true);
 					}
 
-					StructureObject structureObject = this.stubService.getBOAS().newStructureObject(relationTemplate.getStructureClassGuid(), null);
-					this.stubService.getBOAS().link(objectGuid, targetObjectGuid, structureObject, BuiltinRelationNameEnum.TRANSFROM.toString());
+					StructureObject structureObject = this.stubService.getBoas().newStructureObject(relationTemplate.getStructureClassGuid(), null);
+					this.stubService.getBoas().link(objectGuid, targetObjectGuid, structureObject, BuiltinRelationNameEnum.TRANSFROM.toString());
 
 				}
 
-				DSSFileInfo attachFile = ((DSSImpl) this.stubService.getDSS()).getInstFileStub().attachFile(targetObjectGuid, file, false, false);
-				uploadFile = this.stubService.getDSS().uploadFile(attachFile.getGuid(), clientFilePath);
+				DSSFileInfo attachFile = ((DSSImpl) this.stubService.getDss()).getInstFileStub().attachFile(targetObjectGuid, file, false, false);
+				uploadFile = this.stubService.getDss().uploadFile(attachFile.getGuid(), clientFilePath);
 
 				queue.put(TransformQueue.TARGETREVISIONCLASSGUID, targetObjectGuid.getClassGuid());
 				queue.put(TransformQueue.TARGETREVISIONGUID, targetObjectGuid.getGuid());
@@ -1265,21 +1265,21 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 		ClassStub.decorateObjectGuid(target.getObjectGuid(), this.stubService);
 		ClassStub.decorateObjectGuid(sourceFoundation.getObjectGuid(), this.stubService);
 
-		ClassField field = this.stubService.getEMM().getFieldByName(target.getObjectGuid().getClassName(), fieldName, true);
-		ClassField sfield = this.stubService.getEMM().getFieldByName(sourceFoundation.getObjectGuid().getClassName(), sourceFieldName, true);
+		ClassField field = this.stubService.getEmm().getFieldByName(target.getObjectGuid().getClassName(), fieldName, true);
+		ClassField sfield = this.stubService.getEmm().getFieldByName(sourceFoundation.getObjectGuid().getClassName(), sourceFieldName, true);
 		Object object = sourceFoundation.get(sourceFieldName);
 		if (field != null && sfield != null && field.getType() == sfield.getType() && object != null && field.getType().equals(FieldTypeEnum.OBJECT))
 		{
-			ClassInfo classInfo = this.stubService.getEMM().getClassByName(field.getTypeValue());
+			ClassInfo classInfo = this.stubService.getEmm().getClassByName(field.getTypeValue());
 			if (classInfo.hasInterface(ModelInterfaceEnum.IUser) || classInfo.hasInterface(ModelInterfaceEnum.IGroup) || classInfo.hasInterface(ModelInterfaceEnum.IPMCalendar)
 					|| classInfo.hasInterface(ModelInterfaceEnum.IPMRole))
 			{
 				return false;
 			}
-			ObjectGuid objectGuid = new ObjectGuid(this.stubService.getEMM().getClassByName(field.getTypeValue()).getGuid(), null, object.toString(), null);
+			ObjectGuid objectGuid = new ObjectGuid(this.stubService.getEmm().getClassByName(field.getTypeValue()).getGuid(), null, object.toString(), null);
 			target.put(fieldName, object);
 			target.put(fieldName + "$master", objectGuid.getMasterGuid());
-			target.put(fieldName + "$class", this.stubService.getEMM().getClassByName(field.getTypeValue()).getGuid());
+			target.put(fieldName + "$class", this.stubService.getEmm().getClassByName(field.getTypeValue()).getGuid());
 			return true;
 		}
 		else if (field != null && sfield != null && field.getType() == sfield.getType() && object != null)
@@ -1295,7 +1295,7 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 	public void setDefaultValue(FoundationObject target, String fieldName, String value) throws ServiceRequestException
 	{
 		ClassStub.decorateObjectGuid(target.getObjectGuid(), this.stubService);
-		ClassField field = this.stubService.getEMM().getFieldByName(target.getObjectGuid().getClassName(), fieldName, true);
+		ClassField field = this.stubService.getEmm().getFieldByName(target.getObjectGuid().getClassName(), fieldName, true);
 		if (field != null)
 		{
 			switch (field.getType())
@@ -1313,7 +1313,7 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 			case CODE:
 				if (!StringUtils.isNullString(field.getTypeValue()))
 				{
-					List<CodeItemInfo> listCodeItem = this.stubService.getEMM().listAllCodeItemInfoByMaster(null, field.getTypeValue());
+					List<CodeItemInfo> listCodeItem = this.stubService.getEmm().listAllCodeItemInfoByMaster(null, field.getTypeValue());
 					CodeItemInfo codeItemByName = null;
 					if (!SetUtils.isNullList(listCodeItem))
 					{
@@ -1327,7 +1327,7 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 							}
 						}
 					}
-					// CodeItemInfo codeItemByName = this.stubService.getEMM().getCodeItemByName(field.getTypeValue(),
+					// CodeItemInfo codeItemByName = this.stubService.getEmm().getCodeItemByName(field.getTypeValue(),
 					// value);
 					if (codeItemByName != null)
 					{
@@ -1337,11 +1337,11 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 				}
 			case CLASSIFICATION:
 				ClassStub.decorateObjectGuid(target.getObjectGuid(), this.stubService);
-				ClassInfo classByName = this.stubService.getEMM().getClassByName(target.getObjectGuid().getClassName());
+				ClassInfo classByName = this.stubService.getEmm().getClassByName(target.getObjectGuid().getClassName());
 				if (classByName != null && !StringUtils.isNullString(classByName.getClassification()))
 				{
 
-					List<CodeItemInfo> listCodeItem = this.stubService.getEMM().listAllCodeItemInfoByMaster(null, classByName.getClassification());
+					List<CodeItemInfo> listCodeItem = this.stubService.getEmm().listAllCodeItemInfoByMaster(null, classByName.getClassification());
 					CodeItemInfo codeItemByName = null;
 					if (!SetUtils.isNullList(listCodeItem))
 					{
@@ -1357,7 +1357,7 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 					}
 
 					// CodeItemInfo codeItemByName =
-					// this.stubService.getEMM().getCodeItemByName(classByName.getClassification(), value);
+					// this.stubService.getEmm().getCodeItemByName(classByName.getClassification(), value);
 					if (codeItemByName != null)
 					{
 						target.put(fieldName, codeItemByName.getGuid());
@@ -1487,7 +1487,7 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 			if (queue.getJobStatus() == JobStatus.RUNNING && queue.getUpdateTime().compareTo(current) < 0)
 			{
 
-				String msrString = this.stubService.getMSRM().getMSRString("ID_APP_TRANSFORM_TIMEOUT", this.stubService.getUserSignature().getLanguageEnum().toString());
+				String msrString = this.stubService.getMsrm().getMSRString("ID_APP_TRANSFORM_TIMEOUT", this.stubService.getUserSignature().getLanguageEnum().toString());
 				if (msrString == null)
 				{
 					msrString = "ID_APP_TRANSFORM_TIMEOUT";
@@ -1506,7 +1506,7 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 				String actUser = null;
 				if (procrtGuid != null)
 				{
-					List<Performer> listPerformer = this.stubService.getWFI().listPerformer(actrtGuid);
+					List<Performer> listPerformer = this.stubService.getWfi().listPerformer(actrtGuid);
 					if (!SetUtils.isNullList(listPerformer))
 					{
 						for (Performer per : listPerformer)
@@ -1521,19 +1521,19 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 					toUserIdList.add(actUser);
 				}
 
-				String subject = this.stubService.getMSRM().getMSRString("ID_APP_TRANSFORM_OUTTIME_TITLE", this.stubService.getUserSignature().getLanguageEnum().getId());
-				String content = this.stubService.getMSRM().getMSRString("ID_APP_TRANSFORM_OUTTIME_CONTENT", this.stubService.getUserSignature().getLanguageEnum().getId());
+				String subject = this.stubService.getMsrm().getMSRString("ID_APP_TRANSFORM_OUTTIME_TITLE", this.stubService.getUserSignature().getLanguageEnum().getId());
+				String content = this.stubService.getMsrm().getMSRString("ID_APP_TRANSFORM_OUTTIME_CONTENT", this.stubService.getUserSignature().getLanguageEnum().getId());
 
 				ObjectGuid objectGuid = new ObjectGuid(queue.getTransformInstanceClassGuid(), null, queue.getTransformInstanceGuid(), null);
 
-				// FoundationObject object = ((BOASImpl)this.stubService.getBOAS()
+				// FoundationObject object = ((BOASImpl)this.stubService.getBoas()
 				// ).getFoundationStub().getObject(objectGuid, false);
 
 				content = MessageFormat.format(content, queue.get("FULLNAME"), queue.getFileName(), queue.get("TRANSFORMTYPE$TITLE"));
 
 				List<ObjectGuid> objectGuidList = new ArrayList<ObjectGuid>();
 				objectGuidList.add(objectGuid);
-				this.stubService.getSMS().sendMailToUsers(subject, content, MailCategoryEnum.ERROR, objectGuidList, toUserIdList, MailMessageType.JOBNOTIFY);
+				this.stubService.getSms().sendMailToUsers(subject, content, MailCategoryEnum.ERROR, objectGuidList, toUserIdList, MailMessageType.JOBNOTIFY);
 
 			}
 		}
@@ -1550,7 +1550,7 @@ public class TransformStub extends AbstractServiceStub<FTSImpl>
 			filter.put(TransformServer.SERVER_ID, serverID);
 			sds.delete(TransformServer.class, filter, "deleteConfig");
 			Map<String, String> typeList = new HashMap<String, String>();
-			List<CodeItemInfo> listCodeItem = this.stubService.getEMM().listAllCodeItemInfoByMaster(null, CodeNameEnum.TRANSFORMTYPE.getValue());
+			List<CodeItemInfo> listCodeItem = this.stubService.getEmm().listAllCodeItemInfoByMaster(null, CodeNameEnum.TRANSFORMTYPE.getValue());
 			if (!SetUtils.isNullList(listCodeItem))
 			{
 				for (CodeItemInfo info : listCodeItem)

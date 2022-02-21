@@ -106,7 +106,7 @@ public class DrivenStub extends AbstractServiceStub<CPBImpl>
 	{
 		try
 		{
-			ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(end1.getObjectGuid().getClassGuid());
+			ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(end1.getObjectGuid().getClassGuid());
 			if (!classInfo.hasInterface(ModelInterfaceEnum.IManufacturingRule))
 			{
 				return null;
@@ -133,7 +133,7 @@ public class DrivenStub extends AbstractServiceStub<CPBImpl>
 			// 验证输入参数
 			this.stubService.getConfigCheckStub().checkIputVar(end1.getId(), configVariable);
 
-			RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateByName(end1.getObjectGuid(),
+			RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateByName(end1.getObjectGuid(),
 					ConfigParameterConstants.CONFIG_PARAMETER_RELATION_TEMPLATE_NAME);
 
 			// 计算变量
@@ -238,7 +238,7 @@ public class DrivenStub extends AbstractServiceStub<CPBImpl>
 	protected FoundationObject saveDrivenTestResult(ObjectGuid end1ObjectGuid, SearchCondition strucSearchCondition, SearchCondition end2SearchCondition, DataRule dataRule,
 			String gNumber, String lNumbers, String inptVarriables) throws ServiceRequestException
 	{
-		FoundationObject draw = this.stubService.getBOAS().getObject(end1ObjectGuid);
+		FoundationObject draw = this.stubService.getBoas().getObject(end1ObjectGuid);
 		if (draw == null)
 		{
 			throw new ServiceRequestException("ID_DS_NO_DATA", "draw is not exist, guid='" + end1ObjectGuid.getGuid() + "'");
@@ -307,7 +307,7 @@ public class DrivenStub extends AbstractServiceStub<CPBImpl>
 				String inptVariables = (String) struc.get(ConfigParameterConstants.CONFIGPARAMETER);
 
 				FoundationObject end2 = struc.getEnd2UIObject();
-				ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(end2.getObjectGuid().getClassGuid());
+				ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(end2.getObjectGuid().getClassGuid());
 				if (classInfo.hasInterface(ModelInterfaceEnum.IManufacturingRule) && end2.getStatus() != SystemStatusEnum.RELEASE)
 				{
 					throw new ServiceRequestException("ID_APP_DRAW_NOT_RLS", "draw is not released, id='" + end2.getId() + "'", null, end2.getId());
@@ -344,7 +344,7 @@ public class DrivenStub extends AbstractServiceStub<CPBImpl>
 
 		FoundationObject foundationObject_ = new FoundationObjectImpl();
 		foundationObject_.sync(foundationObject);
-		ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(foundationObject_.getObjectGuid().getClassGuid());
+		ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(foundationObject_.getObjectGuid().getClassGuid());
 		if (classInfo.hasInterface(ModelInterfaceEnum.IManufacturingRule))
 		{
 			String matchedClassGuid = (String) foundationObject_.get(ConfigParameterConstants.MATCHEDCLASS);
@@ -366,9 +366,9 @@ public class DrivenStub extends AbstractServiceStub<CPBImpl>
 
 				this.clearForCreateObj(foundationObject_);
 
-				FoundationObject newEnd2 = this.stubService.getBOAS().newFoundationObject(targetClassInfo.getGuid(), targetClassInfo.getName());
+				FoundationObject newEnd2 = this.stubService.getBoas().newFoundationObject(targetClassInfo.getGuid(), targetClassInfo.getName());
 				((FoundationObjectImpl) newEnd2).putAll((FoundationObjectImpl) foundationObject_);
-				FoundationObject tmpFoundationObject = this.stubService.getBOAS().getObject(foundationObject.getObjectGuid());
+				FoundationObject tmpFoundationObject = this.stubService.getBoas().getObject(foundationObject.getObjectGuid());
 				this.copy(tmpFoundationObject, newEnd2);
 
 				newEnd2.put(ConfigParameterConstants.ORIGOBJ, foundationObject_.getObjectGuid().getGuid());
@@ -386,7 +386,7 @@ public class DrivenStub extends AbstractServiceStub<CPBImpl>
 				}
 				newEnd2.put(ConfigParameterConstants.CONFIGPARAMETER, inputVars_);
 
-				FoundationObject retObject = this.stubService.getBOAS().createObject(newEnd2);
+				FoundationObject retObject = this.stubService.getBoas().createObject(newEnd2);
 				retObject.put(ConfigParameterConstants.IS_NEW_ITEM, BooleanUtils.getBooleanStringYN(true));
 				return retObject;
 			}
@@ -447,21 +447,21 @@ public class DrivenStub extends AbstractServiceStub<CPBImpl>
 	 */
 	private FoundationObject createItemFromDraw(FoundationObject foundationObject, String partNumber, String lNumber, String inptVariables) throws ServiceRequestException
 	{
-		ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(foundationObject.getObjectGuid().getClassGuid());
+		ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(foundationObject.getObjectGuid().getClassGuid());
 		if (classInfo.hasInterface(ModelInterfaceEnum.IManufacturingRule))
 		{
 			FoundationObject item = this.saveFoundationObject(foundationObject, null, partNumber, lNumber, inptVariables);
 			if (item.get(ConfigParameterConstants.IS_NEW_ITEM) != null && BooleanUtils.getBooleanByYN((String) item.get(ConfigParameterConstants.IS_NEW_ITEM)))
 			{
 				String templateName = this.getCADTemplate(classInfo.getName());
-				RelationTemplateInfo relationTemplate = this.stubService.getEMM().getRelationTemplateByName(item.getObjectGuid(), templateName);
+				RelationTemplateInfo relationTemplate = this.stubService.getEmm().getRelationTemplateByName(item.getObjectGuid(), templateName);
 				if (relationTemplate == null)
 				{
 					throw new ServiceRequestException("ID_APP_NO_RELATION_TEMPLATE", "no relation template:" + templateName, null, templateName);
 				}
 
-				StructureObject structureObject = this.stubService.getBOAS().newStructureObject(relationTemplate.getStructureClassGuid(), relationTemplate.getStructureClassName());
-				this.stubService.getBOAS().link(item.getObjectGuid(), foundationObject.getObjectGuid(), structureObject, templateName);
+				StructureObject structureObject = this.stubService.getBoas().newStructureObject(relationTemplate.getStructureClassGuid(), relationTemplate.getStructureClassName());
+				this.stubService.getBoas().link(item.getObjectGuid(), foundationObject.getObjectGuid(), structureObject, templateName);
 			}
 			return item;
 		}
@@ -508,7 +508,7 @@ public class DrivenStub extends AbstractServiceStub<CPBImpl>
 					newEnd2.put(ConfigParameterConstants.PARAMETERDESC,
 							ConfigParameterConstants.UNIQUE_SPLIT_CHAR + gNumberDesc + ConfigParameterConstants.UNIQUE_SPLIT_CHAR + lNumberDesc);
 
-					StructureObject structureObject = this.stubService.getBOAS().newStructureObject(relationTemplate.getStructureClassGuid(),
+					StructureObject structureObject = this.stubService.getBoas().newStructureObject(relationTemplate.getStructureClassGuid(),
 							relationTemplate.getStructureClassName());
 					structureObject.setEnd2ObjectGuid(newEnd2.getObjectGuid());
 					structureObject.put(BOMStructure.END2_UI_OBJECT, newEnd2);
@@ -529,7 +529,7 @@ public class DrivenStub extends AbstractServiceStub<CPBImpl>
 			for (StructureObject strucObject : end2List)
 			{
 				FoundationObject end2 = (FoundationObject) strucObject.get(BOMStructure.END2_UI_OBJECT);
-				ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(end2.getObjectGuid().getClassGuid());
+				ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(end2.getObjectGuid().getClassGuid());
 
 				// 客供料检查
 				boolean isSuppliedItem = false;
@@ -694,7 +694,7 @@ public class DrivenStub extends AbstractServiceStub<CPBImpl>
 			return null;
 		}
 
-		CodeItemInfo codeItem = this.stubService.getEMM().getCodeItem(matchedClassGuid);
+		CodeItemInfo codeItem = this.stubService.getEmm().getCodeItem(matchedClassGuid);
 		if (codeItem == null)
 		{
 			String title = this.getMessage("ID_APP_CONFIGTITLE_MATCHED_TITLE");
@@ -704,7 +704,7 @@ public class DrivenStub extends AbstractServiceStub<CPBImpl>
 		}
 
 		String targetClassName = codeItem.getName();
-		ClassInfo targetClassInfo = this.stubService.getEMM().getClassByName(targetClassName);
+		ClassInfo targetClassInfo = this.stubService.getEmm().getClassByName(targetClassName);
 		if (targetClassInfo == null)
 		{
 			String title = this.getMessage("ID_APP_CONFIGTITLE_MATCHED_TITLE");
@@ -729,7 +729,7 @@ public class DrivenStub extends AbstractServiceStub<CPBImpl>
 
 	private FoundationObject getCustomerSupplyDraw(String id) throws ServiceRequestException
 	{
-		ClassInfo classInfo = this.stubService.getEMM().getFirstLevelClassByInterface(ModelInterfaceEnum.IManufacturingRule, null);
+		ClassInfo classInfo = this.stubService.getEmm().getFirstLevelClassByInterface(ModelInterfaceEnum.IManufacturingRule, null);
 		ObjectGuid objectGuid_ = new ObjectGuid();
 		objectGuid_.setClassGuid(classInfo.getGuid());
 		objectGuid_.setClassName(classInfo.getName());
@@ -737,7 +737,7 @@ public class DrivenStub extends AbstractServiceStub<CPBImpl>
 		sc.setCaseSensitive(true);
 		sc.addFilter(SystemClassFieldEnum.ID, id, OperateSignEnum.EQUALS);
 		sc.setSearchRevisionTypeEnum(SearchRevisionTypeEnum.ISLATESTONLY);
-		List<FoundationObject> objectList = this.stubService.getBOAS().listObject(sc);
+		List<FoundationObject> objectList = this.stubService.getBoas().listObject(sc);
 		if (SetUtils.isNullList(objectList))
 		{
 			return null;
@@ -769,7 +769,7 @@ public class DrivenStub extends AbstractServiceStub<CPBImpl>
 		}
 		else
 		{
-			List<UIObjectInfo> uiObjectList = this.stubService.getEMM().listALLFormListUIObjectInBizModel(className);
+			List<UIObjectInfo> uiObjectList = this.stubService.getEmm().listALLFormListUIObjectInBizModel(className);
 			if (!SetUtils.isNullList(uiObjectList))
 			{
 				for (UIObjectInfo uiObject : uiObjectList)
@@ -782,7 +782,7 @@ public class DrivenStub extends AbstractServiceStub<CPBImpl>
 		searchCondition.addResultField(ConfigParameterConstants.IS_NO_DRAWING_ITEM);
 		searchCondition.setCaseSensitive(true);
 		searchCondition.setSearchRevisionTypeEnum(SearchRevisionTypeEnum.ISLATESTONLY);
-		List<FoundationObject> list = this.stubService.getBOAS().listObject(searchCondition);
+		List<FoundationObject> list = this.stubService.getBoas().listObject(searchCondition);
 		if (!SetUtils.isNullList(list))
 		{
 			return list.get(0);
@@ -1214,7 +1214,7 @@ public class DrivenStub extends AbstractServiceStub<CPBImpl>
 
 	private String getMessage(String id, Object... agrs) throws ServiceRequestException
 	{
-		return this.stubService.getMSRM().getMSRString(id, this.stubService.getUserSignature().getLanguageEnum().getId(), agrs);
+		return this.stubService.getMsrm().getMSRString(id, this.stubService.getUserSignature().getLanguageEnum().getId(), agrs);
 	}
 
 	protected void saveDriveHistory(ObjectGuid objectGuid, String gNumber, String lNumbers, String inptVarriables) throws ServiceRequestException
@@ -1244,7 +1244,7 @@ public class DrivenStub extends AbstractServiceStub<CPBImpl>
 
 	protected String getCADTemplate(String className) throws ServiceRequestException
 	{
-		ClassInfo classInfo = this.stubService.getEMM().getClassByName(className);
+		ClassInfo classInfo = this.stubService.getEmm().getClassByName(className);
 		if (classInfo.hasInterface(ModelInterfaceEnum.ICAD2D))
 		{
 			return ConfigParameterConstants.CONFIG_PARAMETER_ITEM_CAD2D_TEMPLATE_NAME;
@@ -1299,10 +1299,10 @@ public class DrivenStub extends AbstractServiceStub<CPBImpl>
 	private void setOtherFieldByVariableMap(FoundationObject foundationObject, Map<String, String> variableMap) throws ServiceRequestException
 	{
 		ClassStub.decorateObjectGuid(foundationObject.getObjectGuid(), this.stubService);
-		UIObjectInfo uiObject = this.stubService.getEMM().getUIObjectByName(foundationObject.getObjectGuid().getClassName(), "ListUIFormConfig");
+		UIObjectInfo uiObject = this.stubService.getEmm().getUIObjectByName(foundationObject.getObjectGuid().getClassName(), "ListUIFormConfig");
 		if (uiObject != null)
 		{
-			List<UIField> uiFieldList = this.stubService.getEMM().listUIFieldByUIGuid(uiObject.getGuid());
+			List<UIField> uiFieldList = this.stubService.getEmm().listUIFieldByUIGuid(uiObject.getGuid());
 			if (!SetUtils.isNullList(uiFieldList))
 			{
 				for (UIField uiField : uiFieldList)
@@ -1315,7 +1315,7 @@ public class DrivenStub extends AbstractServiceStub<CPBImpl>
 
 	private void setOthers(FoundationObject foundationObject, String propertyName, Map<String, String> variableMap) throws ServiceRequestException
 	{
-		ClassField field = this.stubService.getEMM().getFieldByName(foundationObject.getObjectGuid().getClassName(), propertyName, true);
+		ClassField field = this.stubService.getEmm().getFieldByName(foundationObject.getObjectGuid().getClassName(), propertyName, true);
 		String origVal = (String) foundationObject.get(propertyName);
 		if (!StringUtils.isNullString(origVal))
 		{

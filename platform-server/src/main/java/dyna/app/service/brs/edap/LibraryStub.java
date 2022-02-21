@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * @author Wanglei
+ * @author Lizw
  * 
  */
 @Component
@@ -68,7 +68,7 @@ public class LibraryStub extends AbstractServiceStub<EDAPImpl>
 
 		try
 		{
-			Group group = this.stubService.getAAS().getGroup(this.stubService.getUserSignature().getLoginGroupGuid());
+			Group group = this.stubService.getAas().getGroup(this.stubService.getUserSignature().getLoginGroupGuid());
 			if (group == null || !group.isAdminGroup())
 			{
 				throw new ServiceRequestException("ID_APP_ADMIN_GROUP_TEAM", "accessible for administrative group only");
@@ -96,7 +96,7 @@ public class LibraryStub extends AbstractServiceStub<EDAPImpl>
 
 	protected Folder getDefaultLibraryByUserGroup() throws ServiceRequestException
 	{
-		Group group = this.stubService.getAAS().getGroup(this.stubService.getUserSignature().getLoginGroupGuid());
+		Group group = this.stubService.getAas().getGroup(this.stubService.getUserSignature().getLoginGroupGuid());
 
 		try
 		{
@@ -155,7 +155,7 @@ public class LibraryStub extends AbstractServiceStub<EDAPImpl>
 	 * }
 	 * else if (statisticResultEnum.equals(StatisticResultEnum.GROUP))
 	 * {
-	 * Group group = this.stubService.getAAS().getGroup(key);
+	 * Group group = this.stubService.getAas().getGroup(key);
 	 * statisticResult.setGroup(group);
 	 * }
 	 * else if (statisticResultEnum.equals(StatisticResultEnum.INTERFACE))
@@ -233,7 +233,7 @@ public class LibraryStub extends AbstractServiceStub<EDAPImpl>
 	 * }
 	 * else if (statisticResultEnum.equals(StatisticResultEnum.GROUP))
 	 * {
-	 * Group group = this.stubService.getAAS().getGroup(key);
+	 * Group group = this.stubService.getAas().getGroup(key);
 	 * statisticResult.setGroup(group);
 	 * }
 	 * else if (statisticResultEnum.equals(StatisticResultEnum.INTERFACE))

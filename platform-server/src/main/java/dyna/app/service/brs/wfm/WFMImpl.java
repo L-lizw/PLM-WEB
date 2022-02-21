@@ -21,6 +21,8 @@ import dyna.common.exception.ServiceRequestException;
 import dyna.net.service.brs.*;
 import dyna.net.service.data.SystemDataService;
 import dyna.net.service.data.model.ClassModelService;
+import lombok.AccessLevel;
+import lombok.Getter;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,10 +37,22 @@ import java.util.List;
  * @author Lizw
  */
 @Order(2)
+@Getter(AccessLevel.PROTECTED)
 @DubboService public class WFMImpl extends BusinessRuleService implements WFM
 {
 	@DubboReference private ClassModelService classModelService;
 	@DubboReference private SystemDataService systemDataService;
+
+	@Autowired
+	private AAS aas;
+	@Autowired
+	private BOAS boas;
+	@Autowired
+	private BOMS boms;
+	@Autowired
+	private EMM emm;
+	@Autowired
+	private WFI wfi;
 
 	@Autowired private ActivitiyStub          activitiyStub       ;
 	@Autowired private ApproveTemplateStub    processTemplateStub ;
@@ -127,65 +141,9 @@ import java.util.List;
 		super.authorize(method, args);
 	}
 
-	protected synchronized EMM getEMM() throws ServiceRequestException
+	public  WFI getWFI()
 	{
-		try
-		{
-			return this.getRefService(EMM.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-
-	}
-
-	public synchronized WFI getWFI() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(WFI.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
-
-	protected synchronized BOAS getBOAS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(BOAS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
-
-	protected synchronized AAS getAAS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(AAS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
-	}
-
-	protected synchronized BOMS getBOMS() throws ServiceRequestException
-	{
-		try
-		{
-			return this.getRefService(BOMS.class);
-		}
-		catch (Exception e)
-		{
-			throw new ServiceRequestException(null, e.getMessage(), e.fillInStackTrace());
-		}
+		return this.wfi;
 	}
 
 	/*

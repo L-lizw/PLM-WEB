@@ -27,7 +27,7 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 /**
- * @author Wanglei
+ * @author Lizw
  * 
  */
 @Component
@@ -52,7 +52,7 @@ public class BOMCompareStub extends AbstractServiceStub<BOMSImpl>
 			BOMTemplateInfo bomTemplate = null;
 			if (bomView != null)
 			{
-				bomTemplate = this.stubService.getEMM().getBOMTemplateById((String) bomView.get(ViewObject.TEMPLATE_ID));
+				bomTemplate = this.stubService.getEmm().getBOMTemplateById((String) bomView.get(ViewObject.TEMPLATE_ID));
 
 				if (bomTemplate != null)
 				{
@@ -64,7 +64,7 @@ public class BOMCompareStub extends AbstractServiceStub<BOMSImpl>
 
 			if (className != null)
 			{
-				List<UIObjectInfo> uiObjectList = this.stubService.getEMM().listALLFormListUIObjectInBizModel(className);
+				List<UIObjectInfo> uiObjectList = this.stubService.getEmm().listALLFormListUIObjectInBizModel(className);
 				searchCondition = SearchConditionFactory.createSearchConditionForBOMStructure(className, uiObjectList);
 			}
 
@@ -72,7 +72,7 @@ public class BOMCompareStub extends AbstractServiceStub<BOMSImpl>
 
 			if (bomTemplate != null)
 			{
-				end2SearchCondition = this.stubService.getEMM().createAssoEnd2SearchCondition(bomTemplate.getGuid(), true, true);
+				end2SearchCondition = this.stubService.getEmm().createAssoEnd2SearchCondition(bomTemplate.getGuid(), true, true);
 			}
 
 			// 获取左边对应的BOMStructure列表
@@ -160,7 +160,7 @@ public class BOMCompareStub extends AbstractServiceStub<BOMSImpl>
 			BOMTemplateInfo bomTemplate = null;
 			if (bomView != null)
 			{
-				bomTemplate = this.stubService.getEMM().getBOMTemplateById((String) bomView.get(ViewObject.TEMPLATE_ID));
+				bomTemplate = this.stubService.getEmm().getBOMTemplateById((String) bomView.get(ViewObject.TEMPLATE_ID));
 
 				if (bomTemplate != null)
 				{
@@ -172,14 +172,14 @@ public class BOMCompareStub extends AbstractServiceStub<BOMSImpl>
 
 			if (className != null)
 			{
-				List<UIObjectInfo> uiObjectList = this.stubService.getEMM().listALLFormListUIObjectInBizModel(className);
+				List<UIObjectInfo> uiObjectList = this.stubService.getEmm().listALLFormListUIObjectInBizModel(className);
 				searchCondition = SearchConditionFactory.createSearchConditionForBOMStructure(className, uiObjectList);
 			}
 
 			SearchCondition end2SearchCondition = null;
 			if (bomTemplate != null)
 			{
-				end2SearchCondition = this.stubService.getEMM().createAssoEnd2SearchCondition(bomTemplate.getGuid(), true, true);
+				end2SearchCondition = this.stubService.getEmm().createAssoEnd2SearchCondition(bomTemplate.getGuid(), true, true);
 			}
 
 			List<BOMStructure> leftBomStructureList = null;
@@ -277,10 +277,10 @@ public class BOMCompareStub extends AbstractServiceStub<BOMSImpl>
 
 							bomCompare.setRightBomStructure(rightBOMStructure);
 							FoundationObject leftFoundationObject = null;
-							leftFoundationObject = this.stubService.getBOAS().getObject(leftBOMStructure.getEnd2ObjectGuid());
+							leftFoundationObject = this.stubService.getBoas().getObject(leftBOMStructure.getEnd2ObjectGuid());
 
 							FoundationObject rightFoundationObject = null;
-							rightFoundationObject = this.stubService.getBOAS().getObject(rightBOMStructure.getEnd2ObjectGuid());
+							rightFoundationObject = this.stubService.getBoas().getObject(rightBOMStructure.getEnd2ObjectGuid());
 
 							// 如果顺序号一致，则把操作符先变更为修改
 							bomCompare.setECOperateTypeEnum(ECOperateTypeEnum.MODIFY);

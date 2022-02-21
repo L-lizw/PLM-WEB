@@ -316,4 +316,19 @@ public interface SMS extends ApplicationService
 	 */
 	public void clearMailByConfig() throws ServiceRequestException;
 
+	/**
+	 * 工作流通知
+	 *
+	 * @param toUserGuidList
+	 * @param fromUseGuid
+	 * @param processGuid
+	 * @param activityGuid
+	 * @param contents
+	 * @param title
+	 * @param category
+	 * @throws ServiceRequestException
+	 */
+	public void sendMail4WorkFlow(List<String> toUserGuidList, String fromUseGuid, String processGuid, String activityGuid, String contents, String title,
+			MailMessageType messageType, MailCategoryEnum category, Integer startNumber) throws ServiceRequestException;
+
 }

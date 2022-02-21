@@ -49,18 +49,18 @@ public class DataCheckStub extends AbstractServiceStub<DCRImpl>
 		FoundationObject end1 = null;
 		try
 		{
-			end1 = this.stubService.getBOAS().getObject(end1ObjectGuid);
+			end1 = this.stubService.getBoas().getObject(end1ObjectGuid);
 		}
 		catch (Exception e)
 		{
 			throw new ServiceRequestException(
-					this.stubService.getMSRM().getMSRString("ID_RM_CHECK_ILLEGAL", this.stubService.getUserSignature().getLanguageEnum().name(), e.getMessage()),
+					this.stubService.getMsrm().getMSRString("ID_RM_CHECK_ILLEGAL", this.stubService.getUserSignature().getLanguageEnum().name(), e.getMessage()),
 					"Unable to get end1");
 		}
 		if (end1 == null)
 		{
 			throw new ServiceRequestException(
-					this.stubService.getMSRM().getMSRString("ID_RM_CHECK_ILLEGAL", this.stubService.getUserSignature().getLanguageEnum().name(), "Unable to get end1"),
+					this.stubService.getMsrm().getMSRString("ID_RM_CHECK_ILLEGAL", this.stubService.getUserSignature().getLanguageEnum().name(), "Unable to get end1"),
 					"Unable to get end1");
 		}
 
@@ -74,18 +74,18 @@ public class DataCheckStub extends AbstractServiceStub<DCRImpl>
 			FoundationObject end2 = null;
 			try
 			{
-				end2 = this.stubService.getBOAS().getObjectNotCheckAuthor(end2ObjectGuid);
+				end2 = this.stubService.getBoas().getObjectNotCheckAuthor(end2ObjectGuid);
 			}
 			catch (Exception e)
 			{
 				throw new ServiceRequestException(
-						this.stubService.getMSRM().getMSRString("ID_RM_CHECK_ILLEGAL", this.stubService.getUserSignature().getLanguageEnum().name(), e.getMessage()),
+						this.stubService.getMsrm().getMSRString("ID_RM_CHECK_ILLEGAL", this.stubService.getUserSignature().getLanguageEnum().name(), e.getMessage()),
 						"Unable to get end2");
 			}
 			if (end2 == null)
 			{
 				throw new ServiceRequestException(
-						this.stubService.getMSRM().getMSRString("ID_RM_CHECK_ILLEGAL", this.stubService.getUserSignature().getLanguageEnum().name(), "Unable to get end1"),
+						this.stubService.getMsrm().getMSRString("ID_RM_CHECK_ILLEGAL", this.stubService.getUserSignature().getLanguageEnum().name(), "Unable to get end1"),
 						"Unable to get end2");
 			}
 
@@ -122,7 +122,7 @@ public class DataCheckStub extends AbstractServiceStub<DCRImpl>
 		boolean result = true;
 		if (attachList == null)
 		{
-			attachList = this.stubService.getWFI().listProcAttach(procrtGuid);
+			attachList = this.stubService.getWfi().listProcAttach(procrtGuid);
 		}
 		if (SetUtils.isNullList(attachList))
 		{
@@ -146,7 +146,7 @@ public class DataCheckStub extends AbstractServiceStub<DCRImpl>
 	protected boolean check(FoundationObject foundationObject) throws ServiceRequestException
 	{
 		ClassStub.decorateObjectGuid(foundationObject.getObjectGuid(), this.stubService);
-		List<ClassField> fieldList = this.stubService.getEMM().listFieldOfClass(foundationObject.getObjectGuid().getClassName());
+		List<ClassField> fieldList = this.stubService.getEmm().listFieldOfClass(foundationObject.getObjectGuid().getClassName());
 		if (!SetUtils.isNullList(fieldList))
 		{
 			for (ClassField field : fieldList)
@@ -158,7 +158,7 @@ public class DataCheckStub extends AbstractServiceStub<DCRImpl>
 				String typeValue = field.getTypeValue();
 				if (!StringUtils.isNullString(typeValue))
 				{
-					ClassInfo classInfo = this.stubService.getEMM().getClassByName(typeValue);
+					ClassInfo classInfo = this.stubService.getEmm().getClassByName(typeValue);
 					if (classInfo.hasInterface(ModelInterfaceEnum.IUser) || classInfo.hasInterface(ModelInterfaceEnum.IGroup)
 							|| classInfo.hasInterface(ModelInterfaceEnum.IPMCalendar) || classInfo.hasInterface(ModelInterfaceEnum.IPMRole))
 					{
@@ -221,17 +221,17 @@ public class DataCheckStub extends AbstractServiceStub<DCRImpl>
 			FoundationObject end2;
 			try
 			{
-				end2 = this.stubService.getBOAS().getObjectNotCheckAuthor(objectGuid);
+				end2 = this.stubService.getBoas().getObjectNotCheckAuthor(objectGuid);
 			}
 			catch (Exception e)
 			{
 				throw new ServiceRequestException(
-						this.stubService.getMSRM().getMSRString("ID_RM_CHECK_ILLEGAL", this.stubService.getUserSignature().getLanguageEnum().name(), e.getMessage()),
+						this.stubService.getMsrm().getMSRString("ID_RM_CHECK_ILLEGAL", this.stubService.getUserSignature().getLanguageEnum().name(), e.getMessage()),
 						"Unable to get ObjectField object");
 			}
 			if (end2 == null)
 			{
-				throw new ServiceRequestException(this.stubService.getMSRM().getMSRString("ID_RM_CHECK_ILLEGAL", this.stubService.getUserSignature().getLanguageEnum().name(),
+				throw new ServiceRequestException(this.stubService.getMsrm().getMSRString("ID_RM_CHECK_ILLEGAL", this.stubService.getUserSignature().getLanguageEnum().name(),
 						"Unable to get ObjectField object"), "Unable to get ObjectField object");
 			}
 
@@ -261,7 +261,7 @@ public class DataCheckStub extends AbstractServiceStub<DCRImpl>
 	private boolean check(String wfName, String actrtName, ProcAttach attach) throws ServiceRequestException
 	{
 		String classGuid = attach.getInstanceClassGuid();
-		ClassInfo classInfo = this.stubService.getEMM().getClassByGuid(classGuid);
+		ClassInfo classInfo = this.stubService.getEmm().getClassByGuid(classGuid);
 
 		boolean result = true;
 		List<CheckRule> list = this.stubService.loadDataCheckConditionList(RuleTypeEnum.WF, wfName, actrtName, classInfo.getName());
@@ -270,7 +270,7 @@ public class DataCheckStub extends AbstractServiceStub<DCRImpl>
 			for (CheckRule rule : list)
 			{
 				ObjectGuid objectGuid = new ObjectGuid(classGuid, null, attach.getInstanceGuid(), null);
-				FoundationObject attach_ = this.stubService.getBOAS().getObject(objectGuid);
+				FoundationObject attach_ = this.stubService.getBoas().getObject(objectGuid);
 				WFRule wfRule = DataCheckRuleFactory.getRule(rule, wfName + "." + actrtName, attach_);
 				result = wfRule.check();
 				if (!result)
