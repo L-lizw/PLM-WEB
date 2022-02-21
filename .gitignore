@@ -1,0 +1,8 @@
+/data-server/target/
+/platform-server/target/
+/source-cmn/target/
+/source-net/target/
+/platform-server/src/main/resources/lic/
+/log/
+/.idea/
+/.idea/
