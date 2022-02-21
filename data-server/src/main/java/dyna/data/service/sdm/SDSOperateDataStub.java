@@ -616,6 +616,7 @@ import java.util.Map;
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
 			throw new DynaDataExceptionAll("select() selectStatement = " + sqlStatementId + " searchConditionMap = " + searchConditionMap, e, DataExceptionEnum.SDS_SELECT);
 		}
 	}

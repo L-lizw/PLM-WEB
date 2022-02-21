@@ -29,6 +29,7 @@ import dyna.net.service.data.DSCommonService;
 import dyna.net.service.data.SystemDataService;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -36,8 +37,9 @@ import java.util.*;
 /**
  * 系统数据服务SystemDataService的实现
  *
- * @author xiasheng
+ * @author Lizw
  */
+@Order(1)
 @DubboService public class SystemDataServiceImpl extends DataRuleService implements SystemDataService
 {
 	@Autowired         DSCommonService                    dsCommonService;

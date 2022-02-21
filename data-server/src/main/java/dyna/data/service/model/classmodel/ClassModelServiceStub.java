@@ -39,28 +39,27 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-@Component
-public class ClassModelServiceStub extends DataCacheServiceStub<ClassModelServiceImpl>
+@Component public class ClassModelServiceStub extends DataCacheServiceStub<ClassModelServiceImpl>
 {
 	// classname:classguid
-	private final Map<String, ClassObject>		CLASSOBJECT_NAME_MAP			= Collections.synchronizedMap(new HashMap<>());
+	private final Map<String, ClassObject>     CLASSOBJECT_NAME_MAP      = Collections.synchronizedMap(new HashMap<>());
 	// classguid:classobject
-	private final Map<String, String>			CLASSOBJECT_GUID_NAME_MAP		= Collections.synchronizedMap(new HashMap<>());
-	private final Map<String, NumberingModel>	NUMBERING_MODEL_GUID_MAP		= Collections.synchronizedMap(new HashMap<>());
-	private final Map<String, NumberingObject>	NUMBERING_OBJECT_GUID_MAP		= Collections.synchronizedMap(new HashMap<>());
-	private final Map<String, ClassField>		CLASSFIELD_GUID_MAP				= Collections.synchronizedMap(new HashMap<>());
-	private final Map<String, UIObject>			UIOBJECT_GUID_MAP				= Collections.synchronizedMap(new HashMap<>());
-	private final Map<String, UIField>			UIFIELD_GUID_MAP				= Collections.synchronizedMap(new HashMap<>());
+	private final Map<String, String>          CLASSOBJECT_GUID_NAME_MAP = Collections.synchronizedMap(new HashMap<>());
+	private final Map<String, NumberingModel>  NUMBERING_MODEL_GUID_MAP  = Collections.synchronizedMap(new HashMap<>());
+	private final Map<String, NumberingObject> NUMBERING_OBJECT_GUID_MAP = Collections.synchronizedMap(new HashMap<>());
+	private final Map<String, ClassField>      CLASSFIELD_GUID_MAP       = Collections.synchronizedMap(new HashMap<>());
+	private final Map<String, UIObject>        UIOBJECT_GUID_MAP         = Collections.synchronizedMap(new HashMap<>());
+	private final Map<String, UIField>         UIFIELD_GUID_MAP          = Collections.synchronizedMap(new HashMap<>());
 
-	private final Map<String, List<String>>		CLASSOBJECT_INTERFACE_NAME_MAP	= Collections.synchronizedMap(new HashMap<>());
-	private final Map<String, String>			CLASS_BASE_TABLE_MAP_KEY_NAME	= Collections.synchronizedMap(new HashMap<>());
-	private final Map<String, String>			CLASS_BASE_TABLE_MAP_KEY_GUID	= Collections.synchronizedMap(new HashMap<>());
-	private final Map<String, String>			FIELD_TABLE_INDEX_MAP_KEY_NAME	= Collections.synchronizedMap(new HashMap<>());
-	private final Map<String, String>			FIELD_TABLE_INDEX_MAP_KEY_GUID	= Collections.synchronizedMap(new HashMap<>());
+	private final Map<String, List<String>> CLASSOBJECT_INTERFACE_NAME_MAP = Collections.synchronizedMap(new HashMap<>());
+	private final Map<String, String>       CLASS_BASE_TABLE_MAP_KEY_NAME  = Collections.synchronizedMap(new HashMap<>());
+	private final Map<String, String>       CLASS_BASE_TABLE_MAP_KEY_GUID  = Collections.synchronizedMap(new HashMap<>());
+	private final Map<String, String>       FIELD_TABLE_INDEX_MAP_KEY_NAME = Collections.synchronizedMap(new HashMap<>());
+	private final Map<String, String>       FIELD_TABLE_INDEX_MAP_KEY_GUID = Collections.synchronizedMap(new HashMap<>());
 
-	private final Map<String, ClassAction>		SCRIPT_ACTION_GUID_MAP			= Collections.synchronizedMap(new HashMap<>());
+	private final Map<String, ClassAction> SCRIPT_ACTION_GUID_MAP = Collections.synchronizedMap(new HashMap<>());
 
-	private AbstractCacheInfo					cacheInfo						= null;
+	private AbstractCacheInfo cacheInfo = null;
 
 	protected ClassModelServiceStub()
 	{
@@ -69,8 +68,7 @@ public class ClassModelServiceStub extends DataCacheServiceStub<ClassModelServic
 		this.cacheInfo.register();
 	}
 
-	@Override
-	public void loadModel() throws ServiceRequestException
+	@Override public void loadModel() throws ServiceRequestException
 	{
 		CLASSOBJECT_NAME_MAP.clear();
 
@@ -103,7 +101,7 @@ public class ClassModelServiceStub extends DataCacheServiceStub<ClassModelServic
 		try
 		{
 			//TODO
-//			DataServer.getTransactionService().startTransaction(tranid);
+			//			DataServer.getTransactionService().startTransaction(tranid);
 			this.cacheInfo.setRemoveErrData(true);
 
 			this.doCheckAndClearUIObject();
@@ -114,25 +112,25 @@ public class ClassModelServiceStub extends DataCacheServiceStub<ClassModelServic
 
 			this.cacheInfo.setRemoveErrData(false);
 
-//			DataServer.getTransactionService().commitTransaction(tranid);
+			//			DataServer.getTransactionService().commitTransaction(tranid);
 		}
 		catch (DynaDataException e)
 		{
 			this.cacheInfo.setRemoveErrData(false);
-//			DataServer.getTransactionService().rollbackTransaction(tranid);
+			//			DataServer.getTransactionService().rollbackTransaction(tranid);
 			throw e;
 		}
 		catch (Exception e)
 		{
 			this.cacheInfo.setRemoveErrData(false);
-//			DataServer.getTransactionService().rollbackTransaction(tranid);
+			//			DataServer.getTransactionService().rollbackTransaction(tranid);
 			throw ServiceRequestException.createByException("ID_APP_SERVER_EXCEPTION", e);
 		}
 	}
 
 	/**
 	 * 部署后检查和 处理ui信息
-	 * 
+	 *
 	 * @throws ServiceRequestException
 	 */
 	private void doCheckAndClearUIObject() throws ServiceRequestException
@@ -175,7 +173,7 @@ public class ClassModelServiceStub extends DataCacheServiceStub<ClassModelServic
 
 	/**
 	 * 部署后检查ui字段记录的字段名在类中是否还存在
-	 * 
+	 *
 	 * @param uiObjectInfo
 	 * @throws ServiceRequestException
 	 */
@@ -210,7 +208,7 @@ public class ClassModelServiceStub extends DataCacheServiceStub<ClassModelServic
 
 	/**
 	 * 部署后检查和 处理ui信息
-	 * 
+	 *
 	 * @throws ServiceRequestException
 	 */
 	private void doCheckAndClearScript() throws ServiceRequestException
@@ -243,7 +241,7 @@ public class ClassModelServiceStub extends DataCacheServiceStub<ClassModelServic
 
 	/**
 	 * 部署后检查和 处理编码规则和合成规则信息
-	 * 
+	 *
 	 * @throws ServiceRequestException
 	 */
 	private void doCheckAndClearNumberModel() throws ServiceRequestException
@@ -259,7 +257,8 @@ public class ClassModelServiceStub extends DataCacheServiceStub<ClassModelServic
 					if (classInfo == null)
 					{
 						DynaLogger.info("NumberingModel delete: " + numberingModelInfo);
-						this.stubService.getSystemDataService().deleteFromCache(NumberingObjectInfo.class, new FieldValueEqualsFilter<>(NumberingObjectInfo.NUMBERRULEFK, numberingModelInfo.getGuid()));
+						this.stubService.getSystemDataService()
+								.deleteFromCache(NumberingObjectInfo.class, new FieldValueEqualsFilter<>(NumberingObjectInfo.NUMBERRULEFK, numberingModelInfo.getGuid()));
 						this.stubService.getSystemDataService().delete(numberingModelInfo);
 						continue;
 					}
@@ -271,7 +270,8 @@ public class ClassModelServiceStub extends DataCacheServiceStub<ClassModelServic
 					UpperKeyMap param = new UpperKeyMap();
 					param.put(NumberingObjectInfo.NUMBERRULEFK, numberingModelInfo.getGuid());
 					param.put(NumberingObjectInfo.TYPE, NumberingTypeEnum.FIELD.toString());
-					List<NumberingObjectInfo> numberingObjectInfoList = this.stubService.getSystemDataService().listFromCache(NumberingObjectInfo.class, new FieldValueEqualsFilter<>(param));
+					List<NumberingObjectInfo> numberingObjectInfoList = this.stubService.getSystemDataService()
+							.listFromCache(NumberingObjectInfo.class, new FieldValueEqualsFilter<>(param));
 					if (!SetUtils.isNullList(numberingObjectInfoList))
 					{
 						for (NumberingObjectInfo numberingObjectInfo : numberingObjectInfoList)
@@ -289,9 +289,10 @@ public class ClassModelServiceStub extends DataCacheServiceStub<ClassModelServic
 								{
 									// 最新设置的类型值（类名）
 									String typeValue = classField.getTypeValue();
-									ClassInfo currentClassInfo = this.stubService.getSystemDataService().listFromCache(ClassInfo.class, new FieldValueEqualsFilter<>(ClassInfo.NAME, typeValue)).get(0);
-									List<NumberingObjectInfo> childNumberingObjectInfoList = this.stubService.getSystemDataService().listFromCache(NumberingObjectInfo.class,
-											new FieldValueEqualsFilter<>(NumberingObjectInfo.PARENTGUID, numberingObjectInfo.getGuid()));
+									ClassInfo currentClassInfo = this.stubService.getSystemDataService()
+											.listFromCache(ClassInfo.class, new FieldValueEqualsFilter<>(ClassInfo.NAME, typeValue)).get(0);
+									List<NumberingObjectInfo> childNumberingObjectInfoList = this.stubService.getSystemDataService()
+											.listFromCache(NumberingObjectInfo.class, new FieldValueEqualsFilter<>(NumberingObjectInfo.PARENTGUID, numberingObjectInfo.getGuid()));
 									if (!SetUtils.isNullList(childNumberingObjectInfoList))
 									{
 										for (NumberingObjectInfo childInfo : childNumberingObjectInfoList)
@@ -300,7 +301,8 @@ public class ClassModelServiceStub extends DataCacheServiceStub<ClassModelServic
 											fieldParam.put(ClassField.CLASSGUID, currentClassInfo.getGuid());
 											fieldParam.put(ClassField.FIELDNAME, oldFieldName);
 											fieldParam.put(ClassField.ISSYSTEM, "Y");
-											List<ClassField> result = this.stubService.getSystemDataService().listFromCache(ClassField.class, new FieldValueEqualsFilter<>(fieldParam));
+											List<ClassField> result = this.stubService.getSystemDataService()
+													.listFromCache(ClassField.class, new FieldValueEqualsFilter<>(fieldParam));
 											ClassField oldField = SetUtils.isNullList(result) ? null : result.get(0);
 											// 新的类型值，用旧的字段名，能找到此字段，且此字段是系统字段，则子编码规则修改记录的类名即可
 											if (oldField != null && !childInfo.getFieldClassName().equals(typeValue))
@@ -380,8 +382,8 @@ public class ClassModelServiceStub extends DataCacheServiceStub<ClassModelServic
 	private void buildScript(ClassObject classObject)
 	{
 		String classGuid = classObject.getGuid();
-		List<ClassAction> classActionList = this.stubService.getSystemDataService().listFromCache(ClassAction.class,
-				new FieldValueEqualsFilter<ClassAction>(ClassAction.CLASSFK, classGuid));
+		List<ClassAction> classActionList = this.stubService.getSystemDataService()
+				.listFromCache(ClassAction.class, new FieldValueEqualsFilter<ClassAction>(ClassAction.CLASSFK, classGuid));
 		if (!SetUtils.isNullList(classActionList))
 		{
 			for (ClassAction classAction : classActionList)
@@ -440,6 +442,10 @@ public class ClassModelServiceStub extends DataCacheServiceStub<ClassModelServic
 			return false;
 		}
 		InterfaceObject subInterfaceObject = this.stubService.getInterfaceModelService().getInterface(subInterface);
+		if (subInterfaceObject == null)
+		{
+			return false;
+		}
 		String parent = subInterfaceObject.getParentInterfaces();
 		if (parent != null)
 		{
@@ -537,8 +543,8 @@ public class ClassModelServiceStub extends DataCacheServiceStub<ClassModelServic
 					else
 					{
 						// 子类的TypeValue可以是父类的TypeValue的子类
-						if (!StringUtils.isNullString(classFieldOwner.getTypeValue()) && !classFieldOwner.getTypeValue().equals(classField.getTypeValue())
-								&& !this.isChild(classFieldOwner.getTypeValue(), classField.getTypeValue(), classObjectMap))
+						if (!StringUtils.isNullString(classFieldOwner.getTypeValue()) && !classFieldOwner.getTypeValue().equals(classField.getTypeValue()) && !this
+								.isChild(classFieldOwner.getTypeValue(), classField.getTypeValue(), classObjectMap))
 						{
 							classFieldOwner.setTypeValue(classField.getTypeValue());
 						}
@@ -634,8 +640,8 @@ public class ClassModelServiceStub extends DataCacheServiceStub<ClassModelServic
 					classField2.setType(classField.getType());
 					classField2.setTypeValue(classField.getTypeValue());
 				}
-				else if (classField2.getType() == FieldTypeEnum.OBJECT
-						&& !StringUtils.convertNULLtoString(classField.getTypeValue()).equals(StringUtils.convertNULLtoString(classField2.getTypeValue())))
+				else if (classField2.getType() == FieldTypeEnum.OBJECT && !StringUtils.convertNULLtoString(classField.getTypeValue())
+						.equals(StringUtils.convertNULLtoString(classField2.getTypeValue())))
 				{
 					if (!isChild(classField.getTypeValue(), classField2.getTypeValue(), classObjectMap))
 					{
@@ -995,7 +1001,8 @@ public class ClassModelServiceStub extends DataCacheServiceStub<ClassModelServic
 			{
 				UIObject uiObject = new UIObject(uiObjectInfo);
 				classObject.addUIObject(uiObject);
-				List<UIField> uiFieldList = this.stubService.getSystemDataService().listFromCache(UIField.class, new FieldValueEqualsFilter<>(UIField.UIGUID, uiObjectInfo.getGuid()));
+				List<UIField> uiFieldList = this.stubService.getSystemDataService()
+						.listFromCache(UIField.class, new FieldValueEqualsFilter<>(UIField.UIGUID, uiObjectInfo.getGuid()));
 				uiObject.setFieldList(uiFieldList);
 				if (uiFieldList != null)
 				{
@@ -1013,8 +1020,8 @@ public class ClassModelServiceStub extends DataCacheServiceStub<ClassModelServic
 						}
 					}
 				}
-				List<UIAction> uiActionList = this.stubService.getSystemDataService().listFromCache(UIAction.class,
-						new FieldValueEqualsFilter<>(UIAction.UIGUID, uiObjectInfo.getGuid()));
+				List<UIAction> uiActionList = this.stubService.getSystemDataService()
+						.listFromCache(UIAction.class, new FieldValueEqualsFilter<>(UIAction.UIGUID, uiObjectInfo.getGuid()));
 				uiObject.setActionList(uiActionList);
 				UIOBJECT_GUID_MAP.put(uiObjectInfo.getGuid(), uiObject);
 			}
@@ -1116,8 +1123,8 @@ public class ClassModelServiceStub extends DataCacheServiceStub<ClassModelServic
 	{
 		List<NumberingModel> numberingModelList = new ArrayList<>();
 
-		List<NumberingModelInfo> numberingModelInfoList = this.stubService.getSystemDataService().listFromCache(NumberingModelInfo.class,
-				new FieldValueEqualsFilter<>(NumberingModelInfo.CLASSFK, classfk));
+		List<NumberingModelInfo> numberingModelInfoList = this.stubService.getSystemDataService()
+				.listFromCache(NumberingModelInfo.class, new FieldValueEqualsFilter<>(NumberingModelInfo.CLASSFK, classfk));
 		if (numberingModelInfoList != null)
 		{
 			for (NumberingModelInfo numberingModelInfo : numberingModelInfoList)
@@ -1136,8 +1143,8 @@ public class ClassModelServiceStub extends DataCacheServiceStub<ClassModelServic
 	{
 		List<NumberingObject> numberingObjectList = new ArrayList<>();
 
-		List<NumberingObjectInfo> numberingObjectInfoList = this.stubService.getSystemDataService().listFromCache(NumberingObjectInfo.class,
-				new FieldValueEqualsFilter<>(NumberingObjectInfo.NUMBERRULEFK, numberrulefk));
+		List<NumberingObjectInfo> numberingObjectInfoList = this.stubService.getSystemDataService()
+				.listFromCache(NumberingObjectInfo.class, new FieldValueEqualsFilter<>(NumberingObjectInfo.NUMBERRULEFK, numberrulefk));
 		if (numberingObjectInfoList != null)
 		{
 			Map<String, NumberingObject> numberingObjectMap = new LinkedHashMap<>();
@@ -1193,8 +1200,8 @@ public class ClassModelServiceStub extends DataCacheServiceStub<ClassModelServic
 			classObject.setTableIndexList(new ArrayList<>());
 		}
 
-		List<ClassField> classFieldList = this.stubService.getSystemDataService().listFromCache(ClassField.class,
-				new FieldValueEqualsFilter<>(ClassField.CLASSGUID, classObject.getGuid()));
+		List<ClassField> classFieldList = this.stubService.getSystemDataService()
+				.listFromCache(ClassField.class, new FieldValueEqualsFilter<>(ClassField.CLASSGUID, classObject.getGuid()));
 		classObject.setFieldList(classFieldList);
 		if (classFieldList != null)
 		{
@@ -1383,8 +1390,7 @@ public class ClassModelServiceStub extends DataCacheServiceStub<ClassModelServic
 			return classInfo;
 		}
 
-		@Override
-		public void register()
+		@Override public void register()
 		{
 			DynaObserverMediator mediator = DynaObserverMediator.getInstance();
 			mediator.register(ClassInfo.class, new DynaCacheObserver<>(this, new CacheRefreshListener<ClassInfo>()));
@@ -1396,8 +1402,7 @@ public class ClassModelServiceStub extends DataCacheServiceStub<ClassModelServic
 			mediator.register(ClassAction.class, new DynaCacheObserver<>(this, new CacheRefreshListener<ClassAction>()));
 		}
 
-		@Override
-		public <T extends SystemObject> void addToCache(T data) throws ServiceRequestException
+		@Override public <T extends SystemObject> void addToCache(T data) throws ServiceRequestException
 		{
 			if (data instanceof ClassInfo)
 			{
@@ -1496,8 +1501,7 @@ public class ClassModelServiceStub extends DataCacheServiceStub<ClassModelServic
 			return classField;
 		}
 
-		@Override
-		public <T extends SystemObject> void removeFromCache(T data) throws ServiceRequestException
+		@Override public <T extends SystemObject> void removeFromCache(T data) throws ServiceRequestException
 		{
 			if (data instanceof ClassInfo)
 			{
@@ -1673,8 +1677,7 @@ public class ClassModelServiceStub extends DataCacheServiceStub<ClassModelServic
 			}
 		}
 
-		@Override
-		public <T extends SystemObject> void updateToCache(T data) throws ServiceRequestException
+		@Override public <T extends SystemObject> void updateToCache(T data) throws ServiceRequestException
 		{
 			if (data instanceof ClassInfo)
 			{
@@ -1686,7 +1689,8 @@ public class ClassModelServiceStub extends DataCacheServiceStub<ClassModelServic
 				}
 				classObject.getInfo().putAll(classInfo);
 
-				List<BOInfo> boInfoList = ClassModelServiceStub.this.stubService.getSystemDataService().listFromCache(BOInfo.class, new FieldValueEqualsFilter<BOInfo>(BOInfo.CLASSGUID, classInfo.getGuid()));
+				List<BOInfo> boInfoList = ClassModelServiceStub.this.stubService.getSystemDataService()
+						.listFromCache(BOInfo.class, new FieldValueEqualsFilter<BOInfo>(BOInfo.CLASSGUID, classInfo.getGuid()));
 				if (!SetUtils.isNullList(boInfoList))
 				{
 					boInfoList.forEach(boInfo -> {
