@@ -12,5 +12,8 @@ spring:
           - dataId: mybatis.yml
             group: DEFAULT_GROUP
             refresh: true
+          - dataId: dataService.yml
+            group: DEFAULT_GROUP
+            refresh: true
 
 

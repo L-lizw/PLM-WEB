@@ -10,7 +10,7 @@ import dyna.common.bean.data.SystemObjectImpl;
 import dyna.common.util.BooleanUtils;
 
 /**
- * @author WangLHB
+ * @author Lizw
  * 
  */
 public class WorkFlowPerference extends SystemObjectImpl implements SystemObject

@@ -7,12 +7,14 @@ import dyna.common.log.DynaLogger;
 import dyna.common.util.PackageScanUtil;
 import dyna.common.util.SetUtils;
 import dyna.net.service.ApplicationService;
+import dyna.net.service.Service;
 import org.apache.poi.hssf.record.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.Modifier;
 import java.util.*;
 
 /**
@@ -35,48 +37,61 @@ public class ApplicationServiceCommonRunner implements CommandLineRunner
 
 		if(!SetUtils.isNullSet(set))
 		{
-			Map<Integer, Class<?>> orderServiceMap = new HashMap<>();
+			Map<Integer, String> orderServiceMap = new HashMap<>();
+			Map<String, Class<?>> idServiceMap = new HashMap<>();
 
-			for(Class<?> serviceClass:set)
+			for (Class<?> serviceClass : set)
 			{
-				ServiceDefinition serviceDefinition = configurableService.getServiceDefinitionByclass(serviceClass.getSimpleName());
-				if(serviceDefinition == null)
+				if (serviceClass.isInterface() || Modifier.isAbstract(serviceClass.getModifiers()))
 				{
 					continue;
 				}
+
+				ServiceDefinition serviceDefinition = configurableService.getServiceDefinitionByclass(serviceClass.getSimpleName());
+
 				ApplicationService service = (ApplicationService) SpringUtil.getBean(serviceClass);
 				Order order = serviceClass.getAnnotation(Order.class);
-				if(order!=null)
+				if (order != null)
 				{
 					int sequence = order.value();
-					orderServiceMap.put(sequence, serviceClass);
-					continue;
+					orderServiceMap.put(sequence, serviceDefinition.getId());
 				}
-				DynaLogger.info(serviceDefinition.getDescription()+" init ...");
-				service.init(serviceDefinition);
-				DynaLogger.info(serviceDefinition.getDescription()+" init success");
+				idServiceMap.put(serviceDefinition.getId(), serviceClass);
 			}
 
-			if(!SetUtils.isNullMap(orderServiceMap))
+			if (!SetUtils.isNullMap(orderServiceMap))
 			{
 				List<Integer> orderList = new ArrayList<>(orderServiceMap.keySet());
 				Collections.sort(orderList, new Comparator<Integer>()
 				{
 					@Override public int compare(Integer o1, Integer o2)
 					{
-						return o1-o2;
+						return o1 - o2;
 					}
 				});
 
-				for(Integer order:orderList)
+				for (Integer order : orderList)
 				{
-					ApplicationService service = (ApplicationService) SpringUtil.getBean(orderServiceMap.get(order));
-					ServiceDefinition serviceDefinition = configurableService.getServiceDefinitionByclass(orderServiceMap.get(order).getSimpleName());
-					DynaLogger.info(serviceDefinition.getDescription()+" init ...");
-					service.init(serviceDefinition);
-					DynaLogger.info(serviceDefinition.getDescription()+" init success");
+					this.initDataService(idServiceMap.get(orderServiceMap.get(order)));
+					idServiceMap.remove(orderServiceMap.get(order));
 				}
 			}
+
+			if (!SetUtils.isNullMap(idServiceMap))
+			{
+				idServiceMap.forEach((id, serviceClass) -> {
+					this.initDataService(serviceClass);
+				});
+			}
 		}
+	}
+
+	private void initDataService(Class<?> serviceClass)
+	{
+		ApplicationService service = (ApplicationService) SpringUtil.getBean(serviceClass);
+		ServiceDefinition serviceDefinition = configurableService.getServiceDefinitionByclass(serviceClass.getSimpleName());
+		DynaLogger.info(serviceDefinition.getDescription() + " init ...");
+		service.init(serviceDefinition);
+		DynaLogger.info(serviceDefinition.getDescription() + " init success");
 	}
 }

@@ -27,7 +27,7 @@ import java.util.UUID;
 /**
  * Common Service Access implementation
  * 
- * @author Wanglei
+ * @author Lizw
  * 
  */
 @Service

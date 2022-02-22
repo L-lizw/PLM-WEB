@@ -75,7 +75,7 @@ import java.util.Map;
  *
  * @author Lizw
  */
-@Order(1)
+@Order(2)
 @Getter(AccessLevel.PUBLIC)
 @Service public class WFIImpl extends BusinessRuleService implements WFI
 {

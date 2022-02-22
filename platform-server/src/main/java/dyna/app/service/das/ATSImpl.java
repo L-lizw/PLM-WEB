@@ -28,6 +28,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Action Track Service implementation 用户操作跟踪服务(系统日志)实现
@@ -36,6 +37,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * 
  */
 @Getter(AccessLevel.PROTECTED)
+@Service
 public class ATSImpl extends DataAccessService implements ATS
 {
 

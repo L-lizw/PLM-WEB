@@ -19,10 +19,10 @@ import java.lang.reflect.Method;
  * 业务逻辑服务适配器, 提供服务的基础设置与实现
  * 具体业务逻辑服务需扩展此接口
  * 
- * @author Wanglei
+ * @author Lizw
  * 
  */
-public class BusinessRuleService extends DataAccessService implements Authorizable
+public abstract class BusinessRuleService extends DataAccessService implements Authorizable
 {
 
 	/*

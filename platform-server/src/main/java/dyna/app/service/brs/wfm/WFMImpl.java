@@ -36,7 +36,7 @@ import java.util.List;
  *
  * @author Lizw
  */
-@Order(2)
+@Order(1)
 @Getter(AccessLevel.PROTECTED)
 @DubboService public class WFMImpl extends BusinessRuleService implements WFM
 {

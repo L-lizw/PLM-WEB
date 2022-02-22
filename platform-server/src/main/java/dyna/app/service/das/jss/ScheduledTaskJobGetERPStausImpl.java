@@ -20,6 +20,7 @@ import dyna.common.systemenum.ERPServerType;
 import dyna.common.systemenum.JobStatus;
 import dyna.common.systemenum.MailCategoryEnum;
 import dyna.common.systemenum.MailMessageType;
+import dyna.common.util.DateFormat;
 import dyna.common.util.EnvUtils;
 import dyna.common.util.StringUtils;
 import dyna.net.service.brs.AAS;
@@ -46,7 +47,7 @@ public class ScheduledTaskJobGetERPStausImpl  extends AbstractQuartzJobStub<JSSI
 	@Override
 	protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException
 	{
-		DynaLogger.info("JSS Scheduled [Class]ScheduledGetERPStatusTaskJob , Scheduled Task Start...");
+		DynaLogger.info(DateFormat.formatYMDHMS(new Date())+" JSS Scheduled [Class]ScheduledGetERPStatusTaskJob , Scheduled Task Start...");
 
 		try
 		{
@@ -75,7 +76,7 @@ public class ScheduledTaskJobGetERPStausImpl  extends AbstractQuartzJobStub<JSSI
 				Integer jobLiveTime = Integer.valueOf(jobLiveTimeStr);
 				Integer jobPollTime = Integer.valueOf(jobPollingTimeStr);
 				String result = "The ERP processing time is more than the preset value for " + jobLiveTime + " seconds.";
-				if (ERPServerType.ERPT100 == ERPServerType.valueOf(serviceConfig.getERPServerSelected()) 
+				if (ERPServerType.ERPT100 == ERPServerType.valueOf(serviceConfig.getERPServerSelected())
 						|| ERPServerType.ERPT100DB == ERPServerType.valueOf(serviceConfig.getERPServerSelected())
 						|| ERPServerType.ERPTIPTOP == ERPServerType.valueOf(serviceConfig.getERPServerSelected()))
 				{
@@ -105,7 +106,7 @@ public class ScheduledTaskJobGetERPStausImpl  extends AbstractQuartzJobStub<JSSI
 			DynaLogger.error("polling job error: " + e, e);
 		}
 
-		DynaLogger.info("JSS Scheduled [Class]ScheduledGetERPStatusTaskJob , Scheduled Task End...");
+		DynaLogger.info(DateFormat.formatYMDHMS(new Date())+" JSS Scheduled [Class]ScheduledGetERPStatusTaskJob , Scheduled Task End...");
 	}
 
 	private Queue getJobStatus(Queue queuejob) throws Exception

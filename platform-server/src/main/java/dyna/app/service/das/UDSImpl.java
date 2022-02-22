@@ -11,13 +11,15 @@ import dyna.common.log.DynaLogger;
 import dyna.common.util.StringUtils;
 import dyna.net.service.das.UDS;
 import dyna.net.syncfile.transfer.TransferEnum;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 
 /**
- * @author Wanglei
+ * @author Lizw
  *
  */
+@Service
 public class UDSImpl extends DataAccessService implements UDS
 {
 
